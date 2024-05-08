@@ -474,7 +474,7 @@ usersCtrl.customerPaymentVerification = async (req, res) => {
 
                 const paymentDetails = await oldHistory(req, res, req.body.payment);
                 // ResponseHandler.success(req, res, "hhhhhhhhhhhhhhhhhhhh ", paymentDetails);
-                // console.log("kkkkkkkkkkkkk  ", paymentDetails);
+                console.log("kkkkkkkkkkkkk  ", req.body.payment);
 
 
                 paymentVerificationModel.updateOne({ customerID: req.user.customerID }, { $set: paymentDetails })
@@ -584,21 +584,37 @@ async function oldHistory(req, res, payment) {
                                 data.forEach(x => {
                                     result = parseFloat(result) + parseFloat(x.paidAmount)
                                 })
-                                // console.log("check cthe  value ", result);
-                                if (payment.totalAmount == result) {
-                                    payment['totalPendingAmount'] = '0.00';
-                                    payment['pendingAmount'] = '0.00';
-                                    payment['paymentStatus'] = 'Completed';
-                                    payment['totalPaidAmount'] = payment.totalAmount;
+                                if (payment.coupon && payment.coupon.couponID) {
+                                    var needToPay = payment.totalAmount - payment.coupon.discountValue;
+                                    if (needToPay == result) {
+                                        payment['totalPendingAmount'] = '0.00';
+                                        payment['pendingAmount'] = '0.00';
+                                        payment['paymentStatus'] = 'Completed';
+                                        payment['totalPaidAmount'] = needToPay;
+                                    }
+                                    else {
+                                        const remainingAmount = needToPay - result
+                                        payment['totalPendingAmount'] = remainingAmount.toFixed(2);
+                                        payment['pendingAmount'] = remainingAmount.toFixed(2);
+                                        payment['paymentStatus'] = 'Partial';
+                                        payment['totalPaidAmount'] = result.toFixed(2);
+                                    }
                                 }
                                 else {
-                                    const remainingAmount = payment.totalAmount - result
-                                    payment['totalPendingAmount'] = remainingAmount.toFixed(2);
-                                    payment['pendingAmount'] = remainingAmount.toFixed(2);
-                                    payment['paymentStatus'] = 'Partial';
-                                    payment['totalPaidAmount'] = result.toFixed(2);
+                                    if (payment.totalAmount == result) {
+                                        payment['totalPendingAmount'] = '0.00';
+                                        payment['pendingAmount'] = '0.00';
+                                        payment['paymentStatus'] = 'Completed';
+                                        payment['totalPaidAmount'] = payment.totalAmount;
+                                    }
+                                    else {
+                                        const remainingAmount = payment.totalAmount - result
+                                        payment['totalPendingAmount'] = remainingAmount.toFixed(2);
+                                        payment['pendingAmount'] = remainingAmount.toFixed(2);
+                                        payment['paymentStatus'] = 'Partial';
+                                        payment['totalPaidAmount'] = result.toFixed(2);
+                                    }
                                 }
-
                                 customerPaymentSubInfoModel.updateOne({ customerPaymentSubId: ch._doc.customerPaymentSubId }, { $set: payment })
                                     .then((dd) => {
                                         return resolve(payment);
