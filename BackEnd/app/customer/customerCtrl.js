@@ -4,8 +4,6 @@ var DisplayMessages = require("../../utils/messages");
 // const cryptr = new Cryptr('cryovault');
 
 
-
-
 var customerSignupOrLoginModel = require('../user/model/customerSignUPModel')
 var customerSubscriptionModel = require('./customerModel/customerSubscriptionModel')
 var customerAnnexureInformationModel = require('./customerModel/customerAnnexureInformationModel')
@@ -19,6 +17,7 @@ var customerHelpExecutiveDetailsModel = require('./customerModel/customerHelpExe
 var customerHelpNomineeDetailsChangeModel = require('./customerModel/customerHelpNomineeDetailsChangeModel')
 var customerHelpCommunicationDetailsChangeModel = require('./customerModel/customerHelpCommunicationDetailsChangeModel')
 var customerBabyDetailsModel = require('./customerModel/customerBabyDetailsModel');
+var logModel = require('../user/model/logModel');
 
 
 let customerCtrl = {};
@@ -27,8 +26,28 @@ let customerCtrl = {};
 customerCtrl.updateCustomerInfo = async (req, res) => {
     try {
         const payload = req.body;
-        payload['updatedTime'] = new Date().toISOString()
-        await customerSignupOrLoginModel.updateOne({ customerID: req.user.customerID }, { $set: payload }).then((info) => {
+        payload['updatedTime'] = new Date().toISOString();
+        const oldDocument = await customerSignupOrLoginModel.findOne({ customerID: req.user.customerID });
+
+        await customerSignupOrLoginModel.updateOne({ customerID: req.user.customerID }, { $set: payload }).then(async (info) => {
+            const updatedDocument = await customerSignupOrLoginModel.findOne({ customerID: req.user.customerID });
+
+
+            for (const key in updatedDocument) {
+                if (oldDocument._doc[key] !== updatedDocument._doc[key] && key !== "_id" && key !== "createdTime" && key !== "updatedTime") {
+                    let obj = {};
+                    obj['oldValue'] = oldDocument[key];
+                    obj['newValue'] = updatedDocument[key];
+                    obj['tableName'] = 'customers';
+                    obj['typeOfOperation'] = 'update';
+                    obj['updatedBy'] = req.user.customerID;
+                    obj['typeOfUser'] = 'customer';
+                    obj['recordID'] = oldDocument._doc._id;
+                    obj['field'] = key;
+                    logModel.create(obj);
+                }
+            }
+
             if (info && info.matchedCount) {
                 ResponseHandler.success(req, res, DisplayMessages.updateperofile, "");
             }
@@ -46,31 +65,44 @@ customerCtrl.updateCustomerInfo = async (req, res) => {
     }
 }
 
-
-customerCtrl.createOrUpdateSubscriptionPlan = async (req, res) => {
+customerCtrl.createSubscriptionPlan = async (req, res) => {
     try {
         const body = req.body;
-        if (body.subscriptionID) {
 
-            body['updatedTime'] = new Date().toISOString();
-            body['updatedBy'] = 1
-            console.log(body.subscriptionID);
+        customerSubscriptionModel.create(body).then((plan) => {
+            ResponseHandler.success(req, res, DisplayMessages.saveSubscriptionPlan, "");
+        })
+            .catch((err) => {
+                ResponseHandler.error(req, res, "", err);
+            })
 
-            customerSubscriptionModel.updateOne({ subscriptionID: body.subscriptionID }, { $set: body }).then((sub) => {
+    }
+    catch (err) {
+        ResponseHandler.error(req, res, "", err);
+    }
+}
+
+
+customerCtrl.UpdateSubscriptionPlan = async (req, res) => {
+    try {
+        const body = req.body;
+
+        customerSubscriptionModel.create(body).then((plan) => {
+            let obj = {}
+            obj['updatedTime'] = new Date().toISOString();
+            obj['updatedBy'] = 1;
+            obj['status'] = false;
+            customerSubscriptionModel.updateOne({ subscriptionID: req.params.subscriptionID }, { $set: obj }).then(async (sub) => {
                 ResponseHandler.success(req, res, DisplayMessages.updateSubscriptionPlan, "");
             })
                 .catch((err) => {
                     ResponseHandler.error(req, res, "", err);
                 })
-        }
-        else {
-            customerSubscriptionModel.create(body).then((plan) => {
-                ResponseHandler.success(req, res, DisplayMessages.saveSubscriptionPlan, "");
+        })
+            .catch((err) => {
+                ResponseHandler.error(req, res, "", err);
             })
-                .catch((err) => {
-                    ResponseHandler.error(req, res, "", err);
-                })
-        }
+
     }
     catch (err) {
         ResponseHandler.error(req, res, "", err);
@@ -80,7 +112,7 @@ customerCtrl.createOrUpdateSubscriptionPlan = async (req, res) => {
 
 customerCtrl.getSubscriptionPlan = async (req, res) => {
     try {
-        customerSubscriptionModel.find({}).then((plan) => {
+        customerSubscriptionModel.find({ status: true }).then((plan) => {
             ResponseHandler.success(req, res, DisplayMessages.getSubscriptionPlanDetails, plan);
         })
             .catch((err) => {
@@ -92,6 +124,26 @@ customerCtrl.getSubscriptionPlan = async (req, res) => {
     }
 }
 
+
+customerCtrl.deleteSubscriptionPlan = async (req, res) => {
+    try {
+
+        const body = req.body;
+        body['updatedTime'] = new Date().toISOString();
+        body['updatedBy'] = 1;
+        body['status'] = false;
+
+        customerSubscriptionModel.updateOne({ subscriptionID: req.params.subscriptionID }, { $set: body }).then((plan) => {
+            ResponseHandler.success(req, res, DisplayMessages.deleteSubscriptionPlanDetails, plan);
+        })
+            .catch((err) => {
+                ResponseHandler.error(req, res, "", err);
+            })
+    }
+    catch (err) {
+        ResponseHandler.error(req, res, "", err);
+    }
+}
 
 
 customerCtrl.addOrupdateAnnexureInfo = async (req, res) => {

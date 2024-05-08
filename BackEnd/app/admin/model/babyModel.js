@@ -3,21 +3,30 @@ const AutoIncrement = require('mongoose-sequence')(mongoose);
 
 const Schema = mongoose.Schema;
 
-const videoSchema = new Schema({
-    videoID: {
+const babySchema = new Schema({
+    babyID: {
         type: Number
     },
-    title: {
-        type: String
-    },
-    featureImage: {
-        type: String
-    },
-    description: {
-        type: String
-    },
-    type: {
+    customerID: {
         type: Number
+    },
+    babyName: {
+        type: String
+    },
+    babyDOB: {
+        type: Date
+    },
+    timeOfBirth: {
+        type: String
+    },
+    weight: {
+        type: String
+    },
+    DeliveryDoctorName: {
+        type: Number  /// Doctor ID
+    },
+    placeOfBirth: {
+        type: Number  // City ID
     },
     updatedBy: {
         type: Number
@@ -36,8 +45,8 @@ const videoSchema = new Schema({
 });
 
 
-videoSchema.plugin(AutoIncrement, { inc_field: 'videoID' });
+babySchema.plugin(AutoIncrement, { inc_field: 'babyID' });
 
-const videoModel = mongoose.model('galleryVideo', videoSchema);
+const babyModel = mongoose.model('babyDetails', babySchema);
 
-module.exports = videoModel;
+module.exports = babyModel;

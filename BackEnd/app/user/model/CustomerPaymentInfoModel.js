@@ -22,27 +22,49 @@ const customerPaymentInfoModel = new Schema({
         type: String,
         default: ""
     },
-    paidAmount: {
-        type: Number,
-        default: null
+    totalPaidAmount: {
+        type: String,
+        default: ""
     },
-    pendingAmount: {
-        type: Number,
-        default: null
+    totalPendingAmount: {
+        type: String,
+        default: ""
     },
     paymentDate: {
         type: Date,
         default: ""
+    },
+    totalAmount: {
+        type: String,
+        default: ""
+    },
+    coupon: {
+        couponID: {
+            type: Number,
+            default: null
+        },
+        couponCode: {
+            type: String,
+            default: ""
+        },
+        discountType: {
+            type: String,
+            default: ""
+        },
+        discountValue: {
+            type: String,
+            default: ""
+        },
+        couponPercentage: {
+            type: String,
+            default: ""
+        }
     },
     GUID: {
         type: String,
         default: ""
     },
     OrderCode: {
-        type: String,
-        default: ""
-    },
-    PaymentID: {
         type: String,
         default: ""
     },
@@ -59,8 +81,8 @@ const customerPaymentInfoModel = new Schema({
         default: null
     },
     PaymentGatewayID: {
-        type: Number,
-        default: null
+        type: String,
+        default: ""
     },
     Method: {
         type: String,
@@ -91,6 +113,9 @@ const customerPaymentInfoModel = new Schema({
             type: String,
             default: ""
         }
+    },
+    razorpaySignature:{
+        type: String
     },
     CRNno: {
         type: String

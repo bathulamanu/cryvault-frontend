@@ -4,8 +4,12 @@ var auth = require('../../utils/Auth').token;
 
 module.exports = (app) => {
     app.post('/cryovault/api/customer/updateCustomerInfo', auth, customer.updateCustomerInfo);
-    app.post('/cryovault/api/customer/createOrUpdateSubscriptionPlan', auth, customer.createOrUpdateSubscriptionPlan);
+
+    app.post('/cryovault/api/customer/createSubscriptionPlan', auth, customer.createSubscriptionPlan);    
+    app.put('/cryovault/api/customer/UpdateSubscriptionPlan/:subscriptionID', auth, customer.UpdateSubscriptionPlan);
     app.get('/cryovault/api/customer/getSubscriptionPlan', customer.getSubscriptionPlan);
+    app.delete('/cryovault/api/customer/deleteSubscriptionPlan/:subscriptionID',auth, customer.deleteSubscriptionPlan);
+
     app.post('/cryovault/api/customer/addOrupdateAnnexureInfo', auth, customer.addOrupdateAnnexureInfo);
     app.get('/cryovault/api/customer/getAnnexureInfo', auth, customer.getAnnexureInfo);
     app.post('/cryovault/api/customer/addOrUpdateGender', auth,customer.addOrUpdateGender);

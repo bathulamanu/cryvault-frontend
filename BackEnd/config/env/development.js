@@ -10,8 +10,8 @@ module.exports = {
         template: 'cryovault-1007171255570714661'
     },
     SecretKey: `cryo`,
-    dbConnection: 'mongodb+srv://admin:admin%40123@cluster0.r5inff3.mongodb.net/cryovault-dev?retryWrites=true&w=majority&appName=Cluster0',
-    // dbConnection: `mongodb://localhost:27017/cryovault-dev`,
+    // dbConnection: 'mongodb+srv://admin:admin%40123@cluster0.r5inff3.mongodb.net/cryovault-dev?retryWrites=true&w=majority&appName=Cluster0',
+    dbConnection: `mongodb://localhost:27017/cryovault-dev`,
     razorpay: {
         Key_Id: 'rzp_test_93iVfb7AY6AgpL',//'rzp_test_WEIxQkJ74d9Rnb',
         Key_Secret: 'zEBc1QkY4TDbiXeXs6ZTKJH4'// 'cMxWHPbQfAe2foZcns87rTXd'

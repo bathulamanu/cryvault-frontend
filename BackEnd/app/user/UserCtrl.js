@@ -26,6 +26,8 @@ var CreateOrderModel = require('./model/customerOrdercreateModel');
 var paymentVerificationModel = require('./model/CustomerPaymentInfoModel');
 var customerSubscriptionModel = require('../customer/customerModel/customerSubscriptionModel');
 var emailContentModel = require('../common/model/emailContentModel');
+var couponModel = require('../user/model/couponModel');
+var customerPaymentSubInfoModel = require('./model/customerPaymentSubInfoModel');
 
 var sendEmail = require('../../mail/mailContent');
 
@@ -460,17 +462,22 @@ usersCtrl.customerPaymentVerification = async (req, res) => {
             ResponseHandler.error(req, res, DisplayMessages.OrderCodeRequired, "");
             return;
         }
-        // console.log("jjjjjjjjjjj req.user.customerID ",req.user.customerID);
+
         CreateOrderModel.find({ OrderCode: req.body.payment.OrderCode }).then(async (order) => {
             if (order.length != 0) {
+
                 req.body.payment['GUID'] = order[0].ReceiptID;
                 req.body.payment['customerID'] = req.user.customerID;
                 req.body.payment['paymentDate'] = new Date().toISOString();
                 const crnNo = await generateCRNnoPayment();
-                req.body.payment['CRNno'] = 'CV/HYD/' + crnNo;
+                req.body.payment['CRNno'] = crnNo;
+
+                const paymentDetails = await oldHistory(req, res, req.body.payment);
+                // ResponseHandler.success(req, res, "hhhhhhhhhhhhhhhhhhhh ", paymentDetails);
+                // console.log("kkkkkkkkkkkkk  ", paymentDetails);
 
 
-                paymentVerificationModel.updateOne({ customerID: req.user.customerID }, { $set: req.body.payment })
+                paymentVerificationModel.updateOne({ customerID: req.user.customerID }, { $set: paymentDetails })
                     .then(async (pay) => {
 
                         paymentVerificationModel.aggregate([
@@ -499,39 +506,42 @@ usersCtrl.customerPaymentVerification = async (req, res) => {
                             let invObj = {}
                             if (sub.length != 0) {
                                 data = sub[0];
-                                const invoiceFile = await invoiceGeneration(req.user.customerID, sub[0], data.customerDetails[0], data.subscriptionDetails[0]);
-                                if (invoiceFile && invoiceFile.filePath) {
-                                    const s3FileName = await invoiceFileRead(invoiceFile);
-                                    if (s3FileName && s3FileName.key) {
-                                        req.body.payment['invoiceFile'] = s3FileName.key;
 
 
-                                        if (data.customerDetails && data.customerDetails.length != 0) {
-                                            const emailContent = await getAllEmailContent('invoice');
-                                            invObj['Content'] = "";
-                                            if (emailContent && emailContent.length != 0) {
-                                                invObj['Content'] = emailContent[0].emailDescription;
-                                            }
-                                            invObj['Subject'] = 'CryoVault Invoice File';
-                                            invObj['Email'] = data.customerDetails[0].email;
-                                            invObj['Name'] = data.customerDetails[0].firstName;
-                                            invObj['File'] = {
-                                                fileName: s3FileName.key,
-                                                filePath: invoiceFile.filePath
-                                            }
-                                            await sendEmail.EmailWithInvoicePDF(invObj)
-                                        }
+                                ResponseHandler.success(req, res, "dara ", data);
+                                // const invoiceFile = await invoiceGeneration(req.user.customerID, sub[0], data.customerDetails[0], data.subscriptionDetails[0]);
+                                // if (invoiceFile && invoiceFile.filePath) {
+                                //     const s3FileName = await invoiceFileRead(invoiceFile);
+                                //     if (s3FileName && s3FileName.key) {
+                                //         req.body.payment['invoiceFile'] = s3FileName.key;
 
-                                        ResponseHandler.success(req, res, DisplayMessages.PaymentUpdate, pay);
 
-                                    }
-                                    else {
-                                        ResponseHandler.error(req, res, DisplayMessages.Error, "");
-                                    }
-                                }
-                                else {
-                                    ResponseHandler.error(req, res, DisplayMessages.Error, "");
-                                }
+                                //         if (data.customerDetails && data.customerDetails.length != 0) {
+                                //             const emailContent = await getAllEmailContent('invoice');
+                                //             invObj['Content'] = "";
+                                //             if (emailContent && emailContent.length != 0) {
+                                //                 invObj['Content'] = emailContent[0].emailDescription;
+                                //             }
+                                //             invObj['Subject'] = 'CryoVault Invoice File';
+                                //             invObj['Email'] = data.customerDetails[0].email;
+                                //             invObj['Name'] = data.customerDetails[0].firstName;
+                                //             invObj['File'] = {
+                                //                 fileName: s3FileName.key,
+                                //                 filePath: invoiceFile.filePath
+                                //             }
+                                //             await sendEmail.EmailWithInvoicePDF(invObj)
+                                //         }
+
+                                //         ResponseHandler.success(req, res, DisplayMessages.PaymentUpdate, pay);
+
+                                //     }
+                                //     else {
+                                //         ResponseHandler.error(req, res, DisplayMessages.Error, "");
+                                //     }
+                                // }
+                                // else {
+                                //     ResponseHandler.error(req, res, DisplayMessages.Error, "");
+                                // }
 
                             }
 
@@ -558,6 +568,58 @@ usersCtrl.customerPaymentVerification = async (req, res) => {
 
 }
 
+async function oldHistory(req, res, payment) {
+    try {
+
+        return new Promise(async (resolve, reject) => {
+            paymentVerificationModel.find({ customerID: req.user.customerID }).then((mm) => {
+                payment['customerPaymentId'] = mm[0].customerPaymentId;
+                customerPaymentSubInfoModel.create(payment).then((ch) => {
+                    if (ch) {
+
+                        customerPaymentSubInfoModel.find({ customerID: req.user.customerID }).then((data) => {
+                            var count = 0;
+                            var result = count.toFixed(2)
+                            if (data && data.length != 0) {
+                                data.forEach(x => {
+                                    result = parseFloat(result) + parseFloat(x.paidAmount)
+                                })
+                                // console.log("check cthe  value ", result);
+                                if (payment.totalAmount == result) {
+                                    payment['totalPendingAmount'] = '0.00';
+                                    payment['pendingAmount'] = '0.00';
+                                    payment['paymentStatus'] = 'Completed';
+                                    payment['totalPaidAmount'] = payment.totalAmount;
+                                }
+                                else {
+                                    const remainingAmount = payment.totalAmount - result
+                                    payment['totalPendingAmount'] = remainingAmount.toFixed(2);
+                                    payment['pendingAmount'] = remainingAmount.toFixed(2);
+                                    payment['paymentStatus'] = 'Partial';
+                                    payment['totalPaidAmount'] = result.toFixed(2);
+                                }
+
+                                customerPaymentSubInfoModel.updateOne({ customerPaymentSubId: ch._doc.customerPaymentSubId }, { $set: payment })
+                                    .then((dd) => {
+                                        return resolve(payment);
+                                    })
+
+                            }
+
+                        })
+                    }
+                });
+            })
+                .catch((err) => {
+                    ResponseHandler.error(req, res, "", err);
+                })
+        })
+    }
+    catch (err) {
+        ResponseHandler.error(req, res, "", err);
+    }
+}
+
 usersCtrl.getCustomerPaymentDetails = async (req, res) => {
     try {
 
@@ -577,11 +639,11 @@ usersCtrl.getCustomerPaymentDetails = async (req, res) => {
             },
             {
                 $project: {
-                    _id:0,
+                    _id: 0,
                     createdTime: 0,
                     updatedTime: 0,
                     __v: 0,
-                    status:0,
+                    status: 0,
                     'PaymentDetails._id': 0,
                     "PaymentDetails.updatedTime": 0,
                     "PaymentDetails.status": 0,
@@ -605,8 +667,6 @@ usersCtrl.getCustomerPaymentDetails = async (req, res) => {
 
 async function invoiceGeneration(customerID, paymentdetails, customerDetails, subscriptionItem) {
     console.log("inoice invoice ");
-    // console.log("cehck the data customerID ", customerID);
-    // console.log("cehck the data customerDetails ", customerDetails);
     const jpegFilePath = './public/images/cryoVaultLogo.jpeg';
     const jpegData = fs.readFileSync(jpegFilePath);
     const base64Data = Buffer.from(jpegData).toString('base64');
@@ -678,6 +738,96 @@ async function convertHtmlToPdf(invoiceHTML, pdfFilePath, newFileName) {
     } catch (error) {
         console.error('Error generating PDF:', error);
         throw error;
+    }
+}
+
+usersCtrl.addCoupon = async (req, res) => {
+    try {
+        couponModel.create(req.body).then((foo) => {
+            ResponseHandler.success(req, res, DisplayMessages.AddCoupon, "")
+        })
+            .catch((err) => {
+                ResponseHandler.error(req, res, "", err);
+            })
+
+    }
+    catch (err) {
+        ResponseHandler.error(req, res, '', err)
+    }
+}
+
+usersCtrl.UpdateCoupon = async (req, res) => {
+    try {
+
+        if (!req.params.couponID) {
+            ResponseHandler.error(req, res, DisplayMessages.CouponIDRequired, "");
+            return;
+        }
+        couponModel.create(req.body).then((re) => {
+            let obj = {}
+            obj['updatedTime'] = new Date().toISOString();
+            obj['updatedBy'] = 1;
+            obj['status'] = false;
+            couponModel.updateOne({ couponID: req.params.couponID }, { $set: obj }).then((icon) => {
+                ResponseHandler.success(req, res, DisplayMessages.UpdatedCoupon, icon)
+            })
+                .catch((err) => {
+                    ResponseHandler.error(req, res, "", err);
+                })
+
+        })
+            .catch((err) => {
+                ResponseHandler.error(req, res, "", err);
+            })
+
+
+    }
+    catch (err) {
+        ResponseHandler.error(req, res, '', err)
+    }
+}
+
+usersCtrl.getCoupon = async (req, res) => {
+    try {
+        couponModel.find({ status: true }, {
+            "status": 0,
+            "createdTime": 0,
+            "__v": 0,
+            "updatedBy": 0,
+            "updatedTime": 0
+        }).then((response) => {
+            ResponseHandler.success(req, res, DisplayMessages.GetCoupon, response)
+        })
+            .catch((err) => {
+                ResponseHandler.error(req, res, "", err);
+            })
+    }
+    catch (err) {
+        ResponseHandler.error(req, res, '', err)
+    }
+}
+
+usersCtrl.deleteCoupon = async (req, res) => {
+    try {
+
+        if (!req.params.couponID) {
+            ResponseHandler.error(req, res, DisplayMessages.CouponIDRequired, "");
+            return;
+        }
+        req.body['updatedTime'] = new Date().toISOString();
+        req.body['updatedBy'] = 1;
+        req.body['status'] = false;
+        couponModel.updateOne({ couponID: req.params.couponID }, { $set: req.body }).then((icon) => {
+            ResponseHandler.success(req, res, DisplayMessages.deleteCoupon, icon)
+        })
+            .catch((err) => {
+                ResponseHandler.error(req, res, "", err);
+            })
+
+
+    }
+    catch (err) {
+        ResponseHandler.error(req, res, '', err)
     }
 }
 
