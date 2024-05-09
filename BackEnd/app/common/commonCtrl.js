@@ -29,6 +29,7 @@ var blogModel = require('./model/blogModel');
 var pageMetaInfoModel = require('./model/pageInfoModel');
 var ReachUSModel = require('./model/ReachUsModel');
 var emailContentModel = require('./model/emailContentModel');
+var masterConfigurationModel = require('./model/masterConfigurationModel')
 
 
 var sendEmail = require('../../mail/mailContent');
@@ -73,7 +74,7 @@ async function getAllEmailContent(filterParam) {
     return new Promise(async (resolve, reject) => {
         // appointment
         emailContentModel.find({ status: true, name: filterParam }).then((response) => {
-       
+
             return resolve(response)
         })
             .catch((err) => {
@@ -1576,7 +1577,71 @@ common.deleteEmailContent = async (req, res) => {
     }
 }
 
+///////////////////////////////////////////////////////////////////////////
 
+
+common.addMasterConfiguration = async (req, res) => {
+    try {
+        masterConfigurationModel.create(req.body).then((con) => {
+            ResponseHandler.success(req, res, DisplayMessages.addingMasterConfiguration, "")
+        })
+            .catch((err) => {
+                ResponseHandler.error(req, res, "", err);
+            })
+
+    }
+    catch (err) {
+        ResponseHandler.error(req, res, '', err)
+    }
+}
+
+common.UpdateMasterConfiguration = async (req, res) => {
+    try {
+        req.body['updatedTime'] = new Date().toISOString();
+        req.body['updatedBy'] = 1;
+        masterConfigurationModel.updateOne({ masterConfigurationID: req.params.masterConfigurationID }, { $set: req.body }).then((icon) => {
+            ResponseHandler.success(req, res, DisplayMessages.updatingMasterConfiguration, icon)
+        })
+            .catch((err) => {
+                ResponseHandler.error(req, res, "", err);
+            })
+
+    }
+    catch (err) {
+        ResponseHandler.error(req, res, '', err)
+    }
+}
+
+common.getMasterConfiguration = async (req, res) => {
+    try {
+        masterConfigurationModel.find({ status: true }).then((response) => {
+            ResponseHandler.success(req, res, DisplayMessages.getMasterConfiguration, response)
+        })
+            .catch((err) => {
+                ResponseHandler.error(req, res, "", err);
+            })
+    }
+    catch (err) {
+        ResponseHandler.error(req, res, '', err)
+    }
+}
+
+common.deleteMasterConfiguration = async (req, res) => {
+    try {
+        req.body['updatedTime'] = new Date().toISOString();
+        req.body['updatedBy'] = 1;
+        req.body['status'] = false
+        masterConfigurationModel.updateOne({ masterConfigurationID: req.params.masterConfigurationID }, { $set: req.body }).then((response) => {
+            ResponseHandler.success(req, res, DisplayMessages.deleteMasterConfiguration, response)
+        })
+            .catch((err) => {
+                ResponseHandler.error(req, res, "", err);
+            })
+    }
+    catch (err) {
+        ResponseHandler.error(req, res, '', err)
+    }
+}
 
 
 module.exports = common;

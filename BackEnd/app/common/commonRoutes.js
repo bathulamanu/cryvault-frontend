@@ -107,6 +107,10 @@ module.exports = (app) => {
     app.get('/cryovault/api/user/getEmailContent', auth, commonCtrl.getEmailContent);
     app.delete('/cryovault/api/user/deleteEmailContent/:emailContentID', auth, commonCtrl.deleteEmailContent);
 
-   
+    app.post('/cryovault/api/user/addMasterConfiguration', auth, commonCtrl.addMasterConfiguration);
+    app.put('/cryovault/api/user/UpdateMasterConfiguration/:masterConfigurationID', auth, commonCtrl.UpdateMasterConfiguration);
+    app.get('/cryovault/api/user/getMasterConfiguration', auth, commonCtrl.getMasterConfiguration);
+    app.delete('/cryovault/api/user/deleteMasterConfiguration/:masterConfigurationID', auth, commonCtrl.deleteMasterConfiguration);
+  
 }
 

@@ -184,6 +184,11 @@ module.exports = {
     UpdatedCoupon: `Updated Coupon successfully`,
     AddCoupon: `added Coupon successfully`,
     GetCoupon: `Found Coupon successfully`,
-    deleteCoupon: `Coupon deleted successfully`
+    deleteCoupon: `Coupon deleted successfully`,
+    addingMasterConfiguration: `Master Configuration Added successfully`,
+    updatingMasterConfiguration: `Master Configuration updated successfully`,
+    getMasterConfiguration: `Found Master Configuration successfully`,
+    deleteMasterConfiguration: `Master Configuration deleted successfully`
+    
 }
 

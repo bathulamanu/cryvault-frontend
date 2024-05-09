@@ -38,6 +38,14 @@ const customerPaymentInfoModel = new Schema({
         type: String,
         default: ""
     },
+    GST: {
+        type: String,
+        default: ""
+    },
+    excludeGSTtotalAmount: {
+        type: String,
+        default: ""
+    },
     coupon: {
         couponID: {
             type: Number,

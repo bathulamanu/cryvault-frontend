@@ -472,89 +472,94 @@ usersCtrl.customerPaymentVerification = async (req, res) => {
                 const crnNo = await generateCRNnoPayment();
                 req.body.payment['CRNno'] = crnNo;
 
-                const paymentDetails = await oldHistory(req, res, req.body.payment);
-                // ResponseHandler.success(req, res, "hhhhhhhhhhhhhhhhhhhh ", paymentDetails);
                 console.log("kkkkkkkkkkkkk  ", req.body.payment);
 
 
-                paymentVerificationModel.updateOne({ customerID: req.user.customerID }, { $set: paymentDetails })
-                    .then(async (pay) => {
+                const paymentDetails = await oldHistory(req, res, req.body.payment);
+                // ResponseHandler.success(req, res, "hhhhhhhhhhhhhhhhhhhh ", paymentDetails);
+            
+                if (paymentDetails.customerPaymentId) {
+                    paymentVerificationModel.updateOne({ customerID: req.user.customerID }, { $set: paymentDetails })
+                        .then(async (pay) => {
 
-                        paymentVerificationModel.aggregate([
-                            {
-                                $lookup: {
-                                    from: "customersubscriptionplans",
-                                    localField: "subscriptionPlanId",
-                                    foreignField: "subscriptionID",
-                                    as: "subscriptionDetails"
+                            paymentVerificationModel.aggregate([
+                                {
+                                    $lookup: {
+                                        from: "customersubscriptionplans",
+                                        localField: "subscriptionPlanId",
+                                        foreignField: "subscriptionID",
+                                        as: "subscriptionDetails"
+                                    }
+                                },
+                                {
+                                    $lookup: {
+                                        from: "customers",
+                                        localField: "customerID",
+                                        foreignField: "customerID",
+                                        as: "customerDetails"
+                                    }
+                                },
+                                {
+                                    $match: {
+                                        'customerID': req.user.customerID
+                                    }
                                 }
-                            },
-                            {
-                                $lookup: {
-                                    from: "customers",
-                                    localField: "customerID",
-                                    foreignField: "customerID",
-                                    as: "customerDetails"
+                            ]).then(async (sub) => {
+                                let invObj = {}
+                                if (sub.length != 0) {
+                                    data = sub[0];
+
+
+                                    ResponseHandler.success(req, res, "dara ", data);
+                                    // const invoiceFile = await invoiceGeneration(req.user.customerID, sub[0], data.customerDetails[0], data.subscriptionDetails[0]);
+                                    // if (invoiceFile && invoiceFile.filePath) {
+                                    //     const s3FileName = await invoiceFileRead(invoiceFile);
+                                    //     if (s3FileName && s3FileName.key) {
+                                    //         req.body.payment['invoiceFile'] = s3FileName.key;
+
+
+                                    //         if (data.customerDetails && data.customerDetails.length != 0) {
+                                    //             const emailContent = await getAllEmailContent('invoice');
+                                    //             invObj['Content'] = "";
+                                    //             if (emailContent && emailContent.length != 0) {
+                                    //                 invObj['Content'] = emailContent[0].emailDescription;
+                                    //             }
+                                    //             invObj['Subject'] = 'CryoVault Invoice File';
+                                    //             invObj['Email'] = data.customerDetails[0].email;
+                                    //             invObj['Name'] = data.customerDetails[0].firstName;
+                                    //             invObj['File'] = {
+                                    //                 fileName: s3FileName.key,
+                                    //                 filePath: invoiceFile.filePath
+                                    //             }
+                                    //             await sendEmail.EmailWithInvoicePDF(invObj)
+                                    //         }
+
+                                    //         ResponseHandler.success(req, res, DisplayMessages.PaymentUpdate, pay);
+
+                                    //     }
+                                    //     else {
+                                    //         ResponseHandler.error(req, res, DisplayMessages.Error, "");
+                                    //     }
+                                    // }
+                                    // else {
+                                    //     ResponseHandler.error(req, res, DisplayMessages.Error, "");
+                                    // }
+
                                 }
-                            },
-                            {
-                                $match: {
-                                    'customerID': req.user.customerID
-                                }
-                            }
-                        ]).then(async (sub) => {
-                            let invObj = {}
-                            if (sub.length != 0) {
-                                data = sub[0];
 
-
-                                ResponseHandler.success(req, res, "dara ", data);
-                                // const invoiceFile = await invoiceGeneration(req.user.customerID, sub[0], data.customerDetails[0], data.subscriptionDetails[0]);
-                                // if (invoiceFile && invoiceFile.filePath) {
-                                //     const s3FileName = await invoiceFileRead(invoiceFile);
-                                //     if (s3FileName && s3FileName.key) {
-                                //         req.body.payment['invoiceFile'] = s3FileName.key;
-
-
-                                //         if (data.customerDetails && data.customerDetails.length != 0) {
-                                //             const emailContent = await getAllEmailContent('invoice');
-                                //             invObj['Content'] = "";
-                                //             if (emailContent && emailContent.length != 0) {
-                                //                 invObj['Content'] = emailContent[0].emailDescription;
-                                //             }
-                                //             invObj['Subject'] = 'CryoVault Invoice File';
-                                //             invObj['Email'] = data.customerDetails[0].email;
-                                //             invObj['Name'] = data.customerDetails[0].firstName;
-                                //             invObj['File'] = {
-                                //                 fileName: s3FileName.key,
-                                //                 filePath: invoiceFile.filePath
-                                //             }
-                                //             await sendEmail.EmailWithInvoicePDF(invObj)
-                                //         }
-
-                                //         ResponseHandler.success(req, res, DisplayMessages.PaymentUpdate, pay);
-
-                                //     }
-                                //     else {
-                                //         ResponseHandler.error(req, res, DisplayMessages.Error, "");
-                                //     }
-                                // }
-                                // else {
-                                //     ResponseHandler.error(req, res, DisplayMessages.Error, "");
-                                // }
-
-                            }
+                            })
+                                .catch((err) => {
+                                    ResponseHandler.error(req, res, "", err);
+                                })
 
                         })
-                            .catch((err) => {
-                                ResponseHandler.error(req, res, "", err);
-                            })
-
-                    })
-                    .catch((err) => {
-                        ResponseHandler.error(req, res, "", err);
-                    })
-
+                        .catch((err) => {
+                            ResponseHandler.error(req, res, "", err);
+                        })
+                }
+                else {
+                    ResponseHandler.error(req, res, "Error", "");
+                }
             }
             else {
                 ResponseHandler.error(req, res, DisplayMessages.OrderNotFOund, "");
@@ -570,7 +575,6 @@ usersCtrl.customerPaymentVerification = async (req, res) => {
 
 async function oldHistory(req, res, payment) {
     try {
-
         return new Promise(async (resolve, reject) => {
             paymentVerificationModel.find({ customerID: req.user.customerID }).then((mm) => {
                 payment['customerPaymentId'] = mm[0].customerPaymentId;
@@ -579,52 +583,50 @@ async function oldHistory(req, res, payment) {
 
                         customerPaymentSubInfoModel.find({ customerID: req.user.customerID }).then((data) => {
                             var count = 0;
-                            var result = count.toFixed(2)
+                            var result = count.toFixed(2);
+                            var needToPay;
                             if (data && data.length != 0) {
                                 data.forEach(x => {
                                     result = parseFloat(result) + parseFloat(x.paidAmount)
                                 })
                                 if (payment.coupon && payment.coupon.couponID) {
-                                    var needToPay = payment.totalAmount - payment.coupon.discountValue;
-                                    if (needToPay == result) {
-                                        payment['totalPendingAmount'] = '0.00';
-                                        payment['pendingAmount'] = '0.00';
-                                        payment['paymentStatus'] = 'Completed';
-                                        payment['totalPaidAmount'] = needToPay;
-                                    }
-                                    else {
-                                        const remainingAmount = needToPay - result
-                                        payment['totalPendingAmount'] = remainingAmount.toFixed(2);
-                                        payment['pendingAmount'] = remainingAmount.toFixed(2);
-                                        payment['paymentStatus'] = 'Partial';
-                                        payment['totalPaidAmount'] = result.toFixed(2);
-                                    }
+                                    needToPay = payment.totalAmount - payment.coupon.discountValue;
                                 }
                                 else {
-                                    if (payment.totalAmount == result) {
-                                        payment['totalPendingAmount'] = '0.00';
-                                        payment['pendingAmount'] = '0.00';
-                                        payment['paymentStatus'] = 'Completed';
-                                        payment['totalPaidAmount'] = payment.totalAmount;
-                                    }
-                                    else {
-                                        const remainingAmount = payment.totalAmount - result
-                                        payment['totalPendingAmount'] = remainingAmount.toFixed(2);
-                                        payment['pendingAmount'] = remainingAmount.toFixed(2);
-                                        payment['paymentStatus'] = 'Partial';
-                                        payment['totalPaidAmount'] = result.toFixed(2);
-                                    }
+                                    needToPay = payment.totalAmount;
                                 }
-                                customerPaymentSubInfoModel.updateOne({ customerPaymentSubId: ch._doc.customerPaymentSubId }, { $set: payment })
+                                if (needToPay == result) {
+                                    payment['totalPendingAmount'] = '0.00';
+                                    payment['pendingAmount'] = '0.00';
+                                    payment['paymentStatus'] = 'Completed';
+                                    payment['totalPaidAmount'] = needToPay;
+                                }
+                                else {
+                                    const remainingAmount = needToPay - result
+                                    payment['totalPendingAmount'] = remainingAmount.toFixed(2);
+                                    payment['pendingAmount'] = remainingAmount.toFixed(2);
+                                    payment['paymentStatus'] = 'Partial';
+                                    payment['totalPaidAmount'] = result.toFixed(2);
+                                }
+                                customerPaymentSubInfoModel.updateOne({ customerPaymentSubId: ch._doc.customerPaymentSubId },
+                                    { $set: payment })
                                     .then((dd) => {
                                         return resolve(payment);
                                     })
-
+                                    .catch((err) => {
+                                        return reject({ Error: err });
+                                    })
                             }
 
                         })
+                            .catch((err) => {
+                                ResponseHandler.error(req, res, "", err);
+                            })
                     }
-                });
+                })
+                    .catch((err) => {
+                        ResponseHandler.error(req, res, "", err);
+                    })
             })
                 .catch((err) => {
                     ResponseHandler.error(req, res, "", err);
