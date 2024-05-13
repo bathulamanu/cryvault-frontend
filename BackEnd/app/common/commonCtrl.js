@@ -31,6 +31,8 @@ var ReachUSModel = require('./model/ReachUsModel');
 var emailContentModel = require('./model/emailContentModel');
 var masterConfigurationModel = require('./model/masterConfigurationModel')
 
+const zlib = require('zlib');
+const stream = require('stream');
 
 var sendEmail = require('../../mail/mailContent');
 
@@ -48,14 +50,24 @@ common.upload = async (req, res) => {
         const file = req.file;
         const keyValue = req.body.folder + '/' + `${randomUUID()}-${file.originalname}`;
 
+        // Read the file from the local system
+        const fileStream = fs.createReadStream(file.path);
+
+        // Compress the file using gzip
+        const gzipStream = zlib.createGzip();
+        const compressedFile = fileStream.pipe(gzipStream);
+
+    // Body: fs.createReadStream(file.path),
+
         const params = {
             Bucket: key.s3.Bucket,
-            Key: keyValue,
-            Body: fs.createReadStream(file.path),
+            Key: keyValue,        
+            Body: compressedFile,
             ACL: 'public-read'
         };
 
-        s3.upload(params, (err, data) => {
+        s3.upload(params, async (err, data) => {
+
             if (err) {
                 return ResponseHandler.error(req, res, DisplayMessages.ErrorWhileUpload, err)
             }
@@ -238,7 +250,7 @@ common.bookAppointment = async (req, res) => {
                     if (emailContent && emailContent.length != 0) {
                         app['Content'] = emailContent[0].emailDescription;
                     }
-                    app['Subject'] = 'Cryovault Appointment Acknowledgement';
+                    app['Subject'] = 'Flyingbyts Appointment Acknowledgement';
                     app['Email'] = icon.email;
                     app['Name'] = icon.firstName || "";
                     await sendEmail.EmailWithoutAttachment(app)
@@ -334,7 +346,7 @@ common.addInformationKitRequest = async (req, res) => {
                     if (emailContent && emailContent.length != 0) {
                         kit['Content'] = emailContent[0].emailDescription;
                     }
-                    kit['Subject'] = 'Cryovault InformationKit Request';
+                    kit['Subject'] = 'Flyingbyts InformationKit Request';
                     kit['Email'] = kitres.email;
                     kit['Name'] = kitres.firstName || "";
                     await sendEmail.EmailWithoutAttachment(kit)
@@ -471,7 +483,7 @@ common.addCareerProfile = async (req, res) => {
                 if (emailContent && emailContent.length != 0) {
                     career['Content'] = emailContent[0].emailDescription;
                 }
-                career['Subject'] = 'Cryovault Carrer Acknowledgement';
+                career['Subject'] = 'Flyingbyts Carrer Acknowledgement';
                 career['Email'] = car.email;
                 career['Name'] = car.firstName || "";
                 await sendEmail.EmailWithoutAttachment(career)
@@ -561,7 +573,7 @@ common.addFranchiseRequest = async (req, res) => {
                 if (emailContent && emailContent.length != 0) {
                     franchise['Content'] = emailContent[0].emailDescription;
                 }
-                franchise['Subject'] = 'Cryovault Franchise Request Acknowledgement';
+                franchise['Subject'] = 'Flyingbyts Franchise Request Acknowledgement';
                 franchise['Email'] = fran.email;
                 franchise['Name'] = fran.firstName || "";
                 await sendEmail.EmailWithoutAttachment(franchise)
@@ -1121,7 +1133,7 @@ common.addEmergencyAppointment = async (req, res) => {
                 if (emailContent && emailContent.length != 0) {
                     emer['Content'] = emailContent[0].emailDescription;
                 }
-                emer['Subject'] = 'Cryovault Emergency Appointment Acknowledgement';
+                emer['Subject'] = 'Flyingbyts Emergency Appointment Acknowledgement';
                 emer['Email'] = emergnecy.email;
                 emer['Name'] = emergnecy.firstName || '';
                 await sendEmail.EmailWithoutAttachment(emer)

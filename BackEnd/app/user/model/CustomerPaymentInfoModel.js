@@ -38,6 +38,10 @@ const customerPaymentInfoModel = new Schema({
         type: String,
         default: ""
     },
+    GSTpercentage:{
+        type: String,
+        default: ""
+    },
     GST: {
         type: String,
         default: ""

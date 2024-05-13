@@ -5,6 +5,7 @@ var moment = require('moment');
 
 var customerSignupOrLoginModel = require('../user/model/customerSignUPModel');
 var babyModel = require('../admin/model/babyModel');
+var CustomerPaymentInfoModel = require('../user/model/CustomerPaymentInfoModel');
 
 
 
@@ -113,7 +114,7 @@ adminCtrl.deleteBabyDetails = async (req, res) => {
         req.body['updatedTime'] = new Date().toISOString();
         req.body['updatedBy'] = 1;
         req.body['status'] = false
-        
+
         emailContentModel.updateOne({ babyID: req.params.babyID }, { $set: req.body }).then((response) => {
             ResponseHandler.success(req, res, DisplayMessages.deleteBabyDetails, response)
         })
@@ -123,6 +124,59 @@ adminCtrl.deleteBabyDetails = async (req, res) => {
     }
     catch (err) {
         ResponseHandler.error(req, res, '', err)
+    }
+}
+
+
+adminCtrl.getCustomerPaymentDetails = async (req, res) => {
+    try {
+
+        CustomerPaymentInfoModel.aggregate([
+            {
+                $lookup: {
+                    from: "customers",
+                    localField: "customerID",
+                    foreignField: "customerID",
+                    as: "CustomerDetails"
+                }
+            },
+            {
+                $match: {
+                    'customerID': req.user.customerID
+                }
+            },
+            {
+                $lookup: {
+                    from: "customerpaymentsubinfos",
+                    localField: "customerPaymentId",
+                    foreignField: "customerPaymentId",
+                    as: "PaymentSubDetails"
+                }
+            },
+            {
+                $project: {
+                    'CustomerDetails._id': 0,
+                    'CustomerDetails.createdTime': 0,
+                    'CustomerDetails.updatedTime': 0,
+                    'CustomerDetails.__v': 0,
+                    'CustomerDetails.status': 0,
+                    '_id': 0,
+                    "updatedTime": 0,
+                    "status": 0,
+                    "createdTime": 0,
+                    "__v": 0
+                }
+            }
+        ]).then((payment) => {
+            ResponseHandler.success(req, res, DisplayMessages.DataFound, payment)
+        })
+            .catch((err) => {
+                ResponseHandler.error(req, res, "", err);
+            })
+
+    }
+    catch (err) {
+        ResponseHandler.error(req, res, "", err);
     }
 }
 

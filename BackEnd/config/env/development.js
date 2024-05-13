@@ -9,7 +9,7 @@ module.exports = {
         senderId: 'CROVLT',
         template: 'cryovault-1007171255570714661'
     },
-    SecretKey: `cryo`,
+    SecretKey: `flyingbyts`, //`cryo`,
     dbConnection: 'mongodb+srv://admin:admin%40123@cluster0.r5inff3.mongodb.net/cryovault-dev?retryWrites=true&w=majority&appName=Cluster0',
     // dbConnection: `mongodb://localhost:27017/cryovault-dev`,
     razorpay: {
@@ -17,10 +17,10 @@ module.exports = {
         Key_Secret: 'zEBc1QkY4TDbiXeXs6ZTKJH4'// 'cMxWHPbQfAe2foZcns87rTXd'
     },
     s3: {
-        AccessKeyId: "AKIAYS2NUR7Y6ZVWZJW6",
-        SecretAccessKey: "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",
-        Bucket: 's3-cryovault1',
-        region: 'ap-southeast-1'
+        AccessKeyId: "AKIA6ODU4IHZG2MDPB7G",//"AKIAYS2NUR7Y6ZVWZJW6",
+        SecretAccessKey: "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",// "Y/xgGcnR3VQhuErKoA5jpTJRLUUDqBp9AhBXw851",
+        Bucket: "flyingbyts", //'s3-cryovault1',
+        region: "ap-south-2", //'ap-southeast-1'
     },
     mailAuthInfo: {
         user: 'krishnakumaricryo@gmail.com',

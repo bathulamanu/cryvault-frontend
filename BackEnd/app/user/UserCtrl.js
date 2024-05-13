@@ -6,7 +6,7 @@ const env = require("../../config/env/development");
 var ResponseHandler = require("../../config/ResponseHandler");
 var DisplayMessages = require("../../utils/messages");
 
-const cryptr = new Cryptr('cryovault');
+// const cryptr = new Cryptr('cryovault');
 const shortid = require('shortid');
 const Razorpay = require('razorpay');
 const axios = require('axios');
@@ -508,8 +508,6 @@ usersCtrl.customerPaymentVerification = async (req, res) => {
                                 let invObj = {}
                                 if (sub.length != 0) {
                                     data = sub[0];
-
-
                                     ResponseHandler.success(req, res, "dara ", data);
                                     // const invoiceFile = await invoiceGeneration(req.user.customerID, sub[0], data.customerDetails[0], data.subscriptionDetails[0]);
                                     // if (invoiceFile && invoiceFile.filePath) {
@@ -524,7 +522,7 @@ usersCtrl.customerPaymentVerification = async (req, res) => {
                                     //             if (emailContent && emailContent.length != 0) {
                                     //                 invObj['Content'] = emailContent[0].emailDescription;
                                     //             }
-                                    //             invObj['Subject'] = 'CryoVault Invoice File';
+                                    //             invObj['Subject'] = 'Flyingbyts Invoice File';
                                     //             invObj['Email'] = data.customerDetails[0].email;
                                     //             invObj['Name'] = data.customerDetails[0].firstName;
                                     //             invObj['File'] = {

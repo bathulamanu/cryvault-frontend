@@ -33,7 +33,7 @@ const customerAnnexureSubInformationModel = new Schema({
             default: ""
         }
     },
-    TickAsApplicableForCryovault: {
+    TickAsApplicableForFlyingbyts: {
         type: String,
         default: ""
     },

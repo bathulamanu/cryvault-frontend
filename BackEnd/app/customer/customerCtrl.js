@@ -1,7 +1,6 @@
 var ResponseHandler = require("../../config/ResponseHandler");
 var DisplayMessages = require("../../utils/messages");
 // const Cryptr = require('cryptr');
-// const cryptr = new Cryptr('cryovault');
 
 
 var customerSignupOrLoginModel = require('../user/model/customerSignUPModel')
