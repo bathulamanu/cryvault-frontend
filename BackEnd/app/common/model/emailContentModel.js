@@ -17,6 +17,9 @@ const emailContentSchema = new Schema({
     emailLink: {
         type: String
     },
+    createdby:{
+        type: Number
+    },
     updatedBy: {
         type: Number
     },

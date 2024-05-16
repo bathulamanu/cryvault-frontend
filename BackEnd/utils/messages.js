@@ -1,14 +1,18 @@
 
 module.exports = {
+
     customerRegistration: `User Registration Successfully Completed`,
     userCreationFailed: `Something Went wrong Try Again`,
     loginSucess: `Login successfully`,
     userNotFound: `User Not found`,
+    UserExisits:`User Already Exisits`,
     Duplicate: `You are registered already`,
     Role: `New role added`,
     Payment: `Payment is Not Done`,
     Verification: `Verification is done`,
     updateperofile: `profile Updated Successfully`,
+    emailIdRequired:`Email ID is required `,
+    passwordRequired:`Password is Required`,
     saveCustomerAnnexureInformation: `Saved Information Successfully`,
     updateCustomerAnnexureInformation: `Updated Information Successfully`,
     saveSubscriptionPlan: `Saved new Subscription Plan Successfully`,
@@ -122,6 +126,7 @@ module.exports = {
     ValidFieldRequire: "Please eneter valid data",
     OTPexpiry: "OTP got Expired. Please try again later",
     OTPNotMatch: "OTP Doesn't matched",
+    passwordNotMatch: "Password Doesn't matched",
     amountRequire: "Please Enter Amount",
     CurrencyRequire: "Please Enter Currency",
     orderCreate: 'Order created successfully',
@@ -188,7 +193,8 @@ module.exports = {
     addingMasterConfiguration: `Master Configuration Added successfully`,
     updatingMasterConfiguration: `Master Configuration updated successfully`,
     getMasterConfiguration: `Found Master Configuration successfully`,
-    deleteMasterConfiguration: `Master Configuration deleted successfully`
+    deleteMasterConfiguration: `Master Configuration deleted successfully`,
+    deleteCustomerInfo: `Customer deleted successfully`,
     
 }
 
