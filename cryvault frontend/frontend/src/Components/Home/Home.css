@@ -132,6 +132,7 @@
 
 .appointmentContainer {
   display: flex;
+  gap: 3rem;
 }
 .appointmentForm {
   align-content: center;
@@ -147,8 +148,15 @@
   position: relative;
   width: 50%;
   flex-wrap: wrap;
+  gap: 1rem;
 }
 .appointmentext {
+  align-items: self-start;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1rem;
+  width: 50%;
 }
 .bookImage {
   animation-name: bookImage;
@@ -173,19 +181,190 @@
   }
 }
 .appointmentInput {
-    background-color: #FDFDFD !important;
-    border-radius: 40px !important;
-    font-family: "Source Sans Pro", Sans-serif;
-    font-size: 15px;
-    line-height: 1.5;
-    padding: 10px 32px;
-    height: 60px !important;
-    letter-spacing: 0.3px;
-    border: none !important; /* Remove border */
-    border-color: transparent !important; /* Ensure border color is transparent */
+  background-color: #fdfdfd !important;
+  border-radius: 40px !important;
+  font-family: "Source Sans Pro", Sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  padding: 10px 32px;
+  height: 60px !important;
+  letter-spacing: 0.3px;
+  border: none !important;
+  border-color: transparent !important;
 }
 
 .appointmentInput:focus {
-    border: none !important;
-    border-color: transparent !important; /* Ensure border color is transparent on focus */
+  border: none !important;
+  border-color: transparent !important;
+}
+.appointmentBtn {
+  background-color: #d5008d !important;
+  border: 1px solid #ddd0 !important;
+  color: #fffcfc !important;
+  font-size: 1rem !important;
+  font-family: inherit;
+  padding: 13px 20px;
+  border-radius: 40px !important;
+  width: 100%;
+}
+.fullWidth {
+  grid-column: 1 / -1;
+}
+.birdImg {
+  animation-name: bookImage;
+  opacity: 1;
+  animation-duration: 5s;
+  animation-iteration-count: infinite;
+  animation-direction: normal;
+  z-index: 2;
+  position: absolute;
+  bottom: 15rem;
+  left: 4rem;
+}
+.statsCard {
+  box-shadow: 0px 0px 10px 0px #055ea2 !important;
+  transition: background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s !important;
+  margin: 3% !important;
+  padding: 20px !important;
+  border-radius: 40px !important;
+}
+.statsNumber {
+  color: #9c29b2;
+  font-family: "Charm", Sans-serif;
+  font-size: 52px;
+}
+.statsTitle {
+  color: #000000 !important;
+  font-family: "Baloo 2", Sans-serif !important;
+  font-size: 20px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.4px !important;
+  white-space: nowrap !important;
+}
+.statsCardAction:hover {
+  background: transparent !important;
+}
+.butterflyImage {
+  position: absolute;
+  -webkit-transform: scaleX(-1);
+  transform: rotate(-29deg);
+  filter: blur(0px);
+}
+.googleBtn {
+  color: #fff !important;
+  padding: 6px 15px 10px !important;
+  outline: none !important;
+  border-radius: 27px !important;
+  background: #0a6cff !important;
+  white-space: nowrap !important;
+  vertical-align: middle !important;
+  text-shadow: 1px 1px 0 #888 !important;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.24) !important;
+  transition: all 0.2s ease-in-out !important;
+}
+.testimonailContainer {
+  background-color: #fff7ef61;
+  background-image: url(https://www.cryovault.in/wp-content/uploads/2024/01/testimonial-3-icon-hand.png);
+  background-position: center right;
+  background-repeat: no-repeat;
+  background-size: auto;
+}
+.testimonialAboveImage {
+  transform: rotate(180deg);
+}
+.singleSlide {
+  padding: 54px 60px 60px 60px;
+  box-shadow: -30px 30px 60px 0px rgba(0, 0, 0, 0.07);
+  background-color: #fff;
+  position: relative;
+  transition: all 0.4s ease;
+  z-index: 1;
+  width: 65%;
+}
+.bell {
+  position: absolute;
+  transform: translateY(140px);
+  transition: background 0.3s, border 0.3s, border-radius 0.3s, box-shadow 0.3s, transform var(--e-transform-transition-duration, 0.4s);
+}
+
+.bounce-animation {
+  z-index: 0 !important;
+  animation: ekit-bounce 5s ease-in alternate infinite;
+}
+
+@-webkit-keyframes ekit-bounce {
+  0% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+
+  40% {
+    -webkit-transform: translate3d(0, 150%, 0);
+    transform: translate3d(0, 150%, 0);
+  }
+
+  100% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes ekit-bounce {
+  0% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+
+  40% {
+    -webkit-transform: translate3d(0, 50%, 0);
+    transform: translate3d(0, 50%, 0);
+  }
+
+  100% {
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+.videoContainer {
+  background-color: #ffdd98;
+  position: relative;
+  padding: 10rem;
+}
+.videoContainerImage {
+  background-position: bottom center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  left: 0;
+  position: absolute;
+}
+.enrollText {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.callUsContainer {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-direction: column !important;
+}
+.blogText {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+  text-align: center;
+}
+.singleCard {
+  padding: 30px;
+  background-color: white;
+  box-shadow: 0px 15px 30px 0px rgba(0, 0, 0, 0.05);
+  width: 40rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
 }

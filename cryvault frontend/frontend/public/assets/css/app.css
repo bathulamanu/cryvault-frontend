@@ -26781,9 +26781,9 @@ width: 50px;
   z-index: 99;
 }
 .edu-header .header-mainmenu {
-  background-color: var(--color-white);
-  box-shadow: 0 6px 15px 0 rgba(0, 0, 0, 0.05);
-  position: relative;
+  /* background-color: var(--color-white); */
+  /* box-shadow: 0 6px 15px 0 rgba(0, 0, 0, 0.05); */
+  position: relative !important;
 }
 @media only screen and (max-width: 1199px) {
   .edu-header .header-mainmenu {
@@ -40046,12 +40046,12 @@ img.position-ab.appl-blg {
 
 .icons-img {
   left: 3%;
-  bottom: 26%;
+  top: 10%;
 }
 
 img.position-ab.thumbg-img {
   right: 0px;
-  bottom: 22%;
+  bottom: 20%;
   z-index: -1;
 }
 
