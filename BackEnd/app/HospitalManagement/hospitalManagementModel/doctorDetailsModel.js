@@ -7,9 +7,6 @@ const doctorDetailsSchema = new Schema({
     doctorDetailsID: {
         type: Number
     },
-    id: {
-        type: Number
-    },
     doctorName: {
         type: String,
         required: true
@@ -83,8 +80,6 @@ const doctorDetailsSchema = new Schema({
 
 
 doctorDetailsSchema.plugin(AutoIncrement, { inc_field: 'doctorDetailsID' });
-doctorDetailsSchema.plugin(AutoIncrement, { inc_field: 'id' });
-
 
 const doctorDetailsModel = mongoose.model('doctorDetails', doctorDetailsSchema);
 
