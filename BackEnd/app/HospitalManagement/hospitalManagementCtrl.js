@@ -443,7 +443,7 @@ hospitalManagementCtrl.addDoctorDetails = async (req, res) => {
 
 hospitalManagementCtrl.getDoctorDetails = async (req, res) => {
     try {
-        DoctorDetailsModel.find({ status: true }).then((response) => {
+        DoctorDetailsModel.find().then((response) => {
             ResponseHandler.success(req, res, DisplayMessages.getDoctorDetails, response)
         })
             .catch((err) => {

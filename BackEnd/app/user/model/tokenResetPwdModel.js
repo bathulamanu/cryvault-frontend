@@ -16,6 +16,9 @@ const tokenResetPwdSignUpSchema = new Schema({
         type: String,
         required: true
     },
+    expiryTime: {
+        type: Date
+    },
     createdTime: {
         type: Date,
         default: Date.now

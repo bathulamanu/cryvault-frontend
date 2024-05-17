@@ -435,11 +435,12 @@ usersCtrl.employeeOrAdminForgotPwd = async (req, res) => {
         employeeModel.find({ email: req.body.email }).then(async (emp) => {
             if (emp && emp.length != 0) {
                 const token = crypto.randomBytes(20).toString('hex');
+                const expiryTime = Date.now() + 3600000;
                 const emailContent = await getAllEmailContent('Password Reset');
                 let Obj = {}
                 Obj['Content'] = "";
                 if (emailContent && emailContent.length != 0) {
-                    // Obj['Content'] = emailContent[0].emailDescription.replace('http://localhost:${port}', 'http://localhost:4000') 
+                    // Obj['Content'] = emailContent[0].emailDescription.replace('http://localhost:${port}', 'http://localhost:4000')
                     //     .replace('${token}', token);
 
                     Obj['Content'] = emailContent[0].emailDescription.replace('http://localhost:${port}', 'http://18.61.230.105:4000')
@@ -450,7 +451,7 @@ usersCtrl.employeeOrAdminForgotPwd = async (req, res) => {
                 Obj['Email'] = emp[0].email;
                 Obj['Name'] = emp[0].firstName || '';
                 await sendEmail.EmailWithoutAttachment(Obj)
-                tokenResetPwdModel.create({ token: token, email: req.body.email });
+                tokenResetPwdModel.create({ token: token, email: req.body.email, expiryTime: expiryTime });
                 ResponseHandler.success(req, res, "Sent Email Succesfully", "");
             }
             else {
@@ -470,168 +471,278 @@ usersCtrl.employeeOrAdminResetPwd = async (req, res) => {
     try {
         const token = req.params.token;
 
-        // res.send(`<form action="/flyingbyts/api/user/employeeOrAdminResetPassword" method="POST">
-        //        <input type="hidden" name="token" value="${token}">
-        //        <input type="password" name="password" placeholder="New password">
-        //        <button type="submit">Reset Password</button>
-        //     </form>`);
+        tokenResetPwdModel.find({ token: token }).then((data) => {
 
-        res.send(`<!DOCTYPE html>
-            <html lang="en">
-            <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Password Reset</title>
-            <style>
-              body {
-                font-family: Arial, sans-serif;
-                background-color: #f4f4f4;
-                margin: 0;
-                padding: 0;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100vh;
-              }
-              
-              .reset-form {
-                background-color: #fff;
-                padding: 20px;
-                border-radius: 8px;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-                width: 300px;
-              }
-              
-              .reset-form h2 {
-                margin-top: 0;
-                font-size: 24px;
-                text-align: center;
-              }
-              
-              .reset-form input[type="password"] {
-                width: 100%;
-                padding: 10px;
-                margin-bottom: 15px;
-                border: 1px solid #ccc;
-                border-radius: 4px;
-                box-sizing: border-box;
-              }
-
-              .reset-form input[type="text"] {
-                width: 100%;
-                padding: 10px;
-                margin-bottom: 15px;
-                border: 1px solid #ccc;
-                border-radius: 4px;
-                box-sizing: border-box;
-              }
-              
-              .reset-form button {
-                width: 100%;
-                background-color: #4CAF50;
-                color: white;
-                padding: 10px 0;
-                border: none;
-                border-radius: 4px;
-                cursor: pointer;
-              }
-              
-              .reset-form button:hover {
-                background-color: #45a049;
-              }
-              .error-message {
-                color: red;
-                margin-top: 10px;
-            }
-            .password-toggle {
-                position: relative;
-            }
-            .password-toggle input[type="password"] {
-                padding-right: 30px;
-            }
-            .password-toggle .toggle-password {
-                position: absolute;
-                top: 35%;
-                right: 10px;
-                transform: translateY(-50%);
-                cursor: pointer;
-            }
-            </style>
-            </head>
-            <body>
-            
-            <div class="reset-form">
-              <h2>Password Reset</h2>
-              <form id="resetForm" action="/flyingbyts/api/user/employeeOrAdminResetPassword" method="POST" onsubmit="return validatePassword()">
-              <input type="hidden" name="token" value="${token}">
-       
-              <div class="password-toggle">
-              <input type="password" id="newPassword" name="newPassword" placeholder="New Password" required>
-              <span class="toggle-password" onclick="togglePasswordVisibility()">
-                  <i id="eye-icon" class="fa fa-eye"></i>
-              </span>
-          </div>              
-              <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required>
-              <button type="submit">Reset Password</button>
-              <div id="errorMessage" class="error-message" style="display: none;"></div>      
-              </form>
-              
-                 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
-            </div>
-
-            <script>
-           
-            function togglePasswordVisibility() {
-                var passwordInput = document.getElementById("newPassword");
-                var eyeIcon = document.getElementById("eye-icon");
+            if (data && data.length != 0) {
+                if(data[0].status == true){
+                    if (Date.now() > data[0].expiryTime) {
+                        res.send(`<!DOCTYPE html>
+                        <html lang="en">
+                        <head>
+                            <meta charset="UTF-8">
+                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                            <title>Session Expiry</title>
+                            <style>
+                                body {
+                                    font-family: Arial, sans-serif;
+                                    margin: 0;
+                                    padding: 0;
+                                    background-color: #f5f5f5;
+                                    display: flex;
+                                    justify-content: center;
+                                    align-items: center;
+                                    height: 100vh;
+                                }
     
-                if (passwordInput.type === "password") {
-                    passwordInput.type = "text";
-                    eyeIcon.className = "fa fa-eye-slash";
-                } else {
-                    passwordInput.type = "password";
-                    eyeIcon.className = "fa fa-eye";
+                                .container {
+                                    text-align: center;
+                                }
+    
+                                .success-message {
+                                    color: #4CAF50;
+                                    font-size: 24px;
+                                }
+    
+                                .redirect-message {
+                                    margin-top: 20px;
+                                    color: #333;
+                                }
+    
+                                .redirect-message a {
+                                    color: #007bff;
+                                    text-decoration: none;
+                                }
+    
+                                .redirect-message a:hover {
+                                    text-decoration: underline;
+                                }
+                            </style>
+                        </head>
+                        <body>
+                            <div class="container">
+                                <div class="success-message">Session got Expired,Please Try again.</div>
+                            </div>
+                        </body>
+                        </html>
+                        `);
+                    }
+                    else {
+                        res.send(`<!DOCTYPE html>
+                        <html lang="en">
+                        <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Password Reset</title>
+                        <style>
+                          body {
+                            font-family: Arial, sans-serif;
+                            background-color: #f4f4f4;
+                            margin: 0;
+                            padding: 0;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            height: 100vh;
+                          }
+                          
+                          .reset-form {
+                            background-color: #fff;
+                            padding: 20px;
+                            border-radius: 8px;
+                            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                            width: 300px;
+                          }
+                          
+                          .reset-form h2 {
+                            margin-top: 0;
+                            font-size: 24px;
+                            text-align: center;
+                          }
+                          
+                          .reset-form input[type="password"] {
+                            width: 100%;
+                            padding: 10px;
+                            margin-bottom: 15px;
+                            border: 1px solid #ccc;
+                            border-radius: 4px;
+                            box-sizing: border-box;
+                          }
+            
+                          .reset-form input[type="text"] {
+                            width: 100%;
+                            padding: 10px;
+                            margin-bottom: 15px;
+                            border: 1px solid #ccc;
+                            border-radius: 4px;
+                            box-sizing: border-box;
+                          }
+                          
+                          .reset-form button {
+                            width: 100%;
+                            background-color: #4CAF50;
+                            color: white;
+                            padding: 10px 0;
+                            border: none;
+                            border-radius: 4px;
+                            cursor: pointer;
+                          }
+                          
+                          .reset-form button:hover {
+                            background-color: #45a049;
+                          }
+                          .error-message {
+                            color: red;
+                            margin-top: 10px;
+                        }
+                        .password-toggle {
+                            position: relative;
+                        }
+                        .password-toggle input[type="password"] {
+                            padding-right: 30px;
+                        }
+                        .password-toggle .toggle-password {
+                            position: absolute;
+                            top: 35%;
+                            right: 10px;
+                            transform: translateY(-50%);
+                            cursor: pointer;
+                        }
+                        </style>
+                        </head>
+                        <body>
+                        
+                        <div class="reset-form">
+                          <h2>Password Reset</h2>
+                          <form id="resetForm" action="/flyingbyts/api/user/employeeOrAdminResetPassword" method="POST" onsubmit="return validatePassword()">
+                          <input type="hidden" name="token" value="${token}">
+                   
+                          <div class="password-toggle">
+                          <input type="password" id="newPassword" name="newPassword" placeholder="New Password" required>
+                          <span class="toggle-password" onclick="togglePasswordVisibility()">
+                              <i id="eye-icon" class="fa fa-eye"></i>
+                          </span>
+                      </div>              
+                          <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required>
+                          <button type="submit">Reset Password</button>
+                          <div id="errorMessage" class="error-message" style="display: none;"></div>      
+                          </form>
+                          
+                             <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/js/all.min.js"></script>
+                        </div>
+            
+                        <script>
+                       
+                        function togglePasswordVisibility() {
+                            var passwordInput = document.getElementById("newPassword");
+                            var eyeIcon = document.getElementById("eye-icon");
+                
+                            if (passwordInput.type === "password") {
+                                passwordInput.type = "text";
+                                eyeIcon.className = "fa fa-eye-slash";
+                            } else {
+                                passwordInput.type = "password";
+                                eyeIcon.className = "fa fa-eye";
+                            }
+                        }
+                        
+                        function validatePassword() {
+                            var password = document.getElementById("newPassword").value;
+                            var confirmPassword = document.getElementById("confirmPassword").value;    
+                          
+                            var passwordRegex =  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+                        
+                            if (password !== confirmPassword) {
+                                event.preventDefault();
+                                errorMessage.textContent = 'New and confirm passwords do not match.';
+                                errorMessage.style.display = 'block';
+                                return false;
+                            }
+                            else if(password === confirmPassword){
+                                errorMessage.style.display = 'none';
+                            }
+            
+                            console.log("kkkkkkkkkkkkkkkkkkkkkkkkkk done done ",password)
+                            console.log("kkkpasswordRegex.test(password)  ",passwordRegex.test(password))
+            
+                            // if (passwordRegex.test(password) == false) {
+                            //     event.preventDefault();
+                            //     errorMessage.textContent = 'Password must contain at least one uppercase letter, one lowercase letter, one digit, one special character, and be at least 8 characters long.';
+                            //     errorMessage.style.display = 'block';
+                            //     return false;
+                            // }
+                            // else if(passwordRegex.test(password) == true){
+                            //     errorMessage.style.display = 'none';
+                            // }
+                                           
+                            console.log("lllllllllllllllllllllllllllllllll  ",passwordRegex.test(password), password)
+                            return true;
+                        }
+            
+                        </script>
+                        
+                        </body>
+                        </html>
+                        `)
+                    }
                 }
+                else {
+                    res.send(`<!DOCTYPE html>
+                    <html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Session Expiry</title>
+                        <style>
+                            body {
+                                font-family: Arial, sans-serif;
+                                margin: 0;
+                                padding: 0;
+                                background-color: #f5f5f5;
+                                display: flex;
+                                justify-content: center;
+                                align-items: center;
+                                height: 100vh;
+                            }
+
+                            .container {
+                                text-align: center;
+                            }
+
+                            .success-message {
+                                color: #4CAF50;
+                                font-size: 24px;
+                            }
+
+                            .redirect-message {
+                                margin-top: 20px;
+                                color: #333;
+                            }
+
+                            .redirect-message a {
+                                color: #007bff;
+                                text-decoration: none;
+                            }
+
+                            .redirect-message a:hover {
+                                text-decoration: underline;
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <div class="container">
+                            <div class="success-message">Session got Expired,Please Try again.</div>
+                        </div>
+                    </body>
+                    </html>
+                    `);
+
+                }
+           
             }
-            
-            function validatePassword() {
-                var password = document.getElementById("newPassword").value;
-                var confirmPassword = document.getElementById("confirmPassword").value;    
-              
-                var passwordRegex =  /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-            
-                if (password !== confirmPassword) {
-                    event.preventDefault();
-                    errorMessage.textContent = 'New and confirm passwords do not match.';
-                    errorMessage.style.display = 'block';
-                    return false;
-                }
-                else if(password === confirmPassword){
-                    errorMessage.style.display = 'none';
-                }
 
-                console.log("kkkkkkkkkkkkkkkkkkkkkkkkkk done done ",password)
-                console.log("kkkpasswordRegex.test(password)  ",passwordRegex.test(password))
+        })
 
-                // if (passwordRegex.test(password) == false) {
-                //     event.preventDefault();
-                //     errorMessage.textContent = 'Password must contain at least one uppercase letter, one lowercase letter, one digit, one special character, and be at least 8 characters long.';
-                //     errorMessage.style.display = 'block';
-                //     return false;
-                // }
-                // else if(passwordRegex.test(password) == true){
-                //     errorMessage.style.display = 'none';
-                // }
-                               
-                console.log("lllllllllllllllllllllllllllllllll  ",passwordRegex.test(password), password)
-                return true;
-            }
 
-            </script>
-            
-            </body>
-            </html>
-            `)
 
     }
     catch (err) {
@@ -644,70 +755,72 @@ usersCtrl.employeeOrAdminResetPassword = async (req, res) => {
         const { token, newPassword } = req.body;
         console.log("kkkkkkkkkkkkkkjjjjjjj ", req.body);
 
-        tokenResetPwdModel.find({ token: token, status: true }).then((data) => {
+        tokenResetPwdModel.find({ token: token,status :true }).then(async (data) => {
             if (data && data.length != 0) {
-                bcrypt.hash(newPassword, 10, function (err, hash) {
-                    if (err) {
-                        ResponseHandler.error(req, res, "", err);
-                    }
-                    else {
-                        employeeModel.updateOne({ email: data[0].email }, { $set: { password: hash } }).then(async (emp) => {
-                            res.send(`<!DOCTYPE html>
-                            <html lang="en">
-                            <head>
-                                <meta charset="UTF-8">
-                                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                                <title>Password Updated Successfully</title>
-                                <style>
-                                    body {
-                                        font-family: Arial, sans-serif;
-                                        margin: 0;
-                                        padding: 0;
-                                        background-color: #f5f5f5;
-                                        display: flex;
-                                        justify-content: center;
-                                        align-items: center;
-                                        height: 100vh;
-                                    }
+                    bcrypt.hash(newPassword, 10, async function (err, hash) {
+                        if (err) {
+                            ResponseHandler.error(req, res, "", err);
+                        }
+                        else {
+                           await tokenResetPwdModel.updateOne({ token: token }, { $set: { status: false } })
+                            employeeModel.updateOne({ email: data[0].email }, { $set: { password: hash } }).then(async (emp) => {
+                                res.send(`<!DOCTYPE html>
+                <html lang="en">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Password Updated Successfully</title>
+                    <style>
+                        body {
+                            font-family: Arial, sans-serif;
+                            margin: 0;
+                            padding: 0;
+                            background-color: #f5f5f5;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            height: 100vh;
+                        }
 
-                                    .container {
-                                        text-align: center;
-                                    }
+                        .container {
+                            text-align: center;
+                        }
 
-                                    .success-message {
-                                        color: #4CAF50;
-                                        font-size: 24px;
-                                    }
+                        .success-message {
+                            color: #4CAF50;
+                            font-size: 24px;
+                        }
 
-                                    .redirect-message {
-                                        margin-top: 20px;
-                                        color: #333;
-                                    }
+                        .redirect-message {
+                            margin-top: 20px;
+                            color: #333;
+                        }
 
-                                    .redirect-message a {
-                                        color: #007bff;
-                                        text-decoration: none;
-                                    }
+                        .redirect-message a {
+                            color: #007bff;
+                            text-decoration: none;
+                        }
 
-                                    .redirect-message a:hover {
-                                        text-decoration: underline;
-                                    }
-                                </style>
-                            </head>
-                            <body>
-                                <div class="container">
-                                    <div class="success-message">Password Updated Successfully!</div>
-                                    <div class="redirect-message">click here to redirect to <a href="/">home page</a>.</div>
-                                </div>
-                            </body>
-                            </html>
-                            `);
-                        })
-                            .catch((err) => {
-                                ResponseHandler.error(req, res, "", err);
+                        .redirect-message a:hover {
+                            text-decoration: underline;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="container">
+                        <div class="success-message">Password Updated Successfully!</div>
+                        <div class="redirect-message">click here to redirect to <a href="/">home page</a>.</div>
+                    </div>
+                </body>
+                </html>
+                `);
                             })
-                    }
-                })
+                                .catch((err) => {
+                                    ResponseHandler.error(req, res, "", err);
+                                })
+                        }
+                    })
+                              
             }
             else {
                 res.send(`<!DOCTYPE html>
@@ -715,7 +828,7 @@ usersCtrl.employeeOrAdminResetPassword = async (req, res) => {
                 <head>
                     <meta charset="UTF-8">
                     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>Password Updated Successfully</title>
+                    <title>Token</title>
                     <style>
                         body {
                             font-family: Arial, sans-serif;
@@ -754,7 +867,7 @@ usersCtrl.employeeOrAdminResetPassword = async (req, res) => {
                 </head>
                 <body>
                     <div class="container">
-                        <div class="success-message">User Not Found</div>
+                        <div class="success-message">Token Not Found</div>
                     </div>
                 </body>
                 </html>
