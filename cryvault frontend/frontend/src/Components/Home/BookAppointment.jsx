@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button, TextField, Typography } from "@mui/material";
+import useDeviceSize from "../../Utilities/useDeviceSize";
 
 const BookAppointment = () => {
   const [userData, setUserData] = useState({
@@ -94,19 +95,20 @@ const BookAppointment = () => {
       id: "address",
     },
   });
+  const isMobile = useDeviceSize() === 'xs'
 
   const userDetails = Object.entries(userData);
   const isOdd = userDetails.length % 2 !== 0;
   return (
-    <div style={{ position: "relative", padding: "15rem" }}>
+    <div style={{ position: "relative", padding: isMobile ? "15rem 3rem": "15rem" }}>
       <div>
         <img src="assets/images/note.webp" className="bookImage" style={{}} alt="pencil" />
         <img src="assets/images/anim-icon-4.webp" style={{ zIndex: "9999999", top: "-15rem", right: " 0px", position: "absolute" }} alt="pencil" />
       </div>
 
-      <div className="appointmentContainer">
-        <div className="appointmentForm">
-          <div style={{ display: "grid", gridTemplateColumns: "auto auto", columnGap: "20px", rowGap: "20px" }}>
+      <div className={ isMobile ? "appointmentContainerMobile ":"appointmentContainer"}>
+        <div style={{width: isMobile ? "100%" :"50% "}}  className="appointmentForm">
+          <div style={{ display: "grid", gridTemplateColumns:isMobile ? "auto" : "auto auto", columnGap: "20px", rowGap: "20px", width:"100%" }}>
             {userDetails.map((data, index) => (
               <input key={data[0]} placeholder={data[1].placeholder} className={`appointmentInput ${isOdd && index === userDetails.length - 1 ? "fullWidth" : ""}`} label={data[1].placeholder} type={data[1].type} value={data[1].value} name={data[1].name} size="small" />
             ))}
@@ -119,7 +121,7 @@ const BookAppointment = () => {
           </Button>
         </div>
 
-        <div className="appointmentext">
+        <div style={{width: isMobile ? "100%" :"50% "}} className="appointmentext">
           <Typography sx={{ color: "#FF004D", fontSize: "2.5rem", fontFamily: "Caveat, Sans-serif" }} gutterBottom variant="h5" component="div">
             How We Can Help You?
           </Typography>

@@ -6,7 +6,11 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import { A11y, Navigation, Pagination, Scrollbar } from "swiper/modules";
+import useDeviceSize from "../../Utilities/useDeviceSize";
 const GoogleReviews = () => {
+  const isMobile = useDeviceSize() === 'xs'
+
+
   const stars = Array.from({ length: 5 }, () => (
     <span className="wp-star">
       <svg width="17" height="17" viewBox="0 0 1792 1792">
@@ -15,8 +19,8 @@ const GoogleReviews = () => {
     </span>
   ));
   return (
-    <Container sx={{ display: "flex", paddingTop: "5rem", alignItems: "center", gap: "2rem", marginBottom:"25rem" }}>
-      <div style={{ width: "30%", display: "flex", alignItems: "start", gap: "0.5rem" }}>
+    <Container sx={{ display: "flex", flexDirection: isMobile ? "column" :"row", paddingTop: "5rem", alignItems: "center", gap: "2rem", marginBottom:  isMobile ? "5rem" : "25rem" }}>
+      <div style={{ width: isMobile ?"100%" : "30%", display: "flex", alignItems: "start", gap: "0.5rem" }}>
         <img loading="lazy" decoding="async" src="https://www.cryovault.in/wp-content/plugins/widget-google-reviews/assets/img/gmblogo.svg" alt="Cryovault | Best Stem Cell Banking in Hyderabad | India" width="50" height="50" title="Cryovault | Best Stem Cell Banking in Hyderabad | India" />
 
         <div style={{ display: "flex", alignItems: "start !important", flexDirection: "column", gap: "0.5rem" }}>
@@ -50,9 +54,9 @@ const GoogleReviews = () => {
         </div>
       </div>
 
-      <div style={{ width: "60%" }}>
+      <div style={{ width:  isMobile ?"100%" :  "60%" }}>
         <Swiper
-          slidesPerView={3}
+          slidesPerView={isMobile ? 1 : 3}
           modules={[Navigation, Pagination, Scrollbar, A11y]}
           spaceBetween={10}
           autoplay={{
@@ -61,19 +65,19 @@ const GoogleReviews = () => {
           }}
         >
           <SwiperSlide>
-            <img src="assets/images/mother-babie.png" style={{ width: "25rem", height: "25rem" }} />
+            <img src="assets/images/mother-babie.png" style={{ width:  isMobile ?"100%" : "25rem", height:  isMobile ?"100%" : "25rem" }} />
           </SwiperSlide>
           <SwiperSlide>
-            <img src="assets/images/mother-babie.png" style={{ width: "25rem", height: "25rem" }} />
+            <img src="assets/images/mother-babie.png" style={{ width:  isMobile ?"100%" : "25rem", height:  isMobile ?"100%" : "25rem" }} />
           </SwiperSlide>
           <SwiperSlide>
-            <img src="assets/images/mother-babie.png" style={{ width: "25rem", height: "25rem" }} />
+            <img src="assets/images/mother-babie.png" style={{ width:  isMobile ?"100%" : "25rem", height:  isMobile ?"100%" : "25rem" }} />
           </SwiperSlide>
           <SwiperSlide>
-            <img src="assets/images/mother-babie.png" style={{ width: "25rem", height: "25rem" }} />
+            <img src="assets/images/mother-babie.png" style={{ width:  isMobile ?"100%" : "25rem", height:  isMobile ?"100%" : "25rem" }} />
           </SwiperSlide>
           <SwiperSlide>
-            <img src="assets/images/mother-babie.png" style={{ width: "25rem", height: "25rem" }} />
+            <img src="assets/images/mother-babie.png" style={{ width:  isMobile ?"100%" : "25rem", height:  isMobile ?"100%" : "25rem" }} />
           </SwiperSlide>
         </Swiper>
       </div>

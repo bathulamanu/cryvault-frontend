@@ -6,13 +6,21 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import { A11y, Navigation, Pagination, Scrollbar } from "swiper/modules";
+import useDeviceSize from "../../Utilities/useDeviceSize";
 
 const Testimonial = () => {
+  const isMobile = useDeviceSize() === "xs";
+
   return (
-    <div style={{ position:"relative", marginBottom: "15rem", marginTop: "15rem", paddingTop: "10rem", paddingBottom: "10rem" }} className="testimonailContainer">
-      <img src="assets/images/testimonial-3-icon-bell.webp" className="position-ab icons-img bell" alt="pencil" />
-      <img src="assets/images/testimonial-3-icon-chat.webp" style={{bottom: "6%"}} className="position-ab chat-img bounce-animation" alt="pencil" />
-      <img src="assets/images/testimonial-3-icon-hand.webp" className="position-ab thumbg-img" alt="pencil" />
+    <div style={{ position: "relative", marginBottom:isMobile ?"5rem" : "15rem", marginTop:   "15rem", paddingTop: "10rem", paddingBottom: isMobile ?"0rem" : "10rem" }} className="testimonailContainer">
+      {isMobile ? null : (
+        <>
+          {" "}
+          <img src="assets/images/testimonial-3-icon-bell.webp" className="position-ab icons-img bell" alt="pencil" />
+          <img src="assets/images/testimonial-3-icon-chat.webp" style={{ bottom: "6%" }} className="position-ab chat-img bounce-animation" alt="pencil" />
+          <img src="assets/images/testimonial-3-icon-hand.webp" className="position-ab thumbg-img" alt="pencil" />
+        </>
+      )}
       <div class=" testimonialAboveImage" data-negative="false">
         <svg style={{ position: "absolute", top: "100px" }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none">
           <path
@@ -69,11 +77,13 @@ const Testimonial = () => {
 };
 
 export const SingleSlide = React.memo(() => {
+  const isMobile = useDeviceSize() === "xs";
+
   return (
     <>
-      <div className="singleSlide">
+      <div className="singleSlide" style={{ width: isMobile ? "100%" : "65%" }}>
         <div className="quote-icon">
-          <img src="assets/images/quote.svg" alt="quote svg" style={{width:"4rem"}}/>
+          <img src="assets/images/quote.svg" alt="quote svg" style={{ width: "4rem" }} />
         </div>
         <p>"I am grateful to Cryovault for providing top-notch stem cell storage services. Their knowledgeable staff guided us through the process with ease, giving us peace of mind knowing that our baby's future health is in good hands."</p>
         <div className="d-flex align-items-center avatr_blk">

@@ -5,8 +5,12 @@ import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import { AiFillBank } from "react-icons/ai";
 import { LuMailQuestion } from "react-icons/lu";
 import { FaHandshake } from "react-icons/fa6";
+import useDeviceSize from "../../Utilities/useDeviceSize";
 
 const WhyBank = () => {
+
+  const isMobile = useDeviceSize() === 'xs'
+  
   return (
     <Box sx={{ display: "flex", flexDirection: "column", position: "absolute", width: "100%" }}>
       <div className="bannerImage " style={{ justifyContent: "end", display: "flex" }}>
@@ -14,7 +18,7 @@ const WhyBank = () => {
       </div>
 
       <div className="whybankContent">
-        <Typography variant="h1" sx={{ textAlign: "center" }}>
+        <Typography variant={isMobile ? 'h5' : "h1"} sx={{ textAlign: "center",fontSize: isMobile ? '2.5rem' : "6rem",fontWeight: isMobile ? '500' : "700" }}>
           Newborn stem cells <br /> are a powerful resource
         </Typography>
 
@@ -26,8 +30,8 @@ const WhyBank = () => {
           which are rich sources of unique stem cells that have potential for healing.
         </Typography>
 
-        <Grid sx={{ flexGrow: 1 }} container spacing={2} sx={{ padding: "4rem 12rem" }}>
-          <Grid className="card1" item xs={6} md={4} sm={4}>
+        <Grid  container spacing={4} xs={12} md={4} sm={4} sx={{ padding: isMobile ? '4rem 3rem' :  " 10rem", flexGrow: 1, maxWidth:"100% !important" }}>
+          <Grid className="card1" item xs={12} md={4} sm={4}>
             <div className="cardContainer">
               <HelpOutlineIcon sx={{ fontSize: "2.5rem" }} />
 
@@ -41,7 +45,7 @@ const WhyBank = () => {
               </div>
             </div>
           </Grid>
-          <Grid className="card2" item xs={6} md={4} sm={4}>
+          <Grid className="card2" item xs={12} md={4} sm={12}>
             <div className="cardContainer">
               <LuMailQuestion sx={{ fontSize: "2.5rem" }} />
 
@@ -55,7 +59,7 @@ const WhyBank = () => {
               </div>
             </div>
           </Grid>
-          <Grid className="card3" item xs={6} md={4} sm={4}>
+          <Grid className="card3" item xs={12} md={4} sm={12}>
             <div className="cardContainer">
               <FaHandshake sx={{ fontSize: "2.5rem" }} />
 

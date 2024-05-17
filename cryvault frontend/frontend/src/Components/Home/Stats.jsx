@@ -1,7 +1,10 @@
 import { Card, CardActionArea, CardContent, CardMedia, Grid, Typography } from "@mui/material";
 import React, { useMemo } from "react";
+import useDeviceSize from "../../Utilities/useDeviceSize";
 
 const Stats = () => {
+  const isMobile = useDeviceSize() === 'xs'
+
   const statsData = useMemo(() => {
     const data = [
       {
@@ -28,9 +31,8 @@ const Stats = () => {
 
     return data;
   }, []);
-  console.log(statsData);
   return (
-    <div style={{ position: "relative", padding: "5rem 15rem", border:"1px solid #e5e5e5" }}>
+    <div style={{ position: "relative", padding: isMobile  ? "5rem 1rem" : "5rem 15rem", border:"1px solid #e5e5e5" }}>
      <img  className=" butterflyImage butter_fly" src="assets/images/butterfly-4.webp" alt="Shape" />
 
       <Grid sx={{marginTop:"5rem"}} spacing={3} container rowSpacing={1} columnSpacing={{ xs: 1, sm: 4, md: 4 }}>
