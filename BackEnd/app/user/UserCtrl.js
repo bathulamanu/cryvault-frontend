@@ -526,19 +526,39 @@ usersCtrl.employeeOrAdminResetPwd = async (req, res) => {
               .reset-form button:hover {
                 background-color: #45a049;
               }
+              .error-message {
+                color: red;
+                margin-top: 10px;
+            }
             </style>
             </head>
             <body>
             
             <div class="reset-form">
               <h2>Password Reset</h2>
-              <form action="/flyingbyts/api/user/employeeOrAdminResetPassword" method="POST">
+              <form id="resetForm" action="/flyingbyts/api/user/employeeOrAdminResetPassword" method="POST">
               <input type="hidden" name="token" value="${token}">
-                <label for="password">New Password</label>
-                <input type="password" id="password" name="password" required>               
-                <button type="submit">Reset Password</button>
+              <input type="password" id="newPassword" name="newPassword" placeholder="New Password" required>
+              <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required>
+              <button type="submit">Reset Password</button>
+              <div id="errorMessage" class="error-message" style="display: none;"></div>      
               </form>
             </div>
+
+            <script>
+            const resetForm = document.getElementById('resetForm');
+            const newPasswordInput = document.getElementById('newPassword');
+            const confirmPasswordInput = document.getElementById('confirmPassword');
+            const errorMessage = document.getElementById('errorMessage');
+    
+            resetForm.addEventListener('submit', function(event) {
+                if (newPasswordInput.value !== confirmPasswordInput.value) {
+                    event.preventDefault();
+                    errorMessage.textContent = 'New and confirm passwords do not match.';
+                    errorMessage.style.display = 'block';
+                }
+            });
+        </script>
             
             </body>
             </html>
@@ -552,11 +572,10 @@ usersCtrl.employeeOrAdminResetPwd = async (req, res) => {
 
 usersCtrl.employeeOrAdminResetPassword = async (req, res) => {
     try {
-        const { token, password } = req.body;
-
+        const { token, newPassword } = req.body;
         tokenResetPwdModel.find({ token: token, status: true }).then((data) => {
             if (data && data.length != 0) {
-                bcrypt.hash(password, 10, function (err, hash) {
+                bcrypt.hash(newPassword, 10, function (err, hash) {
                     if (err) {
                         ResponseHandler.error(req, res, "", err);
                     }
