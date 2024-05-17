@@ -54,23 +54,23 @@ const HospitalSchema = new Schema({
     }
 });
 
-async function updateFieldIds(next) {
-    const doc = this;
-    if (!doc.isNew) {
-        return next();
-    }
+// async function updateFieldIds(next) {
+//     const doc = this;
+//     if (!doc.isNew) {
+//         return next();
+//     }
 
-    let counter = 1; // Initial value for auto-increment
-    // let count = 1
-    // Loop through each item in the array and assign auto-incremented IDs
-    doc.Branches.forEach(item => {
-        item.BranchID = counter++;
-    });
+//     let counter = 1; // Initial value for auto-increment
+//     // let count = 1
+//     // Loop through each item in the array and assign auto-incremented IDs
+//     doc.Branches.forEach(item => {
+//         item.BranchID = counter++;
+//     });
 
-    next();
-}
+//     next();
+// }
 
-HospitalSchema.pre('save', updateFieldIds);
+// HospitalSchema.pre('save', updateFieldIds);
 
 
 HospitalSchema.plugin(AutoIncrement, { inc_field: 'HospitalID' });
