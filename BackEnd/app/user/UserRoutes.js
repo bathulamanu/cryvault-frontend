@@ -6,6 +6,14 @@ module.exports = (app) => {
     app.post('/flyingbyts/api/user/customerRegisterOrLogin', userCtrl.customerSignUpOrLogin);
     app.post('/flyingbyts/api/user/otpVerify', userCtrl.otpVerify);
     app.post('/flyingbyts/api/user/customerResendOtp', userCtrl.customerSignUpOrLogin);
+
+    app.post('/flyingbyts/api/user/employeeOrAdminLogin', userCtrl.employeeOrAdminLogin);
+    app.post('/flyingbyts/api/user/employeeOrAdminForgotPwd', userCtrl.employeeOrAdminForgotPwd);  
+    app.get('/flyingbyts/api/user/resetPassword/:token', userCtrl.employeeOrAdminResetPwd);  
+    app.post('/flyingbyts/api/user/employeeOrAdminResetPassword', userCtrl.employeeOrAdminResetPassword);  
+     
+    // app.post('/flyingbyts/api/admin/addSuperAdmin',  userCtrl.addSuperAdmin);
+
     app.post('/flyingbyts/api/user/createOrder', auth, userCtrl.customerOrderCreation);
     app.post('/flyingbyts/api/user/customerPayment', auth, userCtrl.customerPaymentVerification); 
     app.get('/flyingbyts/api/user/getCustomerPaymentDetails', auth, userCtrl.getCustomerPaymentDetails);

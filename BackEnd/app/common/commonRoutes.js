@@ -20,25 +20,25 @@ module.exports = (app) => {
     app.get('/flyingbyts/api/user/getFooter',  commonCtrl.getFooter);
     app.delete('/flyingbyts/api/user/deleteFooter/:footerID', auth, commonCtrl.deleteFooter);
 
-    app.post('/flyingbyts/api/user/bookAppointment', auth, commonCtrl.bookAppointment);
+    app.post('/flyingbyts/api/user/bookAppointment',  commonCtrl.bookAppointment);
     app.put('/flyingbyts/api/user/UpdateAppointment/:AppointmentID', auth, commonCtrl.UpdateAppointment);
     app.get('/flyingbyts/api/user/getAllAppointment', auth, commonCtrl.getAllAppointment);
     app.delete('/flyingbyts/api/user/deleteAppointment/:AppointmentID', auth, commonCtrl.deleteAppointment);
 
 
-    app.post('/flyingbyts/api/user/addInformationKitRequest', auth, commonCtrl.addInformationKitRequest);
+    app.post('/flyingbyts/api/user/addInformationKitRequest',  commonCtrl.addInformationKitRequest);
     app.put('/flyingbyts/api/user/UpdateInformationKitRequest/:informationKitRequestID', auth, commonCtrl.UpdateInformationKitRequest);
     app.get('/flyingbyts/api/user/getInformationKitRequest', auth, commonCtrl.getInformationKitRequest);
     app.delete('/flyingbyts/api/user/deleteInformationKitRequest/:informationKitRequestID', auth, commonCtrl.deleteInformationKitRequest);
 
 
-    app.post('/flyingbyts/api/user/addCareerProfile', auth, commonCtrl.addCareerProfile);
+    app.post('/flyingbyts/api/user/addCareerProfile',  commonCtrl.addCareerProfile);
     app.put('/flyingbyts/api/user/UpdateCareerProfile/:careerID', auth, commonCtrl.UpdateCareerProfile);
     app.get('/flyingbyts/api/user/getCareerProfile', auth, commonCtrl.getCareerProfile);
     app.delete('/flyingbyts/api/user/deleteCareerProfile/:careerID', auth, commonCtrl.deleteCareerProfile);
 
 
-    app.post('/flyingbyts/api/user/addFranchiseRequest', auth, commonCtrl.addFranchiseRequest);
+    app.post('/flyingbyts/api/user/addFranchiseRequest',  commonCtrl.addFranchiseRequest);
     app.put('/flyingbyts/api/user/UpdateFranchiseRequest/:franchiseID', auth, commonCtrl.UpdateFranchiseRequest);
     app.get('/flyingbyts/api/user/getFranchiseRequest', auth, commonCtrl.getFranchiseRequest);
     app.delete('/flyingbyts/api/user/deleteFranchiseRequest/:franchiseID', auth, commonCtrl.deleteFranchiseRequest);
@@ -77,7 +77,7 @@ module.exports = (app) => {
     app.get('/flyingbyts/api/user/getReview', auth, commonCtrl.getReview);
     app.delete('/flyingbyts/api/user/deleteReview/:reviewID', auth, commonCtrl.deleteReview);
 
-    app.post('/flyingbyts/api/user/addEmergencyAppointment', auth, commonCtrl.addEmergencyAppointment);
+    app.post('/flyingbyts/api/user/addEmergencyAppointment',  commonCtrl.addEmergencyAppointment);
     app.put('/flyingbyts/api/user/UpdateEmergencyAppointment/:emergencyAppointmentID', auth, commonCtrl.UpdateEmergencyAppointment);
     app.get('/flyingbyts/api/user/getEmergencyAppointment', auth, commonCtrl.getEmergencyAppointment);
     app.delete('/flyingbyts/api/user/deleteEmergencyAppointment/:emergencyAppointmentID', auth, commonCtrl.deleteEmergencyAppointment);
@@ -97,7 +97,7 @@ module.exports = (app) => {
     app.get('/flyingbyts/api/user/getPageMetaInfo', auth, commonCtrl.getPageMetaInfo);
     app.delete('/flyingbyts/api/user/deletePageMetaInfo/:pageMetaInfoID', auth, commonCtrl.deletePageMetaInfo);
 
-    app.post('/flyingbyts/api/user/addReachUS', auth, commonCtrl.addReachUS);
+    app.post('/flyingbyts/api/user/addReachUS',  commonCtrl.addReachUS);
     app.put('/flyingbyts/api/user/UpdateReachUS/:ReachUSID', auth, commonCtrl.UpdateReachUS);
     app.get('/flyingbyts/api/user/getReachUS', auth, commonCtrl.getReachUS);
     app.delete('/flyingbyts/api/user/deleteReachUS/:ReachUSID', auth, commonCtrl.deleteReachUS);
