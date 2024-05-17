@@ -18,7 +18,7 @@ const CallUs = () => {
         </Typography>
         <img src="assets/images/booknow.webp" className="m-auto" width={96} />
       </Container>
-      <img class="position-ab butterfly_ot" src="assets/images/butterfly-4.webp" style={{ right: isMobile ? " 0%" : "", top: isMobile ? "64%" : "" }} alt="Shape"></img>
+      <img className="position-ab butterfly_ot" src="assets/images/butterfly-4.webp" style={{ right: isMobile ? " 0%" : "", top: isMobile ? "64%" : "" }} alt="Shape"></img>
     </div>
   );
 };

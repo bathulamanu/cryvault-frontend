@@ -30,8 +30,8 @@ const WhyBank = () => {
           which are rich sources of unique stem cells that have potential for healing.
         </Typography>
 
-        <Grid  container spacing={4} xs={12} md={4} sm={4} sx={{ padding: isMobile ? '4rem 3rem' :  " 10rem", flexGrow: 1, maxWidth:"100% !important" }}>
-          <Grid className="card1" item xs={12} md={4} sm={4}>
+        <Grid  container item spacing={3} xs={12} md={3} sm={3} sx={{ padding: isMobile ? '4rem 3rem' :  " 10rem", flexGrow: 1, maxWidth:"100% !important" }}>
+          <Grid className="card1" xs={12} md={3} sm={3}>
             <div className="cardContainer">
               <HelpOutlineIcon sx={{ fontSize: "2.5rem" }} />
 
@@ -45,7 +45,7 @@ const WhyBank = () => {
               </div>
             </div>
           </Grid>
-          <Grid className="card2" item xs={12} md={4} sm={12}>
+          <Grid className="card2" xs={12} md={4} sm={12}>
             <div className="cardContainer">
               <LuMailQuestion sx={{ fontSize: "2.5rem" }} />
 
@@ -59,7 +59,7 @@ const WhyBank = () => {
               </div>
             </div>
           </Grid>
-          <Grid className="card3" item xs={12} md={4} sm={12}>
+          <Grid className="card3"  xs={12} md={4} sm={12}>
             <div className="cardContainer">
               <FaHandshake sx={{ fontSize: "2.5rem" }} />
 

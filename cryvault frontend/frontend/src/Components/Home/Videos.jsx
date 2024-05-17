@@ -18,7 +18,7 @@ const Videos = () => {
         <br />
         <div style={{ display: "flex", gap: "2rem", flexDirection: isMobile ? "column" :"row" }}>
         {videos.map((video) => (
-            <iframe width="353" height="199" src={video} frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen title="video" />
+            <iframe key={video} width="353" height="199" src={video} frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen title="video" />
         ))}
         </div>
       </Container>

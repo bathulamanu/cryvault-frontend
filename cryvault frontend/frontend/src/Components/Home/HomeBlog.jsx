@@ -7,8 +7,8 @@ const HomeBlog = () => {
 
   return (
     <Container sx={{ marginTop: "15rem", display: "flex", gap: "1rem", flexDirection: "column" }}>
-      <img class="position-ab appl-blg" src="assets/images/apple-1.webp" style={{ right: isMobile ? "0" : "", left: isMobile ? "0" : "" }} alt="Shape"></img>
-      <img class="position-ab clod-blg" src="assets/images/cloud-3.webp" alt="Shape"></img>
+      <img className="position-ab appl-blg" src="assets/images/apple-1.webp" style={{ right: isMobile ? "0" : "", left: isMobile ? "0" : "" }} alt="Shape"></img>
+      <img className="position-ab clod-blg" src="assets/images/cloud-3.webp" alt="Shape"></img>
       <Container className="blogText">
         <Typography sx={{ fontWeight: "700", color: "#8A00AF" }} variant="h3">
           Latest News Posts
@@ -46,7 +46,7 @@ const HomeBlog = () => {
         </div>
       </div>
 
-      {/* <img class="position-ab rockets-ot" src="assets/images/rocket.webp" alt="Shape"></img> */}
+      {/* <img className="position-ab rockets-ot" src="assets/images/rocket.webp" alt="Shape"></img> */}
     </Container>
   );
 };

@@ -41,7 +41,7 @@ export const WhyPreserveCards = React.memo(() => {
 
   return (
     <Grid
-      item
+    container item
       spacing={4}
       sx={{
         padding: isMobile ? " 0rem 3rem" : "4rem 6rem",
@@ -52,7 +52,7 @@ export const WhyPreserveCards = React.memo(() => {
         flexDirection: isMobile ? "column" : "row",
       }}
     >
-      <Grid className="whyPreserveCard" item xs={12} md={4} sm={12}>
+      <Grid className="whyPreserveCard" container item xs={12} md={4} sm={12}>
         <WaterDropIcon sx={{ fontSize: "3rem" }} />
         <Typography variant="h4" gutterBottom>
           Amazing Potential
@@ -61,7 +61,7 @@ export const WhyPreserveCards = React.memo(() => {
           Each baby comes into this world with amazing potential to save or improve their own life or the life of others.
         </Typography>
       </Grid>
-      <Grid className="whyPreserveCard" item xs={12} md={4} sm={12}>
+      <Grid className="whyPreserveCard" container item xs={12} md={4} sm={12}>
         <WaterDropIcon sx={{ fontSize: "3rem" }} />
         <Typography variant="h4" gutterBottom>
           Building Blocks
@@ -70,7 +70,7 @@ export const WhyPreserveCards = React.memo(() => {
           Stem cells are the “building blocks” or “master cells” of our bodies with the ability to become different types of cells.
         </Typography>
       </Grid>
-      <Grid className="whyPreserveCard" item xxs={12} md={4} sm={12}>
+      <Grid className="whyPreserveCard" container item xxs={12} md={4} sm={12}>
         <WaterDropIcon sx={{ fontSize: "3rem" }} />
         <Typography variant="h4" gutterBottom>
           Life-Saving
