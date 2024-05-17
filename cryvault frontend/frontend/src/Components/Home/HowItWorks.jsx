@@ -6,12 +6,15 @@ import CardMedia from "@mui/material/CardMedia";
 import { CardActionArea } from "@mui/material";
 
 import "./Home.css";
+import useDeviceSize from "../../Utilities/useDeviceSize";
 const HowItWorks = () => {
+  const isMobile = useDeviceSize() === "xs";
+
   return (
     <div style={{ background: "#F9F6EF", position: "relative", marginTop: "60rem" }}>
       <img style={{ position: "absolute" }} className=" spectrum-circl" src="assets/images/anim-icon-10.webp" alt="Shape" />
 
-      <div style={{ padding: "10rem" }}>
+      <div style={{ padding:isMobile ? "2rem" :  "10rem" }}>
         <Typography variant="h3" sx={{ textAlign: "center", color: "#00215C", fontWeight: "600" }}>
           How it works
         </Typography>
@@ -19,10 +22,10 @@ const HowItWorks = () => {
           Cryovault provides 3 easy steps to preserve your child’s cord blood stem cells.
         </Typography>
       </div>
-      <div style={{ display: "flex", justifyContent: "space-evenly",paddingBottom:"10rem" }}>
+      <div style={{ display: "flex",flexDirection:isMobile ? "column" : "row", justifyContent: "space-evenly",alignItems:"center", paddingBottom:"10rem" }}>
         <Card sx={{ maxWidth: 345, background: "#F9F6EF", boxShadow: "none" }}>
           <CardActionArea>
-            <CardMedia sx={{ borderRadius: "50%" }} component="img" height="140" image="assets/images/kit-pregnant-mom.webp" alt="green iguana" />
+            <CardMedia sx={{ borderRadius: "50%", width:isMobile ? "10rem" :"100%",margin:isMobile ? "auto" :""  }} component="img" height={ isMobile ? '10rem' : "140"} image="assets/images/kit-pregnant-mom.webp" alt="green iguana" />
             <CardContent sx={{ alignItems: "center", display: "flex", flexDirection: "column" }}>
               <Typography gutterBottom variant="h5" component="div">
                 Enroll
@@ -35,7 +38,7 @@ const HowItWorks = () => {
         </Card>
         <Card sx={{ maxWidth: 345, background: "#F9F6EF", boxShadow: "none" }}>
           <CardActionArea>
-            <CardMedia sx={{ borderRadius: "50%" }} component="img" height="140" image="assets/images/2-Collect-.webp" alt="green iguana" />
+          <CardMedia sx={{ borderRadius: "50%", width:isMobile ? "10rem" :"",margin:isMobile ? "auto" :""  }} component="img" height={ isMobile ? '10rem' : "140"} image="assets/images/2-Collect-.webp" alt="green iguana" />
             <CardContent sx={{ alignItems: "center", display: "flex", flexDirection: "column" }}>
               <Typography gutterBottom variant="h5" component="div">
                 Collect
@@ -48,7 +51,7 @@ const HowItWorks = () => {
         </Card>
         <Card sx={{ maxWidth: 345, background: "#F9F6EF", boxShadow: "none" }}>
           <CardActionArea>
-            <CardMedia sx={{ borderRadius: "50%" }} component="img" height="140" image="assets/images/kit-pregnant-mom.webp" alt="green iguana" />
+          <CardMedia sx={{ borderRadius: "50%", width:isMobile ? "10rem" :"",margin:isMobile ? "auto" :""  }} component="img" height={ isMobile ? '10rem' : "140"} image="assets/images/kit-pregnant-mom.webp" alt="green iguana" />
             <CardContent sx={{ alignItems: "center", display: "flex", flexDirection: "column" }}>
               <Typography gutterBottom variant="h5" component="div">
                 Preserve

@@ -16,11 +16,13 @@ import useDeviceSize from '../Utilities/useDeviceSize'
 
 const Home = () => {
   const isMobile = useDeviceSize() === 'xs'
-  console.log(isMobile)
   return (
     <div >
       <Banner/>
       <WhyBank/>
+      {
+        isMobile ? <div style={{height:"40vh"}}/> : null
+      }
       <WhyPreserve/>
       <WhyShould />
       <HowItWorks/>

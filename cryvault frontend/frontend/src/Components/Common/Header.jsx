@@ -255,12 +255,17 @@ const Header = () => {
 
 export const MobileHeader = React.memo(() => {
   const [isActive, setIsActive] = useState(false);
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-  const onAddClick = (e) => {
+  const handleClick = () => {
+    console.log("comoinh here");
+
     setIsActive(!isActive);
   };
-  const scrollToTop = useScrollToTop();
-  console.log("asdasdasdasdasd");
+
+  const close = () => {
+    console.log("comoinh here", isActive);
+
+    setIsActive(false);
+  };
   return (
     <>
       <Box left="0" width="100%" zIndex="999" transition="top 0.3s ease-in-out">
@@ -269,7 +274,7 @@ export const MobileHeader = React.memo(() => {
             <div className="header-navbar" style={{ display: "flex", width: "100%", justifyContent: "space-between", padding: "1rem " }}>
               <div className="header-brand">
                 <div className="logo">
-                  <Link onClick={useScrollToTop()} to="/">
+                  <Link to="/">
                     <img className="logo-dark" src="assets/images/cryovault-blue-200x48.webp" alt="Corporate Logo" />
                   </Link>
                 </div>
@@ -277,39 +282,25 @@ export const MobileHeader = React.memo(() => {
 
               <div className="header-right ">
                 {isActive ? (
-                  <Button
-                    variant="outlined"
-                    aria-label="menu"
-                    onClick={
-                      // scrollToTop();
-                      onAddClick
-                    }
-                    size="large"
-                    sx={{ width: "50px", height: "50px", color: "black" }}
-                  >
-                    <CloseIcon style={{ width: "50px", height: "50px", color: "black" }} />
+                  <Button variant="outlined" aria-label="menu" onClick={ ()=>setIsActive(false) } size="large" sx={{ width: "50px", height: "50px", color: "black" }}>
+                    <CloseIcon onClick={ ()=>setIsActive(false) } style={{ width: "50px", height: "50px", color: "black" }} />
                   </Button>
+                  // <button onClick={close}>
+                  // sdasdsdasdasdasdasd  {/* <CloseIcon onClick={() => setIsActive(false)} style={{ width: "50px", height: "50px", color: "black" }} /> */}
+                  // </button>
                 ) : (
-                  <Button
-                    variant="outlined"
-                    aria-label="menu"
-                    onClick={
-                      // scrollToTop;
-                      onAddClick
-                    }
-                    size="large"
-                    sx={{ width: "50px", height: "50px", color: "black" }}
-                  >
-                    <MenuSharpIcon style={{ width: "50px", height: "50px", color: "black" }} />
+                  <Button variant="outlined" aria-label="menu" onClick={handleClick} size="large" sx={{ width: "50px", height: "50px", color: "black" }}>
+                    <MenuSharpIcon onClick={handleClick} style={{ width: "50px", height: "50px", color: "black" }} />
                   </Button>
                 )}
               </div>
             </div>
           </div>
         </div>
+        {console.log({ isActive })}
+        <h1>{isActive}</h1>
       </Box>
-
-      {isActive ? (
+      {isActive && (
         <div className="popup-mobile-menu active">
           <div className="inner">
             <ul className="mainmenu">
@@ -483,7 +474,7 @@ export const MobileHeader = React.memo(() => {
             </ul>
           </div>
         </div>
-      ) : null}
+      )}
     </>
   );
 });

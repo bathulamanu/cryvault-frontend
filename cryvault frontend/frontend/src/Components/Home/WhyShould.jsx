@@ -1,14 +1,17 @@
 import React from "react";
 import "./Home.css";
 import { Box, Button, Grid, Typography } from "@mui/material";
+import useDeviceSize from "../../Utilities/useDeviceSize";
 
 const WhyShould = () => {
+  const isMobile = useDeviceSize() === 'xs'
+
   return (
     <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", position: "absolute", width: "100%" }}>
       <img className=" position-ab triangle-btn" src="assets/images/anim-icon-9.webp" alt="Shape" />
 
       <div className="WhyShouldContent">
-        <Typography variant="h1" sx={{ textAlign: "center", fontWeight: "600", whiteSpace: "nowrap" }}>
+        <Typography variant={isMobile ? "h4" : "h1"} sx={{ textAlign: "center", fontWeight: "600", whiteSpace: "nowrap" }}>
           Why Should Your Family Bank Cord Blood?
         </Typography>
 
