@@ -440,11 +440,11 @@ usersCtrl.employeeOrAdminForgotPwd = async (req, res) => {
                 let Obj = {}
                 Obj['Content'] = "";
                 if (emailContent && emailContent.length != 0) {
-                    Obj['Content'] = emailContent[0].emailDescription.replace('http://localhost:${port}', 'http://localhost:4000')
-                        .replace('${token}', token);
-
-                    // Obj['Content'] = emailContent[0].emailDescription.replace('http://localhost:${port}', 'http://18.61.230.105:4000')
+                    // Obj['Content'] = emailContent[0].emailDescription.replace('http://localhost:${port}', 'http://localhost:4000')
                     //     .replace('${token}', token);
+
+                    Obj['Content'] = emailContent[0].emailDescription.replace('http://localhost:${port}', 'http://18.61.230.105:4000')
+                        .replace('${token}', token);
 
                 }
                 Obj['Subject'] = 'Flyingbyts Password Reset';

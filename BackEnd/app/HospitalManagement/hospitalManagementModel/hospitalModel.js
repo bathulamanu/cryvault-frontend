@@ -38,6 +38,17 @@ const HospitalSchema = new Schema({
         pinterest: String,
         googleMap: String
     },
+    HospitalAddress: {
+        addressLine1: String,
+        addressLine2: String,
+        nearLandMark: String,
+        country: Number,
+        state: Number,
+        city: Number,
+        pincode: String,
+        latitude: String,
+        longitude: String
+    },
     updatedBy: {
         type: Number
     },

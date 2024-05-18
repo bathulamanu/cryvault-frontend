@@ -42,20 +42,20 @@ const customerSignUpSchema = new Schema({
         default: ""
     },
     city: {
-        type: String,
-        default: ""
+        type: Number,
+        default: null
     },
     state: {
-        type: String,
-        default: ""
+        type: Number,
+        default: null
     },
     pincode: {
         type: String,
         default: ""
     },
     country: {
-        type: String,
-        default: ""
+        type: Number,
+        default: null
     },
     gender: {
         type: Number,
