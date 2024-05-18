@@ -5,8 +5,8 @@ var auth = require('../../utils/Auth').token;
 module.exports = (app) => {
 
     app.get('/flyingbyts/api/user/getCountryName', auth, hospitalManagementCtrl.getCountryName);
-    app.get('/flyingbyts/api/user/getStateName/:country_id', auth, hospitalManagementCtrl.getStateName);
-    app.get('/flyingbyts/api/user/getCityName/:state_id', auth, hospitalManagementCtrl.getCityName);
+    app.get('/flyingbyts/api/user/getStateName/:countryID', auth, hospitalManagementCtrl.getStateName);
+    app.get('/flyingbyts/api/user/getCityName/:stateID', auth, hospitalManagementCtrl.getCityName);
 
     app.post('/flyingbyts/api/user/addRole', auth, hospitalManagementCtrl.addRole);
     app.get('/flyingbyts/api/user/getRole', auth, hospitalManagementCtrl.getRole);
