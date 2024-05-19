@@ -1,0 +1,10 @@
+.contactbgImg {
+  padding: 50px 7px !important;
+  background-size: contain !important;
+}
+.mobileTitle {
+  color: #002c44 !important;
+  font-size: 30px;
+  font-weight: 600 !important;
+  width: 100%;
+}

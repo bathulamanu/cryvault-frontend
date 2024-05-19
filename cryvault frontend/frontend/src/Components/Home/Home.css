@@ -6,12 +6,23 @@
   z-index: 9999999999999;
   right: 4rem;
 }
+.bannerImageMobile {
+  justify-content: end;
+  display: flex;
+  width: 6rem;
+  justify-content: end;
+  display: flex;
+  top: -2rem;
+  position: absolute;
+  z-index: 9999999999999;
+  right: 2rem;
+}
 .whybankContent {
   display: flex;
   align-items: center;
   flex-direction: column;
   align-items: center;
-  margin-top: 20rem;
+  margin-top: 5rem;
   gap: 2rem;
 }
 .whybankHeart {
@@ -117,7 +128,7 @@
 }
 .WhyShouldContent {
   width: 70%;
-  margin-top: 14rem;
+  /* margin-top: 14rem; */
   margin-bottom: 12rem;
   display: flex;
   flex-direction: column;
@@ -140,7 +151,7 @@
   gap: 3rem;
   flex-direction: column-reverse;
   width: 100%;
-    align-items: center;
+  align-items: center;
 }
 .appointmentForm {
   align-content: center;
@@ -376,4 +387,81 @@
   flex-direction: column;
   gap: 2rem;
   align-items: center;
+}
+.blogAppleMobile {
+  top: -100px !important;
+  right: 0px !important;
+  z-index: 0 !important;
+}
+.blogCloudMobile {
+  top: -100px !important;
+  z-index: 0 !important;
+  right: 0px !important;
+}
+
+.shape_inMobile {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.shape_inMobile::before {
+  content: "";
+  width: 100px;
+  height: 1.3px;
+  background: #fff;
+  position: absolute;
+  left: -60px;
+  margin: auto;
+
+  top: 14px;
+}
+.shape_inMobile::after {
+  content: "";
+  width: 100px;
+  height: 1.3px;
+  background: #fff;
+  position: absolute;
+  left: 0px;
+  margin: auto;
+  right: revert-layer;
+  top: 14px;
+}
+
+.shape_inMobile-bk::before,
+.shape_inMobile-bk::after {
+  background: #000;
+}
+
+.shape_inMobileTestimonial {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.shape_inMobileTestimonial::before {
+  content: "";
+  width: 100px;
+  height: 1.3px;
+  background: #fff;
+  position: absolute;
+  left: 90px;
+  margin: auto;
+
+  top: 14px;
+}
+.shape_inMobileTestimonial::after {
+  content: "";
+  width: 100px;
+  height: 1.3px;
+  background: #fff;
+  position: absolute;
+  right: 90px;
+  margin: auto;
+  top: 14px;
+}
+
+.shape_inMobileTestimonial-bk::before,
+.shape_inMobileTestimonial-bk::after {
+  background: #000;
 }

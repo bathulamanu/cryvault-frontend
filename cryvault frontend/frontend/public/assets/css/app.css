@@ -38633,7 +38633,7 @@ justify-content: center
 
 .shape_in::before{
   content: "";
-  width: 180px;
+  width: 200px;
   height: 1.3px;
   background:#fff;
   position: absolute;
@@ -38644,7 +38644,7 @@ justify-content: center
 }
 .shape_in::after{
   content: "";
-  width: 180px;
+  width: 200px;
   height: 1.3px;
   background: #fff;
   position: absolute;

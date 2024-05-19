@@ -1,4 +1,4 @@
-import { Button, Container, Link, Typography } from "@mui/material";
+import { Box, Button, Container, Link, Rating, Typography } from "@mui/material";
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -7,10 +7,98 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import { A11y, Navigation, Pagination, Scrollbar } from "swiper/modules";
 import useDeviceSize from "../../Utilities/useDeviceSize";
+import SwiperCore from "swiper";
+import { FcGoogle } from "react-icons/fc";
+const reviews = [
+  {
+    userImage: "",
+
+    alterImage: "",
+
+    userName: "Vikram goud",
+
+    userEmail: "",
+
+    googleMapLocation: "https://www.google.com/maps/contrib/103344430736844963744/reviews",
+
+    content: "Srinivas is doing great job… thank you for your service Srinivas am really happy with your service thank you ",
+
+    customerID: null,
+
+    rating: 4,
+
+    photoOrVideo: [],
+
+    _id: "662237b63be61d6d5e15a5ae",
+  },
+  {
+    userImage: "",
+
+    alterImage: "",
+
+    userName: "Vikram goud",
+
+    userEmail: "",
+
+    googleMapLocation: "https://www.google.com/maps/contrib/103344430736844963744/reviews",
+
+    content: "Srinivas is doing great job… thank you for your service Srinivas am really happy with your service thank you ",
+
+    customerID: null,
+
+    rating: 4,
+
+    photoOrVideo: [],
+
+    _id: "662237b63be61d6d5e15a5ae",
+  },
+  {
+    userImage: "",
+
+    alterImage: "",
+
+    userName: "Vikram goud",
+
+    userEmail: "",
+
+    googleMapLocation: "https://www.google.com/maps/contrib/103344430736844963744/reviews",
+
+    content: "Srinivas is doing great job… thank you for your service Srinivas am really happy with your service thank you ",
+
+    customerID: null,
+
+    rating: 4,
+
+    photoOrVideo: [],
+
+    _id: "662237b63be61d6d5e15a5ae",
+  },
+  {
+    userImage: "",
+
+    alterImage: "",
+
+    userName: "Vikram goud",
+
+    userEmail: "",
+
+    googleMapLocation: "https://www.google.com/maps/contrib/103344430736844963744/reviews",
+
+    content: "Srinivas is doing great job… thank you for your service Srinivas am really happy with your service thank you ",
+
+    customerID: null,
+
+    rating: 4,
+
+    photoOrVideo: [],
+
+    _id: "662237b63be61d6d5e15a5ae",
+  },
+];
 const GoogleReviews = () => {
-  const isMobile = useDeviceSize() === 'xs'
+  const isMobile = useDeviceSize() === "xs";
 
-
+  SwiperCore.use([Navigation, Pagination, A11y]);
   const stars = Array.from({ length: 5 }, () => (
     <span className="wp-star">
       <svg width="17" height="17" viewBox="0 0 1792 1792">
@@ -19,25 +107,25 @@ const GoogleReviews = () => {
     </span>
   ));
   return (
-    <Container sx={{ display: "flex", flexDirection: isMobile ? "column" :"row", paddingTop: "5rem", alignItems: "center", gap: "2rem", marginBottom:  isMobile ? "5rem" : "25rem" }}>
-      <div style={{ width: isMobile ?"100%" : "30%", display: "flex", alignItems: "start", gap: "0.5rem" }}>
+    <Container sx={{ display: "flex", flexDirection: isMobile ? "column" : "row", paddingTop: "5rem", alignItems: "center", gap: "2rem", marginBottom: isMobile ? "5rem" : "25rem" }}>
+      <Box style={{ width: isMobile ? "100%" : "30%", display: "flex", alignItems: "start", gap: "0.5rem" }}>
         <img loading="lazy" decoding="async" src="https://www.cryovault.in/wp-content/plugins/widget-google-reviews/assets/img/gmblogo.svg" alt="Cryovault | Best Stem Cell Banking in Hyderabad | India" width="50" height="50" title="Cryovault | Best Stem Cell Banking in Hyderabad | India" />
 
-        <div style={{ display: "flex", alignItems: "start !important", flexDirection: "column", gap: "0.5rem" }}>
+        <Box style={{ display: "flex", alignItems: "start !important", flexDirection: "column", gap: "0.5rem" }}>
           <Link href="https://maps.google.com/?cid=1616921368839435671" target="_blank" rel="nofollow noopener">
             <Typography sx={{ fontWeight: "600" }} variant="h4">
               Cryovault | Best Stem Cell Banking in Hyderabad | India
             </Typography>
           </Link>
-          <div>
+          <Box>
             <Typography variant="h4" sx={{ fontWeight: "700", color: "rgb(251, 142, 40)" }}>
               5.0 {stars.map((star, index) => star)}{" "}
             </Typography>
-          </div>
+          </Box>
 
           <Typography variant="h4">Based on 284 reviews</Typography>
           <img loading="lazy" decoding="async" src="https://www.cryovault.in/wp-content/plugins/widget-google-reviews/assets/img/powered_by_google_on_white.png" alt="powered by Google" style={{ maxWidth: "144px", height: "auto" }} />
-          <Button variant="contained" className="googleBtn">
+          <Button variant="contained" sx={{ width: isMobile ? "40%" : "100%" }} className="googleBtn">
             <Link sx={{ textDecoration: "none", color: "white" }} href="https://search.google.com/local/writereview?placeid=ChIJH5WwOMiWyzsRl7VpC2t1cBY" onClick="return rplg_leave_review_window.call(this)" target="_blank" rel="noopener">
               Review us on
               <svg viewBox="0 0 512 512" height="18" width="18">
@@ -51,38 +139,55 @@ const GoogleReviews = () => {
               </svg>
             </Link>
           </Button>
-        </div>
-      </div>
+        </Box>
+      </Box>
 
-      <div style={{ width:  isMobile ?"100%" :  "60%" }}>
+      <Box style={{ width: isMobile ? "100%" : "60%" }}>
         <Swiper
           slidesPerView={isMobile ? 1 : 3}
           modules={[Navigation, Pagination, Scrollbar, A11y]}
           spaceBetween={10}
+          navigation={true}
+          pagination={true}
           autoplay={{
             delay: 2500,
             disableOnInteraction: false,
           }}
         >
-          <SwiperSlide>
-            <img src="assets/images/mother-babie.png" style={{ width:  isMobile ?"100%" : "25rem", height:  isMobile ?"100%" : "25rem" }} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="assets/images/mother-babie.png" style={{ width:  isMobile ?"100%" : "25rem", height:  isMobile ?"100%" : "25rem" }} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="assets/images/mother-babie.png" style={{ width:  isMobile ?"100%" : "25rem", height:  isMobile ?"100%" : "25rem" }} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="assets/images/mother-babie.png" style={{ width:  isMobile ?"100%" : "25rem", height:  isMobile ?"100%" : "25rem" }} />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="assets/images/mother-babie.png" style={{ width:  isMobile ?"100%" : "25rem", height:  isMobile ?"100%" : "25rem" }} />
-          </SwiperSlide>
+          {reviews.map((review) => (
+            <SwiperSlide>
+              <SingleReview review={review} />
+            </SwiperSlide>
+          ))}
         </Swiper>
-      </div>
+      </Box>
     </Container>
   );
 };
+
+export const SingleReview = React.memo(({ review }) => {
+  console.log(review);
+  return (
+    <Box key={review?._id} sx={{ display: "flex", flexDirection: "column", marginBottom: 2, background: "#fafafa", padding:"1rem" }}>
+      <Box sx={{ display: "flex", alignItems: "start !important", justifyContent: "space-between" }}>
+        <Box sx={{ display: "flex"}}>
+          <img src={review?.userImage || "default-user-image.png"} alt="User avatar" style={{ width: 50, height: 50, borderRadius: "50%" }} /> {/* Handle missing user image gracefully */}
+          <Box sx={{ display: "flex", flexDirection: "column", marginLeft: 1 }}>
+            <Typography variant="body1">{review?.userName}</Typography>
+            <Typography variant="caption" color="text.secondary">
+              {/* Time logic goes here */}
+            </Typography>
+          </Box>
+        </Box>
+
+        <FcGoogle style={{ marginLeft: "auto", fontSize:"1.5rem" }} />
+      </Box>
+      <Rating name="read-only" value={review?.rating} readOnly />
+      <Box sx={{ marginTop: 1, height: "5vh", overflow: "auto" }}>
+        <Typography variant="h5">{review?.content}</Typography>
+      </Box>
+    </Box>
+  );
+});
 
 export default GoogleReviews;

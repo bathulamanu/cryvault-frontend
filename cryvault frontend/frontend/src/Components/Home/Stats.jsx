@@ -1,4 +1,4 @@
-import { Card, CardActionArea, CardContent, CardMedia, Grid, Typography } from "@mui/material";
+import { Box, Card, CardActionArea, CardContent, CardMedia, Grid, Typography } from "@mui/material";
 import React, { useMemo } from "react";
 import useDeviceSize from "../../Utilities/useDeviceSize";
 
@@ -32,7 +32,7 @@ const Stats = () => {
     return data;
   }, []);
   return (
-    <div style={{ position: "relative", padding: isMobile  ? "5rem 1rem" : "5rem 15rem", border:"1px solid #e5e5e5" }}>
+    <Box style={{ position: "relative", padding: isMobile  ? "5rem 1rem" : "5rem 15rem", border:"1px solid #e5e5e5" }}>
      <img  className=" butterflyImage butter_fly" src="assets/images/butterfly-4.webp" alt="Shape" />
 
       <Grid sx={{marginTop:"5rem"}} spacing={3} container item rowSpacing={1} columnSpacing={{ xs: 1, sm: 4, md: 4 }}>
@@ -42,11 +42,11 @@ const Stats = () => {
               <CardActionArea className="statsCardAction" sx={{ display: "flex", flexDirection: "column", textAlign: "center" }}>
                 <CardMedia component="img" height="140" sx={{ width: "5rem" }} image={data.image} alt="green iguana" />
                 <CardContent>
-                  <Typography className="statsNumber" gutterBottom variant="h5" component="div">
+                  <Typography className="statsNumber" gutterBottom variant="h5" component="Box">
                     {data.number}
                   </Typography>
-                  <Typography className="statsTitle"  variant="body2" color="text.secondary">
-                    {data.title}
+                  <Typography className="statsTitle" sx={{height:"5rem" , whiteSpace:isMobile ? 'wrap !important' : 'nowrap'}}  variant="body2" color="text.secondary">
+                    {data.title} 
                   </Typography>
                 </CardContent>
               </CardActionArea>
@@ -54,7 +54,7 @@ const Stats = () => {
           </Grid>
         ))}
       </Grid>
-    </div>
+    </Box>
   );
 };
 
