@@ -30,16 +30,16 @@ const customerHelpCommunicationDetailsChangeSchema = new Schema({
         type: String
     },
     city: {
-        type: String
+        type: Number
     },
     state: {
-        type: String
+        type: Number
     },
     pincode: {
         type: String
     },
     country: {
-        type: String
+        type: Number
     },
     ifPermanentAddressIsSameAsCorrespondence: {
         type: Boolean

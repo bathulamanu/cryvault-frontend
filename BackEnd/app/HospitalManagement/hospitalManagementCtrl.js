@@ -299,6 +299,9 @@ hospitalManagementCtrl.addHospitalDetails = async (req, res) => {
 hospitalManagementCtrl.getHospitalDetails = async (req, res) => {
     try {
         HospitalDetailsModel.find({ status: true }).then((response) => {
+            response.forEach(x=>{
+                x._doc['id'] = x._doc.HospitalID
+            })
             ResponseHandler.success(req, res, DisplayMessages.getHospitalDetails, response)
         })
             .catch((err) => {
@@ -443,7 +446,10 @@ hospitalManagementCtrl.addDoctorDetails = async (req, res) => {
 
 hospitalManagementCtrl.getDoctorDetails = async (req, res) => {
     try {
-        DoctorDetailsModel.find({ status: true }).then((response) => {
+        DoctorDetailsModel.find().then((response) => {
+            response.forEach(x=>{
+                x._doc['id'] = x._doc.doctorDetailsID
+            })
             ResponseHandler.success(req, res, DisplayMessages.getDoctorDetails, response)
         })
             .catch((err) => {

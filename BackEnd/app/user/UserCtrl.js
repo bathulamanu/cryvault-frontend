@@ -435,18 +435,23 @@ usersCtrl.employeeOrAdminForgotPwd = async (req, res) => {
         employeeModel.find({ email: req.body.email }).then(async (emp) => {
             if (emp && emp.length != 0) {
                 const token = crypto.randomBytes(20).toString('hex');
+                const expiryTime = Date.now() + 3600000;
                 const emailContent = await getAllEmailContent('Password Reset');
                 let Obj = {}
                 Obj['Content'] = "";
                 if (emailContent && emailContent.length != 0) {
-                    Obj['Content'] = emailContent[0].emailDescription.replace('${port}', '4000')
+                    // Obj['Content'] = emailContent[0].emailDescription.replace('http://localhost:${port}', 'http://localhost:4000')
+                    //     .replace('${token}', token);
+
+                    Obj['Content'] = emailContent[0].emailDescription.replace('http://localhost:${port}', 'http://18.61.230.105:4000')
                         .replace('${token}', token);
+
                 }
                 Obj['Subject'] = 'Flyingbyts Password Reset';
                 Obj['Email'] = emp[0].email;
                 Obj['Name'] = emp[0].firstName || '';
                 await sendEmail.EmailWithoutAttachment(Obj)
-                tokenResetPwdModel.create({ token: token, email: req.body.email });
+                tokenResetPwdModel.create({ token: token, email: req.body.email, expiryTime: expiryTime });
                 ResponseHandler.success(req, res, "Sent Email Succesfully", "");
             }
             else {
@@ -466,104 +471,23 @@ usersCtrl.employeeOrAdminResetPwd = async (req, res) => {
     try {
         const token = req.params.token;
 
-        // res.send(`<form action="/flyingbyts/api/user/employeeOrAdminResetPassword" method="POST">
-        //        <input type="hidden" name="token" value="${token}">
-        //        <input type="password" name="password" placeholder="New password">
-        //        <button type="submit">Reset Password</button>
-        //     </form>`);
+        tokenResetPwdModel.find({ token: token }).then((data) => {
 
-        res.send(`<!DOCTYPE html>
-            <html lang="en">
-            <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Password Reset</title>
-            <style>
-              body {
-                font-family: Arial, sans-serif;
-                background-color: #f4f4f4;
-                margin: 0;
-                padding: 0;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100vh;
-              }
-              
-              .reset-form {
-                background-color: #fff;
-                padding: 20px;
-                border-radius: 8px;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-                width: 300px;
-              }
-              
-              .reset-form h2 {
-                margin-top: 0;
-                font-size: 24px;
-                text-align: center;
-              }
-              
-              .reset-form input[type="password"] {
-                width: 100%;
-                padding: 10px;
-                margin-bottom: 15px;
-                border: 1px solid #ccc;
-                border-radius: 4px;
-                box-sizing: border-box;
-              }
-              
-              .reset-form button {
-                width: 100%;
-                background-color: #4CAF50;
-                color: white;
-                padding: 10px 0;
-                border: none;
-                border-radius: 4px;
-                cursor: pointer;
-              }
-              
-              .reset-form button:hover {
-                background-color: #45a049;
-              }
-              .error-message {
-                color: red;
-                margin-top: 10px;
-            }
-            </style>
-            </head>
-            <body>
-            
-            <div class="reset-form">
-              <h2>Password Reset</h2>
-              <form id="resetForm" action="/flyingbyts/api/user/employeeOrAdminResetPassword" method="POST">
-              <input type="hidden" name="token" value="${token}">
-              <input type="password" id="newPassword" name="newPassword" placeholder="New Password" required>
-              <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required>
-              <button type="submit">Reset Password</button>
-              <div id="errorMessage" class="error-message" style="display: none;"></div>      
-              </form>
-            </div>
-
-            <script>
-            const resetForm = document.getElementById('resetForm');
-            const newPasswordInput = document.getElementById('newPassword');
-            const confirmPasswordInput = document.getElementById('confirmPassword');
-            const errorMessage = document.getElementById('errorMessage');
-    
-            resetForm.addEventListener('submit', function(event) {
-                if (newPasswordInput.value !== confirmPasswordInput.value) {
-                    event.preventDefault();
-                    errorMessage.textContent = 'New and confirm passwords do not match.';
-                    errorMessage.style.display = 'block';
+            if (data && data.length != 0) {
+                if (data[0].status == true) {
+                    if (Date.now() > data[0].expiryTime) {
+                        res.render('sessionExpiry')
+                    }
+                    else {
+                        res.render('reset')
+                    }
                 }
-            });
-        </script>
-            
-            </body>
-            </html>
-            `)
+                else {
+                    res.render('sessionExpiry')
+                }
+            }
 
+        })
     }
     catch (err) {
         ResponseHandler.error(req, res, "", err);
@@ -573,64 +497,17 @@ usersCtrl.employeeOrAdminResetPwd = async (req, res) => {
 usersCtrl.employeeOrAdminResetPassword = async (req, res) => {
     try {
         const { token, newPassword } = req.body;
-        tokenResetPwdModel.find({ token: token, status: true }).then((data) => {
+
+        tokenResetPwdModel.find({ token: token, status: true }).then(async (data) => {
             if (data && data.length != 0) {
-                bcrypt.hash(newPassword, 10, function (err, hash) {
+                bcrypt.hash(newPassword, 10, async function (err, hash) {
                     if (err) {
                         ResponseHandler.error(req, res, "", err);
                     }
                     else {
+                        await tokenResetPwdModel.updateOne({ token: token }, { $set: { status: false } })
                         employeeModel.updateOne({ email: data[0].email }, { $set: { password: hash } }).then(async (emp) => {
-                            res.send(`<!DOCTYPE html>
-                            <html lang="en">
-                            <head>
-                                <meta charset="UTF-8">
-                                <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                                <title>Password Updated Successfully</title>
-                                <style>
-                                    body {
-                                        font-family: Arial, sans-serif;
-                                        margin: 0;
-                                        padding: 0;
-                                        background-color: #f5f5f5;
-                                        display: flex;
-                                        justify-content: center;
-                                        align-items: center;
-                                        height: 100vh;
-                                    }
-                            
-                                    .container {
-                                        text-align: center;
-                                    }
-                            
-                                    .success-message {
-                                        color: #4CAF50;
-                                        font-size: 24px;
-                                    }
-                            
-                                    .redirect-message {
-                                        margin-top: 20px;
-                                        color: #333;
-                                    }
-                            
-                                    .redirect-message a {
-                                        color: #007bff;
-                                        text-decoration: none;
-                                    }
-                            
-                                    .redirect-message a:hover {
-                                        text-decoration: underline;
-                                    }
-                                </style>
-                            </head>
-                            <body>
-                                <div class="container">
-                                    <div class="success-message">Password Updated Successfully!</div>
-                                    <div class="redirect-message">click here to redirect to <a href="/">home page</a>.</div>
-                                </div>
-                            </body>
-                            </html>
-                            `);
+                            res.render('updatePwd')
                         })
                             .catch((err) => {
                                 ResponseHandler.error(req, res, "", err);
@@ -639,56 +516,7 @@ usersCtrl.employeeOrAdminResetPassword = async (req, res) => {
                 })
             }
             else {
-                res.send(`<!DOCTYPE html>
-                <html lang="en">
-                <head>
-                    <meta charset="UTF-8">
-                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                    <title>Password Updated Successfully</title>
-                    <style>
-                        body {
-                            font-family: Arial, sans-serif;
-                            margin: 0;
-                            padding: 0;
-                            background-color: #f5f5f5;
-                            display: flex;
-                            justify-content: center;
-                            align-items: center;
-                            height: 100vh;
-                        }
-                
-                        .container {
-                            text-align: center;
-                        }
-                
-                        .success-message {
-                            color: red;
-                            font-size: 24px;
-                        }
-                
-                        .redirect-message {
-                            margin-top: 20px;
-                            color: #333;
-                        }
-                
-                        .redirect-message a {
-                            color: #007bff;
-                            text-decoration: none;
-                        }
-                
-                        .redirect-message a:hover {
-                            text-decoration: underline;
-                        }
-                    </style>
-                </head>
-                <body>
-                    <div class="container">
-                        <div class="success-message">User Not Found</div>
-                    </div>
-                </body>
-                </html>
-                `);
-
+                res.render('tokenExpiry')               
             }
         })
             .catch((err) => {
@@ -700,27 +528,27 @@ usersCtrl.employeeOrAdminResetPassword = async (req, res) => {
     }
 }
 
-// usersCtrl.addSuperAdmin = async (req, res) => {
-//     try {
-//         bcrypt.hash(req.body.password, 10, function (err, hash) {
-//             if (err) {
-//                 ResponseHandler.error(req, res, "", err);
-//             }
-//             else {
-//                 req.body.password = hash;
-//                 employeeModel.create(req.body).then((response) => {
-//                     ResponseHandler.success(req, res, DisplayMessages.addingEmployee, "")
-//                 })
-//                     .catch((err) => {
-//                         ResponseHandler.error(req, res, "", err);
-//                     })
-//             }
-//         });
-//     }
-//     catch (err) {
-//         ResponseHandler.error(req, res, '', err)
-//     }
-// }
+usersCtrl.addSuperAdmin = async (req, res) => {
+    try {
+        bcrypt.hash(req.body.password, 10, function (err, hash) {
+            if (err) {
+                ResponseHandler.error(req, res, "", err);
+            }
+            else {
+                req.body.password = hash;
+                employeeModel.create(req.body).then((response) => {
+                    ResponseHandler.success(req, res, DisplayMessages.addingEmployee, "")
+                })
+                    .catch((err) => {
+                        ResponseHandler.error(req, res, "", err);
+                    })
+            }
+        });
+    }
+    catch (err) {
+        ResponseHandler.error(req, res, '', err)
+    }
+}
 
 
 async function sendSMS(recipient) {

@@ -34,9 +34,9 @@ const HospitalBranchSchema = new Schema({
         addressLine1: String,
         addressLine2: String,
         nearLandMark: String,
-        country: String,
-        state: String,
-        city: String,
+        country: Number,
+        state: Number,
+        city: Number,
         pincode: String,
         latitude: String,
         longitude: String

@@ -1627,7 +1627,7 @@ common.UpdateMasterConfiguration = async (req, res) => {
 
 common.getMasterConfiguration = async (req, res) => {
     try {
-        masterConfigurationModel.find({ status: true }).then((response) => {
+        masterConfigurationModel.find({ status: true,title:req.params.title }).then((response) => {
             ResponseHandler.success(req, res, DisplayMessages.getMasterConfiguration, response)
         })
             .catch((err) => {

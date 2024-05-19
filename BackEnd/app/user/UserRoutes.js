@@ -1,6 +1,7 @@
 var userCtrl = require("./UserCtrl");
 var auth = require('../../utils/Auth').token;
 
+
 module.exports = (app) => {
     
     app.post('/flyingbyts/api/user/customerRegisterOrLogin', userCtrl.customerSignUpOrLogin);

@@ -7,12 +7,20 @@ const doctorDetailsSchema = new Schema({
     doctorDetailsID: {
         type: Number
     },
-    doctorName: {
+    doctorFirstName: {
+        type: String,
+        required: true
+    },
+    doctorLastName: {
+        type: String
+    },
+    doctorID: {
         type: String,
         required: true
     },
     doctorProfile: {
-        type: String
+        type: String,
+        default:""
     },
     qualification: [
         { qualificationId: Number }
@@ -20,48 +28,69 @@ const doctorDetailsSchema = new Schema({
     specialist: [{
         specilizationID: Number
     }],
+    location: {
+        type: Number
+    },
     DOB: {
         type: Date
     },
-    IMR_Register_ID: {
+    IMRregisterID: {
         type: String
     },
-    Blog: {
-        type: String
-    },
-    Experience: {
-        type: String
-    },
-    Employ_Id: {
-        type: String
-    },
-    Gender: {
+    experience: {
         type: Number
     },
-    Email: {
+    gender: {
+        type: Number
+    },
+    email: {
         type: String
     },
-    Doctor_Bio: {
+    countryCode:{
         type: String
     },
-    Previous_Experience: {
+    phoneNumber: {
         type: String
     },
-    Doctor_Address: {
+    doctorBio: {
+        type: String
+    },
+    previousExperience: [{
+        country: Number,
+        state: Number,
+        city: Number,
+        specialist: [{
+            specilizationID: Number
+        }],
+        hospitalAddress: String,
+        experience: Number,
+        employmentType: Number,
+        startDate: Date,
+        endDate: Date,
+        currentlyWorking: {
+            type: Boolean,
+            default: false
+        },
+        description: String
+    }],
+    doctorAddress: {
         addressLine1: String,
         addressLine2: String,
         nearLandMark: String,
-        country: String,
-        state: String,
-        city: String,
+        country: Number,
+        state: Number,
+        city: Number,
         pincode: String
     },
-    contact: {
-        phoneNumber: String,
-        alterNativePhoneNumber: String,
-        landLine: String,
-        emergencyNumber: String
+    sociallink: {
+        facebook: String,
+        instagram: String,
+        twitter: String,
+        LinkedIn: String,
+        youtube: String,
+        pinterest: String
     },
+    websiteLinks: [{ link: String }],
     updatedBy: {
         type: Number
     },

@@ -116,16 +116,16 @@ const customerAnnexureInformationModel = new Schema({
             default: ""
         },
         City: {
-            type: String,
-            default: ""
+            type: Number,
+            default: null
         },
         State: {
-            type: String,
-            default: ""
+            type: Number,
+            default: null
         },
         Country: {
-            type: String,
-            default: ""
+            type: Number,
+            default: null
         },
         PinCode: {
             type: String,
@@ -140,16 +140,16 @@ const customerAnnexureInformationModel = new Schema({
             default: ""
         },
         PermanentAddressCity: {
-            type: String,
-            default: ""
+            type: Number,
+            default: null
         },
         PermanentAddressState: {
-            type: String,
-            default: ""
+            type: Number,
+            default: null
         },
         PermanentAddressCountry: {
-            type: String,
-            default: ""
+            type: Number,
+            default: null
         },
         PermanentAddressPinCode: {
             type: String,
@@ -183,16 +183,16 @@ const customerAnnexureInformationModel = new Schema({
             default: ""
         },
         ConsultingHosptalCity: {
-            type: String,
-            default: ""
+            type: Number,
+            default: null
         },
         ConsultingHospitalState: {
-            type: String,
-            default: ""
+            type: Number,
+            default: null
         },
         ConsultingHospitalCountry: {
-            type: String,
-            default: ""
+            type: Number,
+            default: null
         },
         ConsultingHospitalPinCode: {
             type: String,
@@ -216,16 +216,16 @@ const customerAnnexureInformationModel = new Schema({
             default: ""
         },
         DeliveringHosptalCity: {
-            type: String,
-            default: ""
+            type: Number,
+            default: null
         },
         DeliveringHospitalState: {
-            type: String,
-            default: ""
+            type: Number,
+            default: null
         },
         DeliveringHospitalCountry: {
-            type: String,
-            default: ""
+            type: Number,
+            default: null
         },
         DeliveringHospitalPinCode: {
             type: String,

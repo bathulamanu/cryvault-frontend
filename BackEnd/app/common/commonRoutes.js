@@ -109,7 +109,7 @@ module.exports = (app) => {
 
     app.post('/flyingbyts/api/user/addMasterConfiguration', auth, commonCtrl.addMasterConfiguration);
     app.put('/flyingbyts/api/user/UpdateMasterConfiguration/:masterConfigurationID', auth, commonCtrl.UpdateMasterConfiguration);
-    app.get('/flyingbyts/api/user/getMasterConfiguration', auth, commonCtrl.getMasterConfiguration);
+    app.get('/flyingbyts/api/user/getMasterConfiguration/:title', auth, commonCtrl.getMasterConfiguration);
     app.delete('/flyingbyts/api/user/deleteMasterConfiguration/:masterConfigurationID', auth, commonCtrl.deleteMasterConfiguration);
   
 }
