@@ -23,11 +23,19 @@ const HospitalSchema = new Schema({
         from: Date,
         to: Date
     },
+    faxNumber: {
+        type: String
+    },
     email: {
         type: String
     },
     website: {
         type: String
+    },
+    contact: {
+        phoneNumber: String,
+        AlterNativePhoneNumber: String,
+        landLine: String
     },
     sociallink: {
         facebook: String,
@@ -36,7 +44,8 @@ const HospitalSchema = new Schema({
         LinkedIn: String,
         youtube: String,
         pinterest: String,
-        googleMap: String
+        googleMap: String,
+        otherLink:String
     },
     HospitalAddress: {
         addressLine1: String,
