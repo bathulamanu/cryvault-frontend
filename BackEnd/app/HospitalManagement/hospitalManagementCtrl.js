@@ -334,6 +334,8 @@ hospitalManagementCtrl.getHospitalDetails = async (req, res) => {
                     hos["createdTime"] = x.createdTime
                     hos["HospitalID"] = x.HospitalID
                     hos['HospitalAddress'] = x.HospitalAddress
+                    hos['contact'] = x.contact
+                    hos['faxNumber'] = x.faxNumber
                     if (x.locationDetails && x.locationDetails.length != 0) {
                         hos['LocationInfo'] = {
                             cityID: x.locationDetails[0].cityID,
