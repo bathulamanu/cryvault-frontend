@@ -298,11 +298,64 @@ hospitalManagementCtrl.addHospitalDetails = async (req, res) => {
 
 hospitalManagementCtrl.getHospitalDetails = async (req, res) => {
     try {
-        HospitalDetailsModel.find({ status: true }).then((response) => {
-            response.forEach(x => {
-                x._doc['id'] = x._doc.HospitalID
-            })
-            ResponseHandler.success(req, res, DisplayMessages.getHospitalDetails, response)
+        HospitalDetailsModel.aggregate([
+            {
+                $lookup: {
+                    from: "cities",
+                    localField: "HospitalAddress.city",
+                    foreignField: "cityID",
+                    as: "locationDetails"
+                }
+            },
+            {
+                $lookup: {
+                    from: "masterconfigurations",
+                    localField: "specialist.specializationID",
+                    foreignField: "masterConfigurationID",
+                    as: "specializationDetails"
+                }
+            }
+        ]).then((response) => {
+            let checkHo = [];
+            if (response && response.length != 0) {
+                response.forEach(x => {
+                    let hos = {}
+                    hos['specialist'] = [];
+                    hos['id'] = x.HospitalID;
+                    hos["hospitalName"] = x.hospitalName
+                    hos["hospitalLogo"] = x.hospitalLogo
+                    hos["about"] = x.about
+                    hos["LicenseNumber"] = x.LicenseNumber
+                    hos["validity"] = x.validity
+                    hos["email"] = x.email
+                    hos["website"] = x.website
+                    hos["sociallink"] = x.sociallink
+                    hos["status"] = x.status
+                    hos["createdTime"] = x.createdTime
+                    hos["HospitalID"] = x.HospitalID
+                    hos['HospitalAddress'] = x.HospitalAddress
+                    if (x.locationDetails && x.locationDetails.length != 0) {
+                        hos['LocationInfo'] = {
+                            cityID: x.locationDetails[0].cityID,
+                            cityName: x.locationDetails[0].name,
+                            stateID: x.locationDetails[0].stateID,
+                            stateName: x.locationDetails[0].stateName,
+                            countryID: x.locationDetails[0].countryID,
+                            countryName: x.locationDetails[0].countryName
+                        }
+                    }
+                    x.specializationDetails.forEach(y => {
+                        hos['specialist'].push({
+                            specilizationID: y.masterConfigurationID,
+                            value: y.value
+                        })
+                    })
+                    checkHo.push(hos)
+
+                })
+            }
+
+            ResponseHandler.success(req, res, DisplayMessages.getHospitalDetails, checkHo)
         })
             .catch((err) => {
                 ResponseHandler.error(req, res, "", err);
