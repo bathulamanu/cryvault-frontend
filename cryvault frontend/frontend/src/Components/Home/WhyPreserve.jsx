@@ -9,14 +9,14 @@ const WhyPreserve = () => {
 
   return (
     <>
-      <div style={{ backgroundColor: "#88D4F2", position: "relative", marginTop: "80rem" }}>
+      <div style={{ backgroundColor: "#88D4F2", position: "relative", marginTop: "55rem" }}>
         <img className="basketball" src="https://www.cryovault.in/wp-content/uploads/2024/01/busket-ball.png" alt=""></img>
 
         <div className="whyPreserveContent" style={{ padding: isMobile ? "10rem 2rem" : "15rem" }}>
           <Typography variant="h3" sx={{ textAlign: "center", color: "#00215C", fontWeight: "600" }}>
             Why Preserve Your Newborn Stem Cells
           </Typography>
-          <div className="shape_in">
+          <div className={isMobile ? "shape_inMobile " :"shape_in "}>
             {" "}
             <img src="assets/images/med-img.svg" width="30" />
           </div>
@@ -41,7 +41,7 @@ export const WhyPreserveCards = React.memo(() => {
 
   return (
     <Grid
-    container item
+     item
       spacing={4}
       sx={{
         padding: isMobile ? " 0rem 3rem" : "4rem 6rem",

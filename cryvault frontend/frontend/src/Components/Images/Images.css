@@ -1,0 +1,38 @@
+.singleCategory {
+  font-family: "Arbutus Slab", Sans-serif;
+  font-size: 2.5rem;
+  letter-spacing: 0.8px;
+  color: black;
+  margin: 4rem 0rem;
+  text-align: center;
+}
+.activeSingleCategory {
+  font-family: "Arbutus Slab", Sans-serif;
+  font-size: 2.5rem;
+  letter-spacing: 0.8px;
+  color: white;
+  background: #ff0025;
+  text-align: center;
+  margin: 4rem 0rem;
+}
+.singleCategory:hover {
+  color: white;
+  background: #ff0025;
+}
+
+.gallerImg {
+    background-color: transparent !important;
+    box-shadow: none !important;
+    -webkit-box-flex: 1 !important;
+    -webkit-flex: 1 !important;
+    -ms-flex: 1 !important;
+    flex: 1 !important;
+    padding: 0 !important;
+}
+
+
+.edu-blog.blog-style-list .thumbnail img {
+    width: 100% !important ;
+    height: 100% !important;
+    object-fit: cover;
+}

@@ -1,0 +1,56 @@
+import { Box, Button, Container, Link, Rating, Typography } from "@mui/material";
+import React, { useState, useEffect } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
+import { A11y, Navigation, Pagination, Scrollbar } from "swiper/modules";
+import useDeviceSize from "../../Utilities/useDeviceSize";
+import SwiperCore from "swiper";
+import './Images.css'
+
+const GalleryImagesCategory = () => {
+  const isMobile = useDeviceSize() === "xs"
+  const [categoryActiveTab, setCategoryActiveTab] = useState("All");
+  const categories = ["All", "Mothers", "Cat 3", "Cat 4", "Cat 5"];
+
+  const handleCategoryClick = (category) => {
+    setCategoryActiveTab(category);
+  };
+
+
+  return (
+    <Container>
+      <Swiper
+        slidesPerView={ isMobile ? 3 : categories.length}
+        modules={[Navigation, Pagination, A11y]}
+        spaceBetween={10}
+        autoplay={{
+          delay: 2500,
+          disableOnInteraction: false,
+        }}
+      >
+        {categories.map((category) => (
+          <SwiperSlide key={category}>
+            <Box
+              style={{
+                border: "1px solid red",
+                cursor: "pointer",
+              }}
+              onClick={() => handleCategoryClick(category)}
+              className={categoryActiveTab === category ? " activeSingleCategory" : "singleCategory"}
+            >
+              {category}
+            </Box>
+          </SwiperSlide>
+        ))}
+      </Swiper>
+      {/* <div className="swiper-button-next"></div> */}
+      {/* <div className="swiper-button-prev"></div> */}
+      {/* <div className="swiper-pagination"></div> */}
+    </Container>
+  );
+};
+
+export default GalleryImagesCategory;

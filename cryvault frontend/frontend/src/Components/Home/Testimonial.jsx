@@ -1,4 +1,4 @@
-import { Button, Container, Link, Typography } from "@mui/material";
+import { Button, Container, Link, Typography,Box } from "@mui/material";
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -7,12 +7,13 @@ import "swiper/css/pagination";
 import "swiper/css/scrollbar";
 import { A11y, Navigation, Pagination, Scrollbar } from "swiper/modules";
 import useDeviceSize from "../../Utilities/useDeviceSize";
+import "./Home.css";
 
 const Testimonial = () => {
   const isMobile = useDeviceSize() === "xs";
 
   return (
-    <div style={{ position: "relative", marginBottom:isMobile ?"5rem" : "15rem", marginTop:   "15rem", paddingTop: "10rem", paddingBottom: isMobile ?"0rem" : "10rem" }} className="testimonailContainer">
+    <Box style={{ position: "relative", marginBottom:isMobile ?"5rem" : "15rem", marginTop: isMobile ? "5rem"  : "15rem", paddingTop: "10rem", paddingBottom: isMobile ?"0rem" : "10rem" }} className="testimonailContainer">
       {isMobile ? null : (
         <>
           {" "}
@@ -21,7 +22,7 @@ const Testimonial = () => {
           <img src="assets/images/testimonial-3-icon-hand.webp" className="position-ab thumbg-img" alt="pencil" />
         </>
       )}
-      <div className=" testimonialAboveImage" data-negative="false">
+      <Box className=" testimonialAboveImage" data-negative="false">
         <svg style={{ position: "absolute", top: "100px" }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none">
           <path
             style={{
@@ -36,20 +37,19 @@ const Testimonial = () => {
 	c21.2-8.1,52.2-18.2,79.7-24.2C399.3,7.9,411.6,7.5,421.9,6.5z"
           ></path>
         </svg>{" "}
-      </div>
-      <div className="section-title section-center">
+      </Box>
+      <Box className="section-title section-center">
         <span className="pre-title reviw_out">Business</span>
         <Typography variant="h2">
           What <span style={{ color: "#EF636D" }}> Parents </span> say
         </Typography>
-        <div className="shape_in shape_in-bk" style={{ display: "flex", justifyContent: "center" }}>
-          {" "}
+        <Box className={isMobile ? "shape_inMobileTestimonial shape_inMobileTestimonial-bk" : "shape_in shape_in-bk"} style={{ display: "flex", justifyContent: "center" }}>
           <img src="assets/images/med-img blk.svg" width="30" />
-        </div>
+        </Box>
         <Typography className="mb-0">
           Let’s start the journey towards success and enhance revenue for your<br></br> business. Take your company to the next level.
         </Typography>
-      </div>
+      </Box>
 
       <Container>
         <Swiper
@@ -72,7 +72,7 @@ const Testimonial = () => {
           </SwiperSlide>
         </Swiper>
       </Container>
-    </div>
+    </Box>
   );
 };
 
@@ -81,15 +81,15 @@ export const SingleSlide = React.memo(() => {
 
   return (
     <>
-      <div className="singleSlide" style={{ width: isMobile ? "100%" : "65%" }}>
-        <div className="quote-icon">
+      <Box className="singleSlide" style={{ width: isMobile ? "100%" : "65%" }}>
+        <Box className="quote-icon">
           <img src="assets/images/quote.svg" alt="quote svg" style={{ width: "4rem" }} />
-        </div>
+        </Box>
         <p>"I am grateful to Cryovault for providing top-notch stem cell storage services. Their knowledgeable staff guided us through the process with ease, giving us peace of mind knowing that our baby's future health is in good hands."</p>
-        <div className="d-flex align-items-center avatr_blk">
+        <Box className="d-flex align-items-center avatr_blk">
           <img src="assets/images/Praveen-Kumar.webp" alt="quote svg" /> <h5 className="title">Praveen</h5>
-        </div>
-      </div>
+        </Box>
+      </Box>
     </>
   );
 });

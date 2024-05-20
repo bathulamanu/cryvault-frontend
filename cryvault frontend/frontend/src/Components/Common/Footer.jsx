@@ -1,12 +1,20 @@
 import { Image } from "@mui/icons-material";
-import { Typography,Container } from "@mui/material";
-import React from "react";
+import { Typography, Container } from "@mui/material";
+import React, { useEffect } from "react";
 import { FaMapMarkerAlt } from "react-icons/fa";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { fetchSocialIcons } from "../../redux/reducers/HomePageReducer";
 
 const Footer = () => {
+  const dispatch = useDispatch();
+  const data = useSelector((state) => state.home);
+  const socialIcons = data && data.socialIcons && data.socialIcons && data.socialIcons.data && data.socialIcons.data[0]
+  useEffect(() => {
+    dispatch(fetchSocialIcons())
+  }, []);
   return (
-    <footer style={{marginTop:"10rem"}} className="edu-footer footer-lighten bg-image footer-style-1">
+    <footer style={{ marginTop: "10rem" }} className="edu-footer footer-lighten bg-image footer-style-1">
       <div className="footer-top">
         <div className="container">
           <div className="row g-5">
@@ -14,10 +22,10 @@ const Footer = () => {
               <div className="edu-footer-widget">
                 <h4 className="widget-title">About Us</h4>
                 <img className="logo-light" src="assets/images/heading-icon1.webp" alt="" />
-                <p className="description">Cryovault is India’s own Umbilical cord blood stem cell preservation center.</p>
+                <p className="description">{socialIcons?.description}</p>
                 <div className="widget-information">
                   <Typography>Trusted By Millions of People</Typography>
-                  <Container sx={{display:"flex"}}>
+                  <Container sx={{ display: "flex" }}>
                     <Typography fontSize={15} color={"#FF0046 !important"}>
                       Accreditations & License
                     </Typography>
@@ -70,7 +78,7 @@ const Footer = () => {
                 <img className="logo-light" src="assets/images/heading-icon1.webp" alt="" />
                 <ul className="information-list">
                   <li>
-                    <Container sx={{display:"flex", justifyContent:"space-between",alignItems:"center", padding:"0 !important"}}>
+                    <Container sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "0 !important" }}>
                       <span>
                         <FaMapMarkerAlt color="#FF0046" />
                       </span>
@@ -155,8 +163,6 @@ const Footer = () => {
                 </div>
               </div>
             </div>
-
-            
           </div>
         </div>
       </div>
@@ -165,14 +171,8 @@ const Footer = () => {
           <div className="row">
             <div className="col-lg-12">
               <div className="inner text-center">
-                <Container sx={{display:"flex", justifyContent:"space-between"}}>
-                  {/* dangerouslySetInnerHTML={{ __html: copyrights }} */}
-                  <p>
-                    Copyright 2024, All Rights Reserved . Powered by{" "}
-                    <a style={{ color: "#d5008d", cursor: "pointer" }} to="#" target="_blank">
-                      {" "}
-                      Cryovault
-                    </a>{" "}
+                <Container sx={{ display: "flex", justifyContent: "space-between" }}>
+                  <p dangerouslySetInnerHTML={{ __html: socialIcons?.footerCopyright }} >
                   </p>
                   <p>
                     {" "}
