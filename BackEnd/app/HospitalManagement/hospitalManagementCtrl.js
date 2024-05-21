@@ -298,11 +298,66 @@ hospitalManagementCtrl.addHospitalDetails = async (req, res) => {
 
 hospitalManagementCtrl.getHospitalDetails = async (req, res) => {
     try {
-        HospitalDetailsModel.find({ status: true }).then((response) => {
-            response.forEach(x=>{
-                x._doc['id'] = x._doc.HospitalID
-            })
-            ResponseHandler.success(req, res, DisplayMessages.getHospitalDetails, response)
+        HospitalDetailsModel.aggregate([
+            {
+                $lookup: {
+                    from: "cities",
+                    localField: "HospitalAddress.city",
+                    foreignField: "cityID",
+                    as: "locationDetails"
+                }
+            },
+            {
+                $lookup: {
+                    from: "masterconfigurations",
+                    localField: "specialist.specializationID",
+                    foreignField: "masterConfigurationID",
+                    as: "specializationDetails"
+                }
+            }
+        ]).then((response) => {
+            let checkHo = [];
+            if (response && response.length != 0) {
+                response.forEach(x => {
+                    let hos = {}
+                    hos['specialist'] = [];
+                    hos['id'] = x.HospitalID;
+                    hos["hospitalName"] = x.hospitalName
+                    hos["hospitalLogo"] = x.hospitalLogo
+                    hos["about"] = x.about
+                    hos["LicenseNumber"] = x.LicenseNumber
+                    hos["validity"] = x.validity
+                    hos["email"] = x.email
+                    hos["website"] = x.website
+                    hos["sociallink"] = x.sociallink
+                    hos["status"] = x.status
+                    hos["createdTime"] = x.createdTime
+                    hos["HospitalID"] = x.HospitalID
+                    hos['HospitalAddress'] = x.HospitalAddress
+                    hos['contact'] = x.contact
+                    hos['faxNumber'] = x.faxNumber
+                    if (x.locationDetails && x.locationDetails.length != 0) {
+                        hos['LocationInfo'] = {
+                            cityID: x.locationDetails[0].cityID,
+                            cityName: x.locationDetails[0].name,
+                            stateID: x.locationDetails[0].stateID,
+                            stateName: x.locationDetails[0].stateName,
+                            countryID: x.locationDetails[0].countryID,
+                            countryName: x.locationDetails[0].countryName
+                        }
+                    }
+                    x.specializationDetails.forEach(y => {
+                        hos['specialist'].push({
+                            specilizationID: y.masterConfigurationID,
+                            value: y.value
+                        })
+                    })
+                    checkHo.push(hos)
+
+                })
+            }
+
+            ResponseHandler.success(req, res, DisplayMessages.getHospitalDetails, checkHo)
         })
             .catch((err) => {
                 ResponseHandler.error(req, res, "", err);
@@ -446,11 +501,274 @@ hospitalManagementCtrl.addDoctorDetails = async (req, res) => {
 
 hospitalManagementCtrl.getDoctorDetails = async (req, res) => {
     try {
-        DoctorDetailsModel.find().then((response) => {
-            response.forEach(x=>{
-                x._doc['id'] = x._doc.doctorDetailsID
+        DoctorDetailsModel.aggregate([
+            {
+                $lookup: {
+                    from: "cities",
+                    localField: "location",
+                    foreignField: "cityID",
+                    as: "cityDetails"
+                }
+            },
+            {
+                $lookup: {
+                    from: "masterconfigurations",
+                    localField: "experience",
+                    foreignField: "masterConfigurationID",
+                    as: "ExperienceDetails"
+                }
+            },
+            {
+                $lookup: {
+                    from: "masterconfigurations",
+                    localField: "specialist.specilizationID",
+                    foreignField: "masterConfigurationID",
+                    as: "specilizationDetails"
+                }
+            }
+        ]).then((response) => {
+            var allDoctorDeatails = [];
+
+            response.forEach(x => {
+                let obj = {};
+                obj['doctorFirstName'] = x.doctorFirstName;
+                obj['doctorLastName'] = x.doctorLastName;
+                obj['doctorID'] = x.doctorID;
+                obj['doctorProfile'] = x.doctorProfile;
+                obj['IMRregisterID'] = x.IMRregisterID;
+                obj['countryCode'] = x.countryCode;
+                obj['phoneNumber'] = x.phoneNumber;
+                obj['status'] = x.status;
+                obj['doctorDetailsID'] = x.doctorDetailsID;
+                obj['specilizationInfo'] = [];
+                obj['id'] = x.doctorDetailsID;
+                obj['cityInfo'] = {
+                    cityID: x.cityDetails[0].cityID,
+                    name: x.cityDetails[0].name
+                }
+                obj['experienceInfo'] = {
+                    experienceID: x.ExperienceDetails[0].masterConfigurationID,
+                    value: x.ExperienceDetails[0].value
+                }
+                x.specilizationDetails.forEach(y => {
+                    obj['specilizationInfo'].push({
+                        specilizationID: y.masterConfigurationID,
+                        value: y.value
+                    })
+                })
+                allDoctorDeatails.push(obj)
+
             })
-            ResponseHandler.success(req, res, DisplayMessages.getDoctorDetails, response)
+            ResponseHandler.success(req, res, DisplayMessages.getDoctorDetails, allDoctorDeatails)
+        })
+            .catch((err) => {
+                ResponseHandler.error(req, res, "", err);
+            })
+    }
+    catch (err) {
+        ResponseHandler.error(req, res, '', err)
+    }
+}
+
+async function getDoctorPreviousExperienceDetails(doctorDetailsID) {
+    try {
+        return new Promise(async (resolve, reject) => {
+            DoctorDetailsModel.aggregate([
+                {
+                    $match: {
+                        doctorDetailsID: Number(doctorDetailsID)
+                    }
+                },
+                {
+                    $lookup: {
+                        from: "cities",
+                        localField: "previousExperience.city",
+                        foreignField: "cityID",
+                        as: "previouscityDetails"
+                    }
+                },
+                {
+                    $lookup: {
+                        from: "masterconfigurations",
+                        localField: "previousExperience.experience",
+                        foreignField: "masterConfigurationID",
+                        as: "previousExperienceDetails"
+                    }
+                },
+                {
+                    $lookup: {
+                        from: "masterconfigurations",
+                        localField: "previousExperience.employmentType",
+                        foreignField: "masterConfigurationID",
+                        as: "previousEmploymentTypeDetails"
+                    }
+                },
+                {
+                    $lookup: {
+                        from: "masterconfigurations",
+                        localField: "previousExperience.specialist.specilizationID",
+                        foreignField: "masterConfigurationID",
+                        as: "previousSpecilizationDetails"
+                    }
+                }
+            ]).then(async (response) => {
+                if (response && response.length != 0) {
+                    let sur = response[0];
+                    var somearr = [];
+                    if (sur.previousExperience && sur.previousExperience.length != 0) {
+                        sur.previousExperience.forEach(xx => {
+                            let eachObj = {}
+                            eachObj['specilizationInfo'] = [];
+                            eachObj['hospitalAddress'] = xx.hospitalAddress
+                            eachObj['startDate'] = xx.startDate
+                            eachObj['endDate'] = xx.endDate
+                            eachObj['currentlyWorking'] = xx.currentlyWorking
+                            eachObj['description'] = xx.description
+                            eachObj['_id'] = xx._id
+                            eachObj['LocationInfo'] = {
+                                cityID: sur.previouscityDetails[0].cityID,
+                                cityName: sur.previouscityDetails[0].name,
+                                stateID: sur.previouscityDetails[0].stateID,
+                                stateName: sur.previouscityDetails[0].stateName,
+                                countryID: sur.previouscityDetails[0].countryID,
+                                countryName: sur.previouscityDetails[0].countryName
+                            }
+                            eachObj['experienceInfo'] = {
+                                experienceID: sur.previousExperienceDetails[0].masterConfigurationID,
+                                value: sur.previousExperienceDetails[0].value
+                            }
+                            eachObj['employmentTypeInfo'] = {
+                                employmentTypeID: sur.previousEmploymentTypeDetails[0].masterConfigurationID,
+                                value: sur.previousEmploymentTypeDetails[0].description
+                            }
+                            sur.previousSpecilizationDetails.forEach(y => {
+                                eachObj['specilizationInfo'].push({
+                                    specilizationID: y.masterConfigurationID,
+                                    value: y.value
+                                })
+                            })
+
+                            somearr.push(eachObj)
+                        })
+                    }
+                    resolve(somearr);
+                }
+            })
+                .catch((err) => {
+                    ResponseHandler.error(req, res, "", err);
+                })
+
+        })
+
+    }
+    catch (err) {
+        ResponseHandler.error(req, res, '', err)
+    }
+}
+
+
+hospitalManagementCtrl.getEachDoctorDetails = async (req, res) => {
+    try {
+        DoctorDetailsModel.aggregate([
+            {
+                $match: {
+                    doctorDetailsID: Number(req.params.doctorDetailsID)
+                }
+            },
+            {
+                $lookup: {
+                    from: "cities",
+                    localField: "location",
+                    foreignField: "cityID",
+                    as: "cityDetails"
+                }
+            },
+            {
+                $lookup: {
+                    from: "masterconfigurations",
+                    localField: "experience",
+                    foreignField: "masterConfigurationID",
+                    as: "ExperienceDetails"
+                }
+            },
+            {
+                $lookup: {
+                    from: "masterconfigurations",
+                    localField: "gender",
+                    foreignField: "masterConfigurationID",
+                    as: "genderDetails"
+                }
+            },
+            {
+                $lookup: {
+                    from: "masterconfigurations",
+                    localField: "qualification.qualificationId",
+                    foreignField: "masterConfigurationID",
+                    as: "qualificationDetails"
+                }
+            },
+            {
+                $lookup: {
+                    from: "masterconfigurations",
+                    localField: "specialist.specilizationID",
+                    foreignField: "masterConfigurationID",
+                    as: "specilizationDetails"
+                }
+            }
+        ]).then(async (response) => {
+            if (response && response.length != 0) {
+                var doc = response[0];
+
+                let obj = {};
+
+                obj['doctorFirstName'] = doc.doctorFirstName;
+                obj['doctorLastName'] = doc.doctorLastName;
+                obj['doctorID'] = doc.doctorID;
+                obj['doctorProfile'] = doc.doctorProfile;
+                obj['DOB'] = doc.DOB;
+                obj['IMRregisterID'] = doc.IMRregisterID;
+                obj['email'] = doc.email;
+                obj['countryCode'] = doc.countryCode;
+                obj['phoneNumber'] = doc.phoneNumber;
+                obj['doctorBio'] = doc.doctorBio;
+                // obj['previousExperience'] = doc.previousExperience;
+                obj['websiteLinks'] = doc.websiteLinks;
+                obj['status'] = doc.status;
+                obj['doctorDetailsID'] = doc.doctorDetailsID;
+                obj['sociallink'] = doc.sociallink
+                obj['specilizationInfo'] = [];
+                obj['qualificationInfo'] = []
+                obj['id'] = doc.doctorDetailsID;
+                obj['cityInfo'] = {
+                    cityID: doc.cityDetails[0].cityID,
+                    name: doc.cityDetails[0].name
+                }
+                obj['experienceInfo'] = {
+                    experienceID: doc.ExperienceDetails[0].masterConfigurationID,
+                    value: doc.ExperienceDetails[0].value
+                }
+                obj['genderInfo'] = {
+                    genderID: doc.genderDetails[0].masterConfigurationID,
+                    value: doc.genderDetails[0].value
+                }
+                doc.specilizationDetails.forEach(y => {
+                    obj['specilizationInfo'].push({
+                        specilizationID: y.masterConfigurationID,
+                        value: y.value
+                    })
+                })
+                doc.qualificationDetails.forEach(y => {
+                    obj['qualificationInfo'].push({
+                        qualificationID: y.masterConfigurationID,
+                        value: y.value
+                    })
+                })
+                obj['previousExperience'] = await getDoctorPreviousExperienceDetails(req.params.doctorDetailsID)
+                ResponseHandler.success(req, res, DisplayMessages.getDoctorDetails, obj);
+            }
+            else {
+                ResponseHandler.error(req, res, "User Not Found", "");
+            }
         })
             .catch((err) => {
                 ResponseHandler.error(req, res, "", err);
