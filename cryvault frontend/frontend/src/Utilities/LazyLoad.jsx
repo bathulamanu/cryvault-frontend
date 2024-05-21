@@ -11,7 +11,7 @@ import useDeviceSize from "./useDeviceSize";
 // import Vision from "Pages/Vision";
 // import Carrer from "Pages/Carrers";
 // import Franchise from "Pages/Franchise";
-// import SingleBanking from "Pages/StemcellBanking";
+import StemCellBanking from "../Pages/StemCellBanking";
 // import ChooseStemcell from "Pages/ChooseStemcell";
 // import UmbilicalCord from "Pages/UmbilicalCord";
 // import CordBloodbanking from "Pages/CordBloodbanking";
@@ -19,16 +19,16 @@ import useDeviceSize from "./useDeviceSize";
 // import Benifitscellbank from "Pages/Benifitscellbank";
 // import HowcordBloodcollected from "Pages/HowcordBloodcollected";
 // import SevenReasonscordblood from "Pages/SevenReasonscordblood";
-// import Plan from "Pages/Plan";
 // import Cart from "Pages/Cart";
-// import RequestInforkit from "Pages/RequestInforkit";
-// import Appointment from "Pages/Appointment";
-// import Pregnancy from "Pages/Pregnancy";
-// import FirstTrimester from "Pages/FirstTrimester";
-// import SecondTimester from "Pages/SecondTimester";
-// import ThirdTrimester from "Pages/ThirdTrimester";
-// import PregnancyChart from "Pages/PregnancyChart";
-// import ImmunizationChart from "Pages/ImmunizationChart";
+import Plan from "../Pages/Plan";
+import RequestKit from "../Pages/RequestKit";
+import Appointment from "../Pages/Appointment";
+import Pregnancy from "../Pages/Pregnancy";
+import FirstTrimester from "../Pages/FirstTrimester";
+import SecondTimester from "../Pages/SecondTrimester";
+import ThirdTrimester from "../Pages/ThirdTrimester";
+import PregnancyChart from "../Pages/PregnancyChart";
+import ImmunizationChart from "../Pages/ImmunizationChart";
 import Blog from "../Pages/Blog";
 // import BlogSingle from "../Pages/SingleBlog";
 import Images from "../Pages/Images";
@@ -116,7 +116,8 @@ const LazyLoad = () => {
         <Route path="/franchise" element={<Franchise />} /> */}
 
         {/* banking-links */}
-        {/* <Route path="/stem-cell-banking" element={<SingleBanking />} />
+        <Route path="/stem-cell-banking" element={<StemCellBanking />} />
+        {/* 
         <Route path="/why-to-choose-stem-cell-banking" element={<ChooseStemcell />} />
         <Route path="/about-umbilical-cord" element={<UmbilicalCord />} />
         <Route path="/cord-blood-banking-umbilical-cord-preservation-in-india-cryovault" element={<CordBloodbanking />} />
@@ -127,20 +128,20 @@ const LazyLoad = () => {
 
         {/* banking-links */}
 
-        {/* <Route path="/plan" element={<Plan />} />
+        {/* 
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<CheckOut />} />
         <Route path="/thankyou" element={<ThankYou />} />
-        <Route path="/request-for-information-kit" element={<RequestInforkit />} />
+        */}
+        <Route path="/plan" element={<Plan />} />
         <Route path="/appointment" element={<Appointment />} />
-
+        <Route path="/request-for-information-kit" element={<RequestKit />} />
         <Route path="/pregnancy" element={<Pregnancy />} />
         <Route path="/first-trimester" element={<FirstTrimester />} />
         <Route path="/second-trimester" element={<SecondTimester />} />
         <Route path="/third-trimester" element={<ThirdTrimester />} />
         <Route path="/pregnancy-diet-chart" element={<PregnancyChart />} />
         <Route path="/immunization-chart" element={<ImmunizationChart />} />
-        */}
         <Route path="/images" element={<Images />} />
         <Route path="/videos" element={<Videos />} />
         <Route path="/contactus" element={<Contact />} />

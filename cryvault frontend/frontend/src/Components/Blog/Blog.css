@@ -1,6 +1,8 @@
 .blogCardMobile{
     align-items: center !important;
     text-align: center !important;
+    gap: 1rem;
+    margin: 0rem !important;
 }
 .blogCardContainerMobile{
     margin: 1rem !important;

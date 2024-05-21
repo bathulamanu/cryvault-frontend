@@ -85,7 +85,7 @@ export const SingleSlide = React.memo(() => {
         <Box className="quote-icon">
           <img src="assets/images/quote.svg" alt="quote svg" style={{ width: "4rem" }} />
         </Box>
-        <p>"I am grateful to Cryovault for providing top-notch stem cell storage services. Their knowledgeable staff guided us through the process with ease, giving us peace of mind knowing that our baby's future health is in good hands."</p>
+        <Typography variant='body1'>"I am grateful to Cryovault for providing top-notch stem cell storage services. Their knowledgeable staff guided us through the process with ease, giving us peace of mind knowing that our baby's future health is in good hands."</Typography>
         <Box className="d-flex align-items-center avatr_blk">
           <img src="assets/images/Praveen-Kumar.webp" alt="quote svg" /> <h5 className="title">Praveen</h5>
         </Box>

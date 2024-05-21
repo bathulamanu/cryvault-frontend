@@ -201,7 +201,7 @@ const Header = () => {
                       </ul>
                     </li>
                     <li className="has-droupdown">
-                      <Link onClick={useScrollToTop()} to="#">
+                      <Link onClick={useScrollToTop()} to="/">
                         {" "}
                         GETTING STARTED
                       </Link>
@@ -212,8 +212,8 @@ const Header = () => {
                           </Link>
                         </li>
                         <li>
-                          <Link onClick={useScrollToTop()} to="request-for-information-kit">
-                            Request For Information Kit
+                          <Link onClick={useScrollToTop()} to="/request-for-information-kit">
+                          Request For Information Kit
                           </Link>
                         </li>
                         <li>

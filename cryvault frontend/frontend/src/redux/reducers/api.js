@@ -17,7 +17,7 @@ export const PaymentStatus = () => {
   return `${BASE_URL}/cryovault/api/user/customerPayment`;
 };
 export const Plans = () => {
-  return `${BASE_URL}/cryovault/api/customer/getSubscriptionPlan`;
+  return `${BASE_URL}/flyingbyts/api/customer/getSubscriptionPlan`;
 };
 
 export const RegistrationForm = () => {
@@ -32,7 +32,7 @@ export const GetCustomerPaymentDetails = () => {
   return `${BASE_URL}/cryovault/api/user/getCustomerPaymentDetails`;
 };
 export const GetHeaderSocialMediaIcon = () => {
-  return `${BASE_URL}flyingbyts/api/user/getsocialMediaIcon`;
+  return `${BASE_URL}/flyingbyts/api/user/getsocialMediaIcon`;
 };
 export const GetFooter = () => {
   return `${BASE_URL}/flyingbyts/api/user/getFooter`;
