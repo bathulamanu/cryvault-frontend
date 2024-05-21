@@ -22,6 +22,9 @@ const customerReferalInfo = new Schema({
         type: String,
         default: ""
     },
+    countryCode: {
+        type: String
+    },
     phoneNumber: {
         type: String,
         default: ""

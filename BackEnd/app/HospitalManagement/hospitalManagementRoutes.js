@@ -27,6 +27,7 @@ module.exports = (app) => {
 
     app.post('/flyingbyts/api/user/addHospitalDetails', auth, hospitalManagementCtrl.addHospitalDetails);
     app.get('/flyingbyts/api/user/getHospitalDetails',  hospitalManagementCtrl.getHospitalDetails);
+    app.get('/flyingbyts/api/user/getEachHospitalDetails/:HospitalID',  hospitalManagementCtrl.getEachHospitalDetails);
     app.put('/flyingbyts/api/user/UpdateHospitalDetails/:HospitalID', auth, hospitalManagementCtrl.UpdateHospitalDetails);
     app.delete('/flyingbyts/api/user/deleteHospitalDetails/:HospitalID', auth, hospitalManagementCtrl.deleteHospitalDetails);
 

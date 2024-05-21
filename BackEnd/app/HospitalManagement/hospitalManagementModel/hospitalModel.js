@@ -33,6 +33,7 @@ const HospitalSchema = new Schema({
         type: String
     },
     contact: {
+        countryCode:String,
         phoneNumber: String,
         AlterNativePhoneNumber: String,
         landLine: String

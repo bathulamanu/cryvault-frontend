@@ -20,6 +20,9 @@ const AppointmentSchema = new Schema({
     email: {
         type: String
     },
+    countryCode: {
+        type: String
+    },
     phoneNumber: {
         type: String,
         required: true

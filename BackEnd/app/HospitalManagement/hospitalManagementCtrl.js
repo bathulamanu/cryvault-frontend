@@ -296,6 +296,84 @@ hospitalManagementCtrl.addHospitalDetails = async (req, res) => {
     }
 }
 
+
+hospitalManagementCtrl.getEachHospitalDetails = async (req, res) => {
+    try {
+        HospitalDetailsModel.aggregate([
+            {
+                $match: {
+                    HospitalID: Number(req.params.HospitalID)
+                }
+            },
+            {
+                $lookup: {
+                    from: "cities",
+                    localField: "HospitalAddress.city",
+                    foreignField: "cityID",
+                    as: "locationDetails"
+                }
+            },
+            {
+                $lookup: {
+                    from: "masterconfigurations",
+                    localField: "specialist.specializationID",
+                    foreignField: "masterConfigurationID",
+                    as: "specializationDetails"
+                }
+            }
+        ]).then((response) => {
+            let singleHos = [];
+            if (response && response.length != 0) {
+                response.forEach(x => {
+                    let hos = {}
+                    hos['specialist'] = [];
+                    hos['id'] = x.HospitalID;
+                    hos["hospitalName"] = x.hospitalName
+                    hos["hospitalLogo"] = x.hospitalLogo
+                    hos["about"] = x.about
+                    hos["LicenseNumber"] = x.LicenseNumber
+                    hos["validity"] = x.validity
+                    hos["email"] = x.email
+                    hos["website"] = x.website
+                    hos["sociallink"] = x.sociallink
+                    hos["status"] = x.status
+                    hos["createdTime"] = x.createdTime
+                    hos["HospitalID"] = x.HospitalID
+                    hos['HospitalAddress'] = x.HospitalAddress
+                    hos['contact'] = x.contact
+                    hos['faxNumber'] = x.faxNumber
+                    if (x.locationDetails && x.locationDetails.length != 0) {
+                        hos['LocationInfo'] = {
+                            cityID: x.locationDetails[0].cityID,
+                            cityName: x.locationDetails[0].name,
+                            stateID: x.locationDetails[0].stateID,
+                            stateName: x.locationDetails[0].stateName,
+                            countryID: x.locationDetails[0].countryID,
+                            countryName: x.locationDetails[0].countryName
+                        }
+                    }
+                    x.specializationDetails.forEach(y => {
+                        hos['specialist'].push({
+                            specilizationID: y.masterConfigurationID,
+                            value: y.value
+                        })
+                    })
+                    singleHos.push(hos)
+
+                })
+            }
+
+            ResponseHandler.success(req, res, DisplayMessages.getHospitalDetails, singleHos)
+        })
+            .catch((err) => {
+                ResponseHandler.error(req, res, "", err);
+            })
+    }
+    catch (err) {
+        ResponseHandler.error(req, res, '', err)
+    }
+}
+
 hospitalManagementCtrl.getHospitalDetails = async (req, res) => {
     try {
         HospitalDetailsModel.aggregate([
@@ -323,19 +401,9 @@ hospitalManagementCtrl.getHospitalDetails = async (req, res) => {
                     hos['specialist'] = [];
                     hos['id'] = x.HospitalID;
                     hos["hospitalName"] = x.hospitalName
-                    hos["hospitalLogo"] = x.hospitalLogo
-                    hos["about"] = x.about
-                    hos["LicenseNumber"] = x.LicenseNumber
-                    hos["validity"] = x.validity
-                    hos["email"] = x.email
-                    hos["website"] = x.website
-                    hos["sociallink"] = x.sociallink
                     hos["status"] = x.status
-                    hos["createdTime"] = x.createdTime
-                    hos["HospitalID"] = x.HospitalID
-                    hos['HospitalAddress'] = x.HospitalAddress
+                    hos["HospitalID"] = x.HospitalBranchID
                     hos['contact'] = x.contact
-                    hos['faxNumber'] = x.faxNumber
                     if (x.locationDetails && x.locationDetails.length != 0) {
                         hos['LocationInfo'] = {
                             cityID: x.locationDetails[0].cityID,

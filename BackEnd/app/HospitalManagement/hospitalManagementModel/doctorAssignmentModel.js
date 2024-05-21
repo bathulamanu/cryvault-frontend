@@ -11,10 +11,10 @@ const doctorAssignmentSchema = new Schema({
         type: Number,
         required: true
     },
-    branchID: {
-        type: Number,
-        required: true
-    },
+    // branchID: {
+    //     type: Number,
+    //     required: true
+    // },
     doctorDetailsID: {
         type: Number,
         required: true
