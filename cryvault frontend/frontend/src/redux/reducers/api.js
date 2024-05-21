@@ -1,4 +1,4 @@
-const BASE_URL = "http://18.61.230.105:4000";
+const BASE_URL = "http://localhost:4000" ;//  "http://18.61.230.105:4000";
 
 export const Login = () => {
   return `${BASE_URL}/cryovault/api/user/customerRegisterOrLogin`;
