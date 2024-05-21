@@ -50,26 +50,26 @@ common.upload = async (req, res) => {
         const file = req.file;
         const keyValue = req.body.folder + '/' + `${randomUUID()}-${file.originalname}`;
 
-        // Read the file from the local system
-        const fileStream = fs.createReadStream(file.path);
+        // // Read the file from the local system
+        // const fileStream = fs.createReadStream(file.path);
 
-        // Compress the file using gzip
-        const gzipStream = zlib.createGzip();
-        const compressedFile = fileStream.pipe(gzipStream);
+        // // Compress the file using gzip
+        // const gzipStream = zlib.createGzip();
+        // const compressedFile = fileStream.pipe(gzipStream);
 
-        // Body: fs.createReadStream(file.path),
+        // Body: compressedFile,
 
         const params = {
             Bucket: key.s3.Bucket,
-            Key: keyValue,
-            Body: compressedFile,
-            ACL: 'public-read'
+            Key: keyValue,            
+            Body: fs.createReadStream(file.path)
+            // ACL: 'public-read'
         };
 
         s3.upload(params, async (err, data) => {
 
             if (err) {
-                return ResponseHandler.error(req, res, DisplayMessages.ErrorWhileUpload, err)
+                return ResponseHandler.error(req, res, DisplayMessages.ErrorWhileUpload, err.message)
             }
             ResponseHandler.success(req, res, DisplayMessages.FileUpload, data)
             fs.unlinkSync(file.path);

@@ -62,7 +62,7 @@ const doctorDetailsSchema = new Schema({
         specialist: [{
             specilizationID: Number
         }],
-        hospitalAddress: String,
+        hospitalAddress: Number,
         experience: Number,
         employmentType: Number,
         startDate: Date,

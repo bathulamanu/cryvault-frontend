@@ -638,7 +638,7 @@ hospitalManagementCtrl.getDoctorDetails = async (req, res) => {
     }
 }
 
-async function getDoctorPreviousExperienceDetails(doctorDetailsID) {
+async function getDoctorPreviousExperienceDetails(req, res, doctorDetailsID) {
     try {
         return new Promise(async (resolve, reject) => {
             DoctorDetailsModel.aggregate([
@@ -678,6 +678,14 @@ async function getDoctorPreviousExperienceDetails(doctorDetailsID) {
                         foreignField: "masterConfigurationID",
                         as: "previousSpecilizationDetails"
                     }
+                },
+                {
+                    $lookup: {
+                        from: "hospitaldetails",
+                        localField: "previousExperience.hospitalAddress",
+                        foreignField: "HospitalID",
+                        as: "previousHospitalDetails"
+                    }
                 }
             ]).then(async (response) => {
                 if (response && response.length != 0) {
@@ -687,7 +695,20 @@ async function getDoctorPreviousExperienceDetails(doctorDetailsID) {
                         sur.previousExperience.forEach(xx => {
                             let eachObj = {}
                             eachObj['specilizationInfo'] = [];
-                            eachObj['hospitalAddress'] = xx.hospitalAddress
+                            sur.previousHospitalDetails.forEach(yy => {
+                                eachObj['hospitalDetails'] = {
+                                    hospitalName: yy.hospitalName,
+                                    hospitalLogo: yy.hospitalLogo,
+                                    contact: yy.contact,
+                                    faxNumber: yy.faxNumber,
+                                    HospitalAddress: {
+                                        addressLine1: yy.HospitalAddress.addressLine1,
+                                        addressLine2: yy.HospitalAddress.addressLine2,
+                                        nearLandMark: yy.HospitalAddress.nearLandMark,
+                                        pincode: yy.HospitalAddress.pincode
+                                    }
+                                }
+                            })
                             eachObj['startDate'] = xx.startDate
                             eachObj['endDate'] = xx.endDate
                             eachObj['currentlyWorking'] = xx.currentlyWorking
@@ -831,7 +852,7 @@ hospitalManagementCtrl.getEachDoctorDetails = async (req, res) => {
                         value: y.value
                     })
                 })
-                obj['previousExperience'] = await getDoctorPreviousExperienceDetails(req.params.doctorDetailsID)
+                obj['previousExperience'] = await getDoctorPreviousExperienceDetails(req, res, req.params.doctorDetailsID)
                 ResponseHandler.success(req, res, DisplayMessages.getDoctorDetails, obj);
             }
             else {
