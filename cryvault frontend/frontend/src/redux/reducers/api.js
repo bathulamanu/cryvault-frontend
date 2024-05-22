@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 const BASE_URL = "http://18.61.60.231:4000";
-=======
-const BASE_URL = "http://localhost:4000" ;//  "http://18.61.230.105:4000";
->>>>>>> a8dd93a8e8844f1f09ba8b5948ca641252d054f7
 
 export const LoginAPI = () => {
   return `${BASE_URL}/flyingbyts/api/user/customerRegisterOrLogin`;

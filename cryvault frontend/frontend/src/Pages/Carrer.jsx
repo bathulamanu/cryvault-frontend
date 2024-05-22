@@ -1,8 +1,10 @@
+import { Box, Breadcrumbs, Button, Link, Typography } from "@mui/material";
 import React from "react";
-import Breadcum from "../Components/Common/Breadcum";
 import { FaCloudUploadAlt } from "react-icons/fa";
-import { Input, InputGroup, InputRightElement } from "@chakra-ui/react";
+import useDeviceSize from "../Utilities/useDeviceSize";
 const Carrers = () => {
+  const isMobile = useDeviceSize() === "xs";
+
   return (
     <>
       <Box className="edu-breadcrumb-area breadcrumb-style-2 bg-image bg-image--19">
@@ -119,7 +121,7 @@ const Carrers = () => {
                     <Box className="form-group col-md-6">
                       <label for="current-log-password">Attach your Resume Here* *</label>
                       <Box style={{ borderWidth: 1, display: "flex", justifyContent: "end", height: "50px", alignItems: "center", paddingRight: "2%" }}>
-                        <Input
+                        <input
                           type="file"
                           display="none"
                           // onChange={handleFileUpload}
@@ -130,9 +132,9 @@ const Carrers = () => {
                     </Box>
 
                     <Box className="form-group">
-                      <button type="button" className="edu-btn btn-medium">
+                      <Button type="button" className="edu-btn btn-medium">
                         Submit <i className="icon-4"></i>
-                      </button>
+                      </Button>
                     </Box>
                   </Box>
                 </form>

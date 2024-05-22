@@ -1,6 +1,7 @@
 import React from "react";
-import ReachUs from "../Components/Common/ReachusCommon";
+import ReachUs from "../Components/Common/ReachUs";
 import useDeviceSize from "../Utilities/useDeviceSize";
+import { Box, Breadcrumbs, Link, Typography } from "@mui/material";
 const Franchise = () => {
   const isMobile = useDeviceSize() === "xs";
 

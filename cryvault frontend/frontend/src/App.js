@@ -6,6 +6,7 @@ import useDeviceSize from "./Utilities/useDeviceSize";
 import LazyLoad from "./Utilities/LazyLoad";
 
 import { BrowserRouter as Router } from "react-router-dom";
+import { Box } from "@mui/material";
 function App() {
   const isMobile = useDeviceSize() === "xs";
   return (
