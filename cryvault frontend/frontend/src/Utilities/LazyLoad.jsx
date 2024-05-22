@@ -1,24 +1,24 @@
 import React, { Suspense, lazy, useEffect, useState } from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
 import Loader from "../Components/Common/Loader";
-// import Login from "Pages/Login";
-// import OTP from "Pages/OTP";
+import Login from "../Pages/Login";
+import OTP from "../Pages/OTP";
 // import Registration from "Pages/Registration";
 import Home from "../Pages/Home";
 import useDeviceSize from "./useDeviceSize";
-// import About from "Pages/Aboutus";
-// import Accera from "Pages/Accreditations";
-// import Vision from "Pages/Vision";
-// import Carrer from "Pages/Carrers";
-// import Franchise from "Pages/Franchise";
+import About from "../Pages/Aboutus";
+import Accreditations from "../Pages/Accreditations";
+import Vision from "../Pages/Vision";
+import Carrer from "../Pages/Carrers";
+import Franchise from "../Pages/Franchise";
 import StemCellBanking from "../Pages/StemCellBanking";
-// import ChooseStemcell from "Pages/ChooseStemcell";
-// import UmbilicalCord from "Pages/UmbilicalCord";
-// import CordBloodbanking from "Pages/CordBloodbanking";
-// import StoreStemcells from "Pages/StoreStemcells";
-// import Benifitscellbank from "Pages/Benifitscellbank";
-// import HowcordBloodcollected from "Pages/HowcordBloodcollected";
-// import SevenReasonscordblood from "Pages/SevenReasonscordblood";
+import ChooseStemcell from "../Pages/ChooseStemcell";
+import UmbilicalCord from "../Pages/UmbilicalCord";
+import CordBloodbanking from "../Pages/CordBloodbanking";
+import StoreStemcells from "../Pages/StoreStemcells";
+import Benifitscellbank from "../Pages/Benifitscellbank";
+import HowcordBloodcollected from "../Pages/HowcordBloodcollected";
+import SevenReasonscordblood from "../Pages/SevenReasonscordblood";
 // import Cart from "Pages/Cart";
 import Plan from "../Pages/Plan";
 import RequestKit from "../Pages/RequestKit";
@@ -56,15 +56,22 @@ import Contact from "../Pages/Contact";
 // import BabyDoctorDetails from "Pages/BabyDoctorDetails";
 // import HelpHospitalDetails from "Pages/HelpHospitalDetails";
 // import Subscription from "Pages/Subscription/index";
-// import Details from "Pages/Details";
+import Details from "../Pages/Dashboard/Details";
 // import ThankYou from "Pages/Thankyou";
 // import CheckOut from "Pages/Checkout";
+import LunchDiningIcon from "@mui/icons-material/LunchDining";
+import { Drawer, Box, IconButton, Typography } from "@mui/material";
+import CloseIcon from "@mui/icons-material/Close";
+import { styled } from "@mui/material/styles";
+// dashboard
+import SettingsColumn from "../Components/Dashboard/Sidebar";
+
 const LazyLoad = () => {
   const [hasToken, setHasToken] = useState(false);
   const [usertype, setUserType] = useState(false);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const toggleDrawer = () => setIsDrawerOpen(!isDrawerOpen);
-  const isMobile = useDeviceSize();
+  const isMobile = useDeviceSize() == "xs";
   const location = useLocation();
 
   useEffect(() => {
@@ -96,37 +103,36 @@ const LazyLoad = () => {
     location.pathname === "/details";
 
   // Add other LazyLoad routes as needed
-
+  console.log(isMobile);
   return (
     <Suspense fallback={<Loader />}>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/blog" element={<Blog />} />
-        {/* <Route path="/blog-single" element={<SingleBlog />} /> */}
-        {/* <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/otp" element={<OTP />} />
+        {/* <Route path="/blog-single" element={<SingleBlog />} /> */}
+        {/* 
+        
         <Route path="/registration" element={<Registration />} />
 
         <Route path="/" element={<Home />} />
 
+         */}
         <Route path="/aboutus" element={<About />} />
-        <Route path="/accreditations" element={<Accera />} />
         <Route path="/vision-mission" element={<Vision />} />
         <Route path="/carrer" element={<Carrer />} />
-        <Route path="/franchise" element={<Franchise />} /> */}
-
+        <Route path="/accreditations" element={<Accreditations />} />
+        <Route path="/franchise" element={<Franchise />} />
         {/* banking-links */}
         <Route path="/stem-cell-banking" element={<StemCellBanking />} />
-        {/* 
         <Route path="/why-to-choose-stem-cell-banking" element={<ChooseStemcell />} />
         <Route path="/about-umbilical-cord" element={<UmbilicalCord />} />
         <Route path="/cord-blood-banking-umbilical-cord-preservation-in-india-cryovault" element={<CordBloodbanking />} />
         <Route path="/how-to-store-your-stem-cells-with-cryovault" element={<StoreStemcells />} />
         <Route path="/best-stem-cell-bank-in-india-stem-cell-banking-cryovault" element={<Benifitscellbank />} />
         <Route path="/when-and-how-is-cord-blood-collected" element={<HowcordBloodcollected />} />
-        <Route path="/7-reasons-to-save-your-childs-cord-blood" element={<SevenReasonscordblood />} /> */}
-
-        {/* banking-links */}
+        <Route path="/7-reasons-to-save-your-childs-cord-blood" element={<SevenReasonscordblood />} />
 
         {/* 
         <Route path="/cart" element={<Cart />} />
@@ -151,6 +157,95 @@ const LazyLoad = () => {
         <Route path="/terms-and-conditions" element={<TermsCondition />} />
         <Route path="/cancellation-refund-replacement-policy" element={<CancellatioRefund />} /> */}
       </Routes>
+
+      {true && (
+        <Box pb="19px" bg="deep_purple.50" w="100%" sx={{ border: "2px solid red" }}>
+          <Box gap="30px" flexDirection="column">
+            <Box sx={{ display: "flex", gap: "13px", width: "90%" }}>
+              {isMobile ? (
+                <>
+                  <Box bg={"#9e64f6"} borderRadius={30} style={{ justifyContent: "space-between", alignItems: "center" }}>
+                    <Typography ml={8} mt={5} color={"black"}>
+                      Dashboard
+                    </Typography>
+                    <IconButton aria-label="Open menu" icon={<LunchDiningIcon />} onClick={toggleDrawer} color="white" h={20} paddingInlineStart={"10px"} paddingInlineEnd={"10px"} borderRadius={25} fontSize={30} p={"20px"} borderColor={"white"} borderWidth={1} />
+                  </Box>
+
+                  <Drawer
+                    anchor="left" // Consistent with placement="left"
+                    open={isDrawerOpen}
+                    onClose={toggleDrawer}
+                    PaperProps={{
+                      sx: { backgroundColor: "white" }, // Set background color using sx prop
+                    }}
+                  >
+                    <IconButton edge="start" color="inherit" onClick={toggleDrawer} aria-label="close drawer">
+                      <CloseIcon />
+                    </IconButton>
+                    <SettingsColumn display="flex" flexDirection="column" alignItems="center" onClose={toggleDrawer} />
+                  </Drawer>
+                  {true && (
+                    <Routes>
+                      <>
+                        {/* <Route path="/popup" element={<Popup />} /> */}
+                        <Route path="/dashboard" element={<Details />} />
+                        {/* <Route path="/reference" element={<Reference />} />
+                        <Route path="/settings" element={<Settings />} />
+                        <Route path="/subscription" element={<Subscription />} />
+                        <Route path="/help" element={<Help />} />
+                        <Route path="/helpexecutive" element={<HelpExecutive />} />
+                        <Route path="/helpnominee" element={<HelpNominee />} />
+                        <Route path="/helpcommunication" element={<HelpCommunication />} />
+                        <Route path="/helpdetails" element={<HelpDetails />} />
+                        <Route path="/helpmobile" element={<HelpMobile />} />
+                        <Route path="/helphospital" element={<HelpHospital />} />
+                        <Route path="/offer" element={<Offer />} />
+                        <Route path="/report" element={<Report />} />
+                        <Route path="/invoice" element={<Invoice />} />
+                        <Route path="/babydoctordetails" element={<BabyDoctorDetails />} />
+                        <Route path="/helphospitaldetails" element={<HelpHospitalDetails />} />
+                        <Route path="/details" element={<Details />} />
+                        <Route path="/registration" element={<Registration />} /> */}
+                        {/* Other protected routes */}
+                      </>
+                    </Routes>
+                  )}
+                </>
+              ) : (
+                <>
+                  <SettingsColumn display="flex" flexDirection="column" alignItems="center" onClose={toggleDrawer} />
+                  {true && (
+                    <Routes>
+                      <>
+                        {/* <Route path="/popup" element={<Popup />} /> */}
+                        <Route path="/dashboard" element={<Details />} />
+                        {/* <Route path="/reference" element={<Reference />} />
+                        <Route path="/settings" element={<Settings />} />
+                        <Route path="/subscription" element={<Subscription />} />
+                        <Route path="/help" element={<Help />} />
+                        <Route path="/helpexecutive" element={<HelpExecutive />} />
+                        <Route path="/helpnominee" element={<HelpNominee />} />
+                        <Route path="/helpcommunication" element={<HelpCommunication />} />
+                        <Route path="/helpdetails" element={<HelpDetails />} />
+                        <Route path="/helpmobile" element={<HelpMobile />} />
+                        <Route path="/helphospital" element={<HelpHospital />} />
+                        <Route path="/offer" element={<Offer />} />
+                        <Route path="/report" element={<Report />} />
+                        <Route path="/invoice" element={<Invoice />} />
+                        <Route path="/babydoctordetails" element={<BabyDoctorDetails />} />
+                        <Route path="/helphospitaldetails" element={<HelpHospitalDetails />} />
+                        <Route path="/details" element={<Details />} />
+                        <Route path="/registration" element={<Registration />} /> */}
+                        {/* Other protected routes */}
+                      </>
+                    </Routes>
+                  )}
+                </>
+              )}
+            </Box>
+          </Box>
+        </Box>
+      )}
     </Suspense>
   );
 };

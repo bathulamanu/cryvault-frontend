@@ -1,4 +1,4 @@
-import {  List, ListItem, ListItemButton, ListItemText, Box, Link, Typography } from "@mui/material";
+import { List, ListItem, ListItemButton, ListItemText, Box, Link, Typography } from "@mui/material";
 import React from "react";
 import { IoCloudDownloadOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
@@ -12,6 +12,7 @@ const courseItems = [
   { text: "When and How is Cord Blood Collected", path: "/when-and-how-is-cord-blood-collected" },
   { text: "7 Reasons to Save your Child's Cord Blood", path: "/7-reasons-to-save-your-childs-cord-blood" },
 ];
+
 const TableContents = () => {
   const navigate = useNavigate();
 
@@ -25,7 +26,9 @@ const TableContents = () => {
                 {courseItems.map((item) => (
                   <ListItem key={item.text} disablePadding>
                     <ListItemButton onClick={() => navigate(item.path)}>
-                      <ListItemText primary={item.text} />
+                      <ListItemText >
+                        <Typography sx={{ fontSize: "2rem !important" }}>{item.text}</Typography>
+                      </ListItemText>
                     </ListItemButton>
                   </ListItem>
                 ))}

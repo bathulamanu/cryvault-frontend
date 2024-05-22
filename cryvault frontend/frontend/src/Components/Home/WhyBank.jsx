@@ -29,7 +29,7 @@ const WhyBank = () => {
           which are rich sources of unique stem cells that have potential for healing.
         </Typography>
 
-        <Grid container spacing={4} xs={12} md={4} sm={4} sx={{ gap: isMobile ? "2rem" : "0rem", padding: isMobile ? "4rem 1rem" : " 10rem", margin: "0 !important", flexGrow: 1, maxWidth: "100% !important" }}>
+        {/* <Grid columnSpacing={4} container spacing={4} xs={12} md={4} sm={4} sx={{ gap: isMobile ? "2rem" : "0rem", padding: isMobile ? "4rem 1rem" : " 10rem", margin: "0 !important", flexGrow: 1, maxWidth: "100% !important" }}>
           <Grid item className="card1" xs={12} md={4} sm={4}>
             <Box className="cardContainer">
               <HelpOutlineIcon style={{ fontSize: "2.5rem" }} />
@@ -71,7 +71,50 @@ const WhyBank = () => {
               </Box>
             </Box>
           </Grid>
-        </Grid>
+        </Grid> */}
+
+        <Box columnSpacing={4} container spacing={4} xs={12} md={4} sm={4} sx={{ display:"flex", flexDirection: isMobile ? "column" :"row", gap:  "2rem", padding: isMobile ? "4rem 1rem" : " 10rem", margin: "0 !important", flexGrow: 1, maxWidth: "100% !important" }}>
+          <Box item className="card1" xs={12} md={4} sm={4} sx={{maxWidth: isMobile ? "100%" : "33%"}}>
+            <Box className="cardContainer">
+              <HelpOutlineIcon style={{ fontSize: "2.5rem" }} />
+              <Box>
+                <Typography variant="h4" sx={{ color: "white" }} gutterBottom>
+                  Why Bank?
+                </Typography>
+                <Typography variant="h5" component="Box">
+                  Stem cells from newborn umbilical cord blood are a treasure that can potentially save your baby or family member .......
+                </Typography>
+              </Box>
+            </Box>
+          </Box>
+          <Box className="card2" xs={12} md={4} sm={4} sx={{maxWidth:isMobile ? "100%" :"33%"}}>
+            <Box className="cardContainer">
+              <LuMailQuestion style={{ fontSize: "6.5rem" }} />
+
+              <Box>
+                <Typography variant="h4" sx={{ color: "white" }} gutterBottom>
+                  Information Guide
+                </Typography>
+                <Typography variant="h5" component="Box">
+                  If you’re thinking about cord blood banking, our Information Guide can help you get started. It answers questions .....
+                </Typography>
+              </Box>
+            </Box>
+          </Box>
+          <Box className="card3" xs={12} md={4} sm={4} sx={{maxWidth:isMobile ? "100%" :"33%"}}>
+            <Box className="cardContainer">
+              <FaHandshake style={{ fontSize: "6.5rem" }} />
+              <Box>
+                <Typography variant="h4" sx={{ color: "white" }} gutterBottom>
+                  Cord Blood & Tissue
+                </Typography>
+                <Typography variant="h5" component="Box">
+                  Today, cord blood stem cells have been used in the treatment of over 80 life threatening diseases. ..
+                </Typography>
+              </Box>
+            </Box>
+          </Box>
+        </Box>
 
         <Box className="whyBankCard"></Box>
       </Box>

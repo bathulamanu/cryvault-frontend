@@ -114,7 +114,6 @@ const Appointment = () => {
             <Box className="page-title d-flex align-items-center">
               <Box sx={{ textAlign: isMobile ? " center" : "start ", width: isMobile ? "100% !important" : "65% !important" }}>
                 <Typography className="title">Appointment</Typography>
-                <Typography className="mb-0">Newborn Stem Cell</Typography>
               </Box>
 
               {isMobile ? null : (

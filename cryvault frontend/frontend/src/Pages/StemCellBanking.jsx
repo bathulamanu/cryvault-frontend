@@ -9,7 +9,7 @@ const StemCellBanking = () => {
 
   return (
     <>
-      <Box sx={{ padding: isMobile ? " 50px 7px !important" : "200px 90px !important" }} className="edu-breadcrumb-area breadcrumb-style-2 bg-image bg-image--19">
+      <Box sx={{ padding: isMobile ? " 50px 7px !important" : "120px 90px !important" }} className="edu-breadcrumb-area breadcrumb-style-2 bg-image bg-image--19">
         <Box className="container">
           <Box className="breadcrumb-inner">
             <Box className="page-title d-flex align-items-center">
@@ -17,7 +17,6 @@ const StemCellBanking = () => {
                 <Typography variant="h1" className="title">
                   Stem Cell Banking
                 </Typography>
-                <Typography className="mb-0">Newborn Stem Cell</Typography>
               </Box>
 
               {isMobile ? null : (

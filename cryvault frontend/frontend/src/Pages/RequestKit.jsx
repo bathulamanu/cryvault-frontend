@@ -117,7 +117,6 @@ const RequestKit = () => {
                 <Typography variant="h1" className="title">
                   Request for Information Kit
                 </Typography>
-                <Typography className="mb-0">Newborn Stem Cell</Typography>
               </Box>
 
               {isMobile ? null : (

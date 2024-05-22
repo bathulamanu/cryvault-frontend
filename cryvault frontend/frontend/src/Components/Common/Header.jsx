@@ -7,13 +7,15 @@ import { FaRegUserCircle } from "react-icons/fa";
 import { FiChevronRight } from "react-icons/fi";
 import { IoMdCart } from "react-icons/io";
 import { MdKeyboardDoubleArrowLeft, MdKeyboardDoubleArrowRight, MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
-import { Link } from "react-router-dom";
 import MenuSharpIcon from "@mui/icons-material/MenuSharp";
 import CloseIcon from "@mui/icons-material/Close";
-import { List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
+import { List, ListItem, ListItemIcon,  ListItemText } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchHeaderSocialIcons } from "../../redux/reducers/HomePageReducer";
+import { AppBar, Toolbar, Menu, MenuItem, Divider, Avatar } from "@mui/material";
+import { Link } from 'react-router-dom';
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const Header = () => {
   const navRef = React.useRef(null);
@@ -53,6 +55,91 @@ const Header = () => {
   useEffect(() => {
     dispatch(fetchHeaderSocialIcons());
   }, []);
+
+  const items = [
+    { label: "HOME", path: "/" },
+    {
+      label: "ABOUT",
+      submenu: [
+        { label: "About Cryovault", path: "aboutus" },
+        { label: "Vision and Mission", path: "vision-mission" },
+        { label: "Accreditations & Certifications", path: "accreditations" },
+        { label: "Careers", path: "carrer" },
+        { label: "Franchise", path: "franchise" },
+      ],
+    },
+    {
+      label: "STEM CELL BANKING",
+      submenu: [
+        { label: "Stem Cell Banking", path: "/stem-cell-banking" },
+        { label: "Why to Choose Stem Cell Banking?", path: "/why-to-choose-stem-cell-banking" },
+        { label: "What is Umbilical Cord?", path: "/about-umbilical-cord" },
+        { label: "Cord Blood Banking", path: "/cord-blood-banking-umbilical-cord-preservation-in-india-cryovault" },
+        { label: "How to Store Your STEM CELLS WITH CRYOVAULT", path: "/how-to-store-your-stem-cells-with-cryovault" },
+        { label: "Benifits of Stem Cells", path: "/best-stem-cell-bank-in-india-stem-cell-banking-cryovault" },
+        { label: "When and How is Cord Blood Collected", path: "/when-and-how-is-cord-blood-collected" },
+        { label: "7 Reasons to Save your Child's Cord Blood", path: "/7-reasons-to-save-your-childs-cord-blood" },
+      ],
+    },
+    {
+      label: "GETTING STARTED",
+      submenu: [
+        { label: "Plans", path: "/plan" },
+        { label: "Request For Information Kit", path: "/request-for-information-kit" },
+        { label: "Appointment", path: "/appointment" },
+      ],
+    },
+    {
+      label: "PREGNANCY",
+      submenu: [
+        { label: "First Trimester", path: "/first-trimester" },
+        { label: "Second Trimester", path: "/second-trimester" },
+        { label: "Third Trimester", path: "/third-trimester" },
+        { label: "Pregnancy Diet Chart", path: "/pregnancy-diet-chart" },
+        { label: "Immunization Chart", path: "/immunization-chart" },
+      ],
+    },
+    { label: "BLOG", path: "/blog" },
+    {
+      label: "GALLERY",
+      submenu: [
+        { label: "Images", path: "/images" },
+        { label: "Videos", path: "/videos" },
+      ],
+    },
+    { label: "CONTACT", path: "/contactus" },
+  ];
+
+  const userMenu = [
+    !hasToken && (
+      <MenuItem component={Link} to="/login">
+        <Button variant="contained" className="edu-btn">
+          GET STARTED
+        </Button>
+      </MenuItem>
+    ),
+    hasToken && (
+      <>
+        {userType && (
+          <MenuItem component={Link} to="/dashboard">
+            Dashboard
+          </MenuItem>
+        )}
+        <MenuItem component={Link} to="/videos" onClick={handleLogout}>
+          Logout
+        </MenuItem>
+      </>
+    ),
+  ];
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleOpenMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleCloseMenu = () => {
+    setAnchorEl(null);
+  };
   return (
     <header className="edu-header header-style-1 header-fullwidth">
       <Box className="header-top-bar">
@@ -107,7 +194,7 @@ const Header = () => {
                 <Box className="logo">
                   <Link onClick={useScrollToTop()} to="/">
                     <img className="logo-light" src="assets/images/cryovault-blue-200x48.webp" alt="Corporate Logo" />
-                    <img className="logo-dark" src="assets/images/cryovault-blue-200x48.webp" alt="Corporate Logo" />
+                    {/* <img className="logo-dark" src="assets/images/cryovault-blue-200x48.webp" alt="Corporate Logo" /> */}
                   </Link>
                 </Box>
               </Box>
@@ -115,11 +202,11 @@ const Header = () => {
               <Box className="header-right ">
                 <nav className="mainmenu-nav header-mainnav">
                   <ul className="mainmenu">
-                    {/* <li>
+                    <li>
                       <Link onClick={useScrollToTop()} to="/">
                         HOME
                       </Link>
-                    </li> */}
+                    </li>
                     <li className="has-droupdown">
                       <Link onClick={useScrollToTop()} to="#">
                         ABOUT
@@ -213,7 +300,7 @@ const Header = () => {
                         </li>
                         <li>
                           <Link onClick={useScrollToTop()} to="/request-for-information-kit">
-                          Request For Information Kit
+                            Request For Information Kit
                           </Link>
                         </li>
                         <li>
@@ -300,7 +387,7 @@ const Header = () => {
                         {!hasToken && (
                           <li>
                             <Link to="/login" className="pr-0">
-                              <button className="edu-btn">GET STARTED</button>
+                              <Button className="edu-btn">GET STARTED</Button>
                             </Link>
                           </li>
                         )}
@@ -313,7 +400,7 @@ const Header = () => {
                             )}
 
                             <li>
-                              <Link to="/videos" onClick={handleLogout}>
+                              <Link to="/logout" onClick={handleLogout}>
                                 Logout
                               </Link>
                             </li>
@@ -542,3 +629,61 @@ export const MobileHeader = React.memo(() => {
 });
 
 export default Header;
+
+{
+  /* <AppBar position="static">
+                  <Toolbar disableGutters component="nav">
+                    <Typography variant="h6" noWrap component="div" sx={{ mr: 2, display: { xs: "none", md: "flex" } }}>
+                      Cryovault
+                    </Typography>
+                    <Box sx={{ display: { xs: "flex", md: "none" } }}>
+                      <IconButton size="large" aria-label="account of current user" aria-controls={anchorEl ? "menu-list-grow" : undefined} aria-haspopup="true" onClick={handleOpenMenu} color="inherit">
+                        <FaRegUserCircle />
+                      </IconButton>
+                      <Menu
+                        id="menu-list-grow"
+                        anchorEl={anchorEl}
+                        open={Boolean(anchorEl)}
+                        onClose={handleCloseMenu}
+                        MenuListProps={{
+                          "aria-labelledby": "menu-list-grow",
+                        }}
+                      >
+                        {userMenu}
+                      </Menu>
+                    </Box>
+                    <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
+                      {items.map((item) => (
+                        <Button key={item.label} component={Link} to={item.path} sx={{ my: 2, color: "white", display: "block" }} aria-controls={item.submenu && "menu-list-grow-" + item.label} aria-haspopup={item.submenu && true} onMouseEnter={item.submenu && handleOpenMenu}>
+                          {item.label}
+                          {item.submenu && <ExpandMoreIcon sx={{ ml: 1 }} />}
+                        </Button>
+                      ))}
+                    </Box>
+                    <Box sx={{ display: { xs: "flex", md: "none" } }}>
+                      <IconButton size="large" aria-label="cart" color="inherit">
+                        <IoMdCart />
+                      </IconButton>
+                    </Box>
+                  </Toolbar>
+                  {items.map((item) => (
+                    <Menu
+                      key={item.label}
+                      id={"menu-list-grow-" + item.label}
+                      anchorEl={anchorEl}
+                      open={Boolean(anchorEl) && anchorEl === item.submenu}
+                      onClose={handleCloseMenu}
+                      MenuListProps={{
+                        "aria-labelledby": "menu-list-grow-" + item.label,
+                      }}
+                    >
+                      {item.submenu &&
+                        item.submenu.map((subItem) => (
+                          <MenuItem key={subItem.label} component={Link} to={subItem.path}>
+                            {subItem.label}
+                          </MenuItem>
+                        ))}
+                    </Menu>
+                  ))}
+                </AppBar> */
+}

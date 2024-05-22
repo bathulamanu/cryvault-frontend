@@ -12,7 +12,7 @@ const Blogs = () => {
       <Box className={isMobile ? "inner blogCardMobile " : "inner"} sx={{flexDirection: isMobile ? "column" : "row"}}>
         <Box className="thumbnail" sx={{marginRight: isMobile ? "0rem !important" : "40px"}}>
           <Link to="#">
-            <img style={{width: isMobile ? "100%" : "300px",height: isMobile ? "100%" : "236px"}} src="assets/images/2-Collect-.webp" alt="Blog Images" />
+            <img style={{width: isMobile ? "100%" : "300px !important",height: isMobile ? "100%" : "236px !important"}} src="assets/images/2-Collect-.webp" alt="Blog Images" />
           </Link>
         </Box>
         <Box className="content">

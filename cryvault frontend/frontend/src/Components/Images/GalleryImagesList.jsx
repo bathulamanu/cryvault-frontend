@@ -80,7 +80,7 @@ const GalleryImagesList = () => {
             <Box className={"edu-blog gallerImg blog-style-list sal-animate"} sx={{margin:"0 !important"}}>
               <Box className="thumbnail" sx={{margin:"0 !important"}}>
                 <Link to="#">
-                  <img {...srcset(item.img, 121, item.rows, item.cols)} style={{ border: "1px solid #FF003F", borderRadius: "4px" }} alt={item.title} loading="lazy" />
+                  <img {...srcset(item.img, 121, item.rows, item.cols)} style={{ border: "1px solid #FF003F", borderRadius: "4px", width:"100%", height:"100%" }} alt={item.title} loading="lazy" />
                 </Link>
               </Box>
             </Box>
