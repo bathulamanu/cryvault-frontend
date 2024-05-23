@@ -1528,7 +1528,7 @@ input[type="number"],
 input[type="tel"],
 textarea {
   font-size: 15px;
-  background-color: var(--color-white);
+  /* background-color: var(--color-white); */
   box-shadow: none;
   padding: 0 25px;
   outline: none;
@@ -39210,11 +39210,11 @@ table {
   border-width: 1px 0 0 1px;
   margin: 0 0 1.5em;
   width: 100%;
-  background-color: #fff;
+  /* background-color: #fff; */
 }
 
 table, td, th {
-  border: 1px solid #e2e8f0;
+  /* border: 1px solid #e2e8f0; */
 }
 
 table thead tr th:first-child {

@@ -30,9 +30,9 @@ import ImmunizationChart from "../Pages/ImmunizationChart";
 import Blog from "../Pages/Blog";
 import Images from "../Pages/Images";
 import Videos from "../Pages/Videos";
+import Cart from "../Pages/Cart";
 import Contact from "../Pages/Contact";
 // import Registration from "Pages/Registration";
-// import Cart from "Pages/Cart";
 // import BlogSingle from "../Pages/SingleBlog";
 // import Faq from "Pages/Faq";
 // import PrivacyPolicy from "Pages/PrivacyPolicy";
@@ -65,6 +65,7 @@ import { styled } from "@mui/material/styles";
 // dashboard
 import SettingsColumn from "../Components/DashboardComponents/Sidebar";
 import Dashboard from "../Components/DashboardComponents/Dashboard";
+import CheckoutDetails from "../Pages/CheckoutDetails";
 
 const LazyLoad = () => {
   const [hasToken, setHasToken] = useState(false);
@@ -133,11 +134,11 @@ const LazyLoad = () => {
         <Route path="/best-stem-cell-bank-in-india-stem-cell-banking-cryovault" element={<Benifitscellbank />} />
         <Route path="/when-and-how-is-cord-blood-collected" element={<HowcordBloodcollected />} />
         <Route path="/7-reasons-to-save-your-childs-cord-blood" element={<SevenReasonscordblood />} />
-
-        {/* 
         <Route path="/cart" element={<Cart />} />
-        <Route path="/checkout" element={<CheckOut />} />
-        <Route path="/thankyou" element={<ThankYou />} />
+        <Route path="/checkout" element={<CheckoutDetails />} />
+        {/* <Route path="/thankyou" element={<ThankYou />} /> */}
+        {/* 
+      
         */}
         <Route path="/plan" element={<Plan />} />
         <Route path="/appointment" element={<Appointment />} />

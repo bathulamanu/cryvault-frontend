@@ -5,10 +5,13 @@ import useDeviceSize from "../Utilities/useDeviceSize";
 import { Box, List, ListItem, ListItemIcon, ListItemText, Breadcrumbs, Typography, Link, Button } from "@mui/material";
 import { getAllPlans } from "../redux/reducers/PlansReducer";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Plan = () => {
   const isMobile = useDeviceSize() === "xs";
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const data = useSelector((state) => state.plans.plans);
   const plans = data?.data;
 
@@ -16,7 +19,12 @@ const Plan = () => {
     dispatch(getAllPlans());
   }, []);
   console.log(plans);
-  const handleAddClick = () => {};
+  const handleAddClick = (plan) => {
+    sessionStorage.setItem("exampleData", plan.title);
+    sessionStorage.setItem("amount", plan.offerPrice);
+    sessionStorage.setItem("subscription", plan.subscriptionID);
+    navigate("/cart");
+  };
   return (
     <>
       <Box sx={{ padding: isMobile ? " 50px 7px !important" : "120px 90px !important" }} className="edu-breadcrumb-area breadcrumb-style-2 bg-image bg-image--19">

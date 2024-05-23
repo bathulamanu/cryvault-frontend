@@ -14,7 +14,7 @@ code {
 
 /* dashboar */
 .Icon:hover {
-  background-color: #9e64f6;
+  background-color: #2b2e64;
   color: white;
   /* padding: 1rem; */
 }
@@ -28,6 +28,57 @@ code {
   background-color: transparent !important;
 }
 .selectedIcon {
-  background-color: #9e64f6;
+  background-color: #2b2e64;
   color: white;
+}
+.detailsInput {
+  background-color: #e5e5e5 !important;
+  font-size: 1.5rem !important;
+}
+
+/* cart */
+.cart {
+  display: flex;
+  padding: 9rem 10rem;
+  gap: 3rem;
+}
+.leftCartSection {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 60%;
+  /* padding: 0dvh; */
+}
+.cartProducts {
+  display: flex;
+  gap: 2rem;
+  justify-content: space-between;
+  padding: 0rem 3rem 0rem 0rem;
+}
+.cartProductsMobile{
+  display: flex;
+  gap: 2rem;
+  width: 100%;
+  justify-content: space-between;
+}
+.productDetails {
+  display: flex;
+  flex-direction: column;
+}
+.productAmount {
+  display: flex;
+  flex-direction: column;
+}
+.rightCartSection {
+  display: flex;
+  width: 35%;
+  border: 1px solid #e5e5e5;
+  flex-direction: column;
+  padding: 2rem;
+  border-radius: 1.5rem;
+  gap: 2rem;
+}
+.discount {
+  display: flex;
+  justify-content: space-between;
 }

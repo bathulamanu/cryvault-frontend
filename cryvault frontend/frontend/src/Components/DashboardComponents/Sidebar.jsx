@@ -33,10 +33,10 @@ const ReportColumn = ({ reports = "Reports", onClose, ...props }) => {
         <NavLink key={index} to={to} onClick={onClose}>
           {isActiveRoute(to) ? (
             <Box flexDirection="column" alignItems="center" mt={index === 0 ? "59px" : "0"} w="100%">
-              <Box sx={{ background: "#9e64f6" }} bg="#9e64f6" flexDirection="column" alignItems="center" p="9px" borderRadius="24px">
+              <Box sx={{ background: "#2b2e64" }} bg="#2b2e64" flexDirection="column" alignItems="center" p="9px" borderRadius="24px">
                 <img src={`images/${activeimg}`} h="30px" w="30px" />
               </Box>
-              <Typography variant="h5" size="xs" color="#9e64f6">
+              <Typography variant="h5" size="xs" color="#2b2e64">
                 {name}
               </Typography>
             </Box>

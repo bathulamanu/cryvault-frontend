@@ -9,22 +9,23 @@ import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import { Share } from "@mui/icons-material";
 import SettingsIcon from "@mui/icons-material/Settings";
 import HelpIcon from "@mui/icons-material/Help";
-
-// import BabyDetails from "./BabyDetails";
-// import Invoices from "./Invoices";
-// import Offers from "./Offers";
-// import Services from "./Services";
-// import "./Dashboard.scss";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import Details from "../../Pages/DashboardPages/Details";
-// import Subscription from "./Subscription";
+import Services from "../../Pages/DashboardPages/Services";
+import Subscription from "../../Pages/DashboardPages/Subscriptions";
+
+// import Offers from "./Offers";
 // import Settings from "./Settings";
 // import Reference from "./Reference";
 import "./Dashboard.css";
+import BabyDetails from "../../Pages/DashboardPages/BabyDetails";
+import Invoices from "../../Pages/DashboardPages/Invoices";
+import Offers from "../../Pages/DashboardPages/Offers";
+import Refferals from "../../Pages/DashboardPages/Refferals";
 
 const Dashboard = () => {
-  const [selectedItem, setSelectedItem] = useState(null);
+  const [selectedItem, setSelectedItem] = useState("DashBoard");
   const isMobile = false;
   const [isListVisible, setListVisible] = useState(false); // State variable to track list visibility
 
@@ -40,11 +41,13 @@ const Dashboard = () => {
 
   return (
     <>
-      <div
+      <Box
         style={{
           display: "flex",
           flexDirection: isMobile ? "column" : "row",
           marginTop: "100px",
+          backgroundColor:"#e5e5e5",
+          padding:'4rem 0rem'
         }}
       >
         <Box
@@ -52,6 +55,7 @@ const Dashboard = () => {
             display: isMobile ? "none" : "block",
             marginLeft: isMobile ? "0px" : "30px",
             marginBottom: isMobile ? "20px" : "0px",
+           
           }}
         >
           <Box
@@ -64,11 +68,13 @@ const Dashboard = () => {
               display: "flex",
               flexDirection: "column",
               gap: "1.5rem",
-              textAlign:"center !important",
-              alignItems:"center"
+              textAlign: "center !important",
+              alignItems: "center",
+              boxShadow: 3,
+              backgroundColor:"white"
             }}
           >
-            <List style={{ paddingTop: "20px" }} component="nav" aria-label="main mailbox folders">
+            <List style={{ paddingTop: "20px", marginTop: "2rem", gap: "3rem", display: "flex", flexDirection: "column" }} component="nav" aria-label="main mailbox folders">
               <ListItem
                 className="listItem"
                 button
@@ -88,17 +94,16 @@ const Dashboard = () => {
                   <DashboardIcon
                     className={selectedItem === "DashBoard" ? "selectedIcon" : "Icon"}
                     sx={{
-                      color: selectedItem === "DashBoard" ? "#9e64f6" : "black",
+                      color: selectedItem === "DashBoard" ? "#2b2e64" : "black",
                     }}
                   />
                 </ListItemIcon>
                 {selectedItem === "DashBoard" && (
                   <div
                     style={{
-                      color: "#9e64f6",
+                      color: "#2b2e64",
                       fontSize: isMobile ? "14px" : "2rem",
-                      marginLeft: "-25px",
-                      textAlign:"center !important"
+                      textAlign: "center !important",
                     }}
                   >
                     DashBoard
@@ -120,15 +125,15 @@ const Dashboard = () => {
                 onClick={() => handleItemClick("Baby Details")}
               >
                 <ListItemIcon>
-                  <Cake className={selectedItem === "Baby Details" ? "selectedIcon" : "Icon"} sx={{ color: selectedItem === "Baby Details" ? "#9e64f6" : "black" }} />
+                  <Cake className={selectedItem === "Baby Details" ? "selectedIcon" : "Icon"} sx={{ color: selectedItem === "Baby Details" ? "#2b2e64" : "black" }} />
                 </ListItemIcon>
 
                 {selectedItem === "Baby Details" && (
                   <div
                     style={{
-                      color: "#9e64f6",
+                      color: "#2b2e64",
                       fontSize: isMobile ? "14px" : "2rem",
-                      marginLeft: "-25px",
+                      // marginLeft: "-25px",
                     }}
                   >
                     Baby Details
@@ -149,14 +154,14 @@ const Dashboard = () => {
                 onClick={() => handleItemClick("Invoices")}
               >
                 <ListItemIcon>
-                  <ReceiptIcon className={selectedItem === "Invoices" ? "selectedIcon" : "Icon"} sx={{ color: selectedItem === "Invoices" ? "#9e64f6" : "black" }} />
+                  <ReceiptIcon className={selectedItem === "Invoices" ? "selectedIcon" : "Icon"} sx={{ color: selectedItem === "Invoices" ? "#2b2e64" : "black" }} />
                 </ListItemIcon>
                 {selectedItem === "Invoices" && (
                   <div
                     style={{
-                      color: "#9e64f6",
+                      color: "#2b2e64",
                       fontSize: isMobile ? "14px" : "2rem",
-                      marginLeft: "-25px",
+                      // marginLeft: "-25px",
                     }}
                   >
                     Invoices
@@ -177,14 +182,14 @@ const Dashboard = () => {
                 onClick={() => handleItemClick("Reports")}
               >
                 <ListItemIcon>
-                  <Report className={selectedItem === "Reports" ? "selectedIcon" : "Icon"} sx={{ color: selectedItem === "Reports" ? "#9e64f6" : "black" }} />
+                  <Report className={selectedItem === "Reports" ? "selectedIcon" : "Icon"} sx={{ color: selectedItem === "Reports" ? "#2b2e64" : "black" }} />
                 </ListItemIcon>
                 {selectedItem === "Reports" && (
                   <div
                     style={{
-                      color: "#9e64f6",
+                      color: "#2b2e64",
                       fontSize: isMobile ? "14px" : "2rem",
-                      marginLeft: "-25px",
+                      // marginLeft: "-25px",
                     }}
                   >
                     Reports
@@ -206,12 +211,12 @@ const Dashboard = () => {
                 onClick={() => handleItemClick("Offers and Updates")}
               >
                 <ListItemIcon>
-                  <LocalOffer className={selectedItem === "Offers and Updates" ? "selectedIcon" : "Icon"} sx={{ color: selectedItem === "Offers and Updates" ? "#9e64f6" : "black" }} />
+                  <LocalOffer className={selectedItem === "Offers and Updates" ? "selectedIcon" : "Icon"} sx={{ color: selectedItem === "Offers and Updates" ? "#2b2e64" : "black" }} />
                 </ListItemIcon>
                 {selectedItem === "Offers and Updates" && (
                   <div
                     style={{
-                      color: "#9e64f6",
+                      color: "#2b2e64",
                       fontSize: isMobile ? "14px" : "2rem",
                       marginLeft: "0px",
                       whiteSpace: "nowrap",
@@ -236,14 +241,14 @@ const Dashboard = () => {
                 onClick={() => handleItemClick("Subscription")}
               >
                 <ListItemIcon>
-                  <MonetizationOnIcon className={selectedItem === "Subscription" ? "selectedIcon" : "Icon"} sx={{ color: selectedItem === "Subscription" ? "#9e64f6" : "black" }} />
+                  <MonetizationOnIcon className={selectedItem === "Subscription" ? "selectedIcon" : "Icon"} sx={{ color: selectedItem === "Subscription" ? "#2b2e64" : "black" }} />
                 </ListItemIcon>
                 {selectedItem === "Subscription" && (
                   <div
                     style={{
-                      color: "#9e64f6",
+                      color: "#2b2e64",
                       fontSize: isMobile ? "14px" : "2rem",
-                      marginLeft: "-25px",
+                      // marginLeft: "-25px",
                     }}
                   >
                     Subscription
@@ -264,14 +269,14 @@ const Dashboard = () => {
                 onClick={() => handleItemClick("Reference")}
               >
                 <ListItemIcon>
-                  <Share className={selectedItem === "Reference" ? "selectedIcon" : "Icon"} sx={{ color: selectedItem === "Reference" ? "#9e64f6" : "black" }} />
+                  <Share className={selectedItem === "Reference" ? "selectedIcon" : "Icon"} sx={{ color: selectedItem === "Reference" ? "#2b2e64" : "black" }} />
                 </ListItemIcon>
                 {selectedItem === "Reference" && (
                   <div
                     style={{
-                      color: "#9e64f6",
+                      color: "#2b2e64",
                       fontSize: isMobile ? "14px" : "2rem",
-                      marginLeft: "-25px",
+                      // marginLeft: "-25px",
                     }}
                   >
                     Reference
@@ -292,12 +297,12 @@ const Dashboard = () => {
                 onClick={() => handleItemClick("Settings")}
               >
                 <ListItemIcon>
-                  <SettingsIcon className={selectedItem === "Settings" ? "selectedIcon" : "Icon"} sx={{ color: selectedItem === "Settings" ? "#9e64f6" : "black" }} />
+                  <SettingsIcon className={selectedItem === "Settings" ? "selectedIcon" : "Icon"} sx={{ color: selectedItem === "Settings" ? "#2b2e64" : "black" }} />
                 </ListItemIcon>
                 {selectedItem === "Settings" && (
                   <div
                     style={{
-                      color: "#9e64f6",
+                      color: "#2b2e64",
                       fontSize: isMobile ? "14px" : "2rem",
                       marginLeft: "-25px",
                     }}
@@ -321,12 +326,12 @@ const Dashboard = () => {
                 onClick={() => handleItemClick("Help")}
               >
                 <ListItemIcon>
-                  <HelpIcon className={selectedItem === "Help" ? "selectedIcon" : "Icon"} sx={{ color: selectedItem === "Help" ? "#9e64f6" : "black" }} />
+                  <HelpIcon className={selectedItem === "Help" ? "selectedIcon" : "Icon"} sx={{ color: selectedItem === "Help" ? "#2b2e64" : "black" }} />
                 </ListItemIcon>
                 {selectedItem === "Help" && (
                   <div
                     style={{
-                      color: "#9e64f6",
+                      color: "#2b2e64",
                       fontSize: isMobile ? "14px" : "2rem",
                       marginLeft: isMobile ? "1px" : "-25px",
                     }}
@@ -340,26 +345,28 @@ const Dashboard = () => {
         </Box>
         <Box
           style={{
-            width: isMobile ? "100%" : "calc(100% - 200px)",
+            width: isMobile ? "100%" : "calc(100% - 300px)",
             display: isMobile ? "none" : "block",
           }}
         >
           {selectedItem === "DashBoard" && <Details />}
-          {/* {selectedItem === "Baby Details" && <BabyDetails />}
+          {selectedItem === "Baby Details" && <BabyDetails />}
           {selectedItem === "Invoices" && <Invoices />}
           {selectedItem === "Reports" && <Services />}
-          {selectedItem === "Offers and Updates" && <Offers />}
           {selectedItem === "Subscription" && <Subscription />}
+          {selectedItem === "Offers and Updates" && <Offers />}
+          {selectedItem === "Reference" && <Refferals />} 
+          {/* 
           {selectedItem === "Settings" && <Settings />}
-          {selectedItem === "Reference" && <Reference />} */}
+          */}
         </Box>
-      </div>
+      </Box>
 
       {/* mobile */}
-      <div style={{ display: isMobile ? "block" : "none" }}>
+      <Box style={{ display: isMobile ? "block" : "none" }}>
         <Card
           sx={{
-            backgroundColor: "#9e64f6",
+            backgroundColor: "#2b2e64",
             marginLeft: "10px",
             width: "90vw",
             height: "50px",
@@ -429,14 +436,14 @@ const Dashboard = () => {
                   <DashboardIcon
                     className="Icon"
                     sx={{
-                      color: "#9e64f6",
+                      color: "#2b2e64",
                     }}
                   />
                 </ListItemIcon>
 
                 <div
                   style={{
-                    color: "#9e64f6",
+                    color: "#2b2e64",
                     fontSize: isMobile ? "14px" : "2rem",
                     marginLeft: isMobile ? "-5px" : "-25px",
                   }}
@@ -459,12 +466,12 @@ const Dashboard = () => {
                 onClick={() => handleItemClick("Baby Details")}
               >
                 <ListItemIcon>
-                  <Cake className="Icon" sx={{ color: "#9e64f6" }} />
+                  <Cake className="Icon" sx={{ color: "#2b2e64" }} />
                 </ListItemIcon>
 
                 <div
                   style={{
-                    color: "#9e64f6",
+                    color: "#2b2e64",
                     fontSize: isMobile ? "14px" : "2rem",
                     marginLeft: isMobile ? "-5px" : "-25px",
                   }}
@@ -486,12 +493,12 @@ const Dashboard = () => {
                 onClick={() => handleItemClick("Invoices")}
               >
                 <ListItemIcon>
-                  <ReceiptIcon className="Icon" sx={{ color: "#9e64f6" }} />
+                  <ReceiptIcon className="Icon" sx={{ color: "#2b2e64" }} />
                 </ListItemIcon>
 
                 <div
                   style={{
-                    color: "#9e64f6",
+                    color: "#2b2e64",
                     fontSize: isMobile ? "14px" : "2rem",
                     marginLeft: isMobile ? "-5px" : "-25px",
                   }}
@@ -513,12 +520,12 @@ const Dashboard = () => {
                 onClick={() => handleItemClick("Reports")}
               >
                 <ListItemIcon>
-                  <Report className="Icon" sx={{ color: "#9e64f6" }} />
+                  <Report className="Icon" sx={{ color: "#2b2e64" }} />
                 </ListItemIcon>
 
                 <div
                   style={{
-                    color: "#9e64f6",
+                    color: "#2b2e64",
                     fontSize: isMobile ? "14px" : "2rem",
                     marginLeft: isMobile ? "-5px" : "-25px",
                   }}
@@ -542,12 +549,12 @@ const Dashboard = () => {
                 onClick={() => handleItemClick("Offers and Updates")}
               >
                 <ListItemIcon>
-                  <LocalOffer style={{ marginLeft: isMobile ? "50px" : "-10px" }} className="Icon" sx={{ color: "#9e64f6" }} />
+                  <LocalOffer style={{ marginLeft: isMobile ? "50px" : "-10px" }} className="Icon" sx={{ color: "#2b2e64" }} />
                 </ListItemIcon>
 
                 <div
                   style={{
-                    color: "#9e64f6",
+                    color: "#2b2e64",
                     fontSize: isMobile ? "14px" : "2rem",
                     marginLeft: isMobile ? "20px" : "-25px",
                   }}
@@ -569,12 +576,12 @@ const Dashboard = () => {
                 onClick={() => handleItemClick("Subscription")}
               >
                 <ListItemIcon>
-                  <MonetizationOnIcon className="Icon" sx={{ color: "#9e64f6" }} />
+                  <MonetizationOnIcon className="Icon" sx={{ color: "#2b2e64" }} />
                 </ListItemIcon>
 
                 <div
                   style={{
-                    color: "#9e64f6",
+                    color: "#2b2e64",
                     fontSize: isMobile ? "14px" : "2rem",
                     marginLeft: isMobile ? "-5px" : "-25px",
                   }}
@@ -596,12 +603,12 @@ const Dashboard = () => {
                 onClick={() => handleItemClick("Reference")}
               >
                 <ListItemIcon>
-                  <Share className="Icon" sx={{ color: "#9e64f6" }} />
+                  <Share className="Icon" sx={{ color: "#2b2e64" }} />
                 </ListItemIcon>
 
                 <div
                   style={{
-                    color: "#9e64f6",
+                    color: "#2b2e64",
                     fontSize: isMobile ? "14px" : "2rem",
                     marginLeft: isMobile ? "-5px" : "-25px",
                   }}
@@ -623,12 +630,12 @@ const Dashboard = () => {
                 onClick={() => handleItemClick("Settings")}
               >
                 <ListItemIcon>
-                  <SettingsIcon className="Icon" sx={{ color: "#9e64f6" }} />
+                  <SettingsIcon className="Icon" sx={{ color: "#2b2e64" }} />
                 </ListItemIcon>
 
                 <div
                   style={{
-                    color: "#9e64f6",
+                    color: "#2b2e64",
                     fontSize: isMobile ? "14px" : "2rem",
                     marginLeft: isMobile ? "-5px" : "-25px",
                   }}
@@ -650,12 +657,12 @@ const Dashboard = () => {
                 onClick={() => handleItemClick("Help")}
               >
                 <ListItemIcon>
-                  <HelpIcon className="Icon" sx={{ color: "#9e64f6" }} />
+                  <HelpIcon className="Icon" sx={{ color: "#2b2e64" }} />
                 </ListItemIcon>
 
                 <div
                   style={{
-                    color: "#9e64f6",
+                    color: "#2b2e64",
                     fontSize: isMobile ? "14px" : "2rem",
                     marginLeft: isMobile ? "-5px" : "-25px",
                   }}
@@ -676,7 +683,7 @@ const Dashboard = () => {
           {selectedItem === "Settings" && <Settings />}
           {selectedItem === "Reference" && <Reference />} */}
         </Box>
-      </div>
+      </Box>
     </>
   );
 };

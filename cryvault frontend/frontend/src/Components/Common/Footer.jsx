@@ -14,7 +14,7 @@ const Footer = () => {
     dispatch(fetchSocialIcons())
   }, []);
   return (
-    <footer style={{ marginTop: "10rem" }} className="edu-footer footer-lighten bg-image footer-style-1">
+    <footer  className="edu-footer footer-lighten bg-image footer-style-1">
       <div className="footer-top">
         <div className="container">
           <div className="row g-5">
