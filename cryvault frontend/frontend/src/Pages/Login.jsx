@@ -28,6 +28,7 @@ export const Login = () => {
         justifyContent: "center",
         minHeight: "50vh",
         marginTop: "13rem",
+        marginBottom: "13rem",
       }}
     >
       <Box sx={{ bgcolor: "#EDF2F7", borderRadius: theme.shape.borderRadius, boxShadow: theme.shadows[2], padding: isMobile ? "1rem" : "3rem", margin: "3rem" }}>

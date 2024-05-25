@@ -46,7 +46,7 @@ const Testimonial = () => {
         <Box className={isMobile ? "shape_inMobileTestimonial shape_inMobileTestimonial-bk" : "shape_in shape_in-bk"} style={{ display: "flex", justifyContent: "center" }}>
           <img src="assets/images/med-img blk.svg" width="30" />
         </Box>
-        <Typography className="mb-0">
+        <Typography  className="mb-0">
           Let’s start the journey towards success and enhance revenue for your<br></br> business. Take your company to the next level.
         </Typography>
       </Box>
@@ -85,7 +85,7 @@ export const SingleSlide = React.memo(() => {
         <Box className="quote-icon">
           <img src="assets/images/quote.svg" alt="quote svg" style={{ width: "4rem" }} />
         </Box>
-        <Typography variant='body1'>"I am grateful to Cryovault for providing top-notch stem cell storage services. Their knowledgeable staff guided us through the process with ease, giving us peace of mind knowing that our baby's future health is in good hands."</Typography>
+        <Typography sx={{fontSize:"2rem"}} variant='body1'>"I am grateful to Cryovault for providing top-notch stem cell storage services. Their knowledgeable staff guided us through the process with ease, giving us peace of mind knowing that our baby's future health is in good hands."</Typography>
         <Box className="d-flex align-items-center avatr_blk">
           <img src="assets/images/Praveen-Kumar.webp" alt="quote svg" /> <h5 className="title">Praveen</h5>
         </Box>

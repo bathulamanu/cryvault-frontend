@@ -55,7 +55,7 @@ code {
   justify-content: space-between;
   padding: 0rem 3rem 0rem 0rem;
 }
-.cartProductsMobile{
+.cartProductsMobile {
   display: flex;
   gap: 2rem;
   width: 100%;
@@ -81,4 +81,18 @@ code {
 .discount {
   display: flex;
   justify-content: space-between;
+}
+/* help section */
+.helpDetailSection {
+  width: 65%;
+  /* border: 1px solid red; */
+  height: 100%;
+}
+.issuesButton {
+  background: #2b2e64 !important;
+  background-color: #2b2e64 !important;
+}
+.issuesButton:hover {
+  background: #2b2e64 !important;
+  background-color: #2b2e64 !important;
 }

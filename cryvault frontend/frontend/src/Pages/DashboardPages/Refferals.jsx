@@ -1,39 +1,42 @@
 import { Card, Box, Typography, TextField, Button, Grid, useMediaQuery } from "@mui/material";
 import React from "react";
-// import refferal from "../../assets/images/refferal.png";
+import refferal from "../../assets/images/refferal.jpg";
 
 const Refferals = () => {
   const isMobile = useMediaQuery("(max-width:600px)");
   return (
-    <div style={{ marginTop: isMobile ? "20px" : "0px" }}>
+    <Box style={{ marginTop: isMobile ? "20px" : "0px", height: "100%" }}>
       <Card
         sx={{
-          width: isMobile ? "90%" : "90%",
+          // width: isMobile ? "90%" : "90%",
           marginLeft: "20px",
           borderRadius: "20px",
         }}
       >
-        <div>
+        <Box>
           <Box sx={{ backgroundColor: "#2b2e64", padding: "10px" }}>
             <Typography sx={{ color: "white" }} variant="h6">
               Referral Links
             </Typography>
           </Box>
-          <div
+          <Box
             style={{
               display: "flex",
               flexDirection: isMobile ? "column" : "row",
+              width: "100%",
+              justifyContent: " space-between",
+              padding: "2rem 2rem",
             }}
           >
-            <div>
-              <div style={{ marginTop: "10px" }}>
+            <Box>
+              <Box style={{ marginTop: "10px" }}>
                 <Box
                   sx={{
                     marginLeft: "20px",
                     width: isMobile ? "300px" : "500px",
                   }}
                 >
-                  <Typography sx={{ color: "#000000" }} style={{ fontSize: "12px" }}>
+                  <Typography sx={{ color: "#000000" }} style={{ fontSize: "2rem" }}>
                     Refer a friend to Cryovault and you'll each get ₹200 off your next order!
                   </Typography>
                 </Box>
@@ -43,12 +46,12 @@ const Refferals = () => {
                     width: isMobile ? "300px" : "500px",
                   }}
                 >
-                  <Typography sx={{ color: "#000000" }} style={{ fontSize: "12px" }}>
-                    Share your unique link below or use the share buttons to spread the word
+                  <Typography sx={{ color: "#000000" }} style={{ fontSize: "2rem" }}>
+                    Share your unique link below or use the share Buttons to spread the word
                   </Typography>
                 </Box>
-              </div>
-              <div
+              </Box>
+              <Box
                 style={{
                   marginLeft: "20px",
                   marginTop: "10px",
@@ -100,15 +103,15 @@ const Refferals = () => {
                 >
                   <Button sx={{ fontSize: "10px", color: "white" }}>Whatsapp</Button>
                 </Card>
-              </div>
+              </Box>
               <Box sx={{ marginLeft: "20px", marginTop: "10px" }}>
-                <Typography sx={{ color: "#000000" }} style={{ fontSize: "12px" }}>
+                <Typography sx={{ color: "#000000" }} style={{ fontSize: "2rem" }}>
                   Your Referral Code
                 </Typography>
                 <TextField label="Enter Referral Code" variant="standard" sx={{ width: "350px" }} />
               </Box>
               <Box sx={{ margin: "10px 0px 10px 40px" }}>
-                <button
+                <Button
                   style={{
                     width: "250px",
                     height: "30px",
@@ -119,9 +122,9 @@ const Refferals = () => {
                   }}
                 >
                   Copy Link
-                </button>
+                </Button>
               </Box>
-              <div
+              <Box
                 style={{
                   margin: "0px 0px 20px 20px",
                   display: "flex",
@@ -129,13 +132,13 @@ const Refferals = () => {
                 }}
               >
                 <Box>
-                  <Typography sx={{ color: "#000000" }} style={{ fontSize: "12px" }}>
+                  <Typography sx={{ color: "#000000" }} style={{ fontSize: "2rem" }}>
                     Send Invitation
                   </Typography>
                   <TextField label="Enter Your Email" variant="standard" />
                 </Box>
                 <Box sx={{ margin: "20px 0px 0px 80px" }}>
-                  <button
+                  <Button
                     style={{
                       width: "90px",
                       height: "30px",
@@ -146,13 +149,13 @@ const Refferals = () => {
                     }}
                   >
                     Submit
-                  </button>
+                  </Button>
                 </Box>
-              </div>
-            </div>
-            <div>
+              </Box>
+            </Box>
+            <Box>
               <img
-                src={"refferal"}
+                src={refferal}
                 alt="reference"
                 style={{
                   width: "300px",
@@ -162,20 +165,24 @@ const Refferals = () => {
                   borderRadius: "30px",
                 }}
               />
-            </div>
-          </div>
-        </div>
+            </Box>
+          </Box>
+        </Box>
       </Card>
       <Card
         sx={{
           marginTop: "20px",
           marginLeft: "20px",
           borderRadius: "20px",
-          width: isMobile ? "90%" : "90%",
+          // width: isMobile ? "90%" : "90%",
+          height: " 40%",
+          display: "flex",
+          flexDirection: "column",
+          gap: "2rem",
         }}
       >
         <Box sx={{ backgroundColor: "#2b2e64", padding: "10px" }}>
-          <Typography sx={{ color: "white" }} variant="h6">
+          <Typography sx={{ color: "white" }} variant="h4">
             Reference
           </Typography>
         </Box>
@@ -208,8 +215,8 @@ const Refferals = () => {
             </Grid>
           </Grid>
         </Box>
-        <div style={{ marginLeft: "30px", marginBottom: "20px" }}>
-          <button
+        <Box style={{ marginLeft: "30px", marginBottom: "20px" }}>
+          <Button
             style={{
               width: "90px",
               height: "30px",
@@ -220,10 +227,10 @@ const Refferals = () => {
             }}
           >
             Send
-          </button>
-        </div>
+          </Button>
+        </Box>
       </Card>
-    </div>
+    </Box>
   );
 };
 

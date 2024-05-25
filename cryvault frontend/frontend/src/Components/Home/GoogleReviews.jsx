@@ -166,7 +166,6 @@ const GoogleReviews = () => {
 };
 
 export const SingleReview = React.memo(({ review }) => {
-  console.log(review);
   return (
     <Box key={review?._id} sx={{ display: "flex", flexDirection: "column", marginBottom: 2, background: "#fafafa", padding:"1rem" }}>
       <Box sx={{ display: "flex", alignItems: "start !important", justifyContent: "space-between" }}>

@@ -9,15 +9,13 @@ const wrongData = ["Colony Forming Unit Assay (CFU)", "Free Global Shipment", "Q
 const Subscription = () => {
   const isMobile = useMediaQuery("(max-width:600px)");
   return (
-    <Box>
+    <Box sx={{ height: "100%" }}>
       <Card
         sx={{
           borderRadius: "20px",
           width: isMobile ? "90%" : "80vw",
-          height: isMobile ? "100%" : "90vh",
+          height: isMobile ? "100%" : "100%",
           flexDirection: isMobile ? "column" : "row",
-        }}
-        style={{
           marginLeft: isMobile ? "10px" : "20px",
           marginTop: isMobile ? "10px" : "0px",
         }}

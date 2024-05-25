@@ -35,7 +35,7 @@ export const verifyOTP = createAsyncThunk("verify", async (payload = {}, thunkAP
 
 const initialState = {
   optid: "",
-  userData:{},
+  userDetails: {},
   loading: false,
   error: null,
 };
@@ -51,13 +51,10 @@ const UserReducer = createSlice({
       })
       .addCase(login.fulfilled, (state, action) => {
         state.loading = false;
-        console.log(action.payload);
         state.userData = action.payload;
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
-        console.log(action.payload);
-
         state.error = action.error.message;
       })
       .addCase(verifyOTP.pending, (state) => {
@@ -66,13 +63,16 @@ const UserReducer = createSlice({
       })
       .addCase(verifyOTP.fulfilled, (state, action) => {
         state.loading = false;
-        console.log(action.payload);
+        const userData = action?.payload?.data;
+        state.userDetails = action?.payload?.data;
+        localStorage.setItem("userData", JSON.stringify(userData));
+        sessionStorage.setItem("token",userData?.token)
+        localStorage.setItem("token", userData?.token);
+        sessionStorage.setItem("userData", JSON.stringify(userData));
         state.optid = action.payload.optid;
       })
       .addCase(verifyOTP.rejected, (state, action) => {
         state.loading = false;
-        console.log(action.payload);
-
         state.error = action.error.message;
       });
   },

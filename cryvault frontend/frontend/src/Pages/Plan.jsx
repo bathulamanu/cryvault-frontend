@@ -18,11 +18,10 @@ const Plan = () => {
   useEffect(() => {
     dispatch(getAllPlans());
   }, []);
-  console.log(plans);
   const handleAddClick = (plan) => {
-    sessionStorage.setItem("exampleData", plan.title);
-    sessionStorage.setItem("amount", plan.offerPrice);
-    sessionStorage.setItem("subscription", plan.subscriptionID);
+    localStorage.setItem("planName", plan.title);
+    localStorage.setItem("planAmount", plan.offerPrice);
+    localStorage.setItem("subscription", plan.subscriptionID);
     navigate("/cart");
   };
   return (

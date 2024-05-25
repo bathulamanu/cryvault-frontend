@@ -56,8 +56,8 @@ import Contact from "../Pages/Contact";
 // import BabyDoctorDetails from "Pages/BabyDoctorDetails";
 // import HelpHospitalDetails from "Pages/HelpHospitalDetails";
 // import Subscription from "Pages/Subscription/index";
-// import ThankYou from "Pages/Thankyou";
 // import CheckOut from "Pages/Checkout";
+import ThankYou from "../Pages/Thankyou";
 import LunchDiningIcon from "@mui/icons-material/LunchDining";
 import { Drawer, Box, IconButton, Typography } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
@@ -66,6 +66,8 @@ import { styled } from "@mui/material/styles";
 import SettingsColumn from "../Components/DashboardComponents/Sidebar";
 import Dashboard from "../Components/DashboardComponents/Dashboard";
 import CheckoutDetails from "../Pages/CheckoutDetails";
+import { useDispatch, useSelector } from "react-redux";
+import { getPageMetaInfo } from "../redux/reducers/HomePageReducer";
 
 const LazyLoad = () => {
   const [hasToken, setHasToken] = useState(false);
@@ -74,7 +76,7 @@ const LazyLoad = () => {
   const toggleDrawer = () => setIsDrawerOpen(!isDrawerOpen);
   const isMobile = useDeviceSize() == "xs";
   const location = useLocation();
-
+  const dispatch = useDispatch();
   useEffect(() => {
     // Check if there is a token in sessionStorage
     const token = sessionStorage.getItem("token");
@@ -82,6 +84,11 @@ const LazyLoad = () => {
     setHasToken(!!token); // Set hasToken to true if token exists, false otherwise
     setUserType(subscription !== null && subscription !== "null");
   }, []);
+
+  useEffect(() => {
+    dispatch(getPageMetaInfo());
+  }, []);
+
   const isLazyLoadRoute =
     location.pathname.startsWith("/login") ||
     location.pathname.startsWith("/dashboard") ||
@@ -104,63 +111,80 @@ const LazyLoad = () => {
     location.pathname === "/details";
 
   // Add other LazyLoad routes as needed
-  console.log(isMobile);
+
+  const pageInfo = useSelector((state) => state.home.pageInfo);
+  const aboutCryovault = pageInfo?.[0]?.[1]?.urlSlug;
+  const howToStoreYourStemCellsWithCryovault = pageInfo?.[1]?.[2]?.urlSlug;
+  const careers = pageInfo?.[2]?.[4]?.urlSlug;
+  const whyToChooseStemCellBanking = pageInfo?.[3]?.[3]?.urlSlug;
+  const cordBloodBankingUmbilicalCordPreservationInIndiaCryovault = pageInfo?.[4]?.[5]?.urlSlug;
+  const stemCellBanking = pageInfo?.[5]?.[9]?.urlSlug;
+  const franchise = pageInfo?.[6]?.[6]?.urlSlug;
+  const visionMission = pageInfo?.[7]?.[7]?.urlSlug;
+  const requestForInformationKit = pageInfo?.[9]?.[12]?.urlSlug;
+  const aboutUmbilicalCord = pageInfo?.[10]?.[10]?.urlSlug;
+  const ReasonsToSaveYourChildsCordBlood = pageInfo?.[11]?.[8]?.urlSlug;
+  const videos = pageInfo?.[13]?.[18]?.urlSlug;
+  const immunizationChart = pageInfo?.[14]?.[19]?.urlSlug;
+  const thirdTrimester = pageInfo?.[15]?.[20]?.urlSlug;
+  const appointment = pageInfo?.[16]?.[15]?.urlSlug;
+  const secondTrimester = pageInfo?.[17]?.[16]?.urlSlug;
+  const firstTrimester = pageInfo?.[18]?.[17]?.urlSlug;
+  const pregnancyDietChart = pageInfo?.[19]?.[21]?.urlSlug;
+  const contact = pageInfo?.[20]?.[22]?.urlSlug;
+  const images = pageInfo?.[21]?.[24]?.urlSlug;
+  const blog = pageInfo?.[22]?.[23]?.urlSlug;
+  const bestStemCellBankInIndiaStemCellBankingCryovault = pageInfo?.[23]?.[25]?.urlSlug;
+  const accreditationsCertifications = pageInfo?.[24]?.[13]?.urlSlug;
+  const whenAndHowIsCordBloodCollected = pageInfo?.[25]?.[26]?.urlSlug;
+
   return (
     <Suspense fallback={<Loader />}>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/blog" element={<Blog />} />
+        <Route path={blog} element={<Blog />} />
         <Route path="/login" element={<Login />} />
         <Route path="/otp" element={<OTP />} />
-        {/* <Route path="/blog-single" element={<SingleBlog />} /> */}
-        {/* 
-        
-        <Route path="/registration" element={<Registration />} />
-
-        <Route path="/" element={<Home />} />
-
-         */}
-        <Route path="/aboutus" element={<About />} />
-        <Route path="/vision-mission" element={<Vision />} />
-        <Route path="/carrer" element={<Carrer />} />
-        <Route path="/accreditations" element={<Accreditations />} />
-        <Route path="/franchise" element={<Franchise />} />
-        {/* banking-links */}
-        <Route path="/stem-cell-banking" element={<StemCellBanking />} />
-        <Route path="/why-to-choose-stem-cell-banking" element={<ChooseStemcell />} />
-        <Route path="/about-umbilical-cord" element={<UmbilicalCord />} />
-        <Route path="/cord-blood-banking-umbilical-cord-preservation-in-india-cryovault" element={<CordBloodbanking />} />
-        <Route path="/how-to-store-your-stem-cells-with-cryovault" element={<StoreStemcells />} />
-        <Route path="/best-stem-cell-bank-in-india-stem-cell-banking-cryovault" element={<Benifitscellbank />} />
-        <Route path="/when-and-how-is-cord-blood-collected" element={<HowcordBloodcollected />} />
-        <Route path="/7-reasons-to-save-your-childs-cord-blood" element={<SevenReasonscordblood />} />
+        <Route path={aboutCryovault} element={<About />} />
+        <Route path={visionMission} element={<Vision />} />
+        <Route path={careers} element={<Carrer />} />
+        <Route path={accreditationsCertifications} element={<Accreditations />} />
+        <Route path={franchise} element={<Franchise />} />
+        <Route path={stemCellBanking} element={<StemCellBanking />} />
+        <Route path={whyToChooseStemCellBanking} element={<ChooseStemcell />} />
+        <Route path={aboutUmbilicalCord} element={<UmbilicalCord />} />
+        <Route path={cordBloodBankingUmbilicalCordPreservationInIndiaCryovault} element={<CordBloodbanking />} />
+        <Route path={howToStoreYourStemCellsWithCryovault} element={<StoreStemcells />} />
+        <Route path={bestStemCellBankInIndiaStemCellBankingCryovault} element={<Benifitscellbank />} />
+        <Route path={whenAndHowIsCordBloodCollected} element={<HowcordBloodcollected />} />
+        <Route path={ReasonsToSaveYourChildsCordBlood} element={<SevenReasonscordblood />} />
         <Route path="/cart" element={<Cart />} />
         <Route path="/checkout" element={<CheckoutDetails />} />
-        {/* <Route path="/thankyou" element={<ThankYou />} /> */}
-        {/* 
-      
-        */}
+        <Route path="/thankyou" element={<ThankYou />} />
         <Route path="/plan" element={<Plan />} />
-        <Route path="/appointment" element={<Appointment />} />
-        <Route path="/request-for-information-kit" element={<RequestKit />} />
+        <Route path={appointment} element={<Appointment />} />
+        <Route path={requestForInformationKit} element={<RequestKit />} />
         <Route path="/pregnancy" element={<Pregnancy />} />
-        <Route path="/first-trimester" element={<FirstTrimester />} />
-        <Route path="/second-trimester" element={<SecondTimester />} />
-        <Route path="/third-trimester" element={<ThirdTrimester />} />
-        <Route path="/pregnancy-diet-chart" element={<PregnancyChart />} />
-        <Route path="/immunization-chart" element={<ImmunizationChart />} />
-        <Route path="/images" element={<Images />} />
-        <Route path="/videos" element={<Videos />} />
-        <Route path="/contactus" element={<Contact />} />
+        <Route path={firstTrimester} element={<FirstTrimester />} />
+        <Route path={secondTrimester} element={<SecondTimester />} />
+        <Route path={thirdTrimester} element={<ThirdTrimester />} />
+        <Route path={pregnancyDietChart} element={<PregnancyChart />} />
+        <Route path={immunizationChart} element={<ImmunizationChart />} />
+        <Route path={images} element={<Images />} />
+        <Route path={videos} element={<Videos />} />
+        <Route path={contact} element={<Contact />} />
         <Route path="/dashboard" element={<Dashboard />} />
         {/*<Route path="/faq" element={<Faq />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/feedback" element={<FeedBack />} />
         <Route path="/terms-and-conditions" element={<TermsCondition />} />
         <Route path="/cancellation-refund-replacement-policy" element={<CancellatioRefund />} /> */}
+        {/* 
+        <Route path="/blog-single" element={<SingleBlog />} />
+        <Route path="/registration" element={<Registration />} />
+        <Route path="/" element={<Home />} />
+         */}
       </Routes>
-
-   
     </Suspense>
   );
 };

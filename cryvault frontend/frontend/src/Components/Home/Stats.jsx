@@ -32,7 +32,7 @@ const Stats = () => {
     return data;
   }, []);
   return (
-    <Box style={{ position: "relative", padding: isMobile  ? "5rem 1rem" : "5rem 15rem", border:"1px solid #e5e5e5" }}>
+    <Box style={{ position: "relative", padding: isMobile  ? "5rem 1rem" : "3rem 8rem", border:"1px solid #e5e5e5" }}>
      <img  className=" butterflyImage butter_fly" src="assets/images/butterfly-4.webp" alt="Shape" />
 
       <Grid sx={{marginTop:"5rem"}} spacing={3} container item rowSpacing={1} columnSpacing={{ xs: 1, sm: 4, md: 4 }}>

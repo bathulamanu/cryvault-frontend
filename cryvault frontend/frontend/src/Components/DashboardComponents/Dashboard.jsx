@@ -23,6 +23,8 @@ import BabyDetails from "../../Pages/DashboardPages/BabyDetails";
 import Invoices from "../../Pages/DashboardPages/Invoices";
 import Offers from "../../Pages/DashboardPages/Offers";
 import Refferals from "../../Pages/DashboardPages/Refferals";
+import SettingsPage from "../../Pages/DashboardPages/SettingsPage";
+import Help from "../../Pages/DashboardPages/Help";
 
 const Dashboard = () => {
   const [selectedItem, setSelectedItem] = useState("DashBoard");
@@ -35,7 +37,7 @@ const Dashboard = () => {
   };
 
   const handleItemClick = (item) => {
-    setSelectedItem(item === selectedItem ? null : item);
+    setSelectedItem(item === selectedItem ? item : item);
     setListVisible(false);
   };
 
@@ -46,8 +48,9 @@ const Dashboard = () => {
           display: "flex",
           flexDirection: isMobile ? "column" : "row",
           marginTop: "100px",
-          backgroundColor:"#e5e5e5",
-          padding:'4rem 0rem'
+          backgroundColor: "#e5e5e5",
+          padding: "4rem 0rem",
+          height: "100%",
         }}
       >
         <Box
@@ -55,7 +58,6 @@ const Dashboard = () => {
             display: isMobile ? "none" : "block",
             marginLeft: isMobile ? "0px" : "30px",
             marginBottom: isMobile ? "20px" : "0px",
-           
           }}
         >
           <Box
@@ -71,7 +73,7 @@ const Dashboard = () => {
               textAlign: "center !important",
               alignItems: "center",
               boxShadow: 3,
-              backgroundColor:"white"
+              backgroundColor: "white",
             }}
           >
             <List style={{ paddingTop: "20px", marginTop: "2rem", gap: "3rem", display: "flex", flexDirection: "column" }} component="nav" aria-label="main mailbox folders">
@@ -355,10 +357,9 @@ const Dashboard = () => {
           {selectedItem === "Reports" && <Services />}
           {selectedItem === "Subscription" && <Subscription />}
           {selectedItem === "Offers and Updates" && <Offers />}
-          {selectedItem === "Reference" && <Refferals />} 
-          {/* 
-          {selectedItem === "Settings" && <Settings />}
-          */}
+          {selectedItem === "Reference" && <Refferals />}
+          {selectedItem === "Settings" && <SettingsPage />}
+          {selectedItem === "Help" && <Help />}
         </Box>
       </Box>
 

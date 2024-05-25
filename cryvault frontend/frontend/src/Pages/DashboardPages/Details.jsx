@@ -251,7 +251,7 @@ const Details = () => {
   const isMobile = useMediaQuery("(max-width:600px)");
 
   return (
-    <Box>
+    <Box sx={{height:"100%"}}>
       <Card
         sx={{
           width: isMobile ? "90%" : "80vw",
@@ -259,6 +259,7 @@ const Details = () => {
           borderRadius: "20px",
           margin: isMobile ? "10px" : "0px",
           backgroundColor: "#F8F9FC",
+          height:"100%"
         }}
         style={{ marginLeft: isMobile ? "10px" : "20px" }}
       >

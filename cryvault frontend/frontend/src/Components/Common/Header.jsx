@@ -1,4 +1,4 @@
-import { Button, IconButton, Drawer, styled, Collapse, ListItemButton, Typography } from "@mui/material";
+import {  Button, IconButton, Drawer, styled, Collapse, ListItemButton, Typography } from "@mui/material";
 import { makeStyles } from "@material-ui/styles";
 import Box from "@mui/material/Box";
 import useScrollToTop from "../../Utilities/scrolltop";
@@ -9,12 +9,12 @@ import { IoMdCart } from "react-icons/io";
 import { MdKeyboardDoubleArrowLeft, MdKeyboardDoubleArrowRight, MdOutlineKeyboardDoubleArrowRight } from "react-icons/md";
 import MenuSharpIcon from "@mui/icons-material/MenuSharp";
 import CloseIcon from "@mui/icons-material/Close";
-import { List, ListItem, ListItemIcon,  ListItemText } from "@mui/material";
+import { List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchHeaderSocialIcons } from "../../redux/reducers/HomePageReducer";
+import { fetchHeaderSocialIcons, getPageMetaInfo } from "../../redux/reducers/HomePageReducer";
 import { AppBar, Toolbar, Menu, MenuItem, Divider, Avatar } from "@mui/material";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 const Header = () => {
@@ -51,95 +51,39 @@ const Header = () => {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.home);
   const headerSocialIcons = data && data.socialIcons && data.socialIcons && data.socialIcons.data && data.socialIcons.data[0];
-  console.log({ headerSocialIcons });
   useEffect(() => {
     dispatch(fetchHeaderSocialIcons());
+    dispatch(getPageMetaInfo());
   }, []);
 
-  const items = [
-    { label: "HOME", path: "/" },
-    {
-      label: "ABOUT",
-      submenu: [
-        { label: "About Cryovault", path: "aboutus" },
-        { label: "Vision and Mission", path: "vision-mission" },
-        { label: "Accreditations & Certifications", path: "accreditations" },
-        { label: "Careers", path: "carrer" },
-        { label: "Franchise", path: "franchise" },
-      ],
-    },
-    {
-      label: "STEM CELL BANKING",
-      submenu: [
-        { label: "Stem Cell Banking", path: "/stem-cell-banking" },
-        { label: "Why to Choose Stem Cell Banking?", path: "/why-to-choose-stem-cell-banking" },
-        { label: "What is Umbilical Cord?", path: "/about-umbilical-cord" },
-        { label: "Cord Blood Banking", path: "/cord-blood-banking-umbilical-cord-preservation-in-india-cryovault" },
-        { label: "How to Store Your STEM CELLS WITH CRYOVAULT", path: "/how-to-store-your-stem-cells-with-cryovault" },
-        { label: "Benifits of Stem Cells", path: "/best-stem-cell-bank-in-india-stem-cell-banking-cryovault" },
-        { label: "When and How is Cord Blood Collected", path: "/when-and-how-is-cord-blood-collected" },
-        { label: "7 Reasons to Save your Child's Cord Blood", path: "/7-reasons-to-save-your-childs-cord-blood" },
-      ],
-    },
-    {
-      label: "GETTING STARTED",
-      submenu: [
-        { label: "Plans", path: "/plan" },
-        { label: "Request For Information Kit", path: "/request-for-information-kit" },
-        { label: "Appointment", path: "/appointment" },
-      ],
-    },
-    {
-      label: "PREGNANCY",
-      submenu: [
-        { label: "First Trimester", path: "/first-trimester" },
-        { label: "Second Trimester", path: "/second-trimester" },
-        { label: "Third Trimester", path: "/third-trimester" },
-        { label: "Pregnancy Diet Chart", path: "/pregnancy-diet-chart" },
-        { label: "Immunization Chart", path: "/immunization-chart" },
-      ],
-    },
-    { label: "BLOG", path: "/blog" },
-    {
-      label: "GALLERY",
-      submenu: [
-        { label: "Images", path: "/images" },
-        { label: "Videos", path: "/videos" },
-      ],
-    },
-    { label: "CONTACT", path: "/contactus" },
-  ];
+  const pageInfo = useSelector((state) => state.home.pageInfo);
+  const aboutCryovault = pageInfo?.[0]?.[1]?.urlSlug;
+  const howToStoreYourStemCellsWithCryovault = pageInfo?.[1]?.[2]?.urlSlug;
+  const careers = pageInfo?.[2]?.[4]?.urlSlug;
+  const whyToChooseStemCellBanking = pageInfo?.[3]?.[3]?.urlSlug;
+  const cordBloodBankingUmbilicalCordPreservationInIndiaCryovault = pageInfo?.[4]?.[5]?.urlSlug;
+  const stemCellBanking = pageInfo?.[5]?.[9]?.urlSlug;
+  const franchise = pageInfo?.[6]?.[6]?.urlSlug;
+  const visionMission = pageInfo?.[7]?.[7]?.urlSlug;
+  // const howToStoreYourStemCellsWithCryovault = pageInfo?.[8]?.[11]?.urlSlug
+  const requestForInformationKit = pageInfo?.[9]?.[12]?.urlSlug;
+  const aboutUmbilicalCord = pageInfo?.[10]?.[10]?.urlSlug;
+  const ReasonsToSaveYourChildsCordBlood = pageInfo?.[11]?.[8]?.urlSlug;
+  const cryovaultUmbilicalCordPreservationStemCellBankingCharges = pageInfo?.[12]?.[14]?.urlSlug;
+  const videos = pageInfo?.[13]?.[18]?.urlSlug;
+  const immunizationChart = pageInfo?.[14]?.[19]?.urlSlug;
+  const thirdTrimester = pageInfo?.[15]?.[20]?.urlSlug;
+  const appointment = pageInfo?.[16]?.[15]?.urlSlug;
+  const secondTrimester = pageInfo?.[17]?.[16]?.urlSlug;
+  const firstTrimester = pageInfo?.[18]?.[17]?.urlSlug;
+  const pregnancyDietChart = pageInfo?.[19]?.[21]?.urlSlug;
+  const contact = pageInfo?.[20]?.[22]?.urlSlug;
+  const images = pageInfo?.[21]?.[24]?.urlSlug;
+  const blog = pageInfo?.[22]?.[23]?.urlSlug;
+  const bestStemCellBankInIndiaStemCellBankingCryovault = pageInfo?.[23]?.[25]?.urlSlug;
+  const accreditationsCertifications = pageInfo?.[24]?.[13]?.urlSlug;
+  const whenAndHowIsCordBloodCollected = pageInfo?.[25]?.[26]?.urlSlug;
 
-  const userMenu = [
-    !hasToken && (
-      <MenuItem component={Link} to="/login">
-        <Button variant="contained" className="edu-btn">
-          GET STARTED
-        </Button>
-      </MenuItem>
-    ),
-    hasToken && (
-      <>
-        {userType && (
-          <MenuItem component={Link} to="/dashboard">
-            Dashboard
-          </MenuItem>
-        )}
-        <MenuItem component={Link} to="/videos" onClick={handleLogout}>
-          Logout
-        </MenuItem>
-      </>
-    ),
-  ];
-  const [anchorEl, setAnchorEl] = React.useState(null);
-
-  const handleOpenMenu = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleCloseMenu = () => {
-    setAnchorEl(null);
-  };
   return (
     <header className="edu-header header-style-1 header-fullwidth">
       <Box className="header-top-bar">
@@ -208,32 +152,33 @@ const Header = () => {
                       </Link>
                     </li>
                     <li className="has-droupdown">
-                      <Link onClick={useScrollToTop()} to="#">
+                      <Link onClick={useScrollToTop()} to={`/${aboutCryovault}`}>
                         ABOUT
                       </Link>
+                      
                       <ul className="submenu">
                         <li>
-                          <Link onClick={useScrollToTop()} to="aboutus">
+                          <Link onClick={useScrollToTop()} to={`/${aboutCryovault}`}>
                             About Cryovault
                           </Link>
                         </li>
                         <li>
-                          <Link onClick={useScrollToTop()} to="vision-mission">
+                          <Link onClick={useScrollToTop()} to={`/${visionMission}`}>
                             Vision and Mission
                           </Link>
                         </li>
                         <li>
-                          <Link onClick={useScrollToTop()} to="accreditations">
+                          <Link onClick={useScrollToTop()} to={`/${accreditationsCertifications}`}>
                             Accreditations &amp; Certifications
                           </Link>
                         </li>
                         <li>
-                          <Link onClick={useScrollToTop()} to="carrer">
+                          <Link onClick={useScrollToTop()} to={`/${careers}`}>
                             Careers
                           </Link>
                         </li>
                         <li>
-                          <Link onClick={useScrollToTop()} to="franchise">
+                          <Link onClick={useScrollToTop()} to={`/${franchise}`}>
                             Franchise
                           </Link>
                         </li>
@@ -246,42 +191,42 @@ const Header = () => {
                       </Link>
                       <ul className="submenu">
                         <li>
-                          <Link onClick={useScrollToTop()} to="/stem-cell-banking">
+                          <Link onClick={useScrollToTop()} to={`/${stemCellBanking}`}>
                             Stem Cell Banking
                           </Link>
                         </li>
                         <li>
-                          <Link onClick={useScrollToTop()} to="/why-to-choose-stem-cell-banking">
+                          <Link onClick={useScrollToTop()} to={`/${whyToChooseStemCellBanking}`}>
                             Why to Choose Stem Cell Banking?
                           </Link>
                         </li>
                         <li>
-                          <Link onClick={useScrollToTop()} to="/about-umbilical-cord">
+                          <Link onClick={useScrollToTop()} to={`/${aboutUmbilicalCord}`}>
                             What is Umbilical Cord?
                           </Link>
                         </li>
                         <li>
-                          <Link onClick={useScrollToTop()} to="/cord-blood-banking-umbilical-cord-preservation-in-india-cryovault">
+                          <Link onClick={useScrollToTop()} to={`/${cordBloodBankingUmbilicalCordPreservationInIndiaCryovault}`}>
                             Cord Blood Banking
                           </Link>
                         </li>
                         <li>
-                          <Link onClick={useScrollToTop()} to="/how-to-store-your-stem-cells-with-cryovault">
+                          <Link onClick={useScrollToTop()} to={`/${howToStoreYourStemCellsWithCryovault}`}>
                             How to Store Your STEM CELLS WITH CRYOVAULT
                           </Link>
                         </li>
                         <li>
-                          <Link onClick={useScrollToTop()} to="/best-stem-cell-bank-in-india-stem-cell-banking-cryovault">
+                          <Link onClick={useScrollToTop()} to={`/${bestStemCellBankInIndiaStemCellBankingCryovault}`}>
                             Benifits of Stem Cells
                           </Link>
                         </li>
                         <li>
-                          <Link onClick={useScrollToTop()} to="/when-and-how-is-cord-blood-collected">
+                          <Link onClick={useScrollToTop()} to={`/${whenAndHowIsCordBloodCollected}`}>
                             When and How is Cord Blood Collected
                           </Link>
                         </li>
                         <li>
-                          <Link onClick={useScrollToTop()} to="/7-reasons-to-save-your-childs-cord-blood">
+                          <Link onClick={useScrollToTop()} to={`/${ReasonsToSaveYourChildsCordBlood}`}>
                             7 Reasons to Save your Child's Cord Blood
                           </Link>
                         </li>
@@ -299,12 +244,12 @@ const Header = () => {
                           </Link>
                         </li>
                         <li>
-                          <Link onClick={useScrollToTop()} to="/request-for-information-kit">
+                          <Link onClick={useScrollToTop()} to={`/${requestForInformationKit}`}>
                             Request For Information Kit
                           </Link>
                         </li>
                         <li>
-                          <Link onClick={useScrollToTop()} to="/appointment">
+                          <Link onClick={useScrollToTop()} to={`/${appointment}`}>
                             Appointment
                           </Link>
                         </li>
@@ -317,51 +262,51 @@ const Header = () => {
                       </Link>
                       <ul className="submenu">
                         <li>
-                          <Link onClick={useScrollToTop()} to="/first-trimester">
+                          <Link onClick={useScrollToTop()} to={`/${firstTrimester}`}>
                             First Trimester
                           </Link>
                         </li>
                         <li>
-                          <Link onClick={useScrollToTop()} to="/second-trimester">
+                          <Link onClick={useScrollToTop()} to={`/${secondTrimester}`}>
                             Second Trimester
                           </Link>
                         </li>
                         <li>
-                          <Link onClick={useScrollToTop()} to="/third-trimester">
+                          <Link onClick={useScrollToTop()} to={`/${thirdTrimester}`}>
                             Third Trimester
                           </Link>
                         </li>
                         <li>
-                          <Link onClick={useScrollToTop()} to="/pregnancy-diet-chart">
+                          <Link onClick={useScrollToTop()} to={`/${pregnancyDietChart}`}>
                             Pregnancy Diet Chart
                           </Link>
                         </li>
                         <li>
-                          <Link onClick={useScrollToTop()} to="/immunization-chart">
+                          <Link onClick={useScrollToTop()} to={`/${immunizationChart}`}>
                             Immunization Chart
                           </Link>
                         </li>
                       </ul>
                     </li>
                     <li>
-                      <Link onClick={useScrollToTop()} to="/blog">
+                      <Link onClick={useScrollToTop()} to={`/${blog}`}>
                         {" "}
                         BLOG
                       </Link>
                     </li>
                     <li className="has-droupdown">
-                      <Link onClick={useScrollToTop()} to="/images">
+                      <Link onClick={useScrollToTop()} to={`/${images}`}>
                         {" "}
                         GALLERY
                       </Link>
                       <ul className="submenu">
                         <li>
-                          <Link onClick={useScrollToTop()} to="/images">
+                          <Link onClick={useScrollToTop()} to={`${images}`}>
                             Images
                           </Link>
                         </li>
                         <li>
-                          <Link onClick={useScrollToTop()} to="/videos">
+                          <Link onClick={useScrollToTop()} to={`/${videos}`}>
                             Videos
                           </Link>
                         </li>
@@ -369,7 +314,7 @@ const Header = () => {
                     </li>
 
                     <li>
-                      <Link onClick={useScrollToTop()} to="/contactus" className="pr-0">
+                      <Link onClick={useScrollToTop()} to={`/${contact}`} className="pr-0">
                         CONTACT
                       </Link>
                     </li>
@@ -407,7 +352,7 @@ const Header = () => {
                           </>
                         )}
                       </ul>
-                    </li>
+                    </li> 
                   </ul>
                 </nav>
               </Box>
@@ -687,3 +632,87 @@ export default Header;
                   ))}
                 </AppBar> */
 }
+// const items = [
+//   { label: "HOME", path: "/" },
+//   {
+//     label: "ABOUT",
+//     submenu: [
+//       { label: "About Cryovault", path: "aboutus" },
+//       { label: "Vision and Mission", path: "vision-mission" },
+//       { label: "Accreditations & Certifications", path: "accreditations" },
+//       { label: "Careers", path: "carrer" },
+//       { label: "Franchise", path: "franchise" },
+//     ],
+//   },
+//   {
+//     label: "STEM CELL BANKING",
+//     submenu: [
+//       { label: "Stem Cell Banking", path: "/stem-cell-banking" },
+//       { label: "Why to Choose Stem Cell Banking?", path: "/why-to-choose-stem-cell-banking" },
+//       { label: "What is Umbilical Cord?", path: "/about-umbilical-cord" },
+//       { label: "Cord Blood Banking", path: "/cord-blood-banking-umbilical-cord-preservation-in-india-cryovault" },
+//       { label: "How to Store Your STEM CELLS WITH CRYOVAULT", path: "/how-to-store-your-stem-cells-with-cryovault" },
+//       { label: "Benifits of Stem Cells", path: "/best-stem-cell-bank-in-india-stem-cell-banking-cryovault" },
+//       { label: "When and How is Cord Blood Collected", path: "/when-and-how-is-cord-blood-collected" },
+//       { label: "7 Reasons to Save your Child's Cord Blood", path: "/7-reasons-to-save-your-childs-cord-blood" },
+//     ],
+//   },
+//   {
+//     label: "GETTING STARTED",
+//     submenu: [
+//       { label: "Plans", path: "/plan" },
+//       { label: "Request For Information Kit", path: "/request-for-information-kit" },
+//       { label: "Appointment", path: "/appointment" },
+//     ],
+//   },
+//   {
+//     label: "PREGNANCY",
+//     submenu: [
+//       { label: "First Trimester", path: "/first-trimester" },
+//       { label: "Second Trimester", path: "/second-trimester" },
+//       { label: "Third Trimester", path: "/third-trimester" },
+//       { label: "Pregnancy Diet Chart", path: "/pregnancy-diet-chart" },
+//       { label: "Immunization Chart", path: "/immunization-chart" },
+//     ],
+//   },
+//   { label: "BLOG", path: "/blog" },
+//   {
+//     label: "GALLERY",
+//     submenu: [
+//       { label: "Images", path: "/images" },
+//       { label: "Videos", path: "/videos" },
+//     ],
+//   },
+//   { label: "CONTACT", path: "/contactus" },
+// ];
+
+// const userMenu = [
+//   !hasToken && (
+//     <MenuItem component={Link} to="/login">
+//       <Button variant="contained" className="edu-btn">
+//         GET STARTED
+//       </Button>
+//     </MenuItem>
+//   ),
+//   hasToken && (
+//     <>
+//       {userType && (
+//         <MenuItem component={Link} to="/dashboard">
+//           Dashboard
+//         </MenuItem>
+//       )}
+//       <MenuItem component={Link} to="/videos" onClick={handleLogout}>
+//         Logout
+//       </MenuItem>
+//     </>
+//   ),
+// ];
+// const [anchorEl, setAnchorEl] = React.useState(null);
+
+// const handleOpenMenu = (event) => {
+//   setAnchorEl(event.currentTarget);
+// };
+
+// const handleCloseMenu = () => {
+//   setAnchorEl(null);
+// };

@@ -21,7 +21,6 @@ export const OTP = () => {
   const OTPid = userData.data?.OTPid;
 
   const dispatch = useDispatch();
-  console.log(userData);
   const handleSendOTP = () => {
     const dataToSend = {
       OTPid: OTPid,
@@ -42,7 +41,13 @@ export const OTP = () => {
     dispatch(login({ payload: dataToSend }));
   };
 
-  const goTodashBoard = () => navigate("/");
+  const goTodashBoard = () => {
+    const isCheckingOut = localStorage.getItem("isCheckingOut");
+    if (isCheckingOut) navigate("/checkout");
+    else {
+      navigate("/dashboard");
+    }
+  };
   return (
     <Box
       sx={{

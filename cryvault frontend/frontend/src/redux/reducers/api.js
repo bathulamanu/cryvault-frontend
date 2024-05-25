@@ -10,11 +10,11 @@ export const OTP = () => {
 export const ResendOTPAPI = () => {
   return `${BASE_URL}/cryovault/api/user/customerResendOtp`;
 };
-export const CreateOrder = () => {
-  return `${BASE_URL}/cryovault/api/user/createOrder`;
+export const CreateOrderApi = () => {
+  return `${BASE_URL}/flyingbyts/api/user/createOrder`;
 };
 export const PaymentStatus = () => {
-  return `${BASE_URL}/cryovault/api/user/customerPayment`;
+  return `${BASE_URL}/flyingbyts/api/user/customerPayment`;
 };
 export const Plans = () => {
   return `${BASE_URL}/flyingbyts/api/customer/getSubscriptionPlan`;
@@ -25,11 +25,11 @@ export const RegistrationForm = () => {
 };
 
 export const GetGenderDetails = () => {
-  return `${BASE_URL}/cryovault/api/customer/getGender`;
+  return `${BASE_URL}/flyingbyts/api/user/getMasterConfiguration/Gender`;
 };
 
 export const GetCustomerPaymentDetails = () => {
-  return `${BASE_URL}/cryovault/api/user/getCustomerPaymentDetails`;
+  return `${BASE_URL}/flyingbyts/api/customer/updateCustomerInfo`;
 };
 export const GetHeaderSocialMediaIcon = () => {
   return `${BASE_URL}/flyingbyts/api/user/getsocialMediaIcon`;
@@ -39,4 +39,22 @@ export const GetFooter = () => {
 };
 export const GetImages = () => {
   return `${BASE_URL}/cryovault/api/user/getFilesFromS3`;
+};
+export const getCountryName = () => {
+  return `${BASE_URL}/flyingbyts/api/user/getCountryName `;
+};
+export const getCityName = () => {
+  return `${BASE_URL}/flyingbyts/api/user/getCityName`;
+};
+export const getStateName = () => {
+  return `${BASE_URL}/flyingbyts/api/user/getStateName`;
+};
+export const getPageMetaInfoApi = () => {
+  return `${BASE_URL}/flyingbyts/api/user/getPageMetaInfo`;
+};
+export const getOrderDetailsApi = () => {
+  return `${BASE_URL}/flyingbyts/api/user/getCustomerPaymentDetails`;
+};
+export const getHelpDetailsApi = () => {
+  return `${BASE_URL}/flyingbyts/api/customer/getHelpDetails`;
 };

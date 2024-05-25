@@ -6,12 +6,11 @@ const Services = () => {
   const isMobile = useMediaQuery("(max-width:600px)");
 
   return (
-    <div>
+    <Box sx={{height:"100%"}}>
       <Card
         sx={{
           width: isMobile ? "90%" : "1100px", // Adjust width based on screen size
-          height: "600px",
-
+          height: "100%",
           margin: isMobile ? "10px" : "0px",
           borderRadius: "20px",
         }}
@@ -86,7 +85,7 @@ const Services = () => {
           </Card>
         </Box>
       </Card>
-    </div>
+    </Box>
   );
 };
 
