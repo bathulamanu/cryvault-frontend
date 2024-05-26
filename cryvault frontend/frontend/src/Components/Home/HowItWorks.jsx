@@ -71,12 +71,13 @@
 
 import { Box, Typography } from "@mui/material";
 import React from "react";
-
+import useDeviceSize from "../../Utilities/useDeviceSize";
 const HowitWorks = () => {
+  const isMobile = useDeviceSize() === "xs";
   return (
     <>
       <Box className="edu-categorie-area categorie-area-5 edu-section-gap">
-        <img className=" position-ab spectrum-circl" src="assets/images/anim-icon-10.webp" alt="Shape" />
+        {isMobile ? null : <img className=" position-ab spectrum-circl" src="assets/images/anim-icon-10.webp" alt="Shape" />}
 
         <Box className="container how-ts-containr">
           <Box className="section-title section-center sal-animate cd-headline">

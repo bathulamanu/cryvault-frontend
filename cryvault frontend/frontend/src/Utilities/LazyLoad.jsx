@@ -68,6 +68,8 @@ import Dashboard from "../Components/DashboardComponents/Dashboard";
 import CheckoutDetails from "../Pages/CheckoutDetails";
 import { useDispatch, useSelector } from "react-redux";
 import { getPageMetaInfo } from "../redux/reducers/HomePageReducer";
+import PopupLayout from "../Pages/PopupPages/PopupLayout";
+import PopupLazyLoad from "./PopupLazyLoad";
 
 const LazyLoad = () => {
   const [hasToken, setHasToken] = useState(false);
@@ -174,6 +176,7 @@ const LazyLoad = () => {
         <Route path={videos} element={<Videos />} />
         <Route path={contact} element={<Contact />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/popup" element={<PopupLayout />} />
         {/*<Route path="/faq" element={<Faq />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/feedback" element={<FeedBack />} />

@@ -15,7 +15,7 @@ const Offers = () => {
           height: isMobile ? "650px" : "100%",
           borderRadius: "20px",
         }}
-        style={{ marginLeft: isMobile ? "10px" : "20px" }}
+        style={{ marginLeft: isMobile ? "none" : "20px" }}
       >
         <Box sx={{ backgroundColor: "#2B2E64", padding: "20px" }}>
           <Typography sx={{ color: "white" }} variant="h4">

@@ -65,7 +65,7 @@ const Invoices = () => {
               color: "white",
             }} variant="h4">Invoice Number</Typography>
           </Box>
-          <TableContainer sx={{backgroundColor:"#F8F9FC"}}>
+          <TableContainer sx={{backgroundColor: "#F8F9FC"}}>
             <Table>
               <TableHead>
                 <TableRow>
@@ -133,7 +133,7 @@ const Invoices = () => {
                     <TableCell style={{ border: "none", textAlign: "center", fontSize: "1.5rem" }}>{invoice.date}</TableCell>
                     <TableCell style={{ border: "none", textAlign: "center", fontSize: "1.5rem" }}>{invoice.amount}</TableCell>
                     <TableCell style={{ border: "none", textAlign: "center", fontSize: "1.5rem" }}>
-                      <Box className="tableCellWithCircle" sx={{ backgroundColor: invoice.status === "Completed" ? "#01d501" : invoice.status === "Pending" ? "yellow" : "#ff9e9e " }}>
+                      <Box className="tableCellWithCircle" sx={{ backgroundColor: isMobile ? invoice.status === "Completed" ? "#01d501" : invoice.status === "Pending" ? "yellow" : "#ff9e9e " : 'none' } }>
                         {" "}
                         {invoice.status}
                       </Box>

@@ -30,7 +30,7 @@ const Help = () => {
         sx={{
           margin: isMobile ? "20px" : "0px",
           width: isMobile ? "90%" : "1100px",
-          height: isMobile ? "650px" : "100%",
+          height: isMobile ? "100%" : "100%",
           borderRadius: "20px",
           backgroundColor: "#F8F9FC",
         }}
@@ -47,12 +47,13 @@ const Help = () => {
             display: "flex",
             alignItems: "center",
             margin: "2rem",
-            height: "100%",
+            height: isMobile ? "auto" : "100%",
             alignItems: "flex-start",
             gap: "1rem",
+            flexDirection: isMobile ? "column" : "row",
           }}
         >
-          <Box sx={{ height: "100%", width: "30%" }}>
+          <Box sx={{ height: "100%", width: isMobile ? "100%" : "30%" }}>
             <Box
               sx={{
                 display: "flex",
@@ -83,7 +84,9 @@ const Help = () => {
             ) : null}
           </Box>
 
-          <Box className="helpDetailSection">{selectedIssue && issueComponents[selectedIssue]}</Box>
+          <Box sx={{ width: isMobile ? "100%" : "65%" }} className="helpDetailSection">
+            {selectedIssue && issueComponents[selectedIssue]}
+          </Box>
         </Box>
       </Card>
     </Box>
@@ -91,6 +94,8 @@ const Help = () => {
 };
 
 export const DetailsIssue = React.memo(() => {
+  const isMobile = useMediaQuery("(max-width:600px)");
+
   return (
     <Box
       sx={{
@@ -117,7 +122,7 @@ export const DetailsIssue = React.memo(() => {
       </Box>
 
       <textarea style={{ alignItems: "flex-start", fontSize: "2rem", width: "100%", border: "1px solid #e5e5e5", height: "80%", borderRadius: "1rem", padding: "1rem" }} variant="outlined" aria-label="Demo input" multiline placeholder="If any issues comment here..." />
-      <Button className="issuesButton" variant="contained" sx={{ bottom: "-15px", right: "20px", fontSize: "2rem", fontWeight: "600", borderRadius: "0.5rem", position: "absolute" }}>
+      <Button className="issuesButton" variant="contained" sx={{ bottom: "-15px", right: "20px", fontSize: "2rem", fontWeight: "600", borderRadius: "0.5rem", position: isMobile ? 'static' :  "absolute", width:isMobile?'100%' : '23e' }}>
         Submit
       </Button>
     </Box>
@@ -125,6 +130,7 @@ export const DetailsIssue = React.memo(() => {
 });
 
 export const MobileNumberIssue = React.memo(() => {
+  const isMobile = useMediaQuery("(max-width:600px)");
   return (
     <Box
       sx={{
@@ -211,13 +217,14 @@ export const MobileNumberIssue = React.memo(() => {
         </Box>
       </Box>
 
-      <Button className="issuesButton" variant="contained" sx={{ bottom: "-15px", right: "20px", fontSize: "2rem", fontWeight: "600", borderRadius: "0.5rem", position: "absolute" }}>
+      <Button className="issuesButton" variant="contained" sx={{ bottom: "-15px", right: "20px", fontSize: "2rem", fontWeight: "600", borderRadius: "0.5rem",  position: isMobile ? 'static' :  "absolute", width:isMobile?'100%' : '23e' }}>
         Submit
       </Button>
     </Box>
   );
 });
 export const HospitalDetailsIssue = React.memo(() => {
+  const isMobile = useMediaQuery("(max-width:600px)");
   return (
     <Box
       sx={{
@@ -319,13 +326,14 @@ export const HospitalDetailsIssue = React.memo(() => {
         </Box>
       </Box>
 
-      <Button className="issuesButton" variant="contained" sx={{ bottom: "-15px", right: "20px", fontSize: "2rem", fontWeight: "600", borderRadius: "0.5rem", position: "absolute" }}>
+      <Button className="issuesButton" variant="contained" sx={{ bottom: "-15px", right: "20px", fontSize: "2rem", fontWeight: "600", borderRadius: "0.5rem",  position: isMobile ? 'static' :  "absolute", width:isMobile?'100%' : '23e' }}>
         Submit
       </Button>
     </Box>
   );
 });
 export const ExecutiveDetailsIssue = React.memo(() => {
+  const isMobile = useMediaQuery("(max-width:600px)");
   return (
     <Box
       sx={{
@@ -392,7 +400,7 @@ export const ExecutiveDetailsIssue = React.memo(() => {
         <textarea style={{ marginTop: "50px", alignItems: "flex-start", fontSize: "2rem", width: "100%", border: "1px solid #e5e5e5", height: "80%", borderRadius: "1rem", padding: "1rem" }} variant="outlined" aria-label="Demo input" multiline placeholder="If any issues comment here..." />
       </Box>
 
-      <Button className="issuesButton" variant="contained" sx={{ bottom: "-15px", right: "20px", fontSize: "2rem", fontWeight: "600", borderRadius: "0.5rem", position: "absolute" }}>
+      <Button className="issuesButton" variant="contained" sx={{ bottom: "-15px", right: "20px", fontSize: "2rem", fontWeight: "600", borderRadius: "0.5rem",  position: isMobile ? 'static' :  "absolute", width:isMobile?'100%' : '23e' }}>
         Submit
       </Button>
     </Box>
@@ -407,6 +415,8 @@ export const NomineeDetailsIssue = React.memo(() => {
     setSelectedValue(event.target.value);
   };
   const chunkedOptions = [options.slice(0, 3), options.slice(3)];
+  const isMobile = useMediaQuery("(max-width:600px)");
+
   return (
     <Box
       sx={{
@@ -507,7 +517,7 @@ export const NomineeDetailsIssue = React.memo(() => {
             fullWidth
           />
         </Box>
-        <Box sx={{ display: "flex", marginTop: "30px", gap: "6rem" }}>
+        <Box sx={{ display: "flex", flexDirection: isMobile ? "column" : "row", marginTop: "30px", gap: isMobile ? "1rem" : "6rem" }}>
           <Typography
             InputLabelProps={{
               sx: {
@@ -527,7 +537,7 @@ export const NomineeDetailsIssue = React.memo(() => {
 
           <RadioGroup sx={{ width: "90%" }} value={selectedValue} onChange={handleChange}>
             <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-              <Box sx={{ display: "flex", flexDirection: "row", gap: "1rem" }}>
+              <Box sx={{ display: "flex", flexDirection: isMobile ? "column" : "row", gap: "1rem" }}>
                 {options.slice(0, 3).map((option) => (
                   <FormControlLabel
                     key={option}
@@ -549,7 +559,7 @@ export const NomineeDetailsIssue = React.memo(() => {
               </Box>
               <Box sx={{ display: "flex", flexDirection: "row", gap: "1rem" }}>
                 {options.length > 3 && (
-                  <Box sx={{ display: "flex", flexDirection: "row" }}>
+                  <Box sx={{ display: "flex", flexDirection: isMobile ? "column" : "row" }}>
                     {options.slice(3).map((option) => (
                       <FormControlLabel
                         key={option}
@@ -574,7 +584,7 @@ export const NomineeDetailsIssue = React.memo(() => {
             </Box>
           </RadioGroup>
         </Box>
-        <Box sx={{ display: "flex", marginTop: "10px", justifyContent: "space-between", alignItems: "center" }}>
+        <Box sx={{ display: "flex", flexDirection: isMobile ? "column" : "row", marginTop: "10px", justifyContent: "space-between", alignItems: isMobile ? "start" : "center" }}>
           <Typography sx={{ fontSize: "2rem", fontWeight: "600", whiteSpace: "nowrap" }}> Id proof Number</Typography>
 
           <TextField
@@ -594,7 +604,7 @@ export const NomineeDetailsIssue = React.memo(() => {
             sx={{ width: "70%" }}
           />
         </Box>
-        <Box sx={{ display: "flex", marginTop: "30px", justifyContent: "space-between", alignItems: "center" }}>
+        <Box sx={{ display: "flex", flexDirection: isMobile ? "column" : "row", marginTop: "30px", justifyContent: "space-between", alignItems: isMobile ? "start" : "center" }}>
           <Typography sx={{ fontSize: "2rem", fontWeight: "600", whiteSpace: "nowrap" }}> If other please specify</Typography>
 
           <TextField
@@ -616,7 +626,7 @@ export const NomineeDetailsIssue = React.memo(() => {
         </Box>
       </Box>
 
-      <Button className="issuesButton" variant="contained" sx={{ bottom: "-15px", right: "20px", fontSize: "2rem", fontWeight: "600", borderRadius: "0.5rem", position: "absolute" }}>
+      <Button className="issuesButton" variant="contained" sx={{ bottom: "-15px", right: "20px", fontSize: "2rem", fontWeight: "600", borderRadius: "0.5rem",  position: isMobile ? 'static' :  "absolute", width:isMobile?'100%' : '23e' }}>
         Submit
       </Button>
     </Box>
@@ -772,8 +782,8 @@ export const CommunicationDetailsIssue = React.memo(() => {
           />
         </Box>
       </Box>
-      <Box sx={{ display: "flex", marginTop: "10px",gap:"1rem", justifyContent: "space-between", alignItems: "center" }}>
-        <Typography sx={{ fontSize: "2rem", fontWeight: "600", whiteSpace: "nowrap" }}> Is permanent address is same as correspondance address</Typography>
+      <Box sx={{ display: "flex", marginTop: "10px", gap: "1rem", justifyContent: "space-between", alignItems: "center" }}>
+        <Typography sx={{ fontSize: "2rem", fontWeight: "600", whiteSpace: isMobile ? "pre-wrap" : "nowrap" }}> Is permanent address is same as correspondance address</Typography>
 
         <FormControlLabel
           control={<Checkbox defaultChecked />}
@@ -788,7 +798,7 @@ export const CommunicationDetailsIssue = React.memo(() => {
         />
       </Box>
       <Box sx={{ width: "100%", display: "flex", flexDirection: "column", marginTop: "30px", justifyContent: "space-between", alignItems: "start" }}>
-        <Typography sx={{ fontSize: "2rem", fontWeight: "600", whiteSpace: "nowrap" }}> Address (If diffrent from above)</Typography>
+        <Typography sx={{ fontSize: "2rem", fontWeight: "600", whiteSpace: isMobile ? "pre-wrap" : "nowrap" }}> Address (If diffrent from above)</Typography>
 
         <TextField
           InputLabelProps={{
@@ -808,7 +818,7 @@ export const CommunicationDetailsIssue = React.memo(() => {
         />
       </Box>
 
-      <Button className="issuesButton" variant="contained" sx={{ bottom: "-15px", right: "20px", fontSize: "2rem", fontWeight: "600", borderRadius: "0.5rem", position: "absolute" }}>
+      <Button className="issuesButton" variant="contained" sx={{ bottom: "-15px", right: "20px", fontSize: "2rem", fontWeight: "600", borderRadius: "0.5rem",  position: isMobile ? 'static' :  "absolute", width:isMobile?'100%' : '23e' }}>
         Submit
       </Button>
     </Box>

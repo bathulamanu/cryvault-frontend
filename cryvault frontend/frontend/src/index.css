@@ -96,3 +96,50 @@ code {
   background: #2b2e64 !important;
   background-color: #2b2e64 !important;
 }
+
+/* --------------0 */
+
+.innerPage {
+  margin-top: 20px;
+  .form-header {
+    background-color: #2b2e64;
+    display: flex;
+    align-items: center; /* To vertically center the image */
+  }
+
+  .form-header img {
+    margin-left: auto; /* Pushes the image to the right */
+  }
+  .innerPageHeading {
+    color: white;
+    text-align: center;
+    background-color: #2b2e64;
+    padding-bottom: 20px;
+  }
+  .innerPageHeading1 {
+    color: white;
+    text-align: start;
+    background-color: #2b2e64;
+    padding: 20px;
+  }
+  .formBox {
+    margin: 0px;
+    padding: 30px;
+    border: 0.01px solid whitesmoke;
+    .formBox1 {
+      margin-top: 20px;
+      border: 0.5px solid grey;
+      border-bottom-left-radius: 20px;
+      border-bottom-right-radius: 20px;
+    }
+    .field {
+      padding: 10px 20px 10px 20px;
+      display: flex;
+      .fieldName {
+        color: #2b2e64;
+        padding-top: 10px;
+        font-size: 2rem;
+      }
+    }
+  }
+}

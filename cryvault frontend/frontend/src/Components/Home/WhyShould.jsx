@@ -32,8 +32,9 @@
 // export default WhyShould;
 import { Box, Link, Typography } from "@mui/material";
 import React from "react";
-
+import useDeviceSize from "../../Utilities/useDeviceSize";
 const WhyShould = () => {
+  const isMobile = useDeviceSize() === "xs";
   return (
     <>
       <Box className="gap-tb-text position-relative overflow-hidden">
@@ -56,8 +57,8 @@ const WhyShould = () => {
             </Box>
           </Box>
         </Box>
+        {isMobile ? null : <img className=" position-ab triangle-btn" src="assets/images/anim-icon-9.webp" alt="Shape" />}
 
-        <img className=" position-ab triangle-btn" src="assets/images/anim-icon-9.webp" alt="Shape" />
         {/* <img className=" position-ab rainbow-img" src="assets/images/rainbow-star.webp" alt="Shape" /> */}
       </Box>
     </>

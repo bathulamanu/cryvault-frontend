@@ -1,5 +1,5 @@
 import { useTheme } from "@emotion/react";
-import { Box, Button, FormControl, InputLabel, MenuItem, OutlinedInput, Select, Stack, Typography } from "@mui/material";
+import { Box, Button, FormControl, FormControlLabel, InputLabel, MenuItem, OutlinedInput, Radio, RadioGroup, Select, Stack, Typography } from "@mui/material";
 import React, { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useDeviceSize from "../Utilities/useDeviceSize";
@@ -38,7 +38,7 @@ const CheckoutDetails = () => {
   const amount = localStorage.getItem("planAmount");
   const handling = 100;
   const tax = amount * 0.18;
-  const total = parseInt(amount) + handling + tax;
+  // const total = parseInt(amount) + handling + tax;
   const subscription = localStorage.getItem("subscription");
 
   const dispatch = useDispatch();
@@ -121,7 +121,7 @@ const CheckoutDetails = () => {
       id: "nearLandMark",
     },
     country: {
-      value: detail?.countryCode,
+      value: detail?.countryCode || 352,
       placeholder: "Country",
       errorStatus: false,
       errorMessage: "",
@@ -129,7 +129,7 @@ const CheckoutDetails = () => {
       type: "text",
       name: "country",
       id: "country",
-      countryId: "",
+      countryId: 352,
     },
     state: {
       value: "",
@@ -481,12 +481,60 @@ const CheckoutDetails = () => {
           </Stack>
         </Box>
 
-        <Box style={{ marginBottom: isMobile ? "2rem" : "0rem", width: isMobile ? "100%" : "40%", padding: "2rem", display: "flex", flexDirection: "column", border: "1px solid #e5e5e5", justifyContent: "start", gap: "7rem" }}>
-          <Typography variant="h4" sx={{ fontWeight: "600" }}>
-            Order Details
-          </Typography>
+        <Box style={{ marginBottom: isMobile ? "2rem" : "0rem", width: isMobile ? "100%" : "40%", padding: "2rem", display: "flex", flexDirection: "column", border: "1px solid #e5e5e5", justifyContent: "start", gap: "5rem" }}>
+          {/* partial payments */}
+          <Box>
+            <Typography variant="h4" sx={{ fontWeight: "600" }}>
+              Payment Type
+            </Typography>
+            <br />
+
+            <RadioGroup sx={{ width: "90%" }}>
+              <Box sx={{ display: "flex", flexDirection:isMobile ? 'column' :  "row", gap: "1rem" }}>
+                <FormControlLabel
+                  control={
+                    <Radio
+                      sx={{
+                        height: "4rem",
+                        width: "4rem",
+                        "& .MuiSvgIcon-root": {
+                          fontSize: "3rem",
+                        },
+                      }}
+                    />
+                  }
+                  label={
+                    <Typography variant="h4" sx={{ whiteSpace: "nowrap" }}>
+                      Partial Payment
+                    </Typography>
+                  } // Use Typography for label
+                />
+                <FormControlLabel
+                  control={
+                    <Radio
+                      sx={{
+                        height: "4rem",
+                        width: "4rem",
+                        "& .MuiSvgIcon-root": {
+                          fontSize: "3rem",
+                        },
+                      }}
+                    />
+                  }
+                  label={
+                    <Typography variant="h4" sx={{ whiteSpace: "nowrap" }}>
+                      Complete Payment
+                    </Typography>
+                  } // Use Typography for label
+                />
+              </Box>
+            </RadioGroup>
+          </Box>
 
           <Box sx={{ flexDirection: "column", display: "flex", gap: "4rem" }}>
+            <Typography variant="h4" sx={{ fontWeight: "600" }}>
+              Order Details
+            </Typography>
             <Box sx={{ border: "none !important" }} class="input-group mb-4 border rounded-pill p-2">
               <input type="text" placeholder="Apply coupon" aria-describedby="button-addon3" className="form-control border-0" height={"45px"} />
               <Box class="input-group-append border-0">
@@ -513,18 +561,18 @@ const CheckoutDetails = () => {
               <Typography variant="h4" sx={{ fontWeight: "600" }}>
                 Subtotal
               </Typography>
-              <Typography variant="h4">34534534</Typography>
+              <Typography variant="h4">{amount}</Typography>
             </Box>
             <Box sx={{ display: "flex", justifyContent: "space-between" }}>
               <Typography variant="h4" sx={{ fontWeight: "600" }}>
                 Total
               </Typography>
-              <Typography variant="h4">{total}</Typography>
+              <Typography variant="h4">{amount}</Typography>
             </Box>
           </Box>
 
           <Button className="edu-btn" sx={{ width: "100%" }} onClick={proceed}>
-            Checkout
+            Place Order
           </Button>
         </Box>
       </Box>

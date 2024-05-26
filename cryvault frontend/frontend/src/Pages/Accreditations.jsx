@@ -37,7 +37,7 @@ const Accreditations = () => {
 
       <Box className="edu-section-gap">
         <Box className="container">
-          <Box className="row">
+          <Box className="row" sx={{gap: isMobile? '2rem' : '1rem'}}>
             <Box className="col-md-3">
               <Box className="cer_out">
                 <Box className={"edu-blog gallerImg blog-style-list sal-animate"} sx={{ margin: "0 !important" }}>

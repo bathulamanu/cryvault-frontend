@@ -29,7 +29,7 @@ const Cart = () => {
     if (planName) {
       const userDetails = localStorage.getItem("userData");
       localStorage.setItem("isCheckingOut", "true");
-      if (userDetails.length > 0 && userDetails != "undefined") {
+      if (userDetails?.length > 0 && userDetails != "undefined") {
         const id = JSON.parse(userDetails);
         const isUserLoggedIn = id?.registrationCRNid?.length > 0;
         if (isUserLoggedIn) navigate("/checkout");
@@ -92,7 +92,7 @@ const Cart = () => {
               </Box>
             </Box>
             <Button className="edu-btn" sx={{ width: "100%" }} onClick={pay}>
-              Make Order
+             Checkout
             </Button>
           </Box>
         </Box>

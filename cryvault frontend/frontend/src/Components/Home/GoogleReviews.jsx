@@ -107,7 +107,7 @@ const GoogleReviews = () => {
     </span>
   ));
   return (
-    <Container sx={{ display: "flex", flexDirection: isMobile ? "column" : "row", paddingTop: "5rem", alignItems: "center", gap: "2rem", marginBottom: isMobile ? "5rem" : "25rem" }}>
+    <Container sx={{ display: "flex", flexDirection: isMobile ? "column" : "row", paddingTop: "5rem", alignItems: "center", gap: "2rem", marginBottom: isMobile ? "5rem" : "5rem" }}>
       <Box style={{ width: isMobile ? "100%" : "30%", display: "flex", alignItems: "start", gap: "0.5rem" }}>
         <img loading="lazy" decoding="async" src="https://www.cryovault.in/wp-content/plugins/widget-google-reviews/assets/img/gmblogo.svg" alt="Cryovault | Best Stem Cell Banking in Hyderabad | India" width="50" height="50" title="Cryovault | Best Stem Cell Banking in Hyderabad | India" />
 
@@ -142,12 +142,12 @@ const GoogleReviews = () => {
         </Box>
       </Box>
 
-      <Box style={{ width: isMobile ? "100%" : "60%" }}>
+      <Box style={{ width: isMobile ? "100%" : "70%" }}>
         <Swiper
           slidesPerView={isMobile ? 1 : 3}
           modules={[Navigation, Pagination, Scrollbar, A11y]}
           spaceBetween={10}
-          navigation={true}
+          // navigation={true}
           pagination={true}
           autoplay={{
             delay: 2500,
@@ -155,7 +155,7 @@ const GoogleReviews = () => {
           }}
         >
           {reviews.map((review) => (
-            <SwiperSlide>
+            <SwiperSlide style={{height:"23rem"}}>
               <SingleReview review={review} />
             </SwiperSlide>
           ))}
@@ -182,7 +182,7 @@ export const SingleReview = React.memo(({ review }) => {
         <FcGoogle style={{ marginLeft: "auto", fontSize:"1.5rem" }} />
       </Box>
       <Rating name="read-only" value={review?.rating} readOnly />
-      <Box sx={{ marginTop: 1, height: "5vh", overflow: "auto" }}>
+      <Box sx={{ marginTop: 1, height: "10vh", overflow: "auto" }}>
         <Typography variant="h5">{review?.content}</Typography>
       </Box>
     </Box>

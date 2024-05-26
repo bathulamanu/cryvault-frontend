@@ -10,7 +10,7 @@ const VideoHero = () => {
       <Box className="container">
         <Box className="breadcrumb-inner">
           <Box className="page-title d-flex align-items-center">
-            <Box className="w-100">
+            <Box  sx={{ width: isMobile ? "100%" : "80% !important" }}>
               <Typography variant="h1" className="title">
                 Videos
               </Typography>

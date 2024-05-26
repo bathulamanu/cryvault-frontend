@@ -16,7 +16,7 @@ const Subscription = () => {
           width: isMobile ? "90%" : "80vw",
           height: isMobile ? "100%" : "100%",
           flexDirection: isMobile ? "column" : "row",
-          marginLeft: isMobile ? "10px" : "20px",
+          marginLeft: isMobile ? "none" : "20px",
           marginTop: isMobile ? "10px" : "0px",
         }}
       >
@@ -33,7 +33,7 @@ const Subscription = () => {
             justifyContent: "start",
             height: "100%",
             gap: "10rem",
-            padding: "0rem 5rem",
+            padding: isMobile ? '5rem' :  "0rem 5rem",
           }}
         >
           <Card

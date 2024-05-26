@@ -87,11 +87,12 @@
 
 import { Box, Typography } from "@mui/material";
 import React from "react";
-
+import useDeviceSize from "../../Utilities/useDeviceSize";
 const WhyPreserve = () => {
+  const isMobile = useDeviceSize() === "xs";
   return (
     <>
-      <Box sx={{ marginTop: "55rem"}} className="features-area-5 edu-course-area course-area-7">
+      <Box sx={{ marginTop: "55rem" }} className="features-area-5 edu-course-area course-area-7">
         <Box className="container">
           <Box className="section-title section-center sal-animate">
             <Typography variant="h2" className="title">
@@ -150,7 +151,7 @@ const WhyPreserve = () => {
             </Box>
           </Box>
         </Box>
-        <img class="position-ab cloud-smle" src="assets/images/cloud-3.webp" alt="Shape"></img>
+        {isMobile ? null : <img class="position-ab cloud-smle" src="assets/images/cloud-3.webp" alt="Shape"></img>}
       </Box>
       <Box className="shaps_inr">
         <img src="assets/images/home-1_section_04.png" />

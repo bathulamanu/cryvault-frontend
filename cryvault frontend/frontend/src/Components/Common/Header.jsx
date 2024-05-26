@@ -1,4 +1,4 @@
-import {  Button, IconButton, Drawer, styled, Collapse, ListItemButton, Typography } from "@mui/material";
+import { Button, IconButton, Drawer, styled, Collapse, ListItemButton, Typography } from "@mui/material";
 import { makeStyles } from "@material-ui/styles";
 import Box from "@mui/material/Box";
 import useScrollToTop from "../../Utilities/scrolltop";
@@ -27,7 +27,6 @@ const Header = () => {
   const onAddClick = (e) => {
     setIsActive(!isActive);
   };
-  const handleLogout = (e) => {};
 
   const [isScrolled, setIsScrolled] = useState(false);
   const scrollToTop = useScrollToTop();
@@ -83,7 +82,11 @@ const Header = () => {
   const bestStemCellBankInIndiaStemCellBankingCryovault = pageInfo?.[23]?.[25]?.urlSlug;
   const accreditationsCertifications = pageInfo?.[24]?.[13]?.urlSlug;
   const whenAndHowIsCordBloodCollected = pageInfo?.[25]?.[26]?.urlSlug;
+  const isUserLoggedIn = localStorage.getItem("token").length > 0;
 
+  const handleLogout = () => {
+    localStorage.setItem("token", "");
+  };
   return (
     <header className="edu-header header-style-1 header-fullwidth">
       <Box className="header-top-bar">
@@ -155,7 +158,7 @@ const Header = () => {
                       <Link onClick={useScrollToTop()} to={`/${aboutCryovault}`}>
                         ABOUT
                       </Link>
-                      
+
                       <ul className="submenu">
                         <li>
                           <Link onClick={useScrollToTop()} to={`/${aboutCryovault}`}>
@@ -329,20 +332,11 @@ const Header = () => {
                         <FaRegUserCircle size={20} />
                       </Link>
                       <ul className="submenu" style={{ left: "-75%", minWidth: "200px" }}>
-                        {!hasToken && (
-                          <li>
-                            <Link to="/login" className="pr-0">
-                              <Button className="edu-btn">GET STARTED</Button>
-                            </Link>
-                          </li>
-                        )}
-                        {hasToken && (
+                        {isUserLoggedIn ? (
                           <>
-                            {userType && (
-                              <li>
-                                <Link to="/dashboard">Dashboard</Link>
-                              </li>
-                            )}
+                            <li>
+                              <Link to="/dashboard">Dashboard</Link>
+                            </li>
 
                             <li>
                               <Link to="/logout" onClick={handleLogout}>
@@ -350,9 +344,15 @@ const Header = () => {
                               </Link>
                             </li>
                           </>
+                        ) : (
+                          <li>
+                            <Link to="/login" className="pr-0">
+                              <Button className="edu-btn">GET STARTED</Button>
+                            </Link>
+                          </li>
                         )}
                       </ul>
-                    </li> 
+                    </li>
                   </ul>
                 </nav>
               </Box>
@@ -385,6 +385,7 @@ const useStyles = makeStyles((theme) => ({
 export const MobileHeader = React.memo(() => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [nestedOpen, setNestedOpen] = useState(false);
+  const dispatch = useDispatch();
   const classes = useStyles();
 
   const handleDrawerOpen = () => {
@@ -394,7 +395,12 @@ export const MobileHeader = React.memo(() => {
   const handleDrawerClose = () => {
     setDrawerOpen(false);
   };
+  const isUserLoggedIn = localStorage.getItem("token").length > 0;
 
+  const handleLogout = () => {
+    localStorage.setItem("token", "");
+    setDrawerOpen(false);
+  };
   const [openNestedListIndex, setOpenNestedListIndex] = useState(null);
 
   const handleNestedClick = (clickedIndex) => {
@@ -404,6 +410,38 @@ export const MobileHeader = React.memo(() => {
       setOpenNestedListIndex(clickedIndex);
     }
   };
+
+  useEffect(() => {
+    dispatch(fetchHeaderSocialIcons());
+    dispatch(getPageMetaInfo());
+  }, []);
+
+  const pageInfo = useSelector((state) => state.home.pageInfo);
+  const aboutCryovault = pageInfo?.[0]?.[1]?.urlSlug;
+  const howToStoreYourStemCellsWithCryovault = pageInfo?.[1]?.[2]?.urlSlug;
+  const careers = pageInfo?.[2]?.[4]?.urlSlug;
+  const whyToChooseStemCellBanking = pageInfo?.[3]?.[3]?.urlSlug;
+  const cordBloodBankingUmbilicalCordPreservationInIndiaCryovault = pageInfo?.[4]?.[5]?.urlSlug;
+  const stemCellBanking = pageInfo?.[5]?.[9]?.urlSlug;
+  const franchise = pageInfo?.[6]?.[6]?.urlSlug;
+  const visionMission = pageInfo?.[7]?.[7]?.urlSlug;
+  const requestForInformationKit = pageInfo?.[9]?.[12]?.urlSlug;
+  const aboutUmbilicalCord = pageInfo?.[10]?.[10]?.urlSlug;
+  const ReasonsToSaveYourChildsCordBlood = pageInfo?.[11]?.[8]?.urlSlug;
+  const videos = pageInfo?.[13]?.[18]?.urlSlug;
+  const immunizationChart = pageInfo?.[14]?.[19]?.urlSlug;
+  const thirdTrimester = pageInfo?.[15]?.[20]?.urlSlug;
+  const appointment = pageInfo?.[16]?.[15]?.urlSlug;
+  const secondTrimester = pageInfo?.[17]?.[16]?.urlSlug;
+  const firstTrimester = pageInfo?.[18]?.[17]?.urlSlug;
+  const pregnancyDietChart = pageInfo?.[19]?.[21]?.urlSlug;
+  const contact = pageInfo?.[20]?.[22]?.urlSlug;
+  const images = pageInfo?.[21]?.[24]?.urlSlug;
+  const blog = pageInfo?.[22]?.[23]?.urlSlug;
+  const bestStemCellBankInIndiaStemCellBankingCryovault = pageInfo?.[23]?.[25]?.urlSlug;
+  const accreditationsCertifications = pageInfo?.[24]?.[13]?.urlSlug;
+  const whenAndHowIsCordBloodCollected = pageInfo?.[25]?.[26]?.urlSlug;
+
   return (
     <>
       <Box left="0" zIndex="999" transition="top 0.3s ease-in-out">
@@ -441,19 +479,29 @@ export const MobileHeader = React.memo(() => {
           {openNestedListIndex === 0 && (
             <List dense disablePadding style={{ marginLeft: 40 }}>
               <ListItem>
-                <ListItemText className={classes.listItemText} primary="About Cryovault" />
+                <Link to={`/${aboutCryovault}`} onClick={handleDrawerClose}>
+                  <ListItemText className={classes.listItemText} primary="About Cryovault" />
+                </Link>
               </ListItem>
               <ListItem>
-                <ListItemText className={classes.listItemText} primary="Vision & Mission " />
+                <Link to={`/${visionMission}`} onClick={handleDrawerClose}>
+                  <ListItemText className={classes.listItemText} primary="Vision & Mission " />
+                </Link>
               </ListItem>
               <ListItem>
-                <ListItemText className={classes.listItemText} primary=" Accreditations &amp; Certifications" />
+                <Link to={`/${accreditationsCertifications}`} onClick={handleDrawerClose}>
+                  <ListItemText className={classes.listItemText} primary=" Accreditations &amp; Certifications" />
+                </Link>
               </ListItem>
               <ListItem>
-                <ListItemText className={classes.listItemText} primary="Carrers " />
+                <Link to={`/${careers}`} onClick={handleDrawerClose}>
+                  <ListItemText className={classes.listItemText} primary="Carrers " />
+                </Link>
               </ListItem>
               <ListItem>
-                <ListItemText className={classes.listItemText} primary="Francise " />
+                <Link to={`/${franchise}`} onClick={handleDrawerClose}>
+                  <ListItemText className={classes.listItemText} primary="Francise " />
+                </Link>
               </ListItem>
             </List>
           )}
@@ -464,45 +512,67 @@ export const MobileHeader = React.memo(() => {
           {openNestedListIndex === 1 && (
             <List dense disablePadding style={{ marginLeft: 40 }}>
               <ListItem>
-                <ListItemText className={classes.listItemText} primary="Stem Cell Banking" />
+                <Link to={`/${stemCellBanking}`} onClick={handleDrawerClose}>
+                  <ListItemText className={classes.listItemText} primary="Stem Cell Banking" />
+                </Link>
               </ListItem>
               <ListItem>
-                <ListItemText className={classes.listItemText} primary="Why to Choose Stem Cell Banking?" />
+                <Link to={`/${whyToChooseStemCellBanking}`} onClick={handleDrawerClose}>
+                  <ListItemText className={classes.listItemText} primary="Why to Choose Stem Cell Banking?" />
+                </Link>
               </ListItem>
               <ListItem>
-                <ListItemText className={classes.listItemText} primary="   What is Umbilical Cord?" />
+                <Link to={`/${aboutUmbilicalCord}`} onClick={handleDrawerClose}>
+                  <ListItemText className={classes.listItemText} primary="   What is Umbilical Cord?" />
+                </Link>
               </ListItem>
               <ListItem>
-                <ListItemText className={classes.listItemText} primary=" Cord Blood Banking" />
+                <Link to={`/${cordBloodBankingUmbilicalCordPreservationInIndiaCryovault}`} onClick={handleDrawerClose}>
+                  <ListItemText className={classes.listItemText} primary=" Cord Blood Banking" />
+                </Link>
               </ListItem>
               <ListItem>
-                <ListItemText className={classes.listItemText} primary="How to Store Your STEM CELLS WITH CRYOVAULT" />
+                <Link to={`/${howToStoreYourStemCellsWithCryovault}`} onClick={handleDrawerClose}>
+                  <ListItemText className={classes.listItemText} primary="How to Store Your STEM CELLS WITH CRYOVAULT" />
+                </Link>
               </ListItem>
               <ListItem>
-                <ListItemText className={classes.listItemText} primary=" Benifits of Stem Cells" />
+                <Link to={`/${bestStemCellBankInIndiaStemCellBankingCryovault}`} onClick={handleDrawerClose}>
+                  <ListItemText className={classes.listItemText} primary=" Benifits of Stem Cells" />
+                </Link>
               </ListItem>
               <ListItem>
-                <ListItemText className={classes.listItemText} primary=" When and How is Cord Blood Collected" />
+                <Link to={`/${whenAndHowIsCordBloodCollected}`} onClick={handleDrawerClose}>
+                  <ListItemText className={classes.listItemText} primary=" When and How is Cord Blood Collected" />
+                </Link>
               </ListItem>
               <ListItem>
-                <ListItemText className={classes.listItemText} primary="  7 Reasons to Save your Child's Cord Blood" />
+                <Link to={`/${ReasonsToSaveYourChildsCordBlood}`} onClick={handleDrawerClose}>
+                  <ListItemText className={classes.listItemText} primary="  7 Reasons to Save your Child's Cord Blood" />
+                </Link>
               </ListItem>
             </List>
           )}
-          <ListItemButton onClick={() => handleNestedClick(3)}>
-            <ListItemText onClick={() => handleNestedClick(3)} className={classes.listItemText} primary="Getting Started" />
+          <ListItemButton onClick={() => handleNestedClick(2)}>
+            <ListItemText onClick={() => handleNestedClick(2)} className={classes.listItemText} primary="Getting Started" />
             <ListItemIcon>{nestedOpen ? <ExpandLess style={{ fontSize: "3.5rem", height: "4rem" }} /> : <ExpandMore style={{ fontSize: "3.5rem", height: "4rem" }} />}</ListItemIcon>
           </ListItemButton>
           {openNestedListIndex === 2 && (
             <List dense disablePadding style={{ marginLeft: 40 }}>
               <ListItem>
-                <ListItemText className={classes.listItemText} primary="Plans" />
+                <Link to={`/plan`} onClick={handleDrawerClose}>
+                  <ListItemText className={classes.listItemText} primary="Plans" />
+                </Link>
               </ListItem>
               <ListItem>
-                <ListItemText className={classes.listItemText} primary=" Request For Information Kit" />
+                <Link to={`/${requestForInformationKit}`} onClick={handleDrawerClose}>
+                  <ListItemText className={classes.listItemText} primary=" Request For Information Kit" />
+                </Link>
               </ListItem>
               <ListItem>
-                <ListItemText className={classes.listItemText} primary="Appointment" />
+                <Link to={`/${appointment}`} onClick={handleDrawerClose}>
+                  <ListItemText className={classes.listItemText} primary="Appointment" />
+                </Link>
               </ListItem>
             </List>
           )}
@@ -513,19 +583,29 @@ export const MobileHeader = React.memo(() => {
           {openNestedListIndex === 3 && (
             <List dense disablePadding style={{ marginLeft: 40 }}>
               <ListItem>
-                <ListItemText className={classes.listItemText} primary=" First Trimester" />
+                <Link to={`/${firstTrimester}`} onClick={handleDrawerClose}>
+                  <ListItemText className={classes.listItemText} primary=" First Trimester" />
+                </Link>
               </ListItem>
               <ListItem>
-                <ListItemText className={classes.listItemText} primary=" Second Trimester" />
+                <Link to={`/${secondTrimester}`} onClick={handleDrawerClose}>
+                  <ListItemText className={classes.listItemText} primary=" Second Trimester" />
+                </Link>
               </ListItem>
               <ListItem>
-                <ListItemText className={classes.listItemText} primary=" Third Trimester" />
+                <Link to={`/${thirdTrimester}`} onClick={handleDrawerClose}>
+                  <ListItemText className={classes.listItemText} primary=" Third Trimester" />
+                </Link>
               </ListItem>
               <ListItem>
-                <ListItemText className={classes.listItemText} primary=" Pregnancy Diet Chart" />
+                <Link to={`/${pregnancyDietChart}`} onClick={handleDrawerClose}>
+                  <ListItemText className={classes.listItemText} primary=" Pregnancy Diet Chart" />
+                </Link>
               </ListItem>
               <ListItem>
-                <ListItemText className={classes.listItemText} primary="Immunization Chart" />
+                <Link to={`/${immunizationChart}`} onClick={handleDrawerClose}>
+                  <ListItemText className={classes.listItemText} primary="Immunization Chart" />
+                </Link>
               </ListItem>
             </List>
           )}
@@ -537,10 +617,14 @@ export const MobileHeader = React.memo(() => {
           {openNestedListIndex === 4 && (
             <List dense disablePadding style={{ marginLeft: 40 }}>
               <ListItem>
-                <ListItemText className={classes.listItemText} primary="Images" />
+                <Link to={`/${images}`} onClick={handleDrawerClose}>
+                  <ListItemText className={classes.listItemText} primary="Images" />
+                </Link>
               </ListItem>
               <ListItem>
-                <ListItemText className={classes.listItemText} primary="Video" />
+                <Link to={`/${videos}`} onClick={handleDrawerClose}>
+                  <ListItemText className={classes.listItemText} primary="Video" />
+                </Link>
               </ListItem>
             </List>
           )}
@@ -550,22 +634,40 @@ export const MobileHeader = React.memo(() => {
           </ListItemButton>
           {openNestedListIndex === 5 && (
             <List dense disablePadding style={{ marginLeft: 40 }}>
-              <ListItem>
-                <ListItemText className={classes.listItemText} primary="Get Started" />
-              </ListItem>
-              <ListItem>
-                <ListItemText className={classes.listItemText} primary="Logout" />
-              </ListItem>
+              {isUserLoggedIn ? (
+                <>
+                  <ListItem>
+                    <Link to={`/dashboard`} onClick={handleDrawerClose}>
+                      <ListItemText className={classes.listItemText} primary="Dashboard" />
+                    </Link>
+                  </ListItem>
+                  <ListItem>
+                    <Link to={`/`} onClick={handleLogout}>
+                      <ListItemText className={classes.listItemText} primary="Logout" />
+                    </Link>
+                  </ListItem>
+                </>
+              ) : (
+                <ListItem>
+                  <Link to={`/login`} onClick={handleDrawerClose}>
+                    <ListItemText className={classes.listItemText} primary="Get Started" />
+                  </Link>
+                </ListItem>
+              )}
             </List>
           )}
           <ListItemButton button onClick={handleNestedClick}>
             <ListItemText className={classes.listItemText} primary="Cart" />
           </ListItemButton>
           <ListItemButton button onClick={handleNestedClick}>
-            <ListItemText className={classes.listItemText} primary="Blog" />
+            <Link to={`/${blog}`} onClick={handleDrawerClose}>
+              <ListItemText sx={{ color: "black" }} className={classes.listItemText} primary="Blog" />
+            </Link>
           </ListItemButton>
           <ListItemButton onClick={handleNestedClick}>
-            <ListItemText onClick={handleNestedClick} className={classes.listItemText} primary="Contact" />
+            <Link to={`/${contact}`} onClick={handleDrawerClose}>
+              <ListItemText sx={{ color: "black" }} onClick={handleNestedClick} className={classes.listItemText} primary="Contact" />
+            </Link>
           </ListItemButton>
         </List>
       </Drawer>

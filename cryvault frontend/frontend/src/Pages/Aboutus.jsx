@@ -119,7 +119,7 @@ const Aboutus = () => {
         </Box>
       </Box>
 
-      <Box className="edu-campus-area">
+      <Box sx={{padding : isMobile ? '50px 0px !important' :"50px"}} className="edu-campus-area">
         <Box className="container edublink-animated-shape">
           <Box className="row g-5 align-items-center">
             <Box className="col-xl-6 sal-animate">

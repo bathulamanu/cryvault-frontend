@@ -5,9 +5,6 @@ import { List, ListItem, ListItemIcon, ListItemText, Link, Box, Breadcrumbs, Typ
 import useDeviceSize from "../Utilities/useDeviceSize";
 import { makeStyles } from "@material-ui/styles";
 
-
-
-
 const reasons = [{ text: "A high-risk family medical history of disease(s) currently treatable by cord blood." }, { text: "A sibling has a medical condition treatable with cord blood." }, { text: "There is high risk of premature delivery." }, { text: "You are a mixed-race couple, thereby making it difficult to get a bone marrow match." }];
 
 const useStyles = makeStyles(() => ({
@@ -74,11 +71,11 @@ const ChooseStemcell = () => {
                       <img src="assets/images/med-img blk.svg" width="30" />
                     </Box>
                   </Box>
-                  <List dense={false}>
+                  <List  dense={false}>
                     {reasons.map((reason, index) => (
                       <ListItem key={index} disableGutters className={classes.listItem}>
                         <ListItemText>
-                          <Typography sx={{ fontSize: "1rem", margin:"0rem !important" }} color="text.primary">
+                          <Typography sx={{ fontSize: "1rem", margin: "0rem !important" }} color="text.primary">
                             {reason.text}
                           </Typography>
                         </ListItemText>

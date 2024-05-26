@@ -11,7 +11,7 @@ import SettingsIcon from "@mui/icons-material/Settings";
 import HelpIcon from "@mui/icons-material/Help";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
-import Details from "../../Pages/DashboardPages/Details";
+import Details, { MobileDetails } from "../../Pages/DashboardPages/Details";
 import Services from "../../Pages/DashboardPages/Services";
 import Subscription from "../../Pages/DashboardPages/Subscriptions";
 
@@ -25,12 +25,17 @@ import Offers from "../../Pages/DashboardPages/Offers";
 import Refferals from "../../Pages/DashboardPages/Refferals";
 import SettingsPage from "../../Pages/DashboardPages/SettingsPage";
 import Help from "../../Pages/DashboardPages/Help";
+import PopupLayout from "../../Pages/PopupPages/PopupLayout";
+import { useSelector } from "react-redux";
+import { AddDetailsPopup } from "../../Utilities/PopupLazyLoad";
+import useDeviceSize from "../../Utilities/useDeviceSize";
 
 const Dashboard = () => {
   const [selectedItem, setSelectedItem] = useState("DashBoard");
-  const isMobile = false;
-  const [isListVisible, setListVisible] = useState(false); // State variable to track list visibility
+  const isMobile = useDeviceSize() === "xs";
 
+  const [isListVisible, setListVisible] = useState(false); // State variable to track list visibility
+  const isSubscribedUser = useSelector((state) => state.dashboard.isSubscribedUser);
   // Function to handle menu icon click
   const handleMenuIconClick = () => {
     setListVisible(!isListVisible); // Toggle list visibility
@@ -45,12 +50,13 @@ const Dashboard = () => {
     <>
       <Box
         style={{
-          display: "flex",
+          display: isMobile ? "none" : "flex",
           flexDirection: isMobile ? "column" : "row",
           marginTop: "100px",
           backgroundColor: "#e5e5e5",
           padding: "4rem 0rem",
           height: "100%",
+          gap:'1rem'
         }}
       >
         <Box
@@ -74,6 +80,7 @@ const Dashboard = () => {
               alignItems: "center",
               boxShadow: 3,
               backgroundColor: "white",
+              height: "100%",
             }}
           >
             <List style={{ paddingTop: "20px", marginTop: "2rem", gap: "3rem", display: "flex", flexDirection: "column" }} component="nav" aria-label="main mailbox folders">
@@ -361,10 +368,42 @@ const Dashboard = () => {
           {selectedItem === "Settings" && <SettingsPage />}
           {selectedItem === "Help" && <Help />}
         </Box>
+        {/* {isSubscribedUser?.length > 0 ? (
+          <Box
+            style={{
+              width: isMobile ? "100%" : "calc(100% - 300px)",
+              display: isMobile ? "none" : "block",
+            }}
+          >
+            {selectedItem === "DashBoard" && <Details />}
+            {selectedItem === "Baby Details" && <BabyDetails />}
+            {selectedItem === "Invoices" && <Invoices />}
+            {selectedItem === "Reports" && <Services />}
+            {selectedItem === "Subscription" && <Subscription />}
+            {selectedItem === "Offers and Updates" && <Offers />}
+            {selectedItem === "Reference" && <Refferals />}
+            {selectedItem === "Settings" && <SettingsPage />}
+            {selectedItem === "Help" && <Help />}
+          </Box>
+        ) : (
+          <Box
+            sx={{
+              display: "block",
+              margin: "auto",
+              background: "white",
+              padding: "1rem",
+              width: "50rem",
+              height: "50rem",
+              boxShadow: "4px 6px 3px -2px rgba(0, 0, 0, 0.2), 0px 3px 4px 0px rgba(0, 0, 0, 0.14), 0px 1px 8px 0px rgba(0, 0, 0, 0.12)",
+            }}
+          >
+            <AddDetailsPopup />
+          </Box>
+        )} */}
       </Box>
 
       {/* mobile */}
-      <Box style={{ display: isMobile ? "block" : "none" }}>
+      <Box style={{ display: isMobile ? "block" : "none", marginTop: "3rem",marginBottom: "10rem" }}>
         <Card
           sx={{
             backgroundColor: "#2b2e64",
@@ -382,7 +421,7 @@ const Dashboard = () => {
               padding: "10px",
             }}
           >
-            <span style={{ color: "white" }}>{selectedItem}</span>
+            <span style={{ color: "white", fontSize: "2rem" }}>{selectedItem}</span>
             <div>
               {isListVisible ? (
                 <CloseIcon
@@ -415,7 +454,6 @@ const Dashboard = () => {
             sx={{
               width: isMobile ? "100%" : "120px",
               height: "auto",
-
               paddingLeft: "20px",
             }}
           >
@@ -445,8 +483,8 @@ const Dashboard = () => {
                 <div
                   style={{
                     color: "#2b2e64",
-                    fontSize: isMobile ? "14px" : "2rem",
-                    marginLeft: isMobile ? "-5px" : "-25px",
+                    fontSize: "2rem",
+                    // marginLeft: isMobile ? "-5px" : "-25px",
                   }}
                 >
                   DashBoard
@@ -473,7 +511,8 @@ const Dashboard = () => {
                 <div
                   style={{
                     color: "#2b2e64",
-                    fontSize: isMobile ? "14px" : "2rem",
+                    fontSize: "2rem",
+
                     marginLeft: isMobile ? "-5px" : "-25px",
                   }}
                 >
@@ -500,7 +539,8 @@ const Dashboard = () => {
                 <div
                   style={{
                     color: "#2b2e64",
-                    fontSize: isMobile ? "14px" : "2rem",
+                    fontSize: "2rem",
+
                     marginLeft: isMobile ? "-5px" : "-25px",
                   }}
                 >
@@ -527,7 +567,8 @@ const Dashboard = () => {
                 <div
                   style={{
                     color: "#2b2e64",
-                    fontSize: isMobile ? "14px" : "2rem",
+                    fontSize: "2rem",
+
                     marginLeft: isMobile ? "-5px" : "-25px",
                   }}
                 >
@@ -556,7 +597,8 @@ const Dashboard = () => {
                 <div
                   style={{
                     color: "#2b2e64",
-                    fontSize: isMobile ? "14px" : "2rem",
+                    fontSize: "2rem",
+
                     marginLeft: isMobile ? "20px" : "-25px",
                   }}
                 >
@@ -583,7 +625,8 @@ const Dashboard = () => {
                 <div
                   style={{
                     color: "#2b2e64",
-                    fontSize: isMobile ? "14px" : "2rem",
+                    fontSize: "2rem",
+
                     marginLeft: isMobile ? "-5px" : "-25px",
                   }}
                 >
@@ -610,7 +653,8 @@ const Dashboard = () => {
                 <div
                   style={{
                     color: "#2b2e64",
-                    fontSize: isMobile ? "14px" : "2rem",
+                    fontSize: "2rem",
+
                     marginLeft: isMobile ? "-5px" : "-25px",
                   }}
                 >
@@ -637,7 +681,8 @@ const Dashboard = () => {
                 <div
                   style={{
                     color: "#2b2e64",
-                    fontSize: isMobile ? "14px" : "2rem",
+                    fontSize: "2rem",
+
                     marginLeft: isMobile ? "-5px" : "-25px",
                   }}
                 >
@@ -664,7 +709,8 @@ const Dashboard = () => {
                 <div
                   style={{
                     color: "#2b2e64",
-                    fontSize: isMobile ? "14px" : "2rem",
+                    fontSize: "2rem",
+
                     marginLeft: isMobile ? "-5px" : "-25px",
                   }}
                 >
@@ -675,18 +721,104 @@ const Dashboard = () => {
           </Card>
         )}
         <Box style={{ width: isMobile ? "100%" : "calc(100% - 120px)" }}>
-          {selectedItem === "DashBoard" && <Details />}
-          {/* {selectedItem === "Baby Details" && <BabyDetails />}
+          {selectedItem === "DashBoard" && <MobileDetails />}
+          {selectedItem === "Baby Details" && <BabyDetails />}
           {selectedItem === "Invoices" && <Invoices />}
           {selectedItem === "Reports" && <Services />}
           {selectedItem === "Offers and Updates" && <Offers />}
           {selectedItem === "Subscription" && <Subscription />}
-          {selectedItem === "Settings" && <Settings />}
-          {selectedItem === "Reference" && <Reference />} */}
+          {selectedItem === "Settings" && <SettingsPage />}
+          {selectedItem === "Reference" && <Refferals />}
+          {selectedItem === "Help" && <Help />}
         </Box>
+
+        {/* {isSubscribedUser?.length == 0 ? (
+          <Box
+            style={{
+              width: isMobile ? "100%" : "calc(100% - 300px)",
+              display: isMobile ? "none" : "block",
+            }}
+          >
+            {selectedItem === "DashBoard" && <Details />}
+            {selectedItem === "Baby Details" && <BabyDetails />}
+            {selectedItem === "Invoices" && <Invoices />}
+            {selectedItem === "Reports" && <Services />}
+            {selectedItem === "Subscription" && <Subscription />}
+            {selectedItem === "Offers and Updates" && <Offers />}
+            {selectedItem === "Reference" && <Refferals />}
+            {selectedItem === "Settings" && <SettingsPage />}
+            {selectedItem === "Help" && <Help />}
+          </Box>
+        ) : (
+          <Box
+            sx={{
+              display: "block",
+              margin: "auto",
+              background: "white",
+              padding: "1rem",
+              height: "50rem",
+              boxShadow: "4px 6px 3px -2px rgba(0, 0, 0, 0.2), 0px 3px 4px 0px rgba(0, 0, 0, 0.14), 0px 1px 8px 0px rgba(0, 0, 0, 0.12)",
+            }}
+          >
+            <AddDetailsPopup />
+          </Box>
+        )} */}
       </Box>
     </>
   );
 };
 
 export default Dashboard;
+{
+  /*
+<Box
+style={{
+  width: isMobile ? "100%" : "calc(100% - 300px)",
+  display: isMobile ? "none" : "block",
+}}
+>
+{isSubscribedUser?.length > 0 ? (
+  <PopupLayout />
+) : (
+  <>
+    {selectedItem === "DashBoard" && <Details />}
+    {selectedItem === "Baby Details" && <BabyDetails />}
+    {selectedItem === "Invoices" && <Invoices />}
+    {selectedItem === "Reports" && <Services />}
+    {selectedItem === "Subscription" && <Subscription />}
+    {selectedItem === "Offers and Updates" && <Offers />}
+    {selectedItem === "Reference" && <Refferals />}
+    {selectedItem === "Settings" && <SettingsPage />}
+    {selectedItem === "Help" && <Help />}
+  </>
+)}
+
+ {isSubscribedUser?.length > 0 ? (
+  <>
+    {selectedItem === "DashBoard" && <Details />}
+    {selectedItem === "Baby Details" && <BabyDetails />}
+    {selectedItem === "Invoices" && <Invoices />}
+    {selectedItem === "Reports" && <Services />}
+    {selectedItem === "Subscription" && <Subscription />}
+    {selectedItem === "Offers and Updates" && <Offers />}
+    {selectedItem === "Reference" && <Refferals />}
+    {selectedItem === "Settings" && <SettingsPage />}
+    {selectedItem === "Help" && <Help />}
+  </>
+) : (
+  <Box
+    sx={{
+      display: "block",
+      margin: "auto",
+      background: "white",
+      padding: "1rem",
+      width: "50rem",
+      height: "50rem",
+      boxShadow: "4px 6px 3px -2px rgba(0, 0, 0, 0.2), 0px 3px 4px 0px rgba(0, 0, 0, 0.14), 0px 1px 8px 0px rgba(0, 0, 0, 0.12)",
+    }}
+  >
+    <AddDetailsPopup />
+  </Box>
+)}
+</Box> */
+}

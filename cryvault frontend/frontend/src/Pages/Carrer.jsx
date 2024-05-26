@@ -1,10 +1,38 @@
-import { Box, Breadcrumbs, Button, Link, Typography } from "@mui/material";
-import React from "react";
+import { Box, Breadcrumbs, Button, FormControl, FormControlLabel, IconButton, Link, Radio, RadioGroup, TextField, Typography } from "@mui/material";
+import React, { useState } from "react";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import useDeviceSize from "../Utilities/useDeviceSize";
 const Carrers = () => {
   const isMobile = useDeviceSize() === "xs";
+  const [formData, setFormData] = useState({
+    title: "",
+    firstName: "",
+    lastName: "",
+    phoneNumber: "",
+    email: "",
+    city: "",
+    state: "",
+    areaOfInterest: "",
+    file: null,
+  });
 
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  const handleFileUpload = (event) => {
+    setFormData(event.target.files[0]); // Assuming single file upload
+  };
+
+  // Form submission logic (replace with your implementation)
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const { title, firstName, lastName, ...rest } = formData; // Destructure file separately
+    console.log("Submitted data:", { title, firstName, lastName, ...rest });
+    // Handle file upload (if applicable)
+    // ...
+  };
   return (
     <>
       <Box className="edu-breadcrumb-area breadcrumb-style-2 bg-image bg-image--19">
@@ -38,15 +66,17 @@ const Carrers = () => {
         <Box className="container position-relative">
           <Box className="row g-5 justify-content-center">
             <Box className="col-lg-12">
-              <Box className="login-form-box">
+              <Box sx={{ padding: isMobile ? "15px 10px !important" : "70px 50px" }} className="login-form-box">
                 <Box className="section-title section-center sal-animate">
                   <span className="pre-title pre-textsecondary">Work with us</span>
-                  <h2 className="title">Drop your Resume</h2>
+                  <Typography variant="h2" className="title" sx={{ fontFamily: "Roboto" }}>
+                    Drop your Resume
+                  </Typography>
                   <Box className="shape_in shape_in-bk" style={{ display: "flex", justifyContent: "center" }}>
                     {" "}
                     <img src="assets/images/med-img blk.svg" width="30" />
                   </Box>
-                  <p>join our mission to connect the right talent with the Right Opportunity.</p>
+                  <Typography>join our mission to connect the right talent with the Right Opportunity.</Typography>
                 </Box>
 
                 <Box className="form-group col-md-12">
@@ -148,3 +178,37 @@ const Carrers = () => {
 };
 
 export default Carrers;
+{
+  /* <form>
+                  <FormControl component="fieldset">
+                    <Typography variant="h6">Title</Typography>
+                    <RadioGroup row aria-label="title" name="title" value={formData.title} onChange={handleChange}>
+                      <FormControlLabel value="mr" control={<Radio />} label="Mr" />
+                      <FormControlLabel value="mrs" control={<Radio />} label="Mrs" />
+                      <FormControlLabel value="ms" control={<Radio />} label="Ms" />
+                      <FormControlLabel value="dr" control={<Radio />} label="Dr" />
+                    </RadioGroup>
+                  </FormControl>
+
+                  <Box sx={{ display: "flex", flexWrap: "wrap", mt: 2 }}>
+                    <TextField margin="normal" required fullWidth id="firstName" label="First Name" name="firstName" value={formData.firstName} onChange={handleChange} />
+                    <TextField margin="normal" required fullWidth id="lastName" label="Last Name" name="lastName" value={formData.lastName} onChange={handleChange} />
+                    <TextField margin="normal" fullWidth id="phoneNumber" label="Phone Number" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} />
+                    <TextField margin="normal" required fullWidth id="email" label="Email" name="email" type="email" value={formData.email} onChange={handleChange} />
+                    <TextField margin="normal" required fullWidth id="city" label="City" name="city" value={formData.city} onChange={handleChange} />
+                    <TextField margin="normal" required fullWidth id="state" label="State" name="state" value={formData.state} onChange={handleChange} />
+                    <TextField margin="normal" required fullWidth id="areaOfInterest" label="Applying for (Area of interest)" name="areaOfInterest" value={formData.areaOfInterest} onChange={handleChange} />
+                    <FormControl fullWidth variant="standard" margin="normal">
+                      <Typography variant="body2">Attach your Resume Here*</Typography>
+                      <input accept=".pdf,.docx,.doc" type="file" id="file" name="file" onChange={handleChange} style={{ display: "none" }} />
+                      <IconButton onClick={() => document.getElementById("file").click()}>
+                        <FaCloudUploadAlt fontSize={40} name="attachment" onClick={() => document.querySelector('input[type="file"]').click()} cursor="pointer" />
+                      </IconButton>
+                    </FormControl>
+                  </Box>
+
+                  <Button variant="contained" type="button" onClick={handleFileUpload}>
+                    Submit
+                  </Button>
+                </form> */
+}

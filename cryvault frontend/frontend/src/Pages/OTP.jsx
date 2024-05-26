@@ -13,12 +13,13 @@ export const OTP = () => {
   const [otp, setOTP] = useState("");
   const isMobile = useDeviceSize() === "xs";
   const userData = useSelector((state) => state.user.userData);
+  const userDetails = useSelector((state) => state.user.userDetails);
 
   const location = useLocation();
   const navigate = useNavigate();
   const countrycode = location.state?.countryCode;
   const phonenumber = location.state?.phoneNumber;
-  const OTPid = userData.data?.OTPid;
+  const OTPid = userData?.data?.OTPid;
 
   const dispatch = useDispatch();
   const handleSendOTP = () => {
@@ -40,12 +41,12 @@ export const OTP = () => {
 
     dispatch(login({ payload: dataToSend }));
   };
-
   const goTodashBoard = () => {
     const isCheckingOut = localStorage.getItem("isCheckingOut");
     if (isCheckingOut) navigate("/checkout");
+    if(userDetails?.subscriptionPlanId !== null) navigate('/dashboard')
     else {
-      navigate("/dashboard");
+      navigate("/plan");
     }
   };
   return (

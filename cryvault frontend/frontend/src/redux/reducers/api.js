@@ -58,3 +58,15 @@ export const getOrderDetailsApi = () => {
 export const getHelpDetailsApi = () => {
   return `${BASE_URL}/flyingbyts/api/customer/getHelpDetails`;
 };
+export const IsSubscribedUserApi = () => {
+  return `${BASE_URL}/flyingbyts/api/customer/getAnnexureInfo`;
+};
+
+// dashboard api
+export const getClientInfoApi = () => {
+  return `${BASE_URL}/flyingbyts/api/customer/getAnnexureInfo`;
+};
+export const addClientInfoApi = () => {
+  return `${BASE_URL}/flyingbyts/api/customer/addOrupdateAnnexureInfo`;
+};
+

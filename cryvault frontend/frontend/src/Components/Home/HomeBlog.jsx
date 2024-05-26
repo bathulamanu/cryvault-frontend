@@ -54,13 +54,20 @@
 // export default HomeBlog;
 import { Box, Link, Typography } from "@mui/material";
 import React from "react";
+import useDeviceSize from "../../Utilities/useDeviceSize";
 
 const HomeBlog = () => {
+  const isMobile = useDeviceSize() === "xs";
   return (
     <>
       <Box className="edu-event-area event-area-4 section-gap-equal position-relative pb-150">
-        <img class="position-ab appl-blg" src="assets/images/apple-1.webp" alt="Shape"></img>
-        <img class="position-ab clod-blg" src="assets/images/cloud-3.webp" alt="Shape"></img>
+        {isMobile ? null : (
+          <>
+            <img class="position-ab appl-blg" src="assets/images/apple-1.webp" alt="Shape"></img>
+            <img class="position-ab clod-blg" src="assets/images/cloud-3.webp" alt="Shape"></img>
+          </>
+        )}
+
         <Box className="container edublink-animated-shape">
           <Box className="section-title section-center sal-animate">
             <span className="pre-title">Latest News Posts</span>
@@ -143,7 +150,11 @@ const HomeBlog = () => {
             </Box>
           </Box>
 
-          <img class="position-ab rockets-ot" src="assets/images/rocket.webp" alt="Shape"></img>
+          {isMobile ? null : (
+            <>
+              <img class="position-ab rockets-ot" src="assets/images/rocket.webp" alt="Shape"></img>
+            </>
+          )}
 
           <ul className="shape-group">
             <li className="shape-1 sal-animate">

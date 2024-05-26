@@ -2,6 +2,7 @@ import { List, ListItem, ListItemButton, ListItemText, Box, Link, Typography } f
 import React from "react";
 import { IoCloudDownloadOutline } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import useDeviceSize from "../../Utilities/useDeviceSize";
 const courseItems = [
   { text: "Stem Cell Banking", path: "/stem-cell-banking" },
   { text: "Why to Choose Stem Cell Banking?", path: "/why-to-choose-stem-cell-banking" },
@@ -15,11 +16,12 @@ const courseItems = [
 
 const TableContents = () => {
   const navigate = useNavigate();
+  const isMobile = useDeviceSize() === "xs";
 
   return (
     <>
       <Box className="course-sidebar-3 sidebar-top-position">
-        <Box className="edu-course-widget widget-course-summery">
+        <Box sx={{padding: isMobile ? "0px" :'10px'}} className="edu-course-widget widget-course-summery">
           <Box className="inner">
             <Box className="content">
               <List dense sx={{ padding: 0 }}>

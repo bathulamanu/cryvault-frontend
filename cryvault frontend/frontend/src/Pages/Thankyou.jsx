@@ -6,6 +6,7 @@ import axios from "axios";
 import { useTheme } from "@emotion/react";
 import { useDispatch, useSelector } from "react-redux";
 import { getOrderDetails } from "../redux/reducers/PaymentReducer";
+import useDeviceSize from "../Utilities/useDeviceSize";
 
 const ThankYouPage = () => {
   const bg = useTheme().palette.mode === "dark" ? "#212121" : "#fff";
@@ -67,9 +68,10 @@ const ThankYouPage = () => {
       phoneNumber: "7879186483",
     },
   ];
+  const isMobile = useDeviceSize() === "xs";
 
   return (
-    <Container sx={{ boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)", margin: "15rem auto" }} minHeight="100vh" py={4} px={2}>
+    <Container sx={{ boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)", margin: isMobile ?'3rem 0rem' : "15rem auto" }} minHeight="100vh" py={4} px={2}>
       <Stack spacing={4}>
         {details && details[0] && (
           <Card sx={{ backgroundColor: bg, boxShadow: "none", borderRadius: "lg", padding: 0 }}>
@@ -85,9 +87,9 @@ const ThankYouPage = () => {
             <CardContent>
               <Stack spacing={4}>
                 <Stack direction="column" spacing={3}>
-                  <Typography sx={{ fontWeight: "500", fontSize: "18px" }}>Order ID: {invoice?.orderid}</Typography>
-                  <Typography sx={{ fontWeight: "500", fontSize: "18px" }}>Subscription Plan: {invoice?.plan}</Typography>
-                  <Typography sx={{ fontWeight: "500", fontSize: "18px" }}>Payment Method: {details[0].PaymentDetails[0].paymentType}</Typography>
+                  <Typography sx={{ fontWeight: "500", fontSize: "18px" }}>Order ID: {invoice?.orderid || "XYZ123"}</Typography>
+                  <Typography sx={{ fontWeight: "500", fontSize: "18px" }}>Subscription Plan: {invoice?.plan || " 2"}</Typography>
+                  <Typography sx={{ fontWeight: "500", fontSize: "18px" }}>Payment Method: {details[0].PaymentDetails[0].paymentType || 'card'}</Typography>
                 </Stack>
                 <Typography sx={{ fontWeight: "500", fontSize: "18px" }}>Thank you!</Typography>
                 <Typography sx={{ fontWeight: "500", fontSize: "18px" }}>Your order is confirmed.</Typography>

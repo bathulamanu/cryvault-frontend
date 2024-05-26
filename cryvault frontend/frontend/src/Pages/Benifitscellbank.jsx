@@ -58,11 +58,11 @@ const Benifitscellbank = () => {
             <Box className="col-lg-8">
               <Box className="course-details-content course-details-2">
                 <Typography variant="h3">Uses and advantages of stem cells:</Typography>
-                <List dense={false}>
+                <List sx={{ paddingLeft: isMobile ? "0px !important" : "35px" }} dense={false}>
                   {reasons.map((reason, index) => (
                     <ListItem key={index} disableGutters>
                       <ListItemText>
-                        <Typography variant="subtitle1" component="span">
+                        <Typography variant="h4" component="span">
                           <b>{reason.title}</b>
                         </Typography>
                         <br />

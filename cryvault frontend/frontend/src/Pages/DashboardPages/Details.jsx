@@ -236,10 +236,12 @@
 // };
 // export default Details;
 
-import React from "react";
+import React, { useEffect, useMemo } from "react";
 import { Box, Card, CardContent, Typography, TextField, Grid, useMediaQuery } from "@mui/material";
 import { makeStyles } from "@material-ui/styles";
 import "../../Components/DashboardComponents/Dashboard.css";
+import { useDispatch, useSelector } from "react-redux";
+import { getClientInfo } from "../../redux/reducers/DashboardReducer";
 const useStyles = makeStyles((theme) => ({
   cardBox: {
     backgroundColor: "#2b2e64",
@@ -251,7 +253,7 @@ const Details = () => {
   const isMobile = useMediaQuery("(max-width:600px)");
 
   return (
-    <Box sx={{height:"100%"}}>
+    <Box sx={{ height: "100%" }}>
       <Card
         sx={{
           width: isMobile ? "90%" : "80vw",
@@ -259,7 +261,7 @@ const Details = () => {
           borderRadius: "20px",
           margin: isMobile ? "10px" : "0px",
           backgroundColor: "#F8F9FC",
-          height:"100%"
+          height: "100%",
         }}
         style={{ marginLeft: isMobile ? "10px" : "20px" }}
       >
@@ -273,7 +275,7 @@ const Details = () => {
             <Grid container spacing={2}>
               <Grid xs={isMobile ? 12 : 6}>
                 <Grid container spacing={2}>
-                  <Grid item xs={4} style={{ marginRight: "2px",marginTop:"20px" }}>
+                  <Grid item xs={12} md={4} style={{ marginRight: "2px", marginTop: "20px" }}>
                     <TextField
                       style={{
                         backgroundColor: "#e5e5e5 !important",
@@ -288,7 +290,7 @@ const Details = () => {
                       // className="detailsInput"
                     />
                   </Grid>
-                  <Grid item xs={4} style={{ marginRight: "2px",marginTop:"20px"  }}>
+                  <Grid item xs={12} md={4} style={{ marginRight: "2px", marginTop: "20px" }}>
                     <TextField
                       style={{
                         backgroundColor: "#e5e5e5 !important",
@@ -302,7 +304,7 @@ const Details = () => {
                       fullWidth
                     />
                   </Grid>
-                  <Grid item xs={4} style={{ marginRight: "2px",marginTop:"20px" }}>
+                  <Grid item xs={12} md={4} style={{ marginRight: "2px", marginTop: "20px" }}>
                     <TextField
                       style={{
                         backgroundColor: "#e5e5e5 !important",
@@ -315,7 +317,7 @@ const Details = () => {
                       fullWidth
                     />
                   </Grid>
-                  <Grid item xs={4} style={{ marginRight: "2px",marginTop:"20px" }}>
+                  <Grid item xs={12} md={4} style={{ marginRight: "2px", marginTop: "20px" }}>
                     <TextField
                       style={{
                         backgroundColor: "#e5e5e5 !important",
@@ -328,7 +330,7 @@ const Details = () => {
                       fullWidth
                     />
                   </Grid>
-                  <Grid item xs={4} style={{ marginRight: "2px",marginTop:"20px" }}>
+                  <Grid item xs={12} md={4} style={{ marginRight: "2px", marginTop: "20px" }}>
                     <TextField
                       style={{
                         backgroundColor: "#e5e5e5 !important",
@@ -341,7 +343,7 @@ const Details = () => {
                       fullWidth
                     />
                   </Grid>
-                  <Grid item xs={4} style={{ marginRight: "2px" }}>
+                  <Grid item xs={12} md={4} style={{ marginRight: "2px", marginTop: "20px" }}>
                     <TextField
                       style={{
                         backgroundColor: "#e5e5e5 !important",
@@ -358,9 +360,9 @@ const Details = () => {
               </Grid>
 
               {/* Father's Details Grid */}
-              <Grid item xs={isMobile ? 12 : 6}>
-                <Grid container spacing={2}>
-                  <Grid item xs={4}>
+              <Grid item xs={isMobile ? 12 : 6} sx={{ padding: "0px !important" }}>
+                <Grid container spacing={2} sx={{ padding: "0px !important" }}>
+                  <Grid item xs={4} style={{ marginRight: "2px", marginTop: "20px" }}>
                     <TextField
                       style={{
                         backgroundColor: "#e5e5e5 !important",
@@ -373,7 +375,7 @@ const Details = () => {
                       fullWidth
                     />
                   </Grid>
-                  <Grid item xs={4} style={{ marginRight: "2px" }}>
+                  <Grid item xs={12} md={4} style={{ marginRight: "2px", marginTop: "20px" }}>
                     <TextField
                       style={{
                         backgroundColor: "#e5e5e5 !important",
@@ -386,7 +388,7 @@ const Details = () => {
                       fullWidth
                     />
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid item xs={12} md={4} style={{ marginRight: "2px", marginTop: "20px" }}>
                     <TextField
                       style={{
                         backgroundColor: "#e5e5e5 !important",
@@ -399,7 +401,7 @@ const Details = () => {
                       fullWidth
                     />
                   </Grid>
-                  <Grid item xs={4} style={{ marginRight: "2px" }}>
+                  <Grid item xs={12} md={4} style={{ marginRight: "2px", marginTop: "20px" }}>
                     <TextField
                       style={{
                         backgroundColor: "#e5e5e5 !important",
@@ -412,7 +414,7 @@ const Details = () => {
                       fullWidth
                     />
                   </Grid>
-                  <Grid item xs={4}>
+                  <Grid item xs={12} md={4} style={{ marginRight: "2px", marginTop: "20px" }}>
                     <TextField
                       style={{
                         backgroundColor: "#e5e5e5 !important",
@@ -425,7 +427,7 @@ const Details = () => {
                       fullWidth
                     />
                   </Grid>
-                  <Grid item xs={4} style={{ marginRight: "2px" }}>
+                  <Grid item xs={12} md={4} style={{ marginRight: "2px", marginTop: "20px" }}>
                     <TextField
                       style={{
                         backgroundColor: "#e5e5e5 !important",
@@ -442,7 +444,7 @@ const Details = () => {
               </Grid>
 
               {/* Remaining Address Details */}
-              <Grid item xs={12}>
+              <Grid item xs={12} style={{ marginRight: "2px", marginTop: "20px" }}>
                 <TextField
                   style={{
                     backgroundColor: "#e5e5e5 !important",
@@ -455,7 +457,7 @@ const Details = () => {
                   fullWidth
                 />
               </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} style={{ marginRight: "2px", marginTop: "20px" }}>
                 <TextField
                   style={{
                     backgroundColor: "#e5e5e5 !important",
@@ -468,7 +470,7 @@ const Details = () => {
                   fullWidth
                 />
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={4} style={{ marginRight: "2px", marginTop: "20px" }}>
                 <TextField
                   style={{
                     backgroundColor: "#e5e5e5 !important",
@@ -481,7 +483,7 @@ const Details = () => {
                   fullWidth
                 />
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={4} style={{ marginRight: "2px", marginTop: "20px" }}>
                 <TextField
                   style={{
                     backgroundColor: "#e5e5e5 !important",
@@ -494,7 +496,7 @@ const Details = () => {
                   fullWidth
                 />
               </Grid>
-              <Grid item xs={4}>
+              <Grid item xs={4} style={{ marginRight: "2px", marginTop: "20px" }}>
                 <TextField
                   style={{
                     backgroundColor: "#e5e5e5 !important",
@@ -507,7 +509,7 @@ const Details = () => {
                   fullWidth
                 />
               </Grid>
-              <Grid item xs={2}>
+              <Grid item xs={2} style={{ marginRight: "2px", marginTop: "20px" }}>
                 <TextField
                   style={{
                     backgroundColor: "#e5e5e5 !important",
@@ -520,7 +522,7 @@ const Details = () => {
                   fullWidth
                 />
               </Grid>
-              <Grid item xs={2}>
+              <Grid item xs={2} style={{ marginRight: "2px", marginTop: "20px" }}>
                 <TextField
                   style={{
                     backgroundColor: "#e5e5e5 !important",
@@ -532,6 +534,347 @@ const Details = () => {
                   variant="standard"
                   fullWidth
                 />
+              </Grid>
+            </Grid>
+          </Box>
+        </CardContent>
+      </Card>
+    </Box>
+  );
+};
+
+export const MobileDetails = () => {
+  const classes = useStyles();
+  const isMobile = useMediaQuery("(max-width:600px)");
+  const dispatch = useDispatch();
+  const clientData = useSelector((state) => state.dashboard.clientData);
+
+  const info = useMemo(() => {
+    const clientInfo = {
+      motherName: clientData?.CustomerClientDetails?.ExpectantMotherName || "",
+      motherDOB: clientData?.CustomerClientDetails?.ExpectantMotherDOB || "",
+      motherEmail: clientData?.CustomerClientDetails?.ExpectantMotherEmail || "",
+      motherMobile: clientData?.CustomerClientDetails?.ExpectantMotherMobile || "",
+      motherOccupation: clientData?.CustomerClientDetails?.ExpectantMotherOccupation || "",
+      motherOrganizationName: clientData?.CustomerClientDetails?.ExpectantMotherOrganizationName || "",
+      fatherName: clientData?.CustomerClientDetails?.ExpectantFatherName || "",
+      fatherDOB: clientData?.CustomerClientDetails?.ExpectantFatherDOB || "",
+      fatherEmail: clientData?.CustomerClientDetails?.ExpectantFatherEmail || "",
+      fatherMobile: clientData?.CustomerClientDetails?.ExpectantFatherMobile || "",
+      fatherOccupation: clientData?.CustomerClientDetails?.ExpectantFatherOccupation || "",
+      fatherOrganizationName: clientData?.CustomerClientDetails?.ExpectantFatherOrganizationName || "",
+      Address: clientData?.CustomerCommunicationDetails?.Address || "",
+      city: clientData?.CustomerCommunicationDetails?.City || "",
+      State: clientData?.CustomerCommunicationDetails?.State || "",
+      State: clientData?.CustomerCommunicationDetails?.State || "",
+      Country: clientData?.CustomerCommunicationDetails?.Country || "",
+    };
+
+    return clientInfo;
+  }, [clientData]);
+  console.log(clientData, info);
+  useEffect(() => {
+    dispatch(getClientInfo());
+  }, []);
+  return (
+    <Box sx={{ height: "100%" }}>
+      <Card
+        sx={{
+          width: isMobile ? "90%" : "80vw",
+          border: "0.5px solid lightgrey",
+          borderRadius: "20px",
+          margin: isMobile ? "10px" : "0px",
+          backgroundColor: "#F8F9FC",
+          height: "100%",
+        }}
+        style={{ marginLeft: isMobile ? "10px" : "20px" }}
+      >
+        <Box className={classes.cardBox} p={3}>
+          <Typography sx={{ color: "white" }} variant="h4">
+            Details
+          </Typography>
+        </Box>
+        <CardContent>
+          <Box mt={2} sx={{ padding: "20px" }}>
+            <Grid container spacing={2}>
+              <Grid xs={isMobile ? 12 : 6}>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} md={4} style={{ marginRight: "2px", marginTop: "20px" }}>
+                    
+                  <TextField
+                      style={{
+                        backgroundColor: "#e5e5e5 !important",
+                        fontSize: "1rem",
+                      }}
+                      InputLabelProps={{ style: { fontSize: "1.25rem" } }}
+                      InputProps={{ style: { backgroundColor: "#e5e5e5 !important", fontSize: "1.25rem" } }}
+                      id="Mother's Name"
+                      label="Mother's Name"
+                      variant="standard"
+                      fullWidth
+                      // className="detailsInput"
+                    />
+
+                    <TextField
+                      style={{
+                        backgroundColor: "#e5e5e5 !important",
+                        fontSize: "1rem",
+                      }}
+                      InputLabelProps={{ style: { fontSize: "1.25rem" } }}
+                      InputProps={{ style: { backgroundColor: "#e5e5e5 !important", fontSize: "1.25rem" } }}
+                      id="Mother's Name"
+                      label="Mother's Name"
+                      variant="standard"
+                      fullWidth
+                      // className="detailsInput"
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={4} style={{ marginRight: "2px", marginTop: "20px" }}>
+                    <TextField
+                      style={{
+                        backgroundColor: "#e5e5e5 !important",
+                        fontSize: "1rem",
+                      }}
+                      InputLabelProps={{ style: { fontSize: "1.25rem" } }}
+                      InputProps={{ style: { backgroundColor: "#e5e5e5 !important", fontSize: "1.25rem" } }}
+                      id="Date of Birth"
+                      label="Date of Birth"
+                      variant="standard"
+                      fullWidth
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={4} style={{ marginRight: "2px", marginTop: "20px" }}>
+                    <TextField
+                      style={{
+                        backgroundColor: "#e5e5e5 !important",
+                        fontSize: "1rem",
+                      }}
+                      InputLabelProps={{ style: { fontSize: "1.25rem" } }}
+                      InputProps={{ style: { backgroundColor: "#e5e5e5 !important", fontSize: "1.25rem" } }}
+                      label="Mobile Number"
+                      variant="standard"
+                      fullWidth
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={4} style={{ marginRight: "2px", marginTop: "20px" }}>
+                    <TextField
+                      style={{
+                        backgroundColor: "#e5e5e5 !important",
+                        fontSize: "1rem",
+                      }}
+                      InputLabelProps={{ style: { fontSize: "1.25rem" } }}
+                      InputProps={{ style: { backgroundColor: "#e5e5e5 !important", fontSize: "1.25rem" } }}
+                      label="Email Address"
+                      variant="standard"
+                      fullWidth
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={4} style={{ marginRight: "2px", marginTop: "20px" }}>
+                    <TextField
+                      style={{
+                        backgroundColor: "#e5e5e5 !important",
+                        fontSize: "1rem",
+                      }}
+                      InputLabelProps={{ style: { fontSize: "1.25rem" } }}
+                      InputProps={{ style: { backgroundColor: "#e5e5e5 !important", fontSize: "1.25rem" } }}
+                      label="Occupation"
+                      variant="standard"
+                      fullWidth
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={4} style={{ marginRight: "2px", marginTop: "20px" }}>
+                    <TextField
+                      style={{
+                        backgroundColor: "#e5e5e5 !important",
+                        fontSize: "1rem",
+                      }}
+                      InputLabelProps={{ style: { fontSize: "1.25rem" } }}
+                      InputProps={{ style: { backgroundColor: "#e5e5e5 !important", fontSize: "1.25rem" } }}
+                      label="Organization Name"
+                      variant="standard"
+                      fullWidth
+                    />
+                  </Grid>
+                </Grid>
+              </Grid>
+
+              {/* Father's Details Grid */}
+              <Grid item xs={isMobile ? 12 : 6} sx={{ padding: "0px !important" }}>
+                <Grid container spacing={2} sx={{ padding: "0px !important" }}>
+                  <Grid item xs={12} md={4} style={{ marginRight: "2px", marginTop: "20px" }}>
+                    <TextField
+                      style={{
+                        backgroundColor: "#e5e5e5 !important",
+                        fontSize: "1rem",
+                      }}
+                      InputLabelProps={{ style: { fontSize: "1.25rem" } }}
+                      InputProps={{ style: { backgroundColor: "#e5e5e5 !important", fontSize: "1.25rem" } }}
+                      label="Father's Name"
+                      variant="standard"
+                      fullWidth
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={4} style={{ marginRight: "2px", marginTop: "20px" }}>
+                    <TextField
+                      style={{
+                        backgroundColor: "#e5e5e5 !important",
+                        fontSize: "1rem",
+                      }}
+                      InputLabelProps={{ style: { fontSize: "1.25rem" } }}
+                      InputProps={{ style: { backgroundColor: "#e5e5e5 !important", fontSize: "1.25rem" } }}
+                      label="Date of Birth"
+                      variant="standard"
+                      fullWidth
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={4} style={{ marginRight: "2px", marginTop: "20px" }}>
+                    <TextField
+                      style={{
+                        backgroundColor: "#e5e5e5 !important",
+                        fontSize: "1rem",
+                      }}
+                      InputLabelProps={{ style: { fontSize: "1.25rem" } }}
+                      InputProps={{ style: { backgroundColor: "#e5e5e5 !important", fontSize: "1.25rem" } }}
+                      label="Mobile Number"
+                      variant="standard"
+                      fullWidth
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={4} style={{ marginRight: "2px", marginTop: "20px" }}>
+                    <TextField
+                      style={{
+                        backgroundColor: "#e5e5e5 !important",
+                        fontSize: "1rem",
+                      }}
+                      InputLabelProps={{ style: { fontSize: "1.25rem" } }}
+                      InputProps={{ style: { backgroundColor: "#e5e5e5 !important", fontSize: "1.25rem" } }}
+                      label="Email Address"
+                      variant="standard"
+                      fullWidth
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={4} style={{ marginRight: "2px", marginTop: "20px" }}>
+                    <TextField
+                      style={{
+                        backgroundColor: "#e5e5e5 !important",
+                        fontSize: "1rem",
+                      }}
+                      InputLabelProps={{ style: { fontSize: "1.25rem" } }}
+                      InputProps={{ style: { backgroundColor: "#e5e5e5 !important", fontSize: "1.25rem" } }}
+                      label="Occupation"
+                      variant="standard"
+                      fullWidth
+                    />
+                  </Grid>
+                  <Grid item xs={12} md={4} style={{ marginRight: "2px", marginTop: "20px" }}>
+                    <TextField
+                      style={{
+                        backgroundColor: "#e5e5e5 !important",
+                        fontSize: "1rem",
+                      }}
+                      InputLabelProps={{ style: { fontSize: "1.25rem" } }}
+                      InputProps={{ style: { backgroundColor: "#e5e5e5 !important", fontSize: "1.25rem" } }}
+                      label="Organization Name"
+                      variant="standard"
+                      fullWidth
+                    />
+                  </Grid>
+                </Grid>
+              </Grid>
+
+              {/* Remaining Address Details */}
+              <Grid item xs={isMobile ? 12 : 6} sx={{ padding: "0px !important" }}>
+                <Grid item xs={12} md={4} style={{ marginRight: "2px", marginTop: "20px" }}>
+                  <TextField
+                    style={{
+                      backgroundColor: "#e5e5e5 !important",
+                      fontSize: "1rem",
+                    }}
+                    InputLabelProps={{ style: { fontSize: "1.25rem" } }}
+                    InputProps={{ style: { backgroundColor: "#e5e5e5 !important", fontSize: "1.25rem" } }}
+                    label="Address line 1"
+                    variant="standard"
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item xs={12} md={4} style={{ marginRight: "2px", marginTop: "20px" }}>
+                  <TextField
+                    style={{
+                      backgroundColor: "#e5e5e5 !important",
+                      fontSize: "1rem",
+                    }}
+                    InputLabelProps={{ style: { fontSize: "1.25rem" } }}
+                    InputProps={{ style: { backgroundColor: "#e5e5e5 !important", fontSize: "1.25rem" } }}
+                    label="Address line 2"
+                    variant="standard"
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item xs={4} md={4} style={{ marginRight: "2px", marginTop: "20px", maxWidth: "100%" }}>
+                  <TextField
+                    style={{
+                      backgroundColor: "#e5e5e5 !important",
+                      fontSize: "1rem",
+                    }}
+                    InputLabelProps={{ style: { fontSize: "1.25rem" } }}
+                    InputProps={{ style: { backgroundColor: "#e5e5e5 !important", fontSize: "1.25rem" } }}
+                    label="Near Land Mark"
+                    variant="standard"
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item xs={4} md={4} style={{ marginRight: "2px", marginTop: "20px", maxWidth: "100%" }}>
+                  <TextField
+                    style={{
+                      backgroundColor: "#e5e5e5 !important",
+                      fontSize: "1rem",
+                    }}
+                    InputLabelProps={{ style: { fontSize: "1.25rem" } }}
+                    InputProps={{ style: { backgroundColor: "#e5e5e5 !important", fontSize: "1.25rem" } }}
+                    label="City"
+                    variant="standard"
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item xs={4} md={4} style={{ marginRight: "2px", marginTop: "20px", maxWidth: "100%" }}>
+                  <TextField
+                    style={{
+                      backgroundColor: "#e5e5e5 !important",
+                      fontSize: "1rem",
+                    }}
+                    InputLabelProps={{ style: { fontSize: "1.25rem" } }}
+                    InputProps={{ style: { backgroundColor: "#e5e5e5 !important", fontSize: "1.25rem" } }}
+                    label="State"
+                    variant="standard"
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item xs={2} md={4} style={{ marginRight: "2px", marginTop: "20px", maxWidth: "100%" }}>
+                  <TextField
+                    style={{
+                      backgroundColor: "#e5e5e5 !important",
+                      fontSize: "1rem",
+                    }}
+                    InputLabelProps={{ style: { fontSize: "1.25rem" } }}
+                    InputProps={{ style: { backgroundColor: "#e5e5e5 !important", fontSize: "1.25rem" } }}
+                    label="Pincode"
+                    variant="standard"
+                    fullWidth
+                  />
+                </Grid>
+                <Grid item xs={2} md={4} style={{ marginRight: "2px", marginTop: "20px", maxWidth: "100%" }}>
+                  <TextField
+                    style={{
+                      backgroundColor: "#e5e5e5 !important",
+                      fontSize: "1rem",
+                    }}
+                    InputLabelProps={{ style: { fontSize: "1.25rem" } }}
+                    InputProps={{ style: { backgroundColor: "#e5e5e5 !important", fontSize: "1.25rem" } }}
+                    label="Country"
+                    variant="standard"
+                    fullWidth
+                  />
+                </Grid>
               </Grid>
             </Grid>
           </Box>
