@@ -82,7 +82,7 @@ const Header = () => {
   const bestStemCellBankInIndiaStemCellBankingCryovault = pageInfo?.[23]?.[25]?.urlSlug;
   const accreditationsCertifications = pageInfo?.[24]?.[13]?.urlSlug;
   const whenAndHowIsCordBloodCollected = pageInfo?.[25]?.[26]?.urlSlug;
-  const isUserLoggedIn = localStorage.getItem("token").length > 0;
+  const isUserLoggedIn = localStorage.getItem("token")?.length > 0;
 
   const handleLogout = () => {
     localStorage.setItem("token", "");
@@ -339,7 +339,7 @@ const Header = () => {
                             </li>
 
                             <li>
-                              <Link to="/logout" onClick={handleLogout}>
+                              <Link to="/" onClick={handleLogout}>
                                 Logout
                               </Link>
                             </li>
@@ -395,7 +395,7 @@ export const MobileHeader = React.memo(() => {
   const handleDrawerClose = () => {
     setDrawerOpen(false);
   };
-  const isUserLoggedIn = localStorage.getItem("token").length > 0;
+  const isUserLoggedIn = localStorage.getItem("token")?.length > 0;
 
   const handleLogout = () => {
     localStorage.setItem("token", "");

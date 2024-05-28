@@ -44,10 +44,9 @@ export const OTP = () => {
   const goTodashBoard = () => {
     const isCheckingOut = localStorage.getItem("isCheckingOut");
     if (isCheckingOut) navigate("/checkout");
-    if(userDetails?.subscriptionPlanId !== null) navigate('/dashboard')
-    else {
-      navigate("/plan");
-    }
+    else if(userDetails?.subscriptionPlanId !== null || userDetails?.subscriptionPlanId !== undefined ) navigate('/dashboard')
+    else navigate("/plan");
+    
   };
   return (
     <Box

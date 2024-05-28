@@ -4,6 +4,7 @@ import ReachUs from "../Components/Common/ReachUs";
 import OurStory from "../Components/Common/OurStory";
 import { List, ListItem, ListItemIcon, ListItemText, Link, Box, Breadcrumbs, Typography } from "@mui/material";
 import useDeviceSize from "../Utilities/useDeviceSize";
+import { useSelector } from "react-redux";
 
 const reasons = ["Cryovault is the only company with CDSCO and DCGI approved with ISO certification.", "Cryovault is the only company with UQSR and ANSI.", "Cryovault provides preservation certificate, CFU, HLA, CD34, CD45 and NBS.", "Cryovault provides unlimited expansion of Mesenchymal cells.", "Cryovault provides free GLOBAL SHIPMENT.", "Cryovault provides Quality Assurance up to RS.20 Lakhs.", "Cryovault Provides Medical Assistance up to RS.20 Lakhs.", "Cryovault offers free professional counselling from transplant specialist for enrolled clients."];
 const medicalAssistance = ["Medical Assistance Team", "Pre-Collection: Kits ID & Client Details Verification.", "Post Collection: Proper Package, Maintain Cold Condition & Transported Within 48 Hours."];
@@ -11,10 +12,12 @@ const responsibilities = ["Main Power Resource", "Client, Sales & Lab Team Coord
 const services = ["Service Approachment", "Presentation and Query Completion", "Registration / Enrollment & Client Consent to the CBIPL"];
 const Aboutus = () => {
   const isMobile = useDeviceSize() === "xs";
+  const pageInfo = useSelector((state) => state.home.pageInfo);
+  const url = `https://flyingbyts.s3.ap-south-2.amazonaws.com/s3/${pageInfo?.[0]?.[1]?.pageHeaderImage}`;
 
   return (
     <>
-      <Box sx={{ padding: isMobile ? " 50px 7px !important" : "120px 0px !important" }} className="edu-breadcrumb-area breadcrumb-style-2 bg-image bg-image--19">
+      <Box sx={{ backgroundImage: ` url(${url})`, padding: isMobile ? " 50px 7px !important" : "120px 0px !important" }} className="edu-breadcrumb-area breadcrumb-style-2 bg-image bg-image--19">
         <Box className="container">
           <Box className="breadcrumb-inner">
             <Box className="page-title d-flex align-items-center">
@@ -119,7 +122,7 @@ const Aboutus = () => {
         </Box>
       </Box>
 
-      <Box sx={{padding : isMobile ? '50px 0px !important' :"50px"}} className="edu-campus-area">
+      <Box sx={{ padding: isMobile ? "50px 0px !important" : "50px" }} className="edu-campus-area">
         <Box className="container edublink-animated-shape">
           <Box className="row g-5 align-items-center">
             <Box className="col-xl-6 sal-animate">

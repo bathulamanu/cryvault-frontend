@@ -5,17 +5,16 @@ import { useDispatch } from "react-redux";
 
 const PopupLayout = () => {
   const [page, setPage] = useState(1);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const handlePageChange = (event, newPage) => {
     setPage(newPage);
-    dipatch()
+    // dispatch(addClientInfo())
   };
   return (
     <>
       <PopupHeader />
       <PopupLazyLoad {...{ page }} />
       <Pagination onChange={handlePageChange} sx={{ position: "absolute", right: "0" }} count={10} color="primary" />
-
       <PopupFooter />
     </>
   );

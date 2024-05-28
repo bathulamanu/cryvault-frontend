@@ -61,7 +61,7 @@ export const getClientInfo = createAsyncThunk("getClientInfo", async (payload = 
   }
 });
 
-export const addClientInfo = createAsyncThunk("getClientInfo", async (payload = {}, thunkAPI) => {
+export const addClientInfo = createAsyncThunk("addClientInfo", async (payload = {}, thunkAPI) => {
   const apiUrl = addClientInfoApi();
   const token = sessionStorage.getItem("token");
   const headers = {

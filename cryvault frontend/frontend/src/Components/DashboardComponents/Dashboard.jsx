@@ -14,10 +14,6 @@ import CloseIcon from "@mui/icons-material/Close";
 import Details, { MobileDetails } from "../../Pages/DashboardPages/Details";
 import Services from "../../Pages/DashboardPages/Services";
 import Subscription from "../../Pages/DashboardPages/Subscriptions";
-
-// import Offers from "./Offers";
-// import Settings from "./Settings";
-// import Reference from "./Reference";
 import "./Dashboard.css";
 import BabyDetails from "../../Pages/DashboardPages/BabyDetails";
 import Invoices from "../../Pages/DashboardPages/Invoices";
@@ -56,7 +52,7 @@ const Dashboard = () => {
           backgroundColor: "#e5e5e5",
           padding: "4rem 0rem",
           height: "100%",
-          gap:'1rem'
+          gap: "1rem",
         }}
       >
         <Box
@@ -352,7 +348,7 @@ const Dashboard = () => {
             </List>
           </Box>
         </Box>
-        <Box
+        {/* <Box
           style={{
             width: isMobile ? "100%" : "calc(100% - 300px)",
             display: isMobile ? "none" : "block",
@@ -367,8 +363,8 @@ const Dashboard = () => {
           {selectedItem === "Reference" && <Refferals />}
           {selectedItem === "Settings" && <SettingsPage />}
           {selectedItem === "Help" && <Help />}
-        </Box>
-        {/* {isSubscribedUser?.length > 0 ? (
+        </Box> */}
+        {isSubscribedUser?.length > 0 ? (
           <Box
             style={{
               width: isMobile ? "100%" : "calc(100% - 300px)",
@@ -399,11 +395,11 @@ const Dashboard = () => {
           >
             <AddDetailsPopup />
           </Box>
-        )} */}
+        )}
       </Box>
 
       {/* mobile */}
-      <Box style={{ display: isMobile ? "block" : "none", marginTop: "3rem",marginBottom: "10rem" }}>
+      <Box style={{ display: isMobile ? "block" : "none", marginTop: "3rem", marginBottom: "10rem" }}>
         <Card
           sx={{
             backgroundColor: "#2b2e64",

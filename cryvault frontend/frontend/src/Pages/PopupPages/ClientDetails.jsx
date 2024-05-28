@@ -3,32 +3,36 @@ import { Container, Typography, TextField, FormControl, InputLabel, Select, Menu
 
 
 const ClientDetails = () => {
-  const [formData, setFormData] = useState({
-    expectantMotherName: "",
-    dateOfBirth: "",
-    mobile: "",
-    email: "",
-    occupation: "",
-    designation: "",
-    organizationName: "",
-    idProof: "",
-    idProofNo: "",
-    otherIdProof: "",
-    address: "",
-    city: "",
-    state: "",
-    country: "",
-    pincode: "",
-    isPermanentAddressSame: false,
-    permanentCity: "",
-    permanentState: "",
-    permanentCountry: "",
-    permanentPincode: "",
+  const [customerClientDetails, setCustomerClientDetails] = useState({
+    ExpectantMotherName: " ",
+    ExpectantMotherDOB: "",
+    ExpectantMotherMobile: "",
+    ExpectantMotherEmail: "",
+    ExpectantMotherOccupation: "  ",
+    ExpectantMotherDesignation: " ",
+    ExpectantMotherOrganizationName: "",
+    ExpectantMotherIDproof: "",
+    ExpectantMotherIDproofPhoto: "",
+    ExpectantMotherProfilePhoto: "",
+    ExpectantMotherIdproofNo: "",
+    ExpectantMotherOtherInfo: "",
+    ExpectantFatherName: "",
+    ExpectantFatherDOB: "",
+    ExpectantFatherMobile: "",
+    ExpectantFatherEmail: "",
+    ExpectantFatherOccupation: "",
+    ExpectantFatherDesignation: "",
+    ExpectantFatherOrganizationName: "",
+    ExpectantFatherIDproof: "",
+    ExpectantFatherIDproofPhoto: "",
+    ExpectantFatherProfilePhoto: "",
+    ExpectantFatherIdproofNo: "",
+    ExpectantFatherOtherInfo: "",
   });
 
   const handleChange = (event) => {
     const { name, value, checked } = event.target;
-    setFormData((prevData) => ({
+    setCustomerClientDetails((prevData) => ({
       ...prevData,
       [name]: checked !== undefined ? checked : value,
     }));
