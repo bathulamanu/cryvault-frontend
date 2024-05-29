@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Box, Button, TextField, Typography } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
+import { Box, Button, TextField, Typography, useTheme } from "@mui/material";
 import { Image } from "@mui/icons-material";
 import { Input } from "../styles/Input";
 import useDeviceSize from "../Utilities/useDeviceSize";

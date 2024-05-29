@@ -1,34 +1,21 @@
-import { DNA } from 'react-loader-spinner'
-
+import React from 'react'
 const Loader = () => {
   return (
     <>
-    <div className="container-fluid">
-      <div className="row">
-        <div className="spinner-container">
-          {/* <DNA
-            visible={true}
-            height="80"
-            width="80"
-            ariaLabel="dna-loading"
-            wrapperStyle={{}}
-            wrapperClass="dna-wrapper"
-          /> */}
-
-<div id="edublink-preloader">
-        <div className="loading-spinner">
-            <div className="preloader-spin-1"></div>
-            <div className="preloader-spin-2"></div>
-        </div>
-
-    </div>
-
-    
+      <div className="container-fluid">
+        <div className="row">
+          <div className="spinner-container">
+            <div id="edublink-preloader">
+              <div className="loading-spinner">
+                <div className="preloader-spin-1"></div>
+                <div className="preloader-spin-2"></div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </>
-  )
-}
+    </>
+  );
+};
 
-export default Loader
+export default Loader;

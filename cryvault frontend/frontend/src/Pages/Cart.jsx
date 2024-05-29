@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BiTrash } from "react-icons/bi";
-// import "bootstrap/dist/css/bootstrap.min.css";
 import { useLocation } from "react-router-dom";
-import useRazorpay from "react-razorpay";
 import { useNavigate } from "react-router-dom";
 import { Box, Button, Input, OutlinedInput, TextField } from "@mui/material";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, IconButton } from "@mui/material";
@@ -18,7 +16,6 @@ const Cart = () => {
   const subscription = localStorage.getItem("subscription");
 
   const navigate = useNavigate();
-  const [Razorpay] = useRazorpay();
   const deleteitem = () => {
     setplanName(localStorage.removeItem("planName"));
     setAmount(localStorage.removeItem("amount"));

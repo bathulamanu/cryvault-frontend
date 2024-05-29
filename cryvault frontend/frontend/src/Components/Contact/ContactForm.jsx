@@ -109,7 +109,7 @@ const ContactForm = () => {
                 </Box>
                 <Box className="form-group">
                   <Button className="edu-btn btn-medium">
-                    Make an Appointment <i className="icon-4"></i>
+                    Make an Appointment 
                   </Button>
                 </Box>
               </Box>

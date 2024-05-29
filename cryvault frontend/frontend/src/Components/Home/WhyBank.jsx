@@ -17,7 +17,7 @@ const WhyBank = () => {
       </Box>
 
       <Box className="whybankContent">
-        <Typography variant={isMobile ? "h5" : "h1"} sx={{ textAlign: "center", fontSize: isMobile ? "2.5rem" : "6rem", fontWeight: isMobile ? "500" : "700" }}>
+        <Typography variant={isMobile ? "h5" : "h1"} sx={{ textAlign: "center", fontSize: isMobile ? "2.5rem" : "46px", fontWeight: isMobile ? "500" : "600",color:"#103741" }}>
           Newborn stem cells <br /> are a powerful resource
         </Typography>
 
@@ -81,7 +81,7 @@ const WhyBank = () => {
                 <Typography variant="h4" sx={{ color: "white" }} gutterBottom>
                   Why Bank?
                 </Typography>
-                <Typography variant="h5" component="Box">
+                <Typography sx={{lineHeight:'2'}} variant="h5" component="Box">
                   Stem cells from newborn umbilical cord blood are a treasure that can potentially save your baby or family member .......
                 </Typography>
               </Box>
@@ -95,7 +95,7 @@ const WhyBank = () => {
                 <Typography variant="h4" sx={{ color: "white" }} gutterBottom>
                   Information Guide
                 </Typography>
-                <Typography variant="h5" component="Box">
+                <Typography sx={{lineHeight:'2'}} variant="h5" component="Box">
                   If you’re thinking about cord blood banking, our Information Guide can help you get started. It answers questions .....
                 </Typography>
               </Box>
@@ -108,7 +108,7 @@ const WhyBank = () => {
                 <Typography variant="h4" sx={{ color: "white" }} gutterBottom>
                   Cord Blood & Tissue
                 </Typography>
-                <Typography variant="h5" component="Box">
+                <Typography sx={{lineHeight:'2'}} variant="h5" component="Box">
                   Today, cord blood stem cells have been used in the treatment of over 80 life threatening diseases. ..
                 </Typography>
               </Box>

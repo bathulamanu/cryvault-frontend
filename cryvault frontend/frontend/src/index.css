@@ -135,10 +135,12 @@ code {
     .field {
       padding: 10px 20px 10px 20px;
       display: flex;
+      align-items: end;
       .fieldName {
         color: #2b2e64;
         padding-top: 10px;
         font-size: 2rem;
+        white-space: nowrap;
       }
     }
   }

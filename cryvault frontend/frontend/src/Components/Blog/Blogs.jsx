@@ -25,7 +25,8 @@ const Blogs = () => {
           <Typography variant="body1">Pregnancy is a time of excitement and preparation for the baby. One of the decisions that soon-to-be parents should consider is whether to bank their baby’s stem cells. Stem cell storage is a sample of these precious cells from umbilical cord blood or tissue in a specialised facility for possible future use. But how does […]</Typography>
           <Box className="read-more-btn">
             <Link className="edu-btn btn-border btn-medium" to="/blog-single">
-              Read More <i className="icon-4"></i>
+              Read More 
+           
             </Link>
           </Box>
         </Box>

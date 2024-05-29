@@ -255,7 +255,7 @@ const BookAppointment = () => {
   const isOdd = userDetails.length % 2 !== 0;
   return (
     <>
-      <Box className="edu-section-gap edu-about-area about-style-4 position-relative">
+      <Box sx={{ marginBottom: "8rem !important", backgroundColor: "white !important" }} className="edu-section-gap edu-about-area about-style-4 position-relative">
         {isMobile ? null : <img src="assets/images/anim-icon-4.webp" style={{ top: "-100px", right: "0" }} className="position-ab pencil-ot" alt="pencil" />}
         {isMobile ? null : <img src="assets/images/note.webp" className="position-ab notes-img" alt="pencil" />}
 
@@ -273,7 +273,7 @@ const BookAppointment = () => {
                   <Box className="form-group col-12">
                     <iframe title="reCAPTCHA" width="304" height="78" role="presentation" name="a-rax7gaw23nj6" frameBorder="0" scrolling="no" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox allow-storage-access-by-user-activation" src="https://www.google.com/recaptcha/api2/anchor?ar=2&amp;k=6LfPixwaAAAAABFFuOob52Mh463Oy3rZEtYUr4oJ&amp;co=aHR0cHM6Ly93d3cuY3J5b3ZhdWx0LmluOjQ0Mw..&amp;hl=en&amp;v=Hq4JZivTyQ7GP8Kt571Tzodj&amp;size=normal&amp;cb=oh1vpc5nfiib" data-gtm-yt-inspected-6="true"></iframe>
                   </Box>
-                  <Button variant="contained" className="appointmentBtn">
+                  <Button sx={{ fontWeight: "600" }} variant="contained" className="appointmentBtn">
                     Make An Appointment
                   </Button>
                 </Box>
@@ -300,6 +300,11 @@ const BookAppointment = () => {
             </Box>
           </Box>
         </Box>
+        {isMobile ? null : (
+          <Box className="birdImg" role="img" aria-label="">
+            <img src="https://www.cryovault.in/wp-content/uploads/2024/01/bird.png" alt="bird image" />
+          </Box>
+        )}
       </Box>
     </>
   );

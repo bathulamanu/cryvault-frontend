@@ -238,18 +238,17 @@
 
 import React, { useEffect, useMemo } from "react";
 import { Box, Card, CardContent, Typography, TextField, Grid, useMediaQuery } from "@mui/material";
-import { makeStyles } from "@material-ui/styles";
 import "../../Components/DashboardComponents/Dashboard.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getClientInfo } from "../../redux/reducers/DashboardReducer";
-const useStyles = makeStyles((theme) => ({
-  cardBox: {
-    backgroundColor: "#2b2e64",
-  },
-}));
+// const useStyles = makeStyles((theme) => ({
+//   cardBox: {
+//     backgroundColor: "#2b2e64",
+//   },
+// }));
 
 const Details = () => {
-  const classes = useStyles();
+  // const classes = useStyles();
   const isMobile = useMediaQuery("(max-width:600px)");
 
   return (
@@ -265,8 +264,16 @@ const Details = () => {
         }}
         style={{ marginLeft: isMobile ? "10px" : "20px" }}
       >
-        <Box className={classes.cardBox} p={3}>
+        {/* <Box className={classes.cardBox} p={3}>
           <Typography sx={{ color: "white" }} variant="h4">
+            Details
+          </Typography>
+        </Box> */}
+
+        <Box style={{ backgroundColor: "#2b2e64", padding: 24 }}>
+          {" "}
+          {/* Inline styles for cardBox */}
+          <Typography variant="h4" style={{ color: "white" }}>
             Details
           </Typography>
         </Box>
@@ -544,7 +551,7 @@ const Details = () => {
 };
 
 export const MobileDetails = () => {
-  const classes = useStyles();
+  // const classes = useStyles();
   const isMobile = useMediaQuery("(max-width:600px)");
   const dispatch = useDispatch();
   const clientData = useSelector((state) => state.dashboard.clientData);
@@ -589,8 +596,15 @@ export const MobileDetails = () => {
         }}
         style={{ marginLeft: isMobile ? "10px" : "20px" }}
       >
-        <Box className={classes.cardBox} p={3}>
+        {/* <Box className={classes.cardBox} p={3}>
           <Typography sx={{ color: "white" }} variant="h4">
+            Details
+          </Typography>
+        </Box> */}
+        <Box style={{ backgroundColor: "#2b2e64", padding: 24 }}>
+          {" "}
+          {/* Inline styles for cardBox */}
+          <Typography variant="h4" style={{ color: "white" }}>
             Details
           </Typography>
         </Box>
@@ -600,8 +614,7 @@ export const MobileDetails = () => {
               <Grid xs={isMobile ? 12 : 6}>
                 <Grid container spacing={2}>
                   <Grid item xs={12} md={4} style={{ marginRight: "2px", marginTop: "20px" }}>
-                    
-                  <TextField
+                    <TextField
                       style={{
                         backgroundColor: "#e5e5e5 !important",
                         fontSize: "1rem",

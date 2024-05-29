@@ -3,29 +3,28 @@ import ReachUs from "../Components/Common/ReachUs";
 import TableContents from "../Components/Common/TableContents";
 import { List, ListItem, ListItemIcon, ListItemText, Link, Box, Breadcrumbs, Typography } from "@mui/material";
 import useDeviceSize from "../Utilities/useDeviceSize";
-import { makeStyles } from "@material-ui/styles";
 
 const reasons = [{ text: "A high-risk family medical history of disease(s) currently treatable by cord blood." }, { text: "A sibling has a medical condition treatable with cord blood." }, { text: "There is high risk of premature delivery." }, { text: "You are a mixed-race couple, thereby making it difficult to get a bone marrow match." }];
 
-const useStyles = makeStyles(() => ({
-  listItem: {
-    paddingLeft: 24, // Adjust padding for bullet point indentation
-    "&::marker": {
-      content: '"•"', // Bullet point character (replace with desired symbol)
-    },
-  },
-}));
+// const useStyles = makeStyles(() => ({
+//   listItem: {
+//     paddingLeft: 24, // Adjust padding for bullet point indentation
+//     "&::marker": {
+//       content: '"•"', // Bullet point character (replace with desired symbol)
+//     },
+//   },
+// }));
 
 const ChooseStemcell = () => {
   const isMobile = useDeviceSize() === "xs";
-  const classes = useStyles();
+  // const classes = useStyles();
   return (
     <>
       <Box sx={{ padding: isMobile ? " 50px 7px !important" : "120px 0px !important" }} className="edu-breadcrumb-area breadcrumb-style-2 bg-image bg-image--19">
         <Box className="container">
-          <Box className="breadcrumb-inner">
+          <Box className="breadcrumb-inner" sx={{ display: "flex" }}>
             <Box className="page-title d-flex align-items-center">
-              <Box sx={{ textAlign: isMobile ? " center" : "start ", width: isMobile ? "100% !important" : "70% !important" }}>
+              <Box sx={{ textAlign: isMobile ? " center" : "start ", width: isMobile ? "100% !important" : "80% !important" }}>
                 <Typography variant="h1" className="title">
                   Why to Choose Stem Cell Banking
                 </Typography>
@@ -34,11 +33,11 @@ const ChooseStemcell = () => {
             {isMobile ? null : (
               <Breadcrumbs aria-label="breadcrumb">
                 <Link underline="hover" color="inherit" href="/pregnancy">
-                  <Typography variant="body2" color="text.primary">
+                  <Typography variant="body2" sx={{fontSize:"20px"}} color="text.primary">
                     Stem Cell Banking
                   </Typography>
                 </Link>
-                <Typography variant="body2" color="text.primary">
+                <Typography variant="body2" sx={{fontSize:"20px"}}  color="text.primary">
                   Why to Choose Stem Cell Banking
                 </Typography>
               </Breadcrumbs>
@@ -71,12 +70,13 @@ const ChooseStemcell = () => {
                       <img src="assets/images/med-img blk.svg" width="30" />
                     </Box>
                   </Box>
-                  <List  dense={false}>
+                  <List dense={false}>
                     {reasons.map((reason, index) => (
-                      <ListItem key={index} disableGutters className={classes.listItem}>
+                      // <ListItem style={{ paddingLeft: 24 }} key={index} disableGutters className={classes.listItem}>
+                      <ListItem style={{ paddingLeft: 24 }} key={index} disableGutters>
                         <ListItemText>
                           <Typography sx={{ fontSize: "1rem", margin: "0rem !important" }} color="text.primary">
-                            {reason.text}
+                            <span style={{ content: '"•"' }}> {/* Bullet point symbol */} </span> {reason.text}
                           </Typography>
                         </ListItemText>
                       </ListItem>

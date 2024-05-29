@@ -63,7 +63,7 @@ const ReachUs = () => {
           </Typography>
           <Typography variant="body1">Make an informed decision.</Typography>
           <Link to="contactus" className="edu-btn">
-            Book an E-meet today <i className="icon-4"></i>
+            Book an E-meet today 
           </Link>
         </Box>
       </Box>
@@ -90,7 +90,7 @@ const ReachUs = () => {
                 </Box>
                 <Box className="form-group col-12">
                   <Button className="rn-btn edu-btn btn-medium submit-btn" name="submit" type="submit">
-                    Submit <i className="icon-4"></i>
+                    Submit 
                   </Button>
                 </Box>
               </Box>

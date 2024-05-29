@@ -7,7 +7,7 @@ const CallUs = () => {
   const isMobile = useDeviceSize() === "xs";
 
   return (
-    <Box style={{ position: "relative", marginTop: "10rem", border: "1px solid #e5e5e5" }}>
+    <Box style={{ position: "relative", marginTop: "10rem",marginBottom:"5rem", border: "1px solid #e5e5e5" }}>
       <img src="assets/images/rainbow-cloud.webp" className="position-ab cloud-up" alt="pencil" />
       <Container className="callUsContainer" sx={{ padding: isMobile ? "25rem 2rem  3rem" : "10rem" }}>
         <Typography sx={{ fontWeight: "700" }} variant={isMobile ? "h3" : "h1"}>

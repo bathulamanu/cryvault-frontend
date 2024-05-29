@@ -1,5 +1,4 @@
-import { Button, IconButton, Drawer, styled, Collapse, ListItemButton, Typography } from "@mui/material";
-import { makeStyles } from "@material-ui/styles";
+import { Button, IconButton, Drawer, Collapse, ListItemButton, Typography, createTheme } from "@mui/material";
 import Box from "@mui/material/Box";
 import useScrollToTop from "../../Utilities/scrolltop";
 import React, { useRef, useState, useEffect } from "react";
@@ -85,7 +84,8 @@ const Header = () => {
   const isUserLoggedIn = localStorage.getItem("token")?.length > 0;
 
   const handleLogout = () => {
-    localStorage.setItem("token", "");
+    localStorage.clear();
+    sessionStorage.clear();
   };
   return (
     <header className="edu-header header-style-1 header-fullwidth">
@@ -363,45 +363,22 @@ const Header = () => {
     </header>
   );
 };
-const useStyles = makeStyles((theme) => ({
-  drawer: {
-    width: "75%",
-    animation: `$slideDown 0.3s ease-in-out forwards`,
-    "& .MuiPaper-root": {
-      width: "70%",
-    },
 
-    "& .MuiTypography-root": {
-      fontSize: "2rem",
-    },
-    listItemText: {
-      "& .MuiTypography-root": {
-        fontSize: "3rem",
-        color: "#333",
-      },
-    },
-  },
-}));
 export const MobileHeader = React.memo(() => {
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [nestedOpen, setNestedOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState("Home");
+  const [openNestedListIndex, setOpenNestedListIndex] = useState(null);
   const dispatch = useDispatch();
-  const classes = useStyles();
 
-  const handleDrawerOpen = () => {
-    setDrawerOpen(true);
-  };
-
-  const handleDrawerClose = () => {
-    setDrawerOpen(false);
-  };
+  const handleDrawerOpen = () => setDrawerOpen(true);
+  const handleDrawerClose = () => setDrawerOpen(false);
   const isUserLoggedIn = localStorage.getItem("token")?.length > 0;
 
   const handleLogout = () => {
-    localStorage.setItem("token", "");
+    localStorage.clear();
     setDrawerOpen(false);
   };
-  const [openNestedListIndex, setOpenNestedListIndex] = useState(null);
 
   const handleNestedClick = (clickedIndex) => {
     if (clickedIndex === openNestedListIndex) {
@@ -465,208 +442,327 @@ export const MobileHeader = React.memo(() => {
           </Box>
         </Box>
       </Box>
+      <Drawer
+        anchor="right"
+        open={drawerOpen}
+        onClose={handleDrawerClose}
+        sx={{
+          width: "75%",
+          animation: `$slideDown 0.3s ease-in-out forwards`,
+          "& .MuiPaper-root": {
+            width: "70%",
+          },
 
-      <Drawer classes={{ paper: classes.drawer }} anchor="left" open={drawerOpen} onClose={handleDrawerClose}>
+          "& .MuiTypography-root": {
+            fontSize: "2rem",
+            fontWeight: "600",
+            fontFamily: "'Baloo 2'",
+          },
+          listItemText: {
+            "& .MuiTypography-root": {
+              fontSize: "3rem",
+              color: "#333",
+            },
+          },
+        }}
+      >
         <List>
-          <ListItem button onClick={handleNestedClick}>
-            <ListItemText className={classes.listItemText} primary="Home" />
-          </ListItem>
-          <ListItemButton onClick={() => handleNestedClick(0)}>
-            <ListItemText className={classes.listItemText} primary="About" />
+          <ListItemButton sx={{ border: "1px solid #e5e5e5", borderTop: "none" }} button onClick={handleNestedClick}>
+            <Link to={`/`}>
+              <ListItemText sx={{ color: selectedItem == "Home" ? "#550059" : "black" }} primary="Home" />
+            </Link>
+          </ListItemButton>
+          <ListItemButton sx={{ border: "1px solid #e5e5e5", borderTop: "none" }} onClick={() => handleNestedClick(0)}>
+            <ListItemText sx={{ color: selectedItem == "About" ? "#550059" : "black" }} onClick={() => setSelectedItem("About")} primary="About" />
             <ListItemIcon>{openNestedListIndex === 0 ? <ExpandLess style={{ fontSize: "3.5rem", height: "4rem" }} /> : <ExpandMore style={{ fontSize: "3.5rem", height: "4rem" }} />}</ListItemIcon>
           </ListItemButton>
 
           {openNestedListIndex === 0 && (
-            <List dense disablePadding style={{ marginLeft: 40 }}>
+            <List dense disablePadding style={{ paddingLeft: 40, borderBottom: "1px solid #e5e5e5" }}>
               <ListItem>
                 <Link to={`/${aboutCryovault}`} onClick={handleDrawerClose}>
-                  <ListItemText className={classes.listItemText} primary="About Cryovault" />
+                  <ListItemText onClick={() => setSelectedItem("About Cryovault")} sx={{ color: selectedItem == "About Cryovault" ? "#550059" : "black" }} primary="About Cryovault" />
                 </Link>
               </ListItem>
               <ListItem>
                 <Link to={`/${visionMission}`} onClick={handleDrawerClose}>
-                  <ListItemText className={classes.listItemText} primary="Vision & Mission " />
+                  <ListItemText sx={{ color: selectedItem == "Vision & Mission " ? "#550059" : "black" }} onClick={() => setSelectedItem("Vision & Mission ")} primary="Vision & Mission " />
                 </Link>
               </ListItem>
               <ListItem>
                 <Link to={`/${accreditationsCertifications}`} onClick={handleDrawerClose}>
-                  <ListItemText className={classes.listItemText} primary=" Accreditations &amp; Certifications" />
+                  <ListItemText sx={{ color: selectedItem == "Accreditations &amp; Certifications" ? "#550059" : "black" }} onClick={() => setSelectedItem(" Accreditations &amp; Certifications")} primary=" Accreditations &amp; Certifications" />
                 </Link>
               </ListItem>
               <ListItem>
                 <Link to={`/${careers}`} onClick={handleDrawerClose}>
-                  <ListItemText className={classes.listItemText} primary="Carrers " />
+                  <ListItemText sx={{ color: selectedItem == "Carrers" ? "#550059" : "black" }} onClick={() => setSelectedItem("Carrers")} primary="Carrers " />
                 </Link>
               </ListItem>
               <ListItem>
                 <Link to={`/${franchise}`} onClick={handleDrawerClose}>
-                  <ListItemText className={classes.listItemText} primary="Francise " />
+                  <ListItemText sx={{ color: selectedItem == "Francise" ? "#550059" : "black" }} onClick={() => setSelectedItem("Francise")} primary="Francise " />
                 </Link>
               </ListItem>
             </List>
           )}
-          <ListItemButton onClick={() => handleNestedClick(1)}>
-            <ListItemText onClick={() => handleNestedClick(1)} className={classes.listItemText} primary="Stem Cell Banking" />
+          <ListItemButton
+            sx={{ border: "1px solid #e5e5e5", borderTop: "none" }}
+            onClick={() => {
+              setSelectedItem("Stem Cell Banking");
+              handleNestedClick(1);
+            }}
+          >
+            <ListItemText
+              onClick={() => {
+                setSelectedItem("Stem Cell Banking");
+                handleNestedClick(1);
+              }}
+              sx={{ color: selectedItem == "Stem Cell Banking" ? "#550059" : "black" }}
+              primary="Stem Cell Banking"
+            />
             <ListItemIcon>{nestedOpen ? <ExpandLess style={{ fontSize: "3.5rem", height: "4rem" }} /> : <ExpandMore style={{ fontSize: "3.5rem", height: "4rem" }} />}</ListItemIcon>
           </ListItemButton>
           {openNestedListIndex === 1 && (
-            <List dense disablePadding style={{ marginLeft: 40 }}>
+            <List dense disablePadding style={{ paddingLeft: 40 }}>
               <ListItem>
                 <Link to={`/${stemCellBanking}`} onClick={handleDrawerClose}>
-                  <ListItemText className={classes.listItemText} primary="Stem Cell Banking" />
+                  <ListItemText sx={{ color: selectedItem == "Stem Cell Banking" ? "#550059" : "black" }} onClick={() => setSelectedItem("Stem Cell Banking")} primary="Stem Cell Banking" />
                 </Link>
               </ListItem>
               <ListItem>
                 <Link to={`/${whyToChooseStemCellBanking}`} onClick={handleDrawerClose}>
-                  <ListItemText className={classes.listItemText} primary="Why to Choose Stem Cell Banking?" />
+                  <ListItemText sx={{ color: selectedItem == "Why to Choose Stem Cell Banking?" ? "#550059" : "black" }} onClick={() => setSelectedItem("Why to Choose Stem Cell Banking?")} primary="Why to Choose Stem Cell Banking?" />
                 </Link>
               </ListItem>
               <ListItem>
                 <Link to={`/${aboutUmbilicalCord}`} onClick={handleDrawerClose}>
-                  <ListItemText className={classes.listItemText} primary="   What is Umbilical Cord?" />
+                  <ListItemText sx={{ color: selectedItem == "What is Umbilical Cord?" ? "#550059" : "black" }} onClick={() => setSelectedItem("What is Umbilical Cord?")} primary="What is Umbilical Cord?" />
                 </Link>
               </ListItem>
               <ListItem>
                 <Link to={`/${cordBloodBankingUmbilicalCordPreservationInIndiaCryovault}`} onClick={handleDrawerClose}>
-                  <ListItemText className={classes.listItemText} primary=" Cord Blood Banking" />
+                  <ListItemText sx={{ color: selectedItem == "Cord Blood Banking" ? "#550059" : "black" }} onClick={() => setSelectedItem("Cord Blood Banking")} primary=" Cord Blood Banking" />
                 </Link>
               </ListItem>
               <ListItem>
                 <Link to={`/${howToStoreYourStemCellsWithCryovault}`} onClick={handleDrawerClose}>
-                  <ListItemText className={classes.listItemText} primary="How to Store Your STEM CELLS WITH CRYOVAULT" />
+                  <ListItemText sx={{ color: selectedItem == "How to Store Your STEM CELLS WITH CRYOVAULT" ? "#550059" : "black" }} onClick={() => setSelectedItem("How to Store Your STEM CELLS WITH CRYOVAULT")} primary="How to Store Your STEM CELLS WITH CRYOVAULT" />
                 </Link>
               </ListItem>
               <ListItem>
                 <Link to={`/${bestStemCellBankInIndiaStemCellBankingCryovault}`} onClick={handleDrawerClose}>
-                  <ListItemText className={classes.listItemText} primary=" Benifits of Stem Cells" />
+                  <ListItemText sx={{ color: selectedItem == "Benifits of Stem Cells" ? "#550059" : "black" }} onClick={() => setSelectedItem("Benifits of Stem Cells")} primary=" Benifits of Stem Cells" />
                 </Link>
               </ListItem>
               <ListItem>
                 <Link to={`/${whenAndHowIsCordBloodCollected}`} onClick={handleDrawerClose}>
-                  <ListItemText className={classes.listItemText} primary=" When and How is Cord Blood Collected" />
+                  <ListItemText sx={{ color: selectedItem == " When and How is Cord Blood Collected" ? "#550059" : "black" }} onClick={() => setSelectedItem(" When and How is Cord Blood Collected")} primary=" When and How is Cord Blood Collected" />
                 </Link>
               </ListItem>
               <ListItem>
                 <Link to={`/${ReasonsToSaveYourChildsCordBlood}`} onClick={handleDrawerClose}>
-                  <ListItemText className={classes.listItemText} primary="  7 Reasons to Save your Child's Cord Blood" />
+                  <ListItemText sx={{ color: selectedItem == "7 Reasons to Save your Child's Cord Blood" ? "#550059" : "black" }} onClick={() => setSelectedItem(" 7 Reasons to Save your Child's Cord Blood")} primary="  7 Reasons to Save your Child's Cord Blood" />
                 </Link>
               </ListItem>
             </List>
           )}
-          <ListItemButton onClick={() => handleNestedClick(2)}>
-            <ListItemText onClick={() => handleNestedClick(2)} className={classes.listItemText} primary="Getting Started" />
+          <ListItemButton
+            onClick={() => {
+              setSelectedItem("Getting Started");
+              handleNestedClick(2);
+            }}
+            sx={{ border: "1px solid #e5e5e5" }}
+          >
+            <ListItemText
+              onClick={() => {
+                setSelectedItem("Getting Started");
+                handleNestedClick(2);
+              }}
+              sx={{ color: selectedItem == "Getting Started" ? "#550059" : "black" }}
+              primary="Getting Started"
+            />
             <ListItemIcon>{nestedOpen ? <ExpandLess style={{ fontSize: "3.5rem", height: "4rem" }} /> : <ExpandMore style={{ fontSize: "3.5rem", height: "4rem" }} />}</ListItemIcon>
           </ListItemButton>
           {openNestedListIndex === 2 && (
-            <List dense disablePadding style={{ marginLeft: 40 }}>
+            <List dense disablePadding style={{ paddingLeft: 40 }}>
               <ListItem>
                 <Link to={`/plan`} onClick={handleDrawerClose}>
-                  <ListItemText className={classes.listItemText} primary="Plans" />
+                  <ListItemText sx={{ color: selectedItem == "Plans" ? "#550059" : "black" }} onClick={() => setSelectedItem("Plans")} primary="Plans" />
                 </Link>
               </ListItem>
               <ListItem>
                 <Link to={`/${requestForInformationKit}`} onClick={handleDrawerClose}>
-                  <ListItemText className={classes.listItemText} primary=" Request For Information Kit" />
+                  <ListItemText sx={{ color: selectedItem == "Request For Information Kit" ? "#550059" : "black" }} onClick={() => setSelectedItem("Request For Information Kit")} primary=" Request For Information Kit" />
                 </Link>
               </ListItem>
               <ListItem>
                 <Link to={`/${appointment}`} onClick={handleDrawerClose}>
-                  <ListItemText className={classes.listItemText} primary="Appointment" />
+                  <ListItemText sx={{ color: selectedItem == "Appointmentt" ? "#550059" : "black" }} onClick={() => setSelectedItem("Appointment")} primary="Appointment" />
                 </Link>
               </ListItem>
             </List>
           )}
-          <ListItemButton onClick={() => handleNestedClick(3)}>
-            <ListItemText onClick={() => handleNestedClick(3)} className={classes.listItemText} primary="Pregnancy" />
+          <ListItemButton
+            onClick={() => {
+              setSelectedItem("Pregnancy");
+              handleNestedClick(3);
+            }}
+            sx={{ border: "1px solid #e5e5e5", borderTop: "none" }}
+          >
+            <ListItemText
+              onClick={() => {
+                setSelectedItem("Pregnancy");
+                handleNestedClick(3);
+              }}
+              sx={{ color: selectedItem == "Pregnancy" ? "#550059" : "black" }}
+              primary="Pregnancy"
+            />
             <ListItemIcon>{nestedOpen ? <ExpandLess style={{ fontSize: "3.5rem", height: "4rem" }} /> : <ExpandMore style={{ fontSize: "3.5rem", height: "4rem" }} />}</ListItemIcon>
           </ListItemButton>
           {openNestedListIndex === 3 && (
-            <List dense disablePadding style={{ marginLeft: 40 }}>
+            <List dense disablePadding style={{ paddingLeft: 40 }}>
               <ListItem>
                 <Link to={`/${firstTrimester}`} onClick={handleDrawerClose}>
-                  <ListItemText className={classes.listItemText} primary=" First Trimester" />
+                  <ListItemText sx={{ color: selectedItem == "First Trimester" ? "#550059" : "black" }} onClick={() => setSelectedItem(" First Trimester")} primary=" First Trimester" />
                 </Link>
               </ListItem>
               <ListItem>
                 <Link to={`/${secondTrimester}`} onClick={handleDrawerClose}>
-                  <ListItemText className={classes.listItemText} primary=" Second Trimester" />
+                  <ListItemText sx={{ color: selectedItem == "Second Trimester" ? "#550059" : "black" }} onClick={() => setSelectedItem(" Second Trimester")} primary=" Second Trimester" />
                 </Link>
               </ListItem>
               <ListItem>
                 <Link to={`/${thirdTrimester}`} onClick={handleDrawerClose}>
-                  <ListItemText className={classes.listItemText} primary=" Third Trimester" />
+                  <ListItemText sx={{ color: selectedItem == "Third Trimester" ? "#550059" : "black" }} onClick={() => setSelectedItem(" Third Trimester")} primary=" Third Trimester" />
                 </Link>
               </ListItem>
               <ListItem>
                 <Link to={`/${pregnancyDietChart}`} onClick={handleDrawerClose}>
-                  <ListItemText className={classes.listItemText} primary=" Pregnancy Diet Chart" />
+                  <ListItemText sx={{ color: selectedItem == "Pregnancy Diet Chart" ? "#550059" : "black" }} onClick={() => setSelectedItem("Pregnancy Diet Chart")} primary=" Pregnancy Diet Chart" />
                 </Link>
               </ListItem>
               <ListItem>
                 <Link to={`/${immunizationChart}`} onClick={handleDrawerClose}>
-                  <ListItemText className={classes.listItemText} primary="Immunization Chart" />
+                  <ListItemText sx={{ color: selectedItem == "Immunization Chart" ? "#550059" : "black" }} onClick={() => setSelectedItem("Immunization Chart")} primary="Immunization Chart" />
                 </Link>
               </ListItem>
             </List>
           )}
 
-          <ListItemButton onClick={() => handleNestedClick(4)}>
-            <ListItemText onClick={() => handleNestedClick(4)} className={classes.listItemText} primary="Gallery" />
+          <ListItemButton
+            onClick={() => {
+              setSelectedItem("Gallery");
+              handleNestedClick(4);
+            }}
+            sx={{ border: "1px solid #e5e5e5" }}
+          >
+            <ListItemText
+              onClick={() => {
+                setSelectedItem("Gallery");
+                handleNestedClick(4);
+              }}
+              sx={{ color: selectedItem == "Gallery" ? "#550059" : "black" }}
+              primary="Gallery"
+            />
             <ListItemIcon>{nestedOpen ? <ExpandLess style={{ fontSize: "3.5rem", height: "4rem" }} /> : <ExpandMore style={{ fontSize: "3.5rem", height: "4rem" }} />}</ListItemIcon>
           </ListItemButton>
           {openNestedListIndex === 4 && (
-            <List dense disablePadding style={{ marginLeft: 40 }}>
+            <List dense disablePadding style={{ paddingLeft: 40 }}>
               <ListItem>
                 <Link to={`/${images}`} onClick={handleDrawerClose}>
-                  <ListItemText className={classes.listItemText} primary="Images" />
+                  <ListItemText sx={{ color: selectedItem == "Images" ? "#550059" : "black" }} onClick={() => setSelectedItem("Images")} primary="Images" />
                 </Link>
               </ListItem>
               <ListItem>
                 <Link to={`/${videos}`} onClick={handleDrawerClose}>
-                  <ListItemText className={classes.listItemText} primary="Video" />
+                  <ListItemText sx={{ color: selectedItem == "Video" ? "#550059" : "black" }} onClick={() => setSelectedItem("Video")} primary="Video" />
                 </Link>
               </ListItem>
             </List>
           )}
-          <ListItemButton onClick={() => handleNestedClick(5)}>
-            <ListItemText onClick={() => handleNestedClick(5)} className={classes.listItemText} primary="Profile" />
+          <ListItemButton sx={{ border: "1px solid #e5e5e5", borderTop: "none" }} onClick={() => handleNestedClick(5)}>
+            <ListItemText
+              sx={{ color: selectedItem == "Profile" ? "#550059" : "black" }}
+              onClick={() => {
+                setSelectedItem("Profile");
+                handleNestedClick(5);
+              }}
+              primary="Profile"
+            />
             <ListItemIcon>{nestedOpen ? <ExpandLess style={{ fontSize: "3.5rem", height: "4rem" }} /> : <ExpandMore style={{ fontSize: "3.5rem", height: "4rem" }} />}</ListItemIcon>
           </ListItemButton>
           {openNestedListIndex === 5 && (
-            <List dense disablePadding style={{ marginLeft: 40 }}>
+            <List dense disablePadding style={{ paddingLeft: 40 }}>
               {isUserLoggedIn ? (
                 <>
                   <ListItem>
                     <Link to={`/dashboard`} onClick={handleDrawerClose}>
-                      <ListItemText className={classes.listItemText} primary="Dashboard" />
+                      <ListItemText
+                        sx={{ color: selectedItem == "Dashboard" ? "#550059" : "black" }}
+                        onClick={() => {
+                          setSelectedItem("Dashboard");
+                        }}
+                        primary="Dashboard"
+                      />
                     </Link>
                   </ListItem>
                   <ListItem>
                     <Link to={`/`} onClick={handleLogout}>
-                      <ListItemText className={classes.listItemText} primary="Logout" />
+                      <ListItemText
+                        sx={{ color: selectedItem == "Logout" ? "#550059" : "black" }}
+                        onClick={() => {
+                          setSelectedItem("Logout");
+                        }}
+                        primary="Logout"
+                      />
                     </Link>
                   </ListItem>
                 </>
               ) : (
                 <ListItem>
                   <Link to={`/login`} onClick={handleDrawerClose}>
-                    <ListItemText className={classes.listItemText} primary="Get Started" />
+                    <ListItemText
+                      sx={{ color: selectedItem == "Get Started" ? "#550059" : "black" }}
+                      onClick={() => {
+                        setSelectedItem("Get Started");
+                      }}
+                      primary="Get Started"
+                    />
                   </Link>
                 </ListItem>
               )}
             </List>
           )}
-          <ListItemButton button onClick={handleNestedClick}>
-            <ListItemText className={classes.listItemText} primary="Cart" />
+          <ListItemButton sx={{ border: "1px solid #e5e5e5", borderTop: "none" }} button onClick={handleNestedClick}>
+            <ListItemText
+              sx={{ color: selectedItem == "Cart" ? "#550059" : "black" }}
+              onClick={() => {
+                setSelectedItem("Cart");
+              }}
+              primary="Cart"
+            />
           </ListItemButton>
-          <ListItemButton button onClick={handleNestedClick}>
+          <ListItemButton sx={{ border: "1px solid #e5e5e5", borderTop: "none" }} button onClick={handleNestedClick}>
             <Link to={`/${blog}`} onClick={handleDrawerClose}>
-              <ListItemText sx={{ color: "black" }} className={classes.listItemText} primary="Blog" />
+              <ListItemText
+                sx={{ color: selectedItem == "Blog" ? "#550059" : "black" }}
+                onClick={() => {
+                  setSelectedItem("Blog");
+                }}
+                primary="Blog"
+              />
             </Link>
           </ListItemButton>
-          <ListItemButton onClick={handleNestedClick}>
+          <ListItemButton sx={{ border: "1px solid #e5e5e5", borderTop: "none" }} onClick={handleNestedClick}>
             <Link to={`/${contact}`} onClick={handleDrawerClose}>
-              <ListItemText sx={{ color: "black" }} onClick={handleNestedClick} className={classes.listItemText} primary="Contact" />
+              <ListItemText
+                sx={{ color: selectedItem == "Contact" ? "#550059" : "black" }}
+                onClick={() => {
+                  setSelectedItem("Contact");
+                }}
+                primary="Contact"
+              />
             </Link>
           </ListItemButton>
         </List>

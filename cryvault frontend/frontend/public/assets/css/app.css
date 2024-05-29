@@ -27691,7 +27691,7 @@ width: 50px;
   padding: 8px 15px;
   display: block;
   color: var(--color-heading);
-  border-bottom: 1px solid #6e62622b;
+  /* border-bottom: 1px solid #6e62622b; */
   text-transform: uppercase;
   line-height: 22px;
 }
