@@ -145,3 +145,15 @@ code {
     }
   }
 }
+/* phone input */
+.borderPhoneInput{
+  width: 100% !important;
+  padding: 10px !important;
+  border-radius: 0.25rem !important;
+  padding-left: 49px !important;
+  height: 61px !important;
+  border: none !important;
+}
+.layoutItem {
+  margin: '6px !important';
+}

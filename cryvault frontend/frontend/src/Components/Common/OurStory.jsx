@@ -18,7 +18,7 @@ const OurStory = () => {
           <Box className="row g-5">
             <Box className="col-lg-3 col-sm-6 mt-0">
               <Box className="edu-counterup counterup-style-4">
-                <Box className="icon primary-color">
+                <Box  className="icon " sx={{backgrounColor:"transparent !important"}}>
                   <img src="assets/images/happy-moms.png" alt="baby" />
                 </Box>
                 <Typography sx={{fontSize:"5rem !important", fontWeight:"500 !important"}}  className="counter-item ">
@@ -29,7 +29,7 @@ const OurStory = () => {
             </Box>
             <Box className="col-lg-3 col-sm-6 mt-0">
               <Box className="edu-counterup counterup-style-4">
-                <Box className="icon secondary-color">
+                <Box className="icon ">
                   <img src="assets/images/clinic-rooms.png" alt="baby" />
                 </Box>
                 <Typography sx={{fontSize:"5rem !important", fontWeight:"500 !important"}} className="counter-item ">312</Typography>
@@ -38,7 +38,7 @@ const OurStory = () => {
             </Box>
             <Box className="col-lg-3 col-sm-6 mt-0">
               <Box className="edu-counterup counterup-style-4">
-                <Box className="icon extra08-color">
+                <Box className="icon ">
                   <img src="assets/images/awards.png" alt="baby" />
                 </Box>
                 <Typography sx={{fontSize:"5rem !important", fontWeight:"500 !important"}}  className="counter-item ">22</Typography>
@@ -47,7 +47,7 @@ const OurStory = () => {
             </Box>
             <Box className="col-lg-3 col-sm-6 mt-0">
               <Box className="edu-counterup counterup-style-4">
-                <Box className="icon extra05-color">
+                <Box className="icon ">
                   <img src="assets/images/dedicateddoctor.png" alt="baby" />
                 </Box>
                 <Typography sx={{fontSize:"5rem !important", fontWeight:"500 !important"}} className="counter-item ">

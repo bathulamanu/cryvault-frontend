@@ -8159,7 +8159,7 @@ body.sal-disabled [data-sal|="flip"] {
   border-radius: 50%;
   font-size: 50px;
   margin: 0 auto 10px;
-  background-color: #fff !important;
+  /* background-color: #fff !important; */
 }
 .edu-counterup.counterup-style-4 .icon.primary-color {
   background-color: rgba(26, 182, 157, 0.1);
@@ -38854,7 +38854,6 @@ body .hr_line {
 }
 .inform_form h3 {
   color: #FF0060;
-  font-family: "Libre Baskerville", Sans-serif !important;
   font-size: 24px;
   font-weight: 500;
   font-style: italic;
@@ -38913,7 +38912,6 @@ body .hr_line {
 
 .address_info h3 {
   color: #FF0060;
-  font-family: "Libre Baskerville", Sans-serif !important;
   font-size: 24px;
   font-weight: 500;
   font-style: italic;

@@ -48,7 +48,7 @@ const Footer = () => {
 
       //   width: "100%",
       // }}
-      style={{backgroundColor:"#D7F5FF"}}
+      style={{ backgroundColor: "#D7F5FF" }}
       className="edu-footer footer-lighten bg-image footer-style-1"
     >
       <Box className="footer-top">
@@ -193,21 +193,13 @@ const Footer = () => {
           </Box>
         </Box>
       </Box>
-      <Box className="copyright-area pt-4 pb-4">
+      <Box style={{ backgroundColor: "#D7F5FF" }} className="copyright-area pt-4 pb-4">
         <Box className="container">
           <Box className="row">
             <Box className="col-lg-12">
               <Box className="inner text-center">
                 <Container sx={{ display: "flex", justifyContent: "space-between" }}>
                   <p dangerouslySetInnerHTML={{ __html: socialIcons?.footerCopyright }}></p>
-                  <p>
-                    {" "}
-                    Designed By{" "}
-                    <a style={{ color: "#d5008d", cursor: "pointer" }} to="#" target="_blank">
-                      {" "}
-                      Innovators Tech Solutions
-                    </a>
-                  </p>
                 </Container>
               </Box>
             </Box>
