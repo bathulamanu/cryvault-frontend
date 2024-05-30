@@ -134,7 +134,7 @@ const ThankYouPage = () => {
             </CardContent>
 
             <CardActions>
-              <Button className="edu-btn" size="small">
+              <Button onClick={()=> navigate('/dashboard')} className="edu-btn" size="small">
                 Go To Dashboard
               </Button>
             </CardActions>
