@@ -25,7 +25,7 @@ export const RegistrationForm = () => {
 };
 
 export const GetGenderDetails = () => {
-  return `${BASE_URL}/flyingbyts/api/user/getMasterConfiguration/Gender`;
+  return `${BASE_URL}/flyingbyts/api/user/getMasterConfiguration/Gender/null`;
 };
 
 export const GetCustomerPaymentDetails = () => {
