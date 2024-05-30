@@ -42,16 +42,10 @@ const Footer = () => {
   }, []);
   return (
     <footer
-      // style={{
-      //   bottom: "0",
-      //   position: "absolute",
-
-      //   width: "100%",
-      // }}
-      style={{ backgroundColor: "#D7F5FF" }}
+      style={{ backgroundColor: "rgb(248 253 255)" }}
       className="edu-footer footer-lighten bg-image footer-style-1"
     >
-      <Box className="footer-top">
+      <Box sx={{padding:"50px 0 140px !important"}} className="footer-top">
         <Box className="container">
           <Box className="row g-5">
             <Box className="col-lg-3 col-md-6">
@@ -75,37 +69,7 @@ const Footer = () => {
               <Box className="edu-footer-widget explore-widget">
                 <h4 className="widget-title">Quick Links </h4>
                 <img className="logo-light" src="assets/images/heading-icon1.webp" alt="" />
-                {/* <Box className="inner">
-                  <ul className="footer-link link-hover">
-                    <li>
-                      <Link to="/">Home</Link>
-                    </li>
-                    <li>
-                      <Link to="/aboutus">About Cryovault</Link>
-                    </li>
-                    <li>
-                      <Link to="/faq">FAQ</Link>
-                    </li>
-                    <li>
-                      <Link to="/feedback">Feedback</Link>
-                    </li>
-                    <li>
-                      <Link to="/contactus">Contact</Link>
-                    </li>
-                    <li>
-                      <Link to="">Sitemap</Link>
-                    </li>
-                    <li>
-                      <Link to="/privacy-policy">Privacy Policy</Link>
-                    </li>
-                    <li>
-                      <Link to="/terms-and-conditions">Terms and Conditions</Link>
-                    </li>
-                    <li>
-                      <Link to="/cancellation-refund-replacement-policy">Cancellation, Refund & Replacement Policy</Link>
-                    </li>
-                  </ul>
-                </Box> */}
+              
                 <Box className="inner">
                   <List className="footer-link link-hover">
                     {quicklinks.map((link) => (
@@ -193,15 +157,15 @@ const Footer = () => {
           </Box>
         </Box>
       </Box>
-      <Box style={{ backgroundColor: "#D7F5FF" }} className="copyright-area pt-4 pb-4">
+      <Box style={{ backgroundColor: "rgb(248 253 255)" }} className="copyright-area pt-4 pb-4">
         <Box className="container">
           <Box className="row">
             <Box className="col-lg-12">
-              <Box className="inner text-center" sx={{display:"flex"}}>
-                <Container sx={{ display: "flex",cursor:"pointer", justifyContent: "space-between" }}>
+              <Box className="inner text-center" sx={{ display: "flex" }}>
+                <Container sx={{ display: "flex", cursor: "pointer", justifyContent: "space-between" }}>
                   <p dangerouslySetInnerHTML={{ __html: socialIcons?.footerCopyright1 }}></p>
                 </Container>
-                <Container sx={{ display: "flex" ,cursor:"pointer", justifyContent: "end" }}>
+                <Container sx={{ display: "flex", cursor: "pointer", justifyContent: "end" }}>
                   <p dangerouslySetInnerHTML={{ __html: socialIcons?.footerCopyright2 }}></p>
                 </Container>
               </Box>

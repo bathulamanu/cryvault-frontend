@@ -112,6 +112,10 @@ const LazyLoad = () => {
   const bestStemCellBankInIndiaStemCellBankingCryovault = pageInfo?.[23]?.[25]?.urlSlug;
   const accreditationsCertifications = pageInfo?.[24]?.[13]?.urlSlug;
   const whenAndHowIsCordBloodCollected = pageInfo?.[25]?.[26]?.urlSlug;
+  const userDetails = useSelector((state) => state.user.userDetails);
+
+  const isUserLoggedIn = userDetails?.customerID?.toString()?.length > 0 || false;
+  const isSubscribedUser = userDetails?.subscriptionPlanId?.toString()?.length > 0 || false;
 
   return (
     <Suspense fallback={<Loader />}>
@@ -148,8 +152,13 @@ const LazyLoad = () => {
         <Route path={images} element={<Images />} />
         <Route path={videos} element={<Videos />} />
         <Route path={contact} element={<Contact />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/popup" element={<PopupLayout />} />
+        {isUserLoggedIn && isSubscribedUser && (
+          <>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/popup" element={<PopupLayout />} />
+          </>
+        )}
+
         {/*<Route path="/faq" element={<Faq />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/feedback" element={<FeedBack />} />

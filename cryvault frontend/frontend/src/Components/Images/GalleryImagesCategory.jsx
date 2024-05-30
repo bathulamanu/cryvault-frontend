@@ -31,7 +31,7 @@ const GalleryImagesCategory = () => {
         }}
       >
         {categories.map((category) => (
-          <SwiperSlide key={category} style={{border:"2px solid", width:"200px !important"}}>
+          <SwiperSlide key={category} style={{ width:"200px !important"}}>
             <Box
               style={{
                 border: "1px solid red",

@@ -7,7 +7,7 @@ const WhyPreserve = () => {
   const isMobile = useDeviceSize() === "xs";
   return (
     <>
-      <Box sx={{ marginTop: "57rem" }} className="features-area-5 edu-course-area course-area-7">
+      <Box sx={{minHeight:"400px !important", marginTop: "60rem" }} className="features-area-5 edu-course-area course-area-7">
         <Box className="container">
           <img className="basketball" src="https://www.cryovault.in/wp-content/uploads/2024/01/busket-ball.png" alt=""></img>
 

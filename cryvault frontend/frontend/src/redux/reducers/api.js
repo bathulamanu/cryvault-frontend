@@ -1,4 +1,4 @@
-const BASE_URL = "http://18.61.60.231:4000";
+const BASE_URL = "http://18.61.73.87:4000";
 
 export const LoginAPI = () => {
   return `${BASE_URL}/flyingbyts/api/user/customerRegisterOrLogin`;
