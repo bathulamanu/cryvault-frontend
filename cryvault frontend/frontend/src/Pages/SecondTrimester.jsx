@@ -143,7 +143,7 @@ const SecondTimester = () => {
                       <BiSolidChevronRightCircle style={{ color: "#2196F3" }} />
                     </ListItemIcon>
                     <ListItemText>
-                      <Typography variant="body2">Regular mild exercise during pregnancy can improve posture, decrease some common discomforts (backaches, constipation, bloating), reduce swelling and fatigue, and improve mood & sleep.</Typography>
+                      <Typography variant="body2" sx={{fontSize:"14px !important"}}>Regular mild exercise during pregnancy can improve posture, decrease some common discomforts (backaches, constipation, bloating), reduce swelling and fatigue, and improve mood & sleep.</Typography>
                     </ListItemText>
                   </ListItem>
                   <ListItem>
@@ -151,7 +151,7 @@ const SecondTimester = () => {
                       <BiSolidChevronRightCircle style={{ color: "#2196F3" }} />
                     </ListItemIcon>
                     <ListItemText>
-                      <Typography variant="body2">Begin exercising 3-4 times per week during the first month if you have no existing health problems.</Typography>
+                      <Typography variant="body2" sx={{fontSize:"14px !important"}}>Begin exercising 3-4 times per week during the first month if you have no existing health problems.</Typography>
                     </ListItemText>
                   </ListItem>
                   <ListItem>
@@ -159,7 +159,7 @@ const SecondTimester = () => {
                       <BiSolidChevronRightCircle style={{ color: "#2196F3" }} />
                     </ListItemIcon>
                     <ListItemText>
-                      <Typography variant="body2">Walking is a great exercise to start with, if you haven't been active before your pregnancy.</Typography>
+                      <Typography variant="body2" sx={{fontSize:"14px !important"}}>Walking is a great exercise to start with, if you haven't been active before your pregnancy.</Typography>
                     </ListItemText>
                   </ListItem>
                   <ListItem>
@@ -167,7 +167,7 @@ const SecondTimester = () => {
                       <BiSolidChevronRightCircle style={{ color: "#2196F3" }} />
                     </ListItemIcon>
                     <ListItemText>
-                      <Typography variant="body2">Every pregnant woman should consult with her doctor before beginning an exercise program. A doctor can give personal exercise guidelines based on medical history.</Typography>
+                      <Typography variant="body2" sx={{fontSize:"14px !important"}}>Every pregnant woman should consult with her doctor before beginning an exercise program. A doctor can give personal exercise guidelines based on medical history.</Typography>
                     </ListItemText>
                   </ListItem>
                 </List>
@@ -196,7 +196,7 @@ const SecondTimester = () => {
                       <BiSolidChevronRightCircle style={{ color: "#2196F3" }} />
                     </ListItemIcon>
                     <ListItemText>
-                      <Typography variant="body2">Eating a healthy balanced diet continues to be important during this trimester. Try to include the following in your diet:</Typography>
+                      <Typography variant="body2" sx={{fontSize:"14px !important"}}>Eating a healthy balanced diet continues to be important during this trimester. Try to include the following in your diet:</Typography>
                     </ListItemText>
                   </ListItem>
                   <ListItem>
@@ -204,7 +204,7 @@ const SecondTimester = () => {
                       <BiSolidChevronRightCircle style={{ color: "#2196F3" }} />
                     </ListItemIcon>
                     <ListItemText>
-                      <Typography variant="body2">5 portions of fruits and vegetables a day. Include a variety of green leafy vegetables (e.g., broccoli, kale, spinach, cabbage) to improve your folic acid and iron intake.</Typography>
+                      <Typography variant="body2" sx={{fontSize:"14px !important"}}>5 portions of fruits and vegetables a day. Include a variety of green leafy vegetables (e.g., broccoli, kale, spinach, cabbage) to improve your folic acid and iron intake.</Typography>
                     </ListItemText>
                   </ListItem>
                   <ListItem>
@@ -212,7 +212,7 @@ const SecondTimester = () => {
                       <BiSolidChevronRightCircle style={{ color: "#2196F3" }} />
                     </ListItemIcon>
                     <ListItemText>
-                      <Typography variant="body2">Starchy wholegrain carbohydrates at every meal, e.g., bread, cereals, potatoes, pasta, and rice.</Typography>
+                      <Typography variant="body2" sx={{fontSize:"14px !important"}}>Starchy wholegrain carbohydrates at every meal, e.g., bread, cereals, potatoes, pasta, and rice.</Typography>
                     </ListItemText>
                   </ListItem>
                   <ListItem>
@@ -220,7 +220,7 @@ const SecondTimester = () => {
                       <BiSolidChevronRightCircle style={{ color: "#2196F3" }} />
                     </ListItemIcon>
                     <ListItemText>
-                      <Typography variant="body2">Low-fat dairy products 2-3 times a day to ensure you consume enough calcium.</Typography>
+                      <Typography variant="body2" sx={{fontSize:"14px !important"}}>Low-fat dairy products 2-3 times a day to ensure you consume enough calcium.</Typography>
                     </ListItemText>
                   </ListItem>
                   <ListItem>
@@ -228,7 +228,7 @@ const SecondTimester = () => {
                       <BiSolidChevronRightCircle style={{ color: "#2196F3" }} />
                     </ListItemIcon>
                     <ListItemText>
-                      <Typography variant="body2">Protein-rich foods (e.g., lean meats, fish, eggs, beans, lentils, and tofu) twice a day. This will help you meet your protein and iron needs.</Typography>
+                      <Typography variant="body2" sx={{fontSize:"14px !important"}}>Protein-rich foods (e.g., lean meats, fish, eggs, beans, lentils, and tofu) twice a day. This will help you meet your protein and iron needs.</Typography>
                     </ListItemText>
                   </ListItem>
                   <ListItem>
@@ -236,7 +236,7 @@ const SecondTimester = () => {
                       <BiSolidChevronRightCircle style={{ color: "#2196F3" }} />
                     </ListItemIcon>
                     <ListItemText>
-                      <Typography variant="body2">Oily fish at least once a week (but no more than twice a week) – this ensures you get your fix of essential omega-3 fatty acids for your baby's brain development.</Typography>
+                      <Typography variant="body2" sx={{fontSize:"14px !important"}}>Oily fish at least once a week (but no more than twice a week) – this ensures you get your fix of essential omega-3 fatty acids for your baby's brain development.</Typography>
                     </ListItemText>
                   </ListItem>
                 </List>
