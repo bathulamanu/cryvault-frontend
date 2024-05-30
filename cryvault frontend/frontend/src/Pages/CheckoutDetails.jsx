@@ -10,23 +10,23 @@ const CheckoutDetails = () => {
 
   useEffect(() => {
     const localData = localStorage.getItem("userData");
-    if (localData.length > 0 && localData != "undefined") {
+    if (localData?.length > 0 && localData != "undefined") {
       const parsedData = JSON.parse(localData);
       setDetail(parsedData);
     }
   }, []);
 
-  const xyz = useMemo(() => {
+  const gettingFromLocalData = useMemo(() => {
     const localData = localStorage.getItem("userData");
-    if (localData.length > 0 && localData != "undefined") {
+    if (localData?.length > 0 && localData != "undefined") {
       const parsedData = JSON.parse(localData);
       return parsedData;
     }
   }, []);
 
   const data = detail;
-  const id = xyz?.registrationCRNid;
-  const number = xyz?.phoneNumber;
+  const id = gettingFromLocalData?.registrationCRNid;
+  const number = gettingFromLocalData?.phoneNumber;
   const theme = useTheme();
   const genders = useSelector((state) => state.payment.genders);
   const countries = useSelector((state) => state.payment.countries);

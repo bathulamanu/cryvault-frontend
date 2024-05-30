@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Box, Typography, Stack, Grid, Card, CardHeader, CardContent, Divider, Button, IconButton, TextField, MenuItem, Select, FormControl, InputLabel, Container } from "@mui/material";
+import { Box, Typography, Stack, Grid, Card, CardHeader, CardContent, Divider, Button, IconButton, TextField, MenuItem, Select, FormControl, InputLabel, Container, CardActions } from "@mui/material";
 import { FaCcVisa } from "react-icons/fa";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
@@ -21,7 +21,7 @@ const ThankYouPage = () => {
     const orderID = orderDetails && orderDetails?.PaymentDetails?.[0]?.OrderCode;
     const plan = orderDetails && orderDetails?.PaymentDetails?.[0]?.subscriptionPlanId;
     const method = orderDetails && orderDetails?.PaymentDetails?.[0]?.Method;
-    const totalAmount = orderDetails && orderDetails?.PaymentDetails?.[0]?.totalAmount;
+    const totalAmount = orderDetails && orderDetails?.PaymentDetails?.[0]?.totalAmount || 0;
     const fname = orderDetails && orderDetails?.firstName;
     const lname = orderDetails && orderDetails?.lastName;
     const email = orderDetails && orderDetails?.email;
@@ -132,6 +132,12 @@ const ThankYouPage = () => {
                 </Stack>
               </Stack>
             </CardContent>
+
+            <CardActions>
+              <Button className="edu-btn" size="small">
+                Go To Dashboard
+              </Button>
+            </CardActions>
           </Card>
         )}
       </Stack>

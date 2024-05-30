@@ -97,6 +97,9 @@ const Header = () => {
     localStorage.clear();
     sessionStorage.clear();
   };
+  useEffect(() => {
+    localStorage.setItem("isCheckingOut", "false");
+  }, []);
   return (
     <header className="edu-header header-style-1 header-fullwidth">
       <Box className="header-top-bar">
