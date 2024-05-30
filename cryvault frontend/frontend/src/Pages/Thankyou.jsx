@@ -81,7 +81,7 @@ const ThankYouPage = () => {
   const isMobile = useDeviceSize() === "xs";
 
   return (
-    <Container sx={{ boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)", margin: isMobile ? "3rem 0rem" : "15rem auto" }} minHeight="100vh" py={4} px={2}>
+    <Container sx={{ boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)", margin: isMobile ? "2rem 0rem" : "15rem auto", width: isMobile ? "100%" : "50%" }} py={4} px={2}>
       <Stack spacing={4}>
         {details && details[0] && (
           <Card sx={{ backgroundColor: bg, boxShadow: "none", borderRadius: "lg", padding: 0 }}>

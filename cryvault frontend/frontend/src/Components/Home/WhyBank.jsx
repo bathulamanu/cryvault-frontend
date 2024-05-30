@@ -29,7 +29,7 @@ const WhyBank = () => {
           which are rich sources of unique stem cells that have potential for healing.
         </Typography>
 
-        <Box columnSpacing={4} container spacing={4} xs={12} md={4} sm={4} sx={{ display: "flex", flexDirection: isMobile ? "column" : "row", gap: "2rem", padding: isMobile ? "4rem 1rem" : "3rem 13rem", margin: "0 !important", flexGrow: 1, maxWidth: "100% !important" }}>
+        <Box columnSpacing={4} container spacing={4} xs={12} md={4} sm={4} sx={{ display: "flex", flexDirection: isMobile ? "column" : "row", gap: "1rem", padding: isMobile ? "4rem 1rem" : "3rem 10rem", margin: "0 !important", flexGrow: 1, maxWidth: "100% !important" }}>
           <Box item className="card1" xs={12} md={4} sm={4} sx={{ maxWidth: isMobile ? "100%" : "33%" }}>
             <Box className="cardContainer">
               <HelpOutlineIcon style={{ fontSize: "2.5rem" }} />

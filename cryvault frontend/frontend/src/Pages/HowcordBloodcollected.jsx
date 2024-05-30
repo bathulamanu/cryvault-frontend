@@ -8,7 +8,7 @@ const HowcordBloodcollected = () => {
   const isMobile = useDeviceSize() === "xs";
   return (
     <>
-      <Box sx={{ padding: isMobile ? " 50px 7px !important" : "120px 0px !important" }} className="edu-breadcrumb-area breadcrumb-style-2 bg-image bg-image--19">
+      <Box sx={{ padding: isMobile ? " 50px 7px !important" : "100px 0px !important" }} className="edu-breadcrumb-area breadcrumb-style-2 bg-image bg-image--19">
         <Box className="container">
           <Box className="breadcrumb-inner">
             <Box className="page-title d-flex align-items-center">

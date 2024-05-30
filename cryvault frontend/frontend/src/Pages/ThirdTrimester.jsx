@@ -144,7 +144,7 @@ const ThirdTrimester = () => {
                       <BiSolidChevronRightCircle style={{ color: "#2196F3" }} />
                     </ListItemIcon>
                     <ListItemText>
-                      <Typography variant="body2">Regular mild exercise during pregnancy can improve posture, decrease common discomforts (backaches, constipation, bloating), reduce swelling and fatigue, and enhance mood and sleep.</Typography>
+                      <Typography variant="body2" sx={{fontSize:"14px !important"}}>Regular mild exercise during pregnancy can improve posture, decrease common discomforts (backaches, constipation, bloating), reduce swelling and fatigue, and enhance mood and sleep.</Typography>
                     </ListItemText>
                   </ListItem>
                   <ListItem>
@@ -152,7 +152,7 @@ const ThirdTrimester = () => {
                       <BiSolidChevronRightCircle style={{ color: "#2196F3" }} />
                     </ListItemIcon>
                     <ListItemText>
-                      <Typography variant="body2">Aim for 3-4 exercise sessions per week during the first month if you have no pre-existing health problems.</Typography>
+                      <Typography variant="body2" sx={{fontSize:"14px !important"}}>Aim for 3-4 exercise sessions per week during the first month if you have no pre-existing health problems.</Typography>
                     </ListItemText>
                   </ListItem>
                   <ListItem>
@@ -160,7 +160,7 @@ const ThirdTrimester = () => {
                       <BiSolidChevronRightCircle style={{ color: "#2196F3" }} />
                     </ListItemIcon>
                     <ListItemText>
-                      <Typography variant="body2">Walking is an excellent starting exercise, especially if you weren't active before pregnancy.</Typography>
+                      <Typography variant="body2" sx={{fontSize:"14px !important"}}>Walking is an excellent starting exercise, especially if you weren't active before pregnancy.</Typography>
                     </ListItemText>
                   </ListItem>
                   <ListItem>
@@ -168,7 +168,7 @@ const ThirdTrimester = () => {
                       <BiSolidChevronRightCircle style={{ color: "#2196F3" }} />
                     </ListItemIcon>
                     <ListItemText>
-                      <Typography variant="body2">Consult your doctor before starting an exercise program during pregnancy. They can provide personalized guidelines based on your medical history.</Typography>
+                      <Typography variant="body2" sx={{fontSize:"14px !important"}}>Consult your doctor before starting an exercise program during pregnancy. They can provide personalized guidelines based on your medical history.</Typography>
                     </ListItemText>
                   </ListItem>
                 </List>
@@ -197,7 +197,7 @@ const ThirdTrimester = () => {
                       <BiSolidChevronRightCircle style={{ color: "#2196F3" }} />
                     </ListItemIcon>
                     <ListItemText>
-                      <Typography variant="body2">In your third trimester (28 weeks-plus), vitamin C, fiber, vitamin K, and thiamine (vitamin B1) are especially important. You'll get enough of these nutrients with a varied, healthy diet. Remember, you need an extra 200-300 calories a day at this stage.</Typography>
+                      <Typography variant="body2" sx={{fontSize:"14px !important"}}>In your third trimester (28 weeks-plus), vitamin C, fiber, vitamin K, and thiamine (vitamin B1) are especially important. You'll get enough of these nutrients with a varied, healthy diet. Remember, you need an extra 200-300 calories a day at this stage.</Typography>
                     </ListItemText>
                   </ListItem>
                   <ListItem>
@@ -205,7 +205,7 @@ const ThirdTrimester = () => {
                       <BiSolidChevronRightCircle style={{ color: "#2196F3" }} />
                     </ListItemIcon>
                     <ListItemText>
-                      <Typography variant="body2">
+                      <Typography variant="body2" sx={{fontSize:"14px !important"}}>
                         <b>Protein:</b> Your baby needs a lot of protein at this stage for muscle and tissue development.
                       </Typography>
                     </ListItemText>
@@ -215,7 +215,7 @@ const ThirdTrimester = () => {
                       <BiSolidChevronRightCircle style={{ color: "#2196F3" }} />
                     </ListItemIcon>
                     <ListItemText>
-                      <Typography variant="body2">
+                      <Typography variant="body2" sx={{fontSize:"14px !important"}}>
                         <b>Choline:</b> Eggs contain choline, a nutrient that aids in proper cell function. This is crucial for your baby's rapid development.
                       </Typography>
                     </ListItemText>
@@ -225,7 +225,7 @@ const ThirdTrimester = () => {
                       <BiSolidChevronRightCircle style={{ color: "#2196F3" }} />
                     </ListItemIcon>
                     <ListItemText>
-                      <Typography variant="body2">
+                      <Typography variant="body2" sx={{fontSize:"14px !important"}}>
                         <b>Omega-3 fatty acids:</b> Your baby's brain development is rapid in the third trimester, and omega-3 fatty acids support this growth. DHA, a specific omega-3 fatty acid, promotes the formation and development of your baby's nervous system.
                       </Typography>
                     </ListItemText>
