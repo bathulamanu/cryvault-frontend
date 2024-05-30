@@ -46,7 +46,7 @@ const Invoices = () => {
       <Grid item xs={12} md={8} lg={6}>
         <Card
           sx={{
-            width: isMobile ? "90%" : "80vw", // Adjust width based on screen size
+            width: isMobile ? "9a0%" : "80vw", // Adjust width based on screen size
             height: "90vh",
             borderRadius: "20px",
             backgroundColor: "#F8F9FC",

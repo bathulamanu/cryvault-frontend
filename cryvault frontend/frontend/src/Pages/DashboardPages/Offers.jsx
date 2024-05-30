@@ -11,7 +11,7 @@ const Offers = () => {
         sx={{
           // Adjust margin based on screen size
           margin: isMobile ? "20px" : "0px",
-          width: isMobile ? "90%" : "1100px", // Adjust width based on screen size
+          width: isMobile ? "9a0%" : "1100px", // Adjust width based on screen size
           height: isMobile ? "650px" : "100%",
           borderRadius: "20px",
         }}

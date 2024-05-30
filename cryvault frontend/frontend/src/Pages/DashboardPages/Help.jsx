@@ -29,7 +29,7 @@ const Help = () => {
       <Card
         sx={{
           margin: isMobile ? "20px" : "0px",
-          width: isMobile ? "90%" : "1100px",
+          width: isMobile ? "9a0%" : "1100px",
           height: isMobile ? "100%" : "100%",
           borderRadius: "20px",
           backgroundColor: "#F8F9FC",

@@ -22,7 +22,7 @@ const BabyDetails = () => {
         <Grid item xs={12} sm={6} md={4}>
           <Card
             sx={{
-              width: isMobile ? "90%" : "35vw",
+              width: isMobile ? "9a0%" : "35vw",
               height: isMobile ? "100%" : "100%",
               borderRadius: "20px",
               margin: isMobile ? "10px" : "0px",
@@ -87,7 +87,7 @@ const BabyDetails = () => {
         <Grid item xs={12} sm={6} md={4}>
           <Card
             sx={{
-              width: isMobile ? "90%" : "35vw",
+              width: isMobile ? "9a0%" : "35vw",
               borderRadius: "20px",
               margin: isMobile ? "20px" : "0px",
               height: isMobile ? "100%" : "100%",

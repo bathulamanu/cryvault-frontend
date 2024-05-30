@@ -443,16 +443,14 @@ export const MobileDetails = () => {
     <Box sx={{ height: "100%" }}>
       <Card
         sx={{
-          width: isMobile ? "90%" : "80vw",
           border: "0.5px solid lightgrey",
           borderRadius: "20px",
-          margin: isMobile ? "10px" : "0px",
+          margin: "10px",
           backgroundColor: "#F8F9FC",
           height: "100%",
         }}
-        style={{ marginLeft: isMobile ? "10px" : "20px" }}
       >
-        <Box style={{ backgroundColor: "#2b2e64", padding: 24 }}>
+        <Box style={{ backgroundColor: "#2b2e64", padding: "16px" }}>
           <Typography variant="h4" style={{ color: "white" }}>
             Details
           </Typography>
@@ -502,7 +500,6 @@ export const MobileDetails = () => {
               </Grid>
 
               {/* Father's Details Grid */}
-              
 
               <Grid xs={isMobile ? 12 : 6}>
                 <Grid container spacing={2}>

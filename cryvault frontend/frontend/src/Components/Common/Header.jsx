@@ -15,6 +15,7 @@ import { fetchHeaderSocialIcons, getPageMetaInfo } from "../../redux/reducers/Ho
 import { AppBar, Toolbar, Menu, MenuItem, Divider, Avatar } from "@mui/material";
 import { Link } from "react-router-dom";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
 const Header = () => {
   const navRef = React.useRef(null);
@@ -479,31 +480,40 @@ export const MobileHeader = React.memo(() => {
 
           {openNestedListIndex === 0 && (
             <List dense disablePadding style={{ paddingLeft: 40, borderBottom: "1px solid #e5e5e5" }}>
-              <ListItem>
-                <Link to={`/${aboutCryovault}`} onClick={handleDrawerClose}>
+              <Link to={`/${aboutCryovault}`} onClick={handleDrawerClose}>
+                <ListItemButton>
+                  <ListItemIcon>{<ChevronRightIcon style={{ fontSize: "3.5rem", height: "4rem" }} />}</ListItemIcon>
                   <ListItemText onClick={() => setSelectedItem("About Cryovault")} sx={{ color: selectedItem == "About Cryovault" ? "#550059" : "black" }} primary="About Cryovault" />
-                </Link>
-              </ListItem>
-              <ListItem>
-                <Link to={`/${visionMission}`} onClick={handleDrawerClose}>
+                </ListItemButton>
+              </Link>
+              <Link to={`/${visionMission}`} onClick={handleDrawerClose}>
+                <ListItemButton>
+                  <ListItemIcon>{<ChevronRightIcon style={{ fontSize: "3.5rem", height: "4rem" }} />}</ListItemIcon>
+
                   <ListItemText sx={{ color: selectedItem == "Vision & Mission " ? "#550059" : "black" }} onClick={() => setSelectedItem("Vision & Mission ")} primary="Vision & Mission " />
-                </Link>
-              </ListItem>
-              <ListItem>
-                <Link to={`/${accreditationsCertifications}`} onClick={handleDrawerClose}>
+                </ListItemButton>
+              </Link>
+              <Link to={`/${accreditationsCertifications}`} onClick={handleDrawerClose}>
+                <ListItemButton>
+                  <ListItemIcon>{<ChevronRightIcon style={{ fontSize: "3.5rem", height: "4rem" }} />}</ListItemIcon>
+
                   <ListItemText sx={{ color: selectedItem == "Accreditations &amp; Certifications" ? "#550059" : "black" }} onClick={() => setSelectedItem(" Accreditations &amp; Certifications")} primary=" Accreditations &amp; Certifications" />
-                </Link>
-              </ListItem>
-              <ListItem>
-                <Link to={`/${careers}`} onClick={handleDrawerClose}>
+                </ListItemButton>
+              </Link>
+              <Link to={`/${careers}`} onClick={handleDrawerClose}>
+                <ListItemButton>
+                  <ListItemIcon>{<ChevronRightIcon style={{ fontSize: "3.5rem", height: "4rem" }} />}</ListItemIcon>
+
                   <ListItemText sx={{ color: selectedItem == "Carrers" ? "#550059" : "black" }} onClick={() => setSelectedItem("Carrers")} primary="Carrers " />
-                </Link>
-              </ListItem>
-              <ListItem>
-                <Link to={`/${franchise}`} onClick={handleDrawerClose}>
+                </ListItemButton>
+              </Link>
+              <Link to={`/${franchise}`} onClick={handleDrawerClose}>
+                <ListItemButton>
+                  <ListItemIcon>{<ChevronRightIcon style={{ fontSize: "3.5rem", height: "4rem" }} />}</ListItemIcon>
+
                   <ListItemText sx={{ color: selectedItem == "Francise" ? "#550059" : "black" }} onClick={() => setSelectedItem("Francise")} primary="Francise " />
-                </Link>
-              </ListItem>
+                </ListItemButton>
+              </Link>
             </List>
           )}
           <ListItemButton
@@ -524,47 +534,65 @@ export const MobileHeader = React.memo(() => {
             <ListItemIcon>{nestedOpen ? <ExpandLess style={{ fontSize: "3.5rem", height: "4rem" }} /> : <ExpandMore style={{ fontSize: "3.5rem", height: "4rem" }} />}</ListItemIcon>
           </ListItemButton>
           {openNestedListIndex === 1 && (
-            <List dense disablePadding style={{ paddingLeft: 40 }}>
-              <ListItem>
-                <Link to={`/${stemCellBanking}`} onClick={handleDrawerClose}>
+            <List dense disablePadding>
+              <Link to={`/${stemCellBanking}`} onClick={handleDrawerClose}>
+                <ListItemButton>
+                  <ListItemIcon>{<ChevronRightIcon style={{ fontSize: "3.5rem", height: "4rem" }} />}</ListItemIcon>
+
                   <ListItemText sx={{ color: selectedItem == "Stem Cell Banking" ? "#550059" : "black" }} onClick={() => setSelectedItem("Stem Cell Banking")} primary="Stem Cell Banking" />
-                </Link>
-              </ListItem>
-              <ListItem>
-                <Link to={`/${whyToChooseStemCellBanking}`} onClick={handleDrawerClose}>
+                </ListItemButton>
+              </Link>
+              <Link to={`/${whyToChooseStemCellBanking}`} onClick={handleDrawerClose}>
+                <ListItemButton>
+                  <ListItemIcon>{<ChevronRightIcon style={{ fontSize: "3.5rem", height: "4rem" }} />}</ListItemIcon>
+
                   <ListItemText sx={{ color: selectedItem == "Why to Choose Stem Cell Banking?" ? "#550059" : "black" }} onClick={() => setSelectedItem("Why to Choose Stem Cell Banking?")} primary="Why to Choose Stem Cell Banking?" />
-                </Link>
-              </ListItem>
-              <ListItem>
-                <Link to={`/${aboutUmbilicalCord}`} onClick={handleDrawerClose}>
+                </ListItemButton>
+              </Link>
+              <Link to={`/${aboutUmbilicalCord}`} onClick={handleDrawerClose}>
+                <ListItemButton>
+                  <ListItemIcon>{<ChevronRightIcon style={{ fontSize: "3.5rem", height: "4rem" }} />}</ListItemIcon>
+
                   <ListItemText sx={{ color: selectedItem == "What is Umbilical Cord?" ? "#550059" : "black" }} onClick={() => setSelectedItem("What is Umbilical Cord?")} primary="What is Umbilical Cord?" />
-                </Link>
-              </ListItem>
-              <ListItem>
-                <Link to={`/${cordBloodBankingUmbilicalCordPreservationInIndiaCryovault}`} onClick={handleDrawerClose}>
+                </ListItemButton>
+              </Link>
+              <Link to={`/${cordBloodBankingUmbilicalCordPreservationInIndiaCryovault}`} onClick={handleDrawerClose}>
+                <ListItemButton>
+                  <ListItemIcon>{<ChevronRightIcon style={{ fontSize: "3.5rem", height: "4rem" }} />}</ListItemIcon>
+
                   <ListItemText sx={{ color: selectedItem == "Cord Blood Banking" ? "#550059" : "black" }} onClick={() => setSelectedItem("Cord Blood Banking")} primary=" Cord Blood Banking" />
-                </Link>
-              </ListItem>
-              <ListItem>
-                <Link to={`/${howToStoreYourStemCellsWithCryovault}`} onClick={handleDrawerClose}>
+                </ListItemButton>
+              </Link>
+
+              <Link to={`/${howToStoreYourStemCellsWithCryovault}`} onClick={handleDrawerClose}>
+                <ListItemButton>
+                  <ListItemIcon>{<ChevronRightIcon style={{ fontSize: "3.5rem", height: "4rem" }} />}</ListItemIcon>
+
                   <ListItemText sx={{ color: selectedItem == "How to Store Your STEM CELLS WITH CRYOVAULT" ? "#550059" : "black" }} onClick={() => setSelectedItem("How to Store Your STEM CELLS WITH CRYOVAULT")} primary="How to Store Your STEM CELLS WITH CRYOVAULT" />
-                </Link>
-              </ListItem>
-              <ListItem>
-                <Link to={`/${bestStemCellBankInIndiaStemCellBankingCryovault}`} onClick={handleDrawerClose}>
+                </ListItemButton>
+              </Link>
+
+              <Link to={`/${bestStemCellBankInIndiaStemCellBankingCryovault}`} onClick={handleDrawerClose}>
+                <ListItemButton>
+                  <ListItemIcon>{<ChevronRightIcon style={{ fontSize: "3.5rem", height: "4rem" }} />}</ListItemIcon>
                   <ListItemText sx={{ color: selectedItem == "Benifits of Stem Cells" ? "#550059" : "black" }} onClick={() => setSelectedItem("Benifits of Stem Cells")} primary=" Benifits of Stem Cells" />
-                </Link>
-              </ListItem>
-              <ListItem>
-                <Link to={`/${whenAndHowIsCordBloodCollected}`} onClick={handleDrawerClose}>
+                </ListItemButton>
+              </Link>
+
+              <Link to={`/${whenAndHowIsCordBloodCollected}`} onClick={handleDrawerClose}>
+                <ListItemButton>
+                  <ListItemIcon>{<ChevronRightIcon style={{ fontSize: "3.5rem", height: "4rem" }} />}</ListItemIcon>
+
                   <ListItemText sx={{ color: selectedItem == " When and How is Cord Blood Collected" ? "#550059" : "black" }} onClick={() => setSelectedItem(" When and How is Cord Blood Collected")} primary=" When and How is Cord Blood Collected" />
-                </Link>
-              </ListItem>
-              <ListItem>
-                <Link to={`/${ReasonsToSaveYourChildsCordBlood}`} onClick={handleDrawerClose}>
+                </ListItemButton>
+              </Link>
+              <Link to={`/${ReasonsToSaveYourChildsCordBlood}`} onClick={handleDrawerClose}>
+                <ListItemButton>
+                  <ListItemIcon>{<ChevronRightIcon style={{ fontSize: "3.5rem", height: "4rem" }} />}</ListItemIcon>
+
                   <ListItemText sx={{ color: selectedItem == "7 Reasons to Save your Child's Cord Blood" ? "#550059" : "black" }} onClick={() => setSelectedItem(" 7 Reasons to Save your Child's Cord Blood")} primary="  7 Reasons to Save your Child's Cord Blood" />
-                </Link>
-              </ListItem>
+                </ListItemButton>
+              </Link>
             </List>
           )}
           <ListItemButton
@@ -585,22 +613,28 @@ export const MobileHeader = React.memo(() => {
             <ListItemIcon>{nestedOpen ? <ExpandLess style={{ fontSize: "3.5rem", height: "4rem" }} /> : <ExpandMore style={{ fontSize: "3.5rem", height: "4rem" }} />}</ListItemIcon>
           </ListItemButton>
           {openNestedListIndex === 2 && (
-            <List dense disablePadding style={{ paddingLeft: 40 }}>
-              <ListItem>
-                <Link to={`/plan`} onClick={handleDrawerClose}>
+            <List dense disablePadding>
+              <Link to={`/plan`} onClick={handleDrawerClose}>
+                <ListItemButton>
+                  <ListItemIcon>{<ChevronRightIcon style={{ fontSize: "3.5rem", height: "4rem" }} />}</ListItemIcon>
+
                   <ListItemText sx={{ color: selectedItem == "Plans" ? "#550059" : "black" }} onClick={() => setSelectedItem("Plans")} primary="Plans" />
-                </Link>
-              </ListItem>
-              <ListItem>
-                <Link to={`/${requestForInformationKit}`} onClick={handleDrawerClose}>
+                </ListItemButton>
+              </Link>
+              <Link to={`/${requestForInformationKit}`} onClick={handleDrawerClose}>
+                <ListItemButton>
+                  <ListItemIcon>{<ChevronRightIcon style={{ fontSize: "3.5rem", height: "4rem" }} />}</ListItemIcon>
+
                   <ListItemText sx={{ color: selectedItem == "Request For Information Kit" ? "#550059" : "black" }} onClick={() => setSelectedItem("Request For Information Kit")} primary=" Request For Information Kit" />
-                </Link>
-              </ListItem>
-              <ListItem>
-                <Link to={`/${appointment}`} onClick={handleDrawerClose}>
+                </ListItemButton>
+              </Link>
+              <Link to={`/${appointment}`} onClick={handleDrawerClose}>
+                <ListItemButton>
+                  <ListItemIcon>{<ChevronRightIcon style={{ fontSize: "3.5rem", height: "4rem" }} />}</ListItemIcon>
+
                   <ListItemText sx={{ color: selectedItem == "Appointmentt" ? "#550059" : "black" }} onClick={() => setSelectedItem("Appointment")} primary="Appointment" />
-                </Link>
-              </ListItem>
+                </ListItemButton>
+              </Link>
             </List>
           )}
           <ListItemButton
@@ -621,32 +655,42 @@ export const MobileHeader = React.memo(() => {
             <ListItemIcon>{nestedOpen ? <ExpandLess style={{ fontSize: "3.5rem", height: "4rem" }} /> : <ExpandMore style={{ fontSize: "3.5rem", height: "4rem" }} />}</ListItemIcon>
           </ListItemButton>
           {openNestedListIndex === 3 && (
-            <List dense disablePadding style={{ paddingLeft: 40 }}>
-              <ListItem>
-                <Link to={`/${firstTrimester}`} onClick={handleDrawerClose}>
+            <List dense disablePadding>
+              <Link to={`/${firstTrimester}`} onClick={handleDrawerClose}>
+                <ListItemButton>
+                  <ListItemIcon>{<ChevronRightIcon style={{ fontSize: "3.5rem", height: "4rem" }} />}</ListItemIcon>
+
                   <ListItemText sx={{ color: selectedItem == "First Trimester" ? "#550059" : "black" }} onClick={() => setSelectedItem(" First Trimester")} primary=" First Trimester" />
-                </Link>
-              </ListItem>
-              <ListItem>
-                <Link to={`/${secondTrimester}`} onClick={handleDrawerClose}>
+                </ListItemButton>
+              </Link>
+              <Link to={`/${secondTrimester}`} onClick={handleDrawerClose}>
+                <ListItemButton>
+                  <ListItemIcon>{<ChevronRightIcon style={{ fontSize: "3.5rem", height: "4rem" }} />}</ListItemIcon>
+
                   <ListItemText sx={{ color: selectedItem == "Second Trimester" ? "#550059" : "black" }} onClick={() => setSelectedItem(" Second Trimester")} primary=" Second Trimester" />
-                </Link>
-              </ListItem>
-              <ListItem>
-                <Link to={`/${thirdTrimester}`} onClick={handleDrawerClose}>
+                </ListItemButton>
+              </Link>
+              <Link to={`/${thirdTrimester}`} onClick={handleDrawerClose}>
+                <ListItemButton>
+                  <ListItemIcon>{<ChevronRightIcon style={{ fontSize: "3.5rem", height: "4rem" }} />}</ListItemIcon>
+
                   <ListItemText sx={{ color: selectedItem == "Third Trimester" ? "#550059" : "black" }} onClick={() => setSelectedItem(" Third Trimester")} primary=" Third Trimester" />
-                </Link>
-              </ListItem>
-              <ListItem>
-                <Link to={`/${pregnancyDietChart}`} onClick={handleDrawerClose}>
+                </ListItemButton>
+              </Link>
+              <Link to={`/${pregnancyDietChart}`} onClick={handleDrawerClose}>
+                <ListItemButton>
+                  <ListItemIcon>{<ChevronRightIcon style={{ fontSize: "3.5rem", height: "4rem" }} />}</ListItemIcon>
+
                   <ListItemText sx={{ color: selectedItem == "Pregnancy Diet Chart" ? "#550059" : "black" }} onClick={() => setSelectedItem("Pregnancy Diet Chart")} primary=" Pregnancy Diet Chart" />
-                </Link>
-              </ListItem>
-              <ListItem>
-                <Link to={`/${immunizationChart}`} onClick={handleDrawerClose}>
+                </ListItemButton>
+              </Link>
+              <Link to={`/${immunizationChart}`} onClick={handleDrawerClose}>
+                <ListItemButton>
+                  <ListItemIcon>{<ChevronRightIcon style={{ fontSize: "3.5rem", height: "4rem" }} />}</ListItemIcon>
+
                   <ListItemText sx={{ color: selectedItem == "Immunization Chart" ? "#550059" : "black" }} onClick={() => setSelectedItem("Immunization Chart")} primary="Immunization Chart" />
-                </Link>
-              </ListItem>
+                </ListItemButton>
+              </Link>
             </List>
           )}
 
@@ -668,17 +712,21 @@ export const MobileHeader = React.memo(() => {
             <ListItemIcon>{nestedOpen ? <ExpandLess style={{ fontSize: "3.5rem", height: "4rem" }} /> : <ExpandMore style={{ fontSize: "3.5rem", height: "4rem" }} />}</ListItemIcon>
           </ListItemButton>
           {openNestedListIndex === 4 && (
-            <List dense disablePadding style={{ paddingLeft: 40 }}>
-              <ListItem>
-                <Link to={`/${images}`} onClick={handleDrawerClose}>
+            <List dense disablePadding>
+              <Link to={`/${images}`} onClick={handleDrawerClose}>
+                <ListItemButton>
+                  <ListItemIcon>{<ChevronRightIcon style={{ fontSize: "3.5rem", height: "4rem" }} />}</ListItemIcon>
+
                   <ListItemText sx={{ color: selectedItem == "Images" ? "#550059" : "black" }} onClick={() => setSelectedItem("Images")} primary="Images" />
-                </Link>
-              </ListItem>
-              <ListItem>
-                <Link to={`/${videos}`} onClick={handleDrawerClose}>
+                </ListItemButton>
+              </Link>
+              <Link to={`/${videos}`} onClick={handleDrawerClose}>
+                <ListItemButton>
+                  <ListItemIcon>{<ChevronRightIcon style={{ fontSize: "3.5rem", height: "4rem" }} />}</ListItemIcon>
+
                   <ListItemText sx={{ color: selectedItem == "Video" ? "#550059" : "black" }} onClick={() => setSelectedItem("Video")} primary="Video" />
-                </Link>
-              </ListItem>
+                </ListItemButton>
+              </Link>
             </List>
           )}
           <ListItemButton sx={{ border: "1px solid #e5e5e5", borderTop: "none" }} onClick={() => handleNestedClick(5)}>
@@ -693,11 +741,13 @@ export const MobileHeader = React.memo(() => {
             <ListItemIcon>{nestedOpen ? <ExpandLess style={{ fontSize: "3.5rem", height: "4rem" }} /> : <ExpandMore style={{ fontSize: "3.5rem", height: "4rem" }} />}</ListItemIcon>
           </ListItemButton>
           {openNestedListIndex === 5 && (
-            <List dense disablePadding style={{ paddingLeft: 40 }}>
+            <List dense disablePadding>
               {isUserLoggedIn ? (
                 <>
-                  <ListItem>
-                    <Link to={`/dashboard`} onClick={handleDrawerClose}>
+                  <Link to={`/dashboard`} onClick={handleDrawerClose}>
+                    <ListItemButton>
+                      <ListItemIcon>{<ChevronRightIcon style={{ fontSize: "3.5rem", height: "4rem" }} />}</ListItemIcon>
+
                       <ListItemText
                         sx={{ color: selectedItem == "Dashboard" ? "#550059" : "black" }}
                         onClick={() => {
@@ -705,10 +755,12 @@ export const MobileHeader = React.memo(() => {
                         }}
                         primary="Dashboard"
                       />
-                    </Link>
-                  </ListItem>
-                  <ListItem>
-                    <Link to={`/`} onClick={handleLogout}>
+                    </ListItemButton>
+                  </Link>
+                  <Link to={`/`} onClick={handleLogout}>
+                    <ListItemButton>
+                      <ListItemIcon>{<ChevronRightIcon style={{ fontSize: "3.5rem", height: "4rem" }} />}</ListItemIcon>
+
                       <ListItemText
                         sx={{ color: selectedItem == "Logout" ? "#550059" : "black" }}
                         onClick={() => {
@@ -716,12 +768,14 @@ export const MobileHeader = React.memo(() => {
                         }}
                         primary="Logout"
                       />
-                    </Link>
-                  </ListItem>
+                    </ListItemButton>
+                  </Link>
                 </>
               ) : (
-                <ListItem>
-                  <Link to={`/login`} onClick={handleDrawerClose}>
+                <Link to={`/login`} onClick={handleDrawerClose}>
+                  <ListItemButton>
+                    <ListItemIcon>{<ChevronRightIcon style={{ fontSize: "3.5rem", height: "4rem" }} />}</ListItemIcon>
+
                     <ListItemText
                       sx={{ color: selectedItem == "Get Started" ? "#550059" : "black" }}
                       onClick={() => {
@@ -729,8 +783,8 @@ export const MobileHeader = React.memo(() => {
                       }}
                       primary="Get Started"
                     />
-                  </Link>
-                </ListItem>
+                  </ListItemButton>
+                </Link>
               )}
             </List>
           )}
