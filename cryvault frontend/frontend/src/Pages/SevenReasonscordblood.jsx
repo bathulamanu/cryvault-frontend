@@ -14,7 +14,7 @@ const SevenReasonscordblood = () => {
           <Box className="breadcrumb-inner">
             <Box className="page-title d-flex align-items-center">
               <Box className="w-100">
-                <Typography variant="h1" className="title">
+                <Typography  sx={{ textAlign: isMobile ? 'center' : 'start', fontSize: isMobile ? "24px !important" : "45px !important" }} variant="h1" className="title">
                   7 Reasons to Save your Childs Cord Blood
                 </Typography>
                 {isMobile ? null : (

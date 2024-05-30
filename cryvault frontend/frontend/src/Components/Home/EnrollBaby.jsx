@@ -14,7 +14,7 @@ const EnrollBaby = () => {
         <Typography sx={{ textAlign: isMobile ?"center" :"start",fontSize:"1.5rem", fontWeight: isMobile ? "400" : "00" }} variant="h4">
           You only have one chance to preserve your baby’s life-saving stem cells, and that’s the day they are born. Secure your family’s healthy future by enrolling in stem cell banking today.
         </Typography>
-        <Button variant="contained" sx={{ backgroundColor: "#D5008D", color: "white", fontSize: "1rem", fontWeight: "700", width: isMobile ? "40%" :"25%",whiteSpace:"nowrap", padding: "15px 30px" }} size="lg">
+        <Button variant="contained" sx={{ textTransform:"none", backgroundColor: "#D5008D", color: "white", fontSize: "1rem", fontWeight: "700", width: isMobile ? "40%" :"25%",whiteSpace:"nowrap", padding: "15px 30px" }} size="lg">
           Enroll Now
         </Button>
       </Box>

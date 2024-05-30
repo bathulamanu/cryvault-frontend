@@ -10,7 +10,7 @@ const ImageHero = () => {
         <Box className="breadcrumb-inner">
           <Box className="page-title d-flex align-items-center">
             <Box sx={{ textAlign: isMobile ? " center" : "start ", width: isMobile ? "100% !important" : "70% !important" }}>
-              <Typography sx={{ width: "75%" }} variant={isMobile ? "h3" : "h1"} className={isMobile ? "mobileTitle" : "title"}>
+              <Typography   sx={{ fontSize: isMobile ? "24px !important" : "45px !important",width:"75%" }} variant={isMobile ? "h3" : "h1"} className={isMobile ? "mobileTitle" : "title"}>
                 Images
               </Typography>
             </Box>

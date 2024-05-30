@@ -11,11 +11,12 @@ const Refferals = () => {
           // width: isMobile ? "90%" : "90%",
           marginLeft: "20px",
           borderRadius: "20px",
+          margin: isMobile ? "10px" : "s",
         }}
       >
         <Box>
-          <Box sx={{ backgroundColor: "#2b2e64", padding: "10px" }}>
-            <Typography sx={{ color: "white" }} variant="h6">
+          <Box p={2} sx={{ backgroundColor: "#2b2e64" }}>
+            <Typography sx={{ color: "white" }} variant="h4">
               Referral Links
             </Typography>
           </Box>
@@ -179,9 +180,10 @@ const Refferals = () => {
           display: "flex",
           flexDirection: "column",
           gap: "2rem",
+          margin: isMobile ? "10px" : "s",
         }}
       >
-        <Box sx={{ backgroundColor: "#2b2e64", padding: "10px" }}>
+        <Box p={2} sx={{ backgroundColor: "#2b2e64" }}>
           <Typography sx={{ color: "white" }} variant="h4">
             Reference
           </Typography>

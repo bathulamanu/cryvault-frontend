@@ -12,7 +12,7 @@ const PregnancyChart = () => {
           <Box className="breadcrumb-inner">
             <Box className="page-title d-flex align-items-center">
               <Box sx={{ textAlign: isMobile ? " center" : "start ", width: isMobile ? "100% !important" : "70% !important" }}>
-                <Typography variant={isMobile ? "h3" : "h1"} className="title">
+                <Typography  sx={{ fontSize: isMobile ? "24px !important" : "45px !important" }} variant={isMobile ? "h3" : "h1"} className="title">
                   Pregnancy Diet Chart
                 </Typography>
            

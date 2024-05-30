@@ -1,4 +1,4 @@
-import { Box, Button, Container, Link, Rating, Typography } from "@mui/material";
+import { Avatar, Box, Button, Container, Link, Rating, Typography } from "@mui/material";
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -108,21 +108,15 @@ const GoogleReviews = () => {
   ));
   return (
     <Container sx={{ display: "flex", flexDirection: isMobile ? "column" : "row", paddingTop: "5rem", alignItems: "center", gap: "2rem", marginBottom: isMobile ? "5rem" : "5rem" }}>
-      <Box style={{ width: isMobile ? "100%" : "26%", display: "flex", alignItems: "start", gap: "0.5rem" }}>
+      <Box style={{ width: isMobile ? "100%" : "23%", display: "flex", alignItems: "start", gap: "0.5rem" }}>
         <img loading="lazy" decoding="async" src="https://www.cryovault.in/wp-content/plugins/widget-google-reviews/assets/img/gmblogo.svg" alt="Cryovault | Best Stem Cell Banking in Hyderabad | India" width="50" height="50" title="Cryovault | Best Stem Cell Banking in Hyderabad | India" />
 
         <Box style={{ display: "flex", alignItems: "start !important", flexDirection: "column", gap: "0.5rem" }}>
           <Link href="https://maps.google.com/?cid=1616921368839435671" target="_blank" rel="nofollow noopener">
-            <Typography sx={{ fontWeight: "600" }} variant="h4">
+            <Typography sx={{ fontWeight: "600", fontSize: "1.5rem" }} variant="h4">
               Cryovault | Best Stem Cell Banking in Hyderabad | India
             </Typography>
           </Link>
-          {/* <Box>
-            <Typography variant="h4" sx={{ fontWeight: "700", color: "rgb(251, 142, 40)" }}>
-              5.0 {stars.map((star, index) => star)}{" "}
-            </Typography>
-          </Box> */}
-
           <Box style={{ display: "flex", alignItems: "center" }}>
             <Typography variant="h4" sx={{ fontWeight: "700", color: "rgb(251, 142, 40)" }}>
               5.0
@@ -132,11 +126,11 @@ const GoogleReviews = () => {
 
           <Typography variant="h4">Based on 284 reviews</Typography>
           <img loading="lazy" decoding="async" src="https://www.cryovault.in/wp-content/plugins/widget-google-reviews/assets/img/powered_by_google_on_white.png" alt="powered by Google" style={{ maxWidth: "144px", height: "auto" }} />
-          <Button variant="contained" sx={{ width: isMobile ? "40%" : "70%" }} className="googleBtn">
+          <Button variant="contained" sx={{ display: "flex", gap: "0.5rem", marginTop: "15px", width: isMobile ? "40%" : "70%" }} className="googleBtn">
             <Link sx={{ textDecoration: "none", color: "white" }} href="https://search.google.com/local/writereview?placeid=ChIJH5WwOMiWyzsRl7VpC2t1cBY" onClick="return rplg_leave_review_window.call(this)" target="_blank" rel="noopener">
               Review us on
-              <svg viewBox="0 0 512 512" height="18" width="18">
-                <g fill="none" fillRule="evenodd">
+              <svg style={{ background: "White", borderRadius: "50%", padding: "0.2rem," }} viewBox="0 0 512 512" height="18" width="18">
+                <g fill="none" fill-rule="evenodd">
                   <path d="M482.56 261.36c0-16.73-1.5-32.83-4.29-48.27H256v91.29h127.01c-5.47 29.5-22.1 54.49-47.09 71.23v59.21h76.27c44.63-41.09 70.37-101.59 70.37-173.46z" fill="#4285f4"></path>
                   <path d="M256 492c63.72 0 117.14-21.13 156.19-57.18l-76.27-59.21c-21.13 14.16-48.17 22.53-79.92 22.53-61.47 0-113.49-41.51-132.05-97.3H45.1v61.15c38.83 77.13 118.64 130.01 210.9 130.01z" fill="#34a853"></path>
                   <path d="M123.95 300.84c-4.72-14.16-7.4-29.29-7.4-44.84s2.68-30.68 7.4-44.84V150.01H45.1C29.12 181.87 20 217.92 20 256c0 38.08 9.12 74.13 25.1 105.99l78.85-61.15z" fill="#fbbc05"></path>
@@ -171,15 +165,20 @@ const GoogleReviews = () => {
     </Container>
   );
 };
-
+export function capitalizeFirstLetter(word) {
+  return word?.charAt(0)?.toUpperCase();
+}
 export const SingleReview = React.memo(({ review }) => {
   return (
     <Box key={review?._id} sx={{ display: "flex", flexDirection: "column", marginBottom: 2, background: "#fafafa", padding: "1rem" }}>
       <Box sx={{ display: "flex", alignItems: "start !important", justifyContent: "space-between" }}>
         <Box sx={{ display: "flex" }}>
-          <img src={review?.userImage || "default-user-image.png"} alt="User avatar" style={{ width: 50, height: 50, borderRadius: "50%" }} /> {/* Handle missing user image gracefully */}
+          {review?.userImage ? <img src={review?.userImage || "default-user-image.png"} alt="User avatar" style={{ width: 50, height: 50, borderRadius: "50%" }} /> : <Avatar sx={{ bgcolor: "orange" }}>{capitalizeFirstLetter(review?.userName)}</Avatar>}
+          {/* Handle missing user image gracefully */}
           <Box sx={{ display: "flex", flexDirection: "column", marginLeft: 1 }}>
-            <Typography variant="body1">{review?.userName}</Typography>
+            <Typography variant="body1" sx={{ fontSize: "2rem !important",fontWeight:"600", color: "#154fc1 !important" }}>
+              {review?.userName}
+            </Typography>
             <Typography variant="caption" color="text.secondary">
               {/* Time logic goes here */}
             </Typography>

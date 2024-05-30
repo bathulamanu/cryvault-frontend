@@ -13,7 +13,7 @@ const HowcordBloodcollected = () => {
           <Box className="breadcrumb-inner">
             <Box className="page-title d-flex align-items-center">
               <Box sx={{ textAlign: isMobile ? " center" : "start ", width: "100% !important" }}>
-                <Typography variant="h1" className="title">
+                <Typography  sx={{ fontSize: isMobile ? "24px !important" : "45px !important" }} variant="h1" className="title">
                   When and How is Cord Blood Collected
                 </Typography>
                 {isMobile ? null : (

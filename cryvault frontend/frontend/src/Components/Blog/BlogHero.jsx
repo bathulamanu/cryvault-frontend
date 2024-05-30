@@ -12,7 +12,7 @@ const BlogHero = () => {
       <Box className="container">
         <Box className="breadcrumb-inner">
           <Box className="page-title">
-            <Typography variant="h1" className="title">
+            <Typography  sx={{ fontSize: isMobile ? "24px !important" : "45px !important" }} variant="h1" className="title">
               Blog
             </Typography>
           </Box>

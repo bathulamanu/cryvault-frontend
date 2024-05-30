@@ -7,7 +7,7 @@ const WhyPreserve = () => {
   const isMobile = useDeviceSize() === "xs";
   return (
     <>
-      <Box sx={{ marginTop: "60rem" }} className="features-area-5 edu-course-area course-area-7">
+      <Box sx={{ marginTop: "57rem" }} className="features-area-5 edu-course-area course-area-7">
         <Box className="container">
           <img className="basketball" src="https://www.cryovault.in/wp-content/uploads/2024/01/busket-ball.png" alt=""></img>
 
@@ -26,7 +26,7 @@ const WhyPreserve = () => {
             </Typography>
           </Box>
 
-          <Box className="row g-5 ">
+          <Box sx={{paddingTop:"20px !important"}} className="row g-5 ">
             <Box className="col-lg-4 sal-animate" data-sal-delay="50" data-sal="slide-up" data-sal-duration="800">
               <Box className="features-box color-primary-style edublink-svg-animate">
                 <Box className="content">

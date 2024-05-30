@@ -92,7 +92,7 @@
 
 .basketball {
   position: absolute;
-  top: -5rem;
+  top: -7rem;
   margin-left: 6rem;
   animation-name: ekit-rotate;
   opacity: 1;
@@ -220,9 +220,9 @@
   background-color: #d5008d !important;
   border: 1px solid #ddd0 !important;
   color: #fffcfc !important;
-  font-size: 1rem !important;
+  font-size: 1.5rem !important;
   font-family: inherit;
-  padding: 13px 20px;
+  padding: 13px 20px !important;
   border-radius: 40px !important;
   width: 100%;
 }

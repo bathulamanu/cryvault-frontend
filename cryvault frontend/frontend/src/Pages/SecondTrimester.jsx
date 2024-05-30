@@ -13,7 +13,7 @@ const SecondTimester = () => {
           <Box className="breadcrumb-inner">
             <Box sx={{ justifyContent: isMobile ? " center" : "start " }} className="page-title d-flex align-items-center">
               <Box sx={{ textAlign: isMobile ? " center" : "start ", width: "75% !important" }}>
-                <Typography variant={isMobile ? "h3" : "h1"} className="title">
+                <Typography  sx={{ fontSize: isMobile ? "24px !important" : "45px !important" }} variant={isMobile ? "h3" : "h1"} className="title">
                   Second Trimester
                 </Typography>
               

@@ -30,7 +30,7 @@ const ImmunizationChart = () => {
           <Box className="breadcrumb-inner">
             <Box className="page-title d-flex align-items-center">
               <Box sx={{ textAlign: isMobile ? " center" : "start ", width: isMobile ? "100% !important" : "70% !important" }}>
-                <Typography variant={isMobile ? "h3" : "h1"} className="title">
+                <Typography  sx={{ fontSize: isMobile ? "24px !important" : "45px !important" }} variant={isMobile ? "h3" : "h1"} className="title">
                   Immunization Chart
                 </Typography>
               </Box>
@@ -54,56 +54,7 @@ const ImmunizationChart = () => {
       {isMobile ? (
         <MobileImmunizationTable />
       ) : (
-        // <Box className="container" sx={{ marginTop: "5rem" }}>
-        //   <Grid container spacing={2}>
-        //     <Grid item xs={12}>
-        //       <TableContainer>
-        //         <Table>
-        //           <TableHead>
-        //             <TableRow>
-        //               <TableCell>
-        //                 <Typography sx={{ textAlign: "center", color: "white", fontSize: "2rem" }} variant="body1">
-        //                   Age
-        //                 </Typography>
-        //               </TableCell>
-        //               <TableCell>
-        //                 <Typography sx={{ textAlign: "center", color: "white", fontSize: "2rem" }} variant="body1">
-        //                   Vaccine
-        //                 </Typography>
-        //               </TableCell>
-        //               <TableCell>
-        //                 <Typography sx={{ textAlign: "center", color: "white", fontSize: "2rem" }} variant="body1">
-        //                   Description
-        //                 </Typography>
-        //               </TableCell>
-        //             </TableRow>
-        //           </TableHead>
-        //           <TableBody>
-        //             {vaccines.map((row) => (
-        //               <TableRow key={row.age}>
-        //                 <TableCell>
-        //                   <Typography variant="body2" sx={{ textAlign: "center", fontSize: "1.5rem" }}>
-        //                     {row.age}
-        //                   </Typography>
-        //                 </TableCell>
-        //                 <TableCell>
-        //                   <Typography variant="body2" sx={{ textAlign: "center", fontSize: "1.5rem" }}>
-        //                     {row.vaccine}
-        //                   </Typography>
-        //                 </TableCell>
-        //                 <TableCell>
-        //                   <Typography variant="body2" sx={{ textAlign: "center", fontSize: "1.5rem" }}>
-        //                     {row.description}
-        //                   </Typography>
-        //                 </TableCell>
-        //               </TableRow>
-        //             ))}
-        //           </TableBody>
-        //         </Table>
-        //       </TableContainer>
-        //     </Grid>
-        //   </Grid>
-        // </Box>
+      
 
         <Box className="py-4 mt-4">
           <Box className="container">
