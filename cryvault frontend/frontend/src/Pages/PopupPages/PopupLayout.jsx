@@ -1,43 +1,69 @@
 import React, { useState } from "react";
-import PopupLazyLoad from "../../Utilities/PopupLazyLoad";
-import { Box, Pagination, Typography } from "@mui/material";
-import { useDispatch } from "react-redux";
+import KeyboardTabIcon from "@mui/icons-material/KeyboardTab";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Box, Button, Typography } from "@mui/material";
+import HospitalDetails from "./HospitalDetails";
+import FatherDetails from "./FatherDetails";
+import MotherDetails from "./MotherDetails";
+import CommunicationDetails from "./CommunicationDetails";
 
-const PopupLayout = () => {
-  const [page, setPage] = useState(1);
-  const dispatch = useDispatch();
-  const handlePageChange = (event, newPage) => {
-    setPage(newPage);
-    // dispatch(addClientInfo())
+const PopupLayout = ({ children }) => {
+  const [currentPage, setCurrentPage] = useState(1);
+  const TOTAL_PAGES = 8;
+
+  const handlePrev = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
   };
-  return (
-    <>
-      <PopupHeader />
-      <PopupLazyLoad {...{ page }} />
-      <Pagination onChange={handlePageChange} sx={{ position: "absolute", right: "0" }} count={10} color="primary" />
-      <PopupFooter />
-    </>
-  );
-};
 
-export const PopupHeader = () => {
-  return (
-    <Box sx={{ padding: "2rem 6rem", display: "flex", justifyContent: "end" }}>
-      <img className="logo-light" src="assets/images/cryovault-blue-200x48.webp" alt="Corporate Logo" />
-    </Box>
-  );
-};
+  const handleNext = () => {
+    if (currentPage < TOTAL_PAGES) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
 
-export const PopupFooter = () => {
   return (
-    <Box sx={{ background: "#2b2e64", marginTop: "10rem" }}>
-      <Typography sx={{ color: "white", textAlign: "center", padding: "2rem", fontSize: "2rem" }}>
-        Cryovault Biotech India Pvt. Ltd.
-        <br />
-        No. 52/65, Swami Vivekananda Road, Srinivasa Layout, Bagalur, North Bangaluru, Karnataka - 562149, INDIA.
-        <br />
-        18001 024 026 (Tollfree) | www.cryovault.in | E-mail: info@cryovault.in
-      </Typography>
+    <Box sx={{ height: "100vh", margin: "13rem", display: "flex", flexDirection: "column", gap: "1rem", border: "1px solid #e5e5e5" }}>
+      <Box sx={{ height: "90vh" }}>
+        
+      {currentPage == 1 && <FatherDetails />}
+      {currentPage == 2 && <MotherDetails />}
+      {currentPage == 3 && <CommunicationDetails />}
+      {currentPage == 4 && <HospitalDetails />}
+        
+        
+        </Box>
+
+      <Box sx={{ display: "flex", justifyContent: "space-between", padding: "4rem" }}>
+        <Button sx={{ padding: "0rem 4rem", borderRadius: "0.5rem", fontSize: "2rem", backgroundColor: "white", color: "blue" }} variant="outlined" startIcon={<ArrowBackIcon />} disabled={currentPage === 1} onClick={handlePrev}>
+          Prev
+        </Button>
+
+        <Box sx={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
+          <Typography sx={{ fontSize: "3rem !important" }} variant="h4">
+            {"<"}
+          </Typography>
+          <Typography sx={{ fontSize: "3rem !important" }} variant="h4" sx={{ display: "flex" }}>
+            <span style={{ color: "blue" }}>{`${currentPage} `}</span>
+            <span>/</span>
+            <span>{`${TOTAL_PAGES} `}</span>
+          </Typography>
+          <Typography sx={{ fontSize: "3rem !important" }} variant="h4">
+            {">"}
+          </Typography>
+        </Box>
+
+        <Button
+          sx={{ padding: "0rem 4rem", borderRadius: "0.5rem", fontSize: "2rem" }}
+          variant="contained"
+          endIcon={<KeyboardTabIcon />}
+          disabled={currentPage === TOTAL_PAGES} // Disable next button on last page
+          onClick={handleNext}
+        >
+          Next
+        </Button>
+      </Box>
     </Box>
   );
 };

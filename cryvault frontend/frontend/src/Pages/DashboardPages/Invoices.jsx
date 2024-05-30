@@ -49,23 +49,28 @@ const Invoices = () => {
             width: isMobile ? "90%" : "80vw", // Adjust width based on screen size
             height: "90vh",
             borderRadius: "20px",
-            backgroundColor:"#F8F9FC",
+            backgroundColor: "#F8F9FC",
             margin: isMobile ? "10px" : "0px",
           }}
           style={{ marginLeft: isMobile ? "10px" : "20px" }}
         >
           <Box
+            p={2}
             sx={{
               color: "white",
               backgroundColor: "#2b2e64",
-              padding: "20px",
             }}
           >
-            <Typography  sx={{
-              color: "white",
-            }} variant="h4">Invoice Number</Typography>
+            <Typography
+              sx={{
+                color: "white",
+              }}
+              variant="h4"
+            >
+              Invoice Number
+            </Typography>
           </Box>
-          <TableContainer sx={{backgroundColor: "#F8F9FC"}}>
+          <TableContainer sx={{ backgroundColor: "#F8F9FC" }}>
             <Table>
               <TableHead>
                 <TableRow>
@@ -133,7 +138,7 @@ const Invoices = () => {
                     <TableCell style={{ border: "none", textAlign: "center", fontSize: "1.5rem" }}>{invoice.date}</TableCell>
                     <TableCell style={{ border: "none", textAlign: "center", fontSize: "1.5rem" }}>{invoice.amount}</TableCell>
                     <TableCell style={{ border: "none", textAlign: "center", fontSize: "1.5rem" }}>
-                      <Box className="tableCellWithCircle" sx={{ backgroundColor: isMobile ? invoice.status === "Completed" ? "#01d501" : invoice.status === "Pending" ? "yellow" : "#ff9e9e " : 'none' } }>
+                      <Box className="tableCellWithCircle" sx={{ width: isMobile ? "100%" : "50%", backgroundColor: isMobile ? (invoice.status === "Completed" ? "#01d501" : invoice.status === "Pending" ? "yellow" : "#ff9e9e ") : "none" }}>
                         {" "}
                         {invoice.status}
                       </Box>

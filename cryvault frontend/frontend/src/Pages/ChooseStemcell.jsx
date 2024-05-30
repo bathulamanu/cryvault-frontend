@@ -23,9 +23,9 @@ const ChooseStemcell = () => {
       <Box sx={{ padding: isMobile ? " 50px 7px !important" : "120px 0px !important" }} className="edu-breadcrumb-area breadcrumb-style-2 bg-image bg-image--19">
         <Box className="container">
           <Box className="breadcrumb-inner" sx={{ display: "flex" }}>
-            <Box className="page-title d-flex align-items-center" sx={{width:"59% !important"}}>
+            <Box className="page-title d-flex align-items-center" sx={{width: isMobile ? "100% !important" : "59% !important"}}>
               <Box sx={{ textAlign: isMobile ? " center" : "start ", width: isMobile ? "100% !important" : "100% !important" }}>
-                <Typography variant="h1" className="title">
+                <Typography sx={{ fontSize: isMobile ? "24px !important" : "45px !important" }} variant="h1" className="title">
                   Why to Choose Stem Cell Banking
                 </Typography>
               </Box>

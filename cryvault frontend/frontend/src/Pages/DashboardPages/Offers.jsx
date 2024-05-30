@@ -17,7 +17,7 @@ const Offers = () => {
         }}
         style={{ marginLeft: isMobile ? "none" : "20px" }}
       >
-        <Box sx={{ backgroundColor: "#2B2E64", padding: "20px" }}>
+        <Box p={2} sx={{ backgroundColor: "#2b2e64"}}>
           <Typography sx={{ color: "white" }} variant="h4">
             Offers and Updates
           </Typography>
@@ -38,7 +38,7 @@ const Offers = () => {
             src={offerImg}
             alt="offer"
           />
-          <Typography sx={{ fontSize: "4rem", fontWeight: "600" }} variant="h4">
+          <Typography sx={{textAlign:"center", fontSize: "4rem", fontWeight: "600" }} variant="h4">
             Offers are coming soon!
           </Typography>
         </Box>

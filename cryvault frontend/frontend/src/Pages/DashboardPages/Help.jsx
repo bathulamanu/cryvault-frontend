@@ -36,7 +36,7 @@ const Help = () => {
         }}
         style={{ marginLeft: isMobile ? "10px" : "20px" }}
       >
-        <Box sx={{ backgroundColor: "#2B2E64", padding: "20px" }}>
+        <Box  p={2} sx={{ backgroundColor: "#2b2e64" }}>
           <Typography sx={{ color: "white" }} variant="h4">
             Help
           </Typography>

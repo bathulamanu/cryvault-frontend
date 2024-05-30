@@ -33,7 +33,7 @@ const BabyDetails = () => {
             <Box
               p={2}
               sx={{
-                backgroundColor: "#2b2e64",
+                backgroundColor: "#2b2e64"
               }}
             >
               <Typography sx={{ paddingLeft: "10px", color: "white" }} variant="h4">
@@ -99,7 +99,6 @@ const BabyDetails = () => {
               p={2}
               sx={{
                 color: "white",
-
                 backgroundColor: "#2b2e64",
               }}
             >
@@ -112,7 +111,7 @@ const BabyDetails = () => {
                 <img
                   style={{
                     marginTop: "10px",
-                    marginLeft: isMobile ? "80px" : "150px",
+                    marginLeft: isMobile ? "0px" : "150px",
                     width: "120px",
                     height: "180px",
                     borderRadius: "50px",

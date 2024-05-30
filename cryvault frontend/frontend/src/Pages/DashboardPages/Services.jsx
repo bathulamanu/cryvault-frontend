@@ -16,7 +16,7 @@ const Services = () => {
         }}
         style={{ marginLeft: isMobile ? "10px" : "20px", backgroundColor: "#F8F9FC" }}
       >
-        <Box sx={{ backgroundColor: "#2b2e64", p: 2, color: "white" }}>
+        <Box  p={2} sx={{ backgroundColor: "#2b2e64",  color: "white" }}>
           <Typography sx={{ color: "white" }} variant="h4">
             Services
           </Typography>

@@ -14,7 +14,7 @@ const FirstTrimester = () => {
           <Box className="breadcrumb-inner">
             <Box sx={{ justifyContent: isMobile ? " center" : "start " }} className="page-title d-flex align-items-center">
               <Box sx={{ textAlign: isMobile ? " center" : "start ", width: "75% !important" }}>
-                <Typography variant="h1" className="title">
+                <Typography  sx={{ fontSize: isMobile ? "24px !important" : "45px !important" }} variant="h1" className="title">
                   First Trimester
                 </Typography>
               </Box>
@@ -150,7 +150,7 @@ const FirstTrimester = () => {
                       <BiSolidChevronRightCircle style={{ color: "#2196F3" }} />
                     </ListItemIcon>
                     <ListItemText>
-                      <Typography variant="body2">Regular mild exercise during pregnancy can improve posture and decrease some common discomforts such as backaches, constipation, bloating, and decreases swelling and fatigue. Exercise can also improve mood & assist with sleep.</Typography>
+                      <Typography sx={{fontSize:"14px !important"}} variant="body2">Regular mild exercise during pregnancy can improve posture and decrease some common discomforts such as backaches, constipation, bloating, and decreases swelling and fatigue. Exercise can also improve mood & assist with sleep.</Typography>
                     </ListItemText>
                   </ListItem>
                   <ListItem>
@@ -158,7 +158,7 @@ const FirstTrimester = () => {
                       <BiSolidChevronRightCircle style={{ color: "#2196F3" }} />
                     </ListItemIcon>
                     <ListItemText>
-                      <Typography variant="body2">Begin exercising 3-4 times per week during the first month if you do not have any existing health problems.</Typography>
+                      <Typography sx={{fontSize:"14px !important"}} variant="body2">Begin exercising 3-4 times per week during the first month if you do not have any existing health problems.</Typography>
                     </ListItemText>
                   </ListItem>
                   <ListItem>
@@ -166,7 +166,7 @@ const FirstTrimester = () => {
                       <BiSolidChevronRightCircle style={{ color: "#2196F3" }} />
                     </ListItemIcon>
                     <ListItemText>
-                      <Typography variant="body2">Walking is a great exercise to start with, if you have not been active prior to your pregnancy.</Typography>
+                      <Typography  sx={{fontSize:"14px !important"}} variant="body2">Walking is a great exercise to start with, if you have not been active prior to your pregnancy.</Typography>
                     </ListItemText>
                   </ListItem>
                   <ListItem>
@@ -174,7 +174,7 @@ const FirstTrimester = () => {
                       <BiSolidChevronRightCircle style={{ color: "#2196F3" }} />
                     </ListItemIcon>
                     <ListItemText>
-                      <Typography variant="body2">Every pregnant woman should consult with her doctor before beginning an exercise program. A doctor can give personal exercise guidelines based on the medical history.</Typography>
+                      <Typography  sx={{fontSize:"14px !important"}} variant="body2">Every pregnant woman should consult with her doctor before beginning an exercise program. A doctor can give personal exercise guidelines based on the medical history.</Typography>
                     </ListItemText>
                   </ListItem>
                 </List>
@@ -202,7 +202,7 @@ const FirstTrimester = () => {
                     <BiSolidChevronRightCircle style={{ color: "#2196F3" }} />
                   </ListItemIcon>
                   <ListItemText>
-                    <Typography variant="body2">During pregnancy, it is important to eat healthily. But, eating healthy food becomes difficult during the first trimester if you have morning sickness. Eating small regular meals and including plenty of fluids can help in combatting nausea during your first trimester.</Typography>
+                    <Typography sx={{fontSize:"14px !important"}} variant="body2">During pregnancy, it is important to eat healthily. But, eating healthy food becomes difficult during the first trimester if you have morning sickness. Eating small regular meals and including plenty of fluids can help in combatting nausea during your first trimester.</Typography>
                   </ListItemText>
                 </ListItem>
               </Box>
@@ -221,7 +221,7 @@ const FirstTrimester = () => {
                       <BiSolidChevronRightCircle style={{ color: "#2196F3" }} />
                     </ListItemIcon>
                     <ListItemText>
-                      <Typography variant="body2">Variety of Fruits and Vegetables</Typography>
+                      <Typography sx={{fontSize:"14px !important"}} variant="body2">Variety of Fruits and Vegetables</Typography>
                     </ListItemText>
                   </ListItem>
                   <ListItem>
@@ -229,7 +229,7 @@ const FirstTrimester = () => {
                       <BiSolidChevronRightCircle style={{ color: "#2196F3" }} />
                     </ListItemIcon>
                     <ListItemText>
-                      <Typography variant="body2">Starchy foods, such as rice, rotis (including mixed grain or stuffed roti)</Typography>
+                      <Typography sx={{fontSize:"14px !important"}} variant="body2">Starchy foods, such as rice, rotis (including mixed grain or stuffed roti)</Typography>
                     </ListItemText>
                   </ListItem>
                   <ListItem>
@@ -237,7 +237,7 @@ const FirstTrimester = () => {
                       <BiSolidChevronRightCircle style={{ color: "#2196F3" }} />
                     </ListItemIcon>
                     <ListItemText>
-                      <Typography variant="body2">Whole grain bread, pasta, and baked/boiled potatoes</Typography>
+                      <Typography sx={{fontSize:"14px !important"}} variant="body2">Whole grain bread, pasta, and baked/boiled potatoes</Typography>
                     </ListItemText>
                   </ListItem>
                   <ListItem>
@@ -245,7 +245,7 @@ const FirstTrimester = () => {
                       <BiSolidChevronRightCircle style={{ color: "#2196F3" }} />
                     </ListItemIcon>
                     <ListItemText>
-                      <Typography variant="body2">Foods rich in protein, such as lean meat and chicken, eggs, pulses (such as beans and lentils) and soya nuggets.</Typography>
+                      <Typography sx={{fontSize:"14px !important"}} variant="body2">Foods rich in protein, such as lean meat and chicken, eggs, pulses (such as beans and lentils) and soya nuggets.</Typography>
                     </ListItemText>
                   </ListItem>
                   <ListItem>
@@ -253,7 +253,7 @@ const FirstTrimester = () => {
                       <BiSolidChevronRightCircle style={{ color: "#2196F3" }} />
                     </ListItemIcon>
                     <ListItemText>
-                      <Typography variant="body2">Dairy foods, such as milk, cheese, cottage cheese (panner) and curd/yoghurt.</Typography>
+                      <Typography sx={{fontSize:"14px !important"}} variant="body2">Dairy foods, such as milk, cheese, cottage cheese (panner) and curd/yoghurt.</Typography>
                     </ListItemText>
                   </ListItem>
                 </List>

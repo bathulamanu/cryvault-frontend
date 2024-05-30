@@ -21,7 +21,6 @@ import Offers from "../../Pages/DashboardPages/Offers";
 import Refferals from "../../Pages/DashboardPages/Refferals";
 import SettingsPage from "../../Pages/DashboardPages/SettingsPage";
 import Help from "../../Pages/DashboardPages/Help";
-import PopupLayout from "../../Pages/PopupPages/PopupLayout";
 import { useSelector } from "react-redux";
 import { AddDetailsPopup } from "../../Utilities/PopupLazyLoad";
 import useDeviceSize from "../../Utilities/useDeviceSize";
@@ -227,7 +226,7 @@ const Dashboard = () => {
                       whiteSpace: "nowrap",
                     }}
                   >
-                    Offers &nbsp; and  <br/> &nbsp;  Updates
+                    Offers &nbsp; and <br /> &nbsp; Updates
                   </div>
                 )}
               </ListItem>
@@ -598,7 +597,8 @@ const Dashboard = () => {
                     marginLeft: isMobile ? "20px" : "-25px",
                   }}
                 >
-                  Offers and <br/>Updates
+                  Offers and <br />
+                  Updates
                 </div>
               </ListItem>
 
@@ -765,56 +765,3 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
-{
-  /*
-<Box
-style={{
-  width: isMobile ? "100%" : "calc(100% - 300px)",
-  display: isMobile ? "none" : "block",
-}}
->
-{isSubscribedUser?.length > 0 ? (
-  <PopupLayout />
-) : (
-  <>
-    {selectedItem === "DashBoard" && <Details />}
-    {selectedItem === "Baby Details" && <BabyDetails />}
-    {selectedItem === "Invoices" && <Invoices />}
-    {selectedItem === "Reports" && <Services />}
-    {selectedItem === "Subscription" && <Subscription />}
-    {selectedItem === "Offers and Updates" && <Offers />}
-    {selectedItem === "Reference" && <Refferals />}
-    {selectedItem === "Settings" && <SettingsPage />}
-    {selectedItem === "Help" && <Help />}
-  </>
-)}
-
- {isSubscribedUser?.length > 0 ? (
-  <>
-    {selectedItem === "DashBoard" && <Details />}
-    {selectedItem === "Baby Details" && <BabyDetails />}
-    {selectedItem === "Invoices" && <Invoices />}
-    {selectedItem === "Reports" && <Services />}
-    {selectedItem === "Subscription" && <Subscription />}
-    {selectedItem === "Offers and Updates" && <Offers />}
-    {selectedItem === "Reference" && <Refferals />}
-    {selectedItem === "Settings" && <SettingsPage />}
-    {selectedItem === "Help" && <Help />}
-  </>
-) : (
-  <Box
-    sx={{
-      display: "block",
-      margin: "auto",
-      background: "white",
-      padding: "1rem",
-      width: "50rem",
-      height: "50rem",
-      boxShadow: "4px 6px 3px -2px rgba(0, 0, 0, 0.2), 0px 3px 4px 0px rgba(0, 0, 0, 0.14), 0px 1px 8px 0px rgba(0, 0, 0, 0.12)",
-    }}
-  >
-    <AddDetailsPopup />
-  </Box>
-)}
-</Box> */
-}

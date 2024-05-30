@@ -14,7 +14,7 @@ const StemCellBanking = () => {
           <Box className="breadcrumb-inner">
             <Box className="page-title d-flex align-items-center">
               <Box sx={{ textAlign: isMobile ? " center" : "start ", width: isMobile ? "100% !important" : "70% !important" }}>
-                <Typography variant="h1" className="title">
+                <Typography sx={{ fontSize: isMobile ? "24px !important" : "45px !important" }} variant="h1" className="title">
                   Stem Cell Banking
                 </Typography>
               </Box>

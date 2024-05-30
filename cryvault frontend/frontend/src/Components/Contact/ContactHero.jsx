@@ -10,7 +10,7 @@ const ContactHero = () => {
     <Box className="container">
       <Box className="breadcrumb-inner">
         <Box className="page-title">
-          <Typography variant={isMobile ? "h3" : 'h1'} className={ isMobile ? "mobileTitle" : "title"}>Contact</Typography>
+          <Typography  sx={{ fontSize: isMobile ? "24px !important" : "45px !important" }} variant={isMobile ? "h3" : 'h1'} className={ isMobile ? "mobileTitle" : "title"}>Contact</Typography>
         </Box>
       </Box>
     </Box>

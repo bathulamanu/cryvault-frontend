@@ -57,15 +57,15 @@ const ReachUs = () => {
 
   return (
     <>
-      <Box sx={{ display: "flex", justifyContent: "center" }} className="edu-cta-banner-area home-gym-cta-wrapper bg-image">
-        <Box sx={{ textAlign: "center", display: "flex", alignItems: "center", gap: "10rem" }} className="section-title section-left sal-animate" data-sal-delay="150" data-sal="slide-up" data-sal-duration="800">
-          <Box className="col-lg-4">
-            <Box className="playiocn">
-              <Link TO="#">
-                <HiOutlinePlayCircle />
-              </Link>
-            </Box>
+      <Box sx={{ display: "flex", width: "100%", justifyContent: "center" }} className="edu-cta-banner-area home-gym-cta-wrapper bg-image">
+        <Box sx={{ justifyContent: "center", gap: "6rem", width: "100%", textAlign: "center", display: "flex", alignItems: "center" }} className="section-title section-left sal-animate" data-sal-delay="150" data-sal="slide-up" data-sal-duration="800">
+          {/* <Box className="col-lg-4"> */}
+          <Box className="playiocn">
+            <Link TO="#">
+              <HiOutlinePlayCircle />
+            </Link>
           </Box>
+          {/* </Box> */}
           <Box>
             <Typography variant="h2" className="title mb-4">
               Ready to Get Started?

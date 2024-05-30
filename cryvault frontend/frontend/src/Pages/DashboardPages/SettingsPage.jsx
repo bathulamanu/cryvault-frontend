@@ -16,8 +16,8 @@ const SettingsPage = () => {
           margin: isMobile ? "20px" : "0px",
         }}
       >
-        <Box sx={{ backgroundColor: "#2b2e64" }}>
-          <Typography sx={{ color: "white", padding: "10px" }} variant="h4">
+        <Box p={2} sx={{ backgroundColor: "#2b2e64",}}>
+          <Typography sx={{ color: "white"}} variant="h4">
             Settings
           </Typography>
         </Box>

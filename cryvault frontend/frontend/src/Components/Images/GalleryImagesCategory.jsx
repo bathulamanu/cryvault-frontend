@@ -20,7 +20,7 @@ const GalleryImagesCategory = () => {
   };
 
   return (
-    <Container sx={{ paddingLeft: "200px !important", paddingRight: "200px !important" }}>
+    <Container sx={{ paddingLeft: isMobile ? "" : "200px !important", paddingRight: isMobile ? "" : "200px !important" }}>
       <Swiper
         slidesPerView={isMobile ? 3 : categories.length}
         modules={[Navigation, Pagination, A11y]}
@@ -31,11 +31,12 @@ const GalleryImagesCategory = () => {
         }}
       >
         {categories.map((category) => (
-          <SwiperSlide key={category}>
+          <SwiperSlide key={category} style={{border:"2px solid", width:"200px !important"}}>
             <Box
               style={{
                 border: "1px solid red",
                 cursor: "pointer",
+                whiteSpace:"nowrap"
               }}
               onClick={() => handleCategoryClick(category)}
               className={categoryActiveTab === category ? " activeSingleCategory" : "singleCategory"}

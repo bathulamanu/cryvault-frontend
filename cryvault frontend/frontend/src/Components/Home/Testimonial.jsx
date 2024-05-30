@@ -13,7 +13,7 @@ const Testimonial = () => {
   const isMobile = useDeviceSize() === "xs";
 
   return (
-    <Box style={{ position: "relative", marginBottom: isMobile ? "5rem" : "15rem", marginTop: isMobile ? "5rem" : "15rem", paddingTop: "10rem", paddingBottom: isMobile ? "0rem" : "10rem" }} className="testimonailContainer">
+    <Box style={{ position: "relative", marginBottom: isMobile ? "5rem" : "15rem", marginTop: isMobile ? "5rem" : "10rem", paddingTop: "10rem", paddingBottom: isMobile ? "0rem" : "10rem" }} className="testimonailContainer">
       {isMobile ? null : (
         <>
           {" "}
@@ -23,7 +23,7 @@ const Testimonial = () => {
         </>
       )}
       <Box className=" testimonialAboveImage" data-negative="false">
-        <svg style={{ position: "absolute", top: "100px" }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none">
+        <svg style={{ position: "absolute",display:"none", top: "100px" }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none">
           <path
             style={{
               fill: "#FFF7EF61",
@@ -59,7 +59,7 @@ const Testimonial = () => {
             disableOnInteraction: false,
           }}
         >
-          <SwiperSlide style={{ display: "flex", justifyContent: "center", height:"45rem" }}>
+          <SwiperSlide style={{ display: "flex", justifyContent: "center", height: "45rem" }}>
             <SingleSlide />
           </SwiperSlide>
           <SwiperSlide style={{ display: "flex", justifyContent: "center" }}>
@@ -79,7 +79,7 @@ export const SingleSlide = React.memo(() => {
 
   return (
     <>
-      <Box className="singleSlide" style={{ width: isMobile ? "100%" : "65%", height:"80%" }}>
+      <Box className="singleSlide" style={{ width: isMobile ? "100%" : "65%", height: "80%" }}>
         <Box className="quote-icon">
           <img src="assets/images/quote.svg" alt="quote svg" style={{ width: "4rem" }} />
         </Box>
