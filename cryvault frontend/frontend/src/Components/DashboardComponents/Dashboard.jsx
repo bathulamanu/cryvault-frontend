@@ -65,10 +65,10 @@ const Dashboard = () => {
           <Box
             sx={{
               border: "0.5px solid #BEBEBE",
-              width: isMobile ? "100%" : "200px",
+              width: isMobile ? "100%" : "150px",
               height: "auto",
               borderRadius: "50px",
-              paddingLeft: "20px",
+              // paddingLeft: "20px",
               display: "flex",
               flexDirection: "column",
               gap: "1.5rem",
@@ -227,7 +227,7 @@ const Dashboard = () => {
                       whiteSpace: "nowrap",
                     }}
                   >
-                    Offers and Updates
+                    Offers &nbsp; and  <br/> &nbsp;  Updates
                   </div>
                 )}
               </ListItem>
@@ -348,7 +348,7 @@ const Dashboard = () => {
             </List>
           </Box>
         </Box>
-        {/* <Box
+        <Box
           style={{
             width: isMobile ? "100%" : "calc(100% - 300px)",
             display: isMobile ? "none" : "block",
@@ -363,8 +363,8 @@ const Dashboard = () => {
           {selectedItem === "Reference" && <Refferals />}
           {selectedItem === "Settings" && <SettingsPage />}
           {selectedItem === "Help" && <Help />}
-        </Box> */}
-        {isSubscribedUser?.length > 0 ? (
+        </Box>
+        {/* {isSubscribedUser?.length > 0 ? (
           <Box
             style={{
               width: isMobile ? "100%" : "calc(100% - 300px)",
@@ -388,14 +388,14 @@ const Dashboard = () => {
               margin: "auto",
               background: "white",
               padding: "1rem",
-              width: "50rem",
-              height: "50rem",
+              width: "47rem",
+              height: "45rem",
               boxShadow: "4px 6px 3px -2px rgba(0, 0, 0, 0.2), 0px 3px 4px 0px rgba(0, 0, 0, 0.14), 0px 1px 8px 0px rgba(0, 0, 0, 0.12)",
             }}
           >
             <AddDetailsPopup />
           </Box>
-        )}
+        )} */}
       </Box>
 
       {/* mobile */}
@@ -581,7 +581,7 @@ const Dashboard = () => {
                   marginBottom: "10px",
                   marginLeft: isMobile ? "-50px" : "-10px",
                   height: "50px",
-                  width: isMobile ? "-50px" : "200px",
+                  width: isMobile ? "-50px" : "150px",
                   borderRadius: "20px",
                 }}
                 onClick={() => handleItemClick("Offers and Updates")}
@@ -598,7 +598,7 @@ const Dashboard = () => {
                     marginLeft: isMobile ? "20px" : "-25px",
                   }}
                 >
-                  Offers and Updates
+                  Offers and <br/>Updates
                 </div>
               </ListItem>
 

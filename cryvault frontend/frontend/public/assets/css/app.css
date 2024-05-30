@@ -1,8 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&display=swap');
 
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap');
 
-@import url('https://fonts.googleapis.com/css2?family=Courgette&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Courgette&display=swap'); */
 
 
 
@@ -8159,7 +8159,7 @@ body.sal-disabled [data-sal|="flip"] {
   border-radius: 50%;
   font-size: 50px;
   margin: 0 auto 10px;
-  background-color: #fff !important;
+  /* background-color: #fff !important; */
 }
 .edu-counterup.counterup-style-4 .icon.primary-color {
   background-color: rgba(26, 182, 157, 0.1);
@@ -38854,7 +38854,6 @@ body .hr_line {
 }
 .inform_form h3 {
   color: #FF0060;
-  font-family: "Libre Baskerville", Sans-serif !important;
   font-size: 24px;
   font-weight: 500;
   font-style: italic;
@@ -38913,7 +38912,6 @@ body .hr_line {
 
 .address_info h3 {
   color: #FF0060;
-  font-family: "Libre Baskerville", Sans-serif !important;
   font-size: 24px;
   font-weight: 500;
   font-style: italic;
@@ -39106,7 +39104,7 @@ justify-content: end;
 
 .excercise_blo h3{
   color: #B70040 !important;
-  font-family: "Amiri", Sans-serif !important;
+  /* font-family: "Amiri", Sans-serif !important; */
   font-size: 24px !important;
   font-weight: 600 !important;
   line-height: 1.9em !important;

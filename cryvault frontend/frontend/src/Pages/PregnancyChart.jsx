@@ -51,28 +51,28 @@ const PregnancyChart = () => {
               <Table>
                 <TableHead>
                   <TableRow>
-                    <TableCell>
+                    <TableCell sx={{ textAlign: "center !important",}}>
                       <TableSortLabel>
                         <Typography variant="body2" sx={{ textAlign: "center !important", color: "white", fontSize: "2rem" }}>
                           Food
                         </Typography>
                       </TableSortLabel>
                     </TableCell>
-                    <TableCell>
+                    <TableCell sx={{ textAlign: "center !important",}}>
                       <TableSortLabel>
                         <Typography variant="body2" sx={{ textAlign: "center !important", color: "white", fontSize: "2rem" }}>
                           Calorie (kcal)
                         </Typography>
                       </TableSortLabel>
                     </TableCell>
-                    <TableCell>
+                    <TableCell sx={{ textAlign: "center !important",}}>
                       <TableSortLabel>
                         <Typography variant="body2" sx={{ textAlign: "center !important", color: "white", fontSize: "2rem" }}>
                           Proteins (gms)
                         </Typography>
                       </TableSortLabel>
                     </TableCell>
-                    <TableCell>
+                    <TableCell sx={{ textAlign: "center !important",}}>
                       <TableSortLabel>
                         <Typography variant="body2" sx={{ textAlign: "center !important", color: "white", fontSize: "2rem" }}>
                           Benefits

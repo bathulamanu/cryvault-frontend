@@ -264,15 +264,7 @@ const Details = () => {
         }}
         style={{ marginLeft: isMobile ? "10px" : "20px" }}
       >
-        {/* <Box className={classes.cardBox} p={3}>
-          <Typography sx={{ color: "white" }} variant="h4">
-            Details
-          </Typography>
-        </Box> */}
-
         <Box style={{ backgroundColor: "#2b2e64", padding: 24 }}>
-          {" "}
-          {/* Inline styles for cardBox */}
           <Typography variant="h4" style={{ color: "white" }}>
             Details
           </Typography>
@@ -283,264 +275,128 @@ const Details = () => {
               <Grid xs={isMobile ? 12 : 6}>
                 <Grid container spacing={2}>
                   <Grid item xs={12} md={4} style={{ marginRight: "2px", marginTop: "20px" }}>
-                    <TextField
-                      style={{
-                        backgroundColor: "#e5e5e5 !important",
-                        fontSize: "1rem",
-                      }}
-                      InputLabelProps={{ style: { fontSize: "1.25rem" } }}
-                      InputProps={{ style: { backgroundColor: "#e5e5e5 !important", fontSize: "1.25rem" } }}
-                      id="Mother's Name"
-                      label="Mother's Name"
-                      variant="standard"
-                      fullWidth
-                      // className="detailsInput"
-                    />
+                    <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                      <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Mother's Name</Typography>
+                      <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>Mother's Name</Typography>
+                    </Box>
                   </Grid>
                   <Grid item xs={12} md={4} style={{ marginRight: "2px", marginTop: "20px" }}>
-                    <TextField
-                      style={{
-                        backgroundColor: "#e5e5e5 !important",
-                        fontSize: "1rem",
-                      }}
-                      InputLabelProps={{ style: { fontSize: "1.25rem" } }}
-                      InputProps={{ style: { backgroundColor: "#e5e5e5 !important", fontSize: "1.25rem" } }}
-                      id="Date of Birth"
-                      label="Date of Birth"
-                      variant="standard"
-                      fullWidth
-                    />
+                    <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                      <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Date of Birth</Typography>
+                      <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>Date of Birth</Typography>
+                    </Box>
                   </Grid>
                   <Grid item xs={12} md={4} style={{ marginRight: "2px", marginTop: "20px" }}>
-                    <TextField
-                      style={{
-                        backgroundColor: "#e5e5e5 !important",
-                        fontSize: "1rem",
-                      }}
-                      InputLabelProps={{ style: { fontSize: "1.25rem" } }}
-                      InputProps={{ style: { backgroundColor: "#e5e5e5 !important", fontSize: "1.25rem" } }}
-                      label="Mobile Number"
-                      variant="standard"
-                      fullWidth
-                    />
+                    <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                      <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Mobile Number</Typography>
+                      <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>Mobile Number</Typography>
+                    </Box>
                   </Grid>
                   <Grid item xs={12} md={4} style={{ marginRight: "2px", marginTop: "20px" }}>
-                    <TextField
-                      style={{
-                        backgroundColor: "#e5e5e5 !important",
-                        fontSize: "1rem",
-                      }}
-                      InputLabelProps={{ style: { fontSize: "1.25rem" } }}
-                      InputProps={{ style: { backgroundColor: "#e5e5e5 !important", fontSize: "1.25rem" } }}
-                      label="Email Address"
-                      variant="standard"
-                      fullWidth
-                    />
+                    <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                      <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Email Address</Typography>
+                      <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>Email Address</Typography>
+                    </Box>
                   </Grid>
                   <Grid item xs={12} md={4} style={{ marginRight: "2px", marginTop: "20px" }}>
-                    <TextField
-                      style={{
-                        backgroundColor: "#e5e5e5 !important",
-                        fontSize: "1rem",
-                      }}
-                      InputLabelProps={{ style: { fontSize: "1.25rem" } }}
-                      InputProps={{ style: { backgroundColor: "#e5e5e5 !important", fontSize: "1.25rem" } }}
-                      label="Occupation"
-                      variant="standard"
-                      fullWidth
-                    />
+                    <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                      <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Occupation</Typography>
+                      <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>Occupation</Typography>
+                    </Box>
                   </Grid>
                   <Grid item xs={12} md={4} style={{ marginRight: "2px", marginTop: "20px" }}>
-                    <TextField
-                      style={{
-                        backgroundColor: "#e5e5e5 !important",
-                        fontSize: "1rem",
-                      }}
-                      InputLabelProps={{ style: { fontSize: "1.25rem" } }}
-                      InputProps={{ style: { backgroundColor: "#e5e5e5 !important", fontSize: "1.25rem" } }}
-                      label="Organization Name"
-                      variant="standard"
-                      fullWidth
-                    />
+                    <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                      <Typography sx={{ whiteSpace: "nowrap", fontWeight: "600", fontSize: "2rem", color: "gray" }}>Organization Name</Typography>
+                      <Typography sx={{ whiteSpace: "nowrap", fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>Organization Name</Typography>
+                    </Box>
                   </Grid>
                 </Grid>
               </Grid>
 
               {/* Father's Details Grid */}
-              <Grid item xs={isMobile ? 12 : 6} sx={{ padding: "0px !important" }}>
-                <Grid container spacing={2} sx={{ padding: "0px !important" }}>
-                  <Grid item xs={4} style={{ marginRight: "2px", marginTop: "20px" }}>
-                    <TextField
-                      style={{
-                        backgroundColor: "#e5e5e5 !important",
-                        fontSize: "1rem",
-                      }}
-                      InputLabelProps={{ style: { fontSize: "1.25rem" } }}
-                      InputProps={{ style: { backgroundColor: "#e5e5e5 !important", fontSize: "1.25rem" } }}
-                      label="Father's Name"
-                      variant="standard"
-                      fullWidth
-                    />
+              <Grid xs={isMobile ? 12 : 6} md={6}>
+                <Grid container spacing={2}>
+                  <Grid item xs={12} md={4} style={{ marginRight: "2px", marginTop: "20px" }}>
+                    <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                      <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Father's Name</Typography>
+                      <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>Father's Name</Typography>
+                    </Box>
                   </Grid>
                   <Grid item xs={12} md={4} style={{ marginRight: "2px", marginTop: "20px" }}>
-                    <TextField
-                      style={{
-                        backgroundColor: "#e5e5e5 !important",
-                        fontSize: "1rem",
-                      }}
-                      InputLabelProps={{ style: { fontSize: "1.25rem" } }}
-                      InputProps={{ style: { backgroundColor: "#e5e5e5 !important", fontSize: "1.25rem" } }}
-                      label="Date of Birth"
-                      variant="standard"
-                      fullWidth
-                    />
+                    <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                      <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Date of Birth</Typography>
+                      <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>Date of Birth</Typography>
+                    </Box>
                   </Grid>
                   <Grid item xs={12} md={4} style={{ marginRight: "2px", marginTop: "20px" }}>
-                    <TextField
-                      style={{
-                        backgroundColor: "#e5e5e5 !important",
-                        fontSize: "1rem",
-                      }}
-                      InputLabelProps={{ style: { fontSize: "1.25rem" } }}
-                      InputProps={{ style: { backgroundColor: "#e5e5e5 !important", fontSize: "1.25rem" } }}
-                      label="Mobile Number"
-                      variant="standard"
-                      fullWidth
-                    />
+                    <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                      <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Mobile Number</Typography>
+                      <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>Mobile Number</Typography>
+                    </Box>
                   </Grid>
                   <Grid item xs={12} md={4} style={{ marginRight: "2px", marginTop: "20px" }}>
-                    <TextField
-                      style={{
-                        backgroundColor: "#e5e5e5 !important",
-                        fontSize: "1rem",
-                      }}
-                      InputLabelProps={{ style: { fontSize: "1.25rem" } }}
-                      InputProps={{ style: { backgroundColor: "#e5e5e5 !important", fontSize: "1.25rem" } }}
-                      label="Email Address"
-                      variant="standard"
-                      fullWidth
-                    />
+                    <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                      <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Email Address</Typography>
+                      <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>Email Address</Typography>
+                    </Box>
                   </Grid>
                   <Grid item xs={12} md={4} style={{ marginRight: "2px", marginTop: "20px" }}>
-                    <TextField
-                      style={{
-                        backgroundColor: "#e5e5e5 !important",
-                        fontSize: "1rem",
-                      }}
-                      InputLabelProps={{ style: { fontSize: "1.25rem" } }}
-                      InputProps={{ style: { backgroundColor: "#e5e5e5 !important", fontSize: "1.25rem" } }}
-                      label="Occupation"
-                      variant="standard"
-                      fullWidth
-                    />
+                    <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                      <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Occupation</Typography>
+                      <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>Occupation</Typography>
+                    </Box>
                   </Grid>
                   <Grid item xs={12} md={4} style={{ marginRight: "2px", marginTop: "20px" }}>
-                    <TextField
-                      style={{
-                        backgroundColor: "#e5e5e5 !important",
-                        fontSize: "1rem",
-                      }}
-                      InputLabelProps={{ style: { fontSize: "1.25rem" } }}
-                      InputProps={{ style: { backgroundColor: "#e5e5e5 !important", fontSize: "1.25rem" } }}
-                      label="Organization Name"
-                      variant="standard"
-                      fullWidth
-                    />
+                    <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                      <Typography sx={{ whiteSpace: "nowrap", fontWeight: "600", fontSize: "2rem", color: "gray" }}>Organization Name</Typography>
+                      <Typography sx={{ whiteSpace: "nowrap", fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>Organization Name</Typography>
+                    </Box>
                   </Grid>
                 </Grid>
               </Grid>
 
               {/* Remaining Address Details */}
-              <Grid item xs={12} style={{ marginRight: "2px", marginTop: "20px" }}>
-                <TextField
-                  style={{
-                    backgroundColor: "#e5e5e5 !important",
-                    fontSize: "1rem",
-                  }}
-                  InputLabelProps={{ style: { fontSize: "1.25rem" } }}
-                  InputProps={{ style: { backgroundColor: "#e5e5e5 !important", fontSize: "1.25rem" } }}
-                  label="Address line 1"
-                  variant="standard"
-                  fullWidth
-                />
+              <Grid item xs={12} style={{ marginRight: "2px", marginTop: "20px", padding: "1rem 0 " }}>
+                <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                  <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Address line 1</Typography>
+                  <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>Address line 1</Typography>
+                </Box>
               </Grid>
-              <Grid item xs={12} style={{ marginRight: "2px", marginTop: "20px" }}>
-                <TextField
-                  style={{
-                    backgroundColor: "#e5e5e5 !important",
-                    fontSize: "1rem",
-                  }}
-                  InputLabelProps={{ style: { fontSize: "1.25rem" } }}
-                  InputProps={{ style: { backgroundColor: "#e5e5e5 !important", fontSize: "1.25rem" } }}
-                  label="Address line 2"
-                  variant="standard"
-                  fullWidth
-                />
+              <Grid item xs={12} style={{ marginRight: "2px", marginTop: "20px", padding: "1rem 0 " }}>
+                <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                  <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Address line 2</Typography>
+                  <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>Address line 2</Typography>
+                </Box>
               </Grid>
-              <Grid item xs={4} style={{ marginRight: "2px", marginTop: "20px" }}>
-                <TextField
-                  style={{
-                    backgroundColor: "#e5e5e5 !important",
-                    fontSize: "1rem",
-                  }}
-                  InputLabelProps={{ style: { fontSize: "1.25rem" } }}
-                  InputProps={{ style: { backgroundColor: "#e5e5e5 !important", fontSize: "1.25rem" } }}
-                  label="Near Land Mark"
-                  variant="standard"
-                  fullWidth
-                />
+              <Grid item xs={4} style={{ marginRight: "2px", marginTop: "20px", padding: "1rem 0 " }}>
+                <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                  <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Near Land Mark</Typography>
+                  <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>Near Land Mark</Typography>
+                </Box>
               </Grid>
-              <Grid item xs={4} style={{ marginRight: "2px", marginTop: "20px" }}>
-                <TextField
-                  style={{
-                    backgroundColor: "#e5e5e5 !important",
-                    fontSize: "1rem",
-                  }}
-                  InputLabelProps={{ style: { fontSize: "1.25rem" } }}
-                  InputProps={{ style: { backgroundColor: "#e5e5e5 !important", fontSize: "1.25rem" } }}
-                  label="City"
-                  variant="standard"
-                  fullWidth
-                />
+              <Grid item xs={4} style={{ marginRight: "2px", marginTop: "20px", padding: "1rem 0 " }}>
+                <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                  <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>City</Typography>
+                  <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>City</Typography>
+                </Box>
               </Grid>
-              <Grid item xs={4} style={{ marginRight: "2px", marginTop: "20px" }}>
-                <TextField
-                  style={{
-                    backgroundColor: "#e5e5e5 !important",
-                    fontSize: "1rem",
-                  }}
-                  InputLabelProps={{ style: { fontSize: "1.25rem" } }}
-                  InputProps={{ style: { backgroundColor: "#e5e5e5 !important", fontSize: "1.25rem" } }}
-                  label="State"
-                  variant="standard"
-                  fullWidth
-                />
+              <Grid item xs={4} style={{ marginRight: "2px", marginTop: "20px", padding: "1rem 0 " }}>
+                <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                  <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>State</Typography>
+                  <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>State</Typography>
+                </Box>
               </Grid>
-              <Grid item xs={2} style={{ marginRight: "2px", marginTop: "20px" }}>
-                <TextField
-                  style={{
-                    backgroundColor: "#e5e5e5 !important",
-                    fontSize: "1rem",
-                  }}
-                  InputLabelProps={{ style: { fontSize: "1.25rem" } }}
-                  InputProps={{ style: { backgroundColor: "#e5e5e5 !important", fontSize: "1.25rem" } }}
-                  label="Pincode"
-                  variant="standard"
-                  fullWidth
-                />
+              <Grid item xs={2} style={{ marginRight: "2px", marginTop: "20px", padding: "1rem 0 " }}>
+                <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                  <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Pincode</Typography>
+                  <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>Pincode</Typography>
+                </Box>
               </Grid>
-              <Grid item xs={2} style={{ marginRight: "2px", marginTop: "20px" }}>
-                <TextField
-                  style={{
-                    backgroundColor: "#e5e5e5 !important",
-                    fontSize: "1rem",
-                  }}
-                  InputLabelProps={{ style: { fontSize: "1.25rem" } }}
-                  InputProps={{ style: { backgroundColor: "#e5e5e5 !important", fontSize: "1.25rem" } }}
-                  label="Country"
-                  variant="standard"
-                  fullWidth
-                />
+              <Grid item xs={2} style={{ marginRight: "2px", marginTop: "20px", padding: "1rem 0 " }}>
+                <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                  <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Country</Typography>
+                  <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>Country</Typography>
+                </Box>
               </Grid>
             </Grid>
           </Box>
@@ -596,14 +452,7 @@ export const MobileDetails = () => {
         }}
         style={{ marginLeft: isMobile ? "10px" : "20px" }}
       >
-        {/* <Box className={classes.cardBox} p={3}>
-          <Typography sx={{ color: "white" }} variant="h4">
-            Details
-          </Typography>
-        </Box> */}
         <Box style={{ backgroundColor: "#2b2e64", padding: 24 }}>
-          {" "}
-          {/* Inline styles for cardBox */}
           <Typography variant="h4" style={{ color: "white" }}>
             Details
           </Typography>
@@ -628,7 +477,7 @@ export const MobileDetails = () => {
                       // className="detailsInput"
                     />
 
-                    <TextField
+                    {/* <TextField
                       style={{
                         backgroundColor: "#e5e5e5 !important",
                         fontSize: "1rem",
@@ -640,7 +489,7 @@ export const MobileDetails = () => {
                       variant="standard"
                       fullWidth
                       // className="detailsInput"
-                    />
+                    /> */}
                   </Grid>
                   <Grid item xs={12} md={4} style={{ marginRight: "2px", marginTop: "20px" }}>
                     <TextField
