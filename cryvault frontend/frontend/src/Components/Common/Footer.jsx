@@ -48,6 +48,7 @@ const Footer = () => {
 
       //   width: "100%",
       // }}
+      style={{backgroundColor:"#D7F5FF"}}
       className="edu-footer footer-lighten bg-image footer-style-1"
     >
       <Box className="footer-top">

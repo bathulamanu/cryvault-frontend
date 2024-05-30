@@ -93,7 +93,7 @@ const HomeBlog = () => {
 
                     <Box className="read-more-btn">
                       <Link className="edu-btn btn-small" href="#">
-                        Read More <i className="icon-4"></i>
+                        Read More 
                       </Link>
                     </Box>
                   </Box>
@@ -117,7 +117,7 @@ const HomeBlog = () => {
 
                     <Box className="read-more-btn">
                       <Link className="edu-btn btn-small" href="#">
-                        Read More <i className="icon-4"></i>
+                        Read More 
                       </Link>
                     </Box>
                   </Box>
@@ -141,7 +141,7 @@ const HomeBlog = () => {
 
                     <Box className="read-more-btn">
                       <Link className="edu-btn btn-small" href="#">
-                        Read More <i className="icon-4"></i>
+                        Read More 
                       </Link>
                     </Box>
                   </Box>

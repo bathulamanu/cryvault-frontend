@@ -90,7 +90,7 @@ const Aboutus = () => {
                   <Typography>For over 6 years parents have been preserving their baby’s umbilical cord blood stem cells for various medical treatments. Preserving your newborn’s umbilical cord provides your family a chance to save and change lives. Umbilical cord stem cells if not only perfectly match the baby but also the siblings, parents and other close family members in most cases.</Typography>
                   <Box className="about-btn sal-animate" data-sal-delay="400" data-sal="slide-up" data-sal-duration="1000">
                     <Link href="#" className="edu-btn">
-                      Book Appointment <i className="icon-4"></i>
+                      Book Appointment 
                     </Link>
                   </Box>
                 </Box>

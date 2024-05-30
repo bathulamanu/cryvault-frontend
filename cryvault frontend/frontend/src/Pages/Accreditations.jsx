@@ -8,7 +8,6 @@ const Accreditations = () => {
   const isMobile = useDeviceSize() === "xs";
   const pageInfo = useSelector((state) => state.home.pageInfo);
   const url = `https://flyingbyts.s3.ap-south-2.amazonaws.com/s3/${pageInfo?.[7]?.[7]?.pageHeaderImage}`;
-  console.log(pageInfo,url)
 
   return (
     <>

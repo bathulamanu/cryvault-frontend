@@ -1,4 +1,4 @@
-import { Button, Container, Link, Typography,Box } from "@mui/material";
+import { Button, Container, Link, Typography, Box } from "@mui/material";
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -13,7 +13,7 @@ const Testimonial = () => {
   const isMobile = useDeviceSize() === "xs";
 
   return (
-    <Box style={{ position: "relative", marginBottom:isMobile ?"5rem" : "15rem", marginTop: isMobile ? "5rem"  : "15rem", paddingTop: "10rem", paddingBottom: isMobile ?"0rem" : "10rem" }} className="testimonailContainer">
+    <Box style={{ position: "relative", marginBottom: isMobile ? "5rem" : "15rem", marginTop: isMobile ? "5rem" : "15rem", paddingTop: "10rem", paddingBottom: isMobile ? "0rem" : "10rem" }} className="testimonailContainer">
       {isMobile ? null : (
         <>
           {" "}
@@ -43,10 +43,7 @@ const Testimonial = () => {
         <Typography variant="h2">
           What <span style={{ color: "#EF636D" }}> Parents </span> say
         </Typography>
-        <Box className={isMobile ? "shape_inMobileTestimonial shape_inMobileTestimonial-bk" : "shape_in shape_in-bk"} style={{ display: "flex", justifyContent: "center" }}>
-          <img src="assets/images/med-img blk.svg" width="30" />
-        </Box>
-        <Typography  className="mb-0">
+        <Typography className="mb-0">
           Let’s start the journey towards success and enhance revenue for your<br></br> business. Take your company to the next level.
         </Typography>
       </Box>
@@ -56,12 +53,13 @@ const Testimonial = () => {
           slidesPerView={1}
           modules={[Navigation, Pagination, Scrollbar, A11y]}
           spaceBetween={10}
+          pagination={true}
           autoplay={{
             delay: 2500,
             disableOnInteraction: false,
           }}
         >
-          <SwiperSlide style={{ display: "flex", justifyContent: "center" }}>
+          <SwiperSlide style={{ display: "flex", justifyContent: "center", height:"45rem" }}>
             <SingleSlide />
           </SwiperSlide>
           <SwiperSlide style={{ display: "flex", justifyContent: "center" }}>
@@ -81,11 +79,13 @@ export const SingleSlide = React.memo(() => {
 
   return (
     <>
-      <Box className="singleSlide" style={{ width: isMobile ? "100%" : "65%" }}>
+      <Box className="singleSlide" style={{ width: isMobile ? "100%" : "65%", height:"80%" }}>
         <Box className="quote-icon">
           <img src="assets/images/quote.svg" alt="quote svg" style={{ width: "4rem" }} />
         </Box>
-        <Typography sx={{fontSize:"2rem"}} variant='body1'>"I am grateful to Cryovault for providing top-notch stem cell storage services. Their knowledgeable staff guided us through the process with ease, giving us peace of mind knowing that our baby's future health is in good hands."</Typography>
+        <Typography sx={{ fontSize: "2rem" }} variant="body1">
+          "I am grateful to Cryovault for providing top-notch stem cell storage services. Their knowledgeable staff guided us through the process with ease, giving us peace of mind knowing that our baby's future health is in good hands."
+        </Typography>
         <Box className="d-flex align-items-center avatr_blk">
           <img src="assets/images/Praveen-Kumar.webp" alt="quote svg" /> <h5 className="title">Praveen</h5>
         </Box>

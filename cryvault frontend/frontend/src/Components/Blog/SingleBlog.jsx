@@ -72,7 +72,7 @@ const SingleBlog = () => {
                   </Box>
                   <Box className="form-group">
                     <button type="button" className="edu-btn btn-medium">
-                      Submit <i className="icon-4"></i>
+                      Submit 
                     </button>
                   </Box>
                 </form>
