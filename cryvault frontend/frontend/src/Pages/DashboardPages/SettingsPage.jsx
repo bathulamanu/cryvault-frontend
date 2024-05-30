@@ -16,8 +16,8 @@ const SettingsPage = () => {
           margin: isMobile ? "20px" : "0px",
         }}
       >
-        <Box p={2} sx={{ backgroundColor: "#2b2e64",}}>
-          <Typography sx={{ color: "white"}} variant="h4">
+        <Box p={2} sx={{ backgroundColor: "#2b2e64" }}>
+          <Typography sx={{ color: "white" }} variant="h4">
             Settings
           </Typography>
         </Box>
@@ -28,7 +28,7 @@ const SettingsPage = () => {
             padding: "20px",
           }}
         >
-          <Box style={{ margin: "60px", position: "relative" }}>
+          <Box style={{ margin: isMobile ? 'none' :  "60px", position: "relative", display: isMobile ? 'flex' :  "block", alignItems: "center", justifyContent: "center" }}>
             <img
               style={{
                 width: "150px",
@@ -39,17 +39,31 @@ const SettingsPage = () => {
               src={baby}
               alt="Father-son"
             />
-            <IconButton
-              style={{
-                position: "absolute",
-                top: isMobile ? "140px" : "140px",
-                right: isMobile ? "30px" : "0px",
-                backgroundColor: "whitesmoke",
-              }}
-              aria-label="edit"
-            >
-              <EditIcon />
-            </IconButton>
+            {isMobile ? (
+              <IconButton
+                style={{
+                  position: "absolute",
+                  bottom: "30px",
+                  right: "90px",
+                  backgroundColor: "whitesmoke",
+                }}
+                aria-label="edit"
+              >
+                <EditIcon />
+              </IconButton>
+            ) : (
+              <IconButton
+                style={{
+                  position: "absolute",
+                  top: "140px",
+                  right: "0px",
+                  backgroundColor: "whitesmoke",
+                }}
+                aria-label="edit"
+              >
+                <EditIcon />{" "}
+              </IconButton>
+            )}
           </Box>
           <Grid container spacing={2}>
             <Grid item xs={12}>

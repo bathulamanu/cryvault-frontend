@@ -402,10 +402,9 @@ const Dashboard = () => {
         <Card
           sx={{
             backgroundColor: "#2b2e64",
-            marginLeft: "10px",
-            width: "90vw",
             height: "50px",
             borderRadius: "20px",
+            margin:"1rem"
           }}
         >
           <Box

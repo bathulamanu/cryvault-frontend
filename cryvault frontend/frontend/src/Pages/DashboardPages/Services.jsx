@@ -9,7 +9,7 @@ const Services = () => {
     <Box sx={{height:"100%"}}>
       <Card
         sx={{
-          width: isMobile ? "90%" : "1100px", // Adjust width based on screen size
+          width: isMobile ? "9a0%" : "1100px", // Adjust width based on screen size
           height: "100%",
           margin: isMobile ? "10px" : "0px",
           borderRadius: "20px",
