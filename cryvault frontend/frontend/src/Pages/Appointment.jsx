@@ -115,7 +115,9 @@ const Appointment = () => {
           <Box className="breadcrumb-inner">
             <Box className="page-title d-flex align-items-center">
               <Box sx={{ textAlign: isMobile ? " center" : "start ", width: isMobile ? "100% !important" : "65% !important" }}>
-                <Typography variant="h1" className="title">Appointment</Typography>
+                <Typography variant="h1" className="title">
+                  Appointment
+                </Typography>
               </Box>
 
               {isMobile ? null : (
@@ -165,37 +167,44 @@ const Appointment = () => {
 
                   <Box className="add_info">
                     <Box className="number_info">
-                      <RiCustomerService2Fill />
+                      <RiCustomerService2Fill style={{ color: "#2A0011" }} />
                       <Typography variant="body1">
                         <span>Toll Free No</span>
                       </Typography>
                       <Typography variant="bod1">
                         {" "}
-                        <Link to="tel:18001 024 026">18001 024 026</Link>
+                        <Link sx={{ color: "black", fontSize: "2rem" }} to="tel:18001 024 026">
+                          18001 024 026
+                        </Link>
                       </Typography>
                     </Box>
                     <Box className="text-center shld_ot">
                       <BsShieldPlus />
                     </Box>
                     <Box className="number_info">
-                      <HiOutlineMail />
+                      <HiOutlineMail style={{ color: "#2A0011" }} />
                       <Typography variant="body1">
                         <span>Email</span>
                       </Typography>
                       <Typography variant="body1">
                         {" "}
-                        <Link to="tel:18001 024 026">info@cryovault.in</Link>
+                        <Link sx={{ color: "black", fontSize: "2rem" }} to="tel:18001 024 026">
+                          info@cryovault.in
+                        </Link>
                       </Typography>
                     </Box>
                     <Box className="text-center shld_ot">
                       <BsShieldPlus />
                     </Box>
                     <Box className="number_info">
-                      <FaMapLocationDot />
+                      <FaMapLocationDot style={{ color: "#2A0011" }} />
                       <Typography variant="body1">
                         <span>Location</span>
                       </Typography>
-                      <Typography variant="body1"> Arden Fair, 4th Floor, Pai Layout, Old Madras Road, Bangalore – 560016</Typography>
+                      <Typography variant="body1" sx={{ color: "black", fontSize: "2rem" }}>
+                        {" "}
+                        Arden Fair, 4th Floor, Pai Layout, Old Madras Road, Bangalore – 560016
+                      </Typography>
                     </Box>
                   </Box>
                 </Box>

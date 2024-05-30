@@ -197,9 +197,12 @@ const Footer = () => {
         <Box className="container">
           <Box className="row">
             <Box className="col-lg-12">
-              <Box className="inner text-center">
+              <Box className="inner text-center" sx={{display:"flex"}}>
                 <Container sx={{ display: "flex", justifyContent: "space-between" }}>
-                  <p dangerouslySetInnerHTML={{ __html: socialIcons?.footerCopyright }}></p>
+                  <p dangerouslySetInnerHTML={{ __html: socialIcons?.footerCopyright1 }}></p>
+                </Container>
+                <Container sx={{ display: "flex", justifyContent: "end" }}>
+                  <p dangerouslySetInnerHTML={{ __html: socialIcons?.footerCopyright2 }}></p>
                 </Container>
               </Box>
             </Box>

@@ -9,24 +9,25 @@ const ImageHero = () => {
       <Box className="container">
         <Box className="breadcrumb-inner">
           <Box className="page-title d-flex align-items-center">
-            <Typography sx={{width:"75%"}} variant={isMobile ? "h3" : "h1"} className={isMobile ? "mobileTitle" : "title"}>
-              Images
-            </Typography>
-            {isMobile ? null : (
-            <Breadcrumbs aria-label="breadcrumb">
-              <Link underline="hover" color="inherit" href="/pregnancy">
-                <Typography variant="body2" color="text.primary">
-                  Pregnancy
-                </Typography>
-              </Link>
-              <Typography variant="body2" color="text.primary">
-                Third Trimester
+            <Box sx={{ textAlign: isMobile ? " center" : "start ", width: isMobile ? "100% !important" : "70% !important" }}>
+              <Typography sx={{ width: "75%" }} variant={isMobile ? "h3" : "h1"} className={isMobile ? "mobileTitle" : "title"}>
+                Images
               </Typography>
-            </Breadcrumbs>
-          )}
-          </Box>
+            </Box>
 
-          
+            {isMobile ? null : (
+              <Breadcrumbs aria-label="breadcrumb">
+                <Link underline="hover" color="inherit" href="/images">
+                  <Typography variant="body2" color="text.primary">
+                    Gallery
+                  </Typography>
+                </Link>
+                <Typography variant="body2" color="text.primary">
+                  Images
+                </Typography>
+              </Breadcrumbs>
+            )}
+          </Box>
         </Box>
       </Box>
     </Box>

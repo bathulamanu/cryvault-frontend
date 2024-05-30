@@ -1,8 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&display=swap');
 
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap');
 
-@import url('https://fonts.googleapis.com/css2?family=Courgette&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Courgette&display=swap'); */
 
 
 
@@ -39104,7 +39104,7 @@ justify-content: end;
 
 .excercise_blo h3{
   color: #B70040 !important;
-  font-family: "Amiri", Sans-serif !important;
+  /* font-family: "Amiri", Sans-serif !important; */
   font-size: 24px !important;
   font-weight: 600 !important;
   line-height: 1.9em !important;

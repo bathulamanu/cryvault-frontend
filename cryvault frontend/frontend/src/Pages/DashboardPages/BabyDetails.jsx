@@ -26,7 +26,7 @@ const BabyDetails = () => {
               height: isMobile ? "100%" : "100%",
               borderRadius: "20px",
               margin: isMobile ? "10px" : "0px",
-              backgroundColor:"#F8F9FC"
+              backgroundColor: "#F8F9FC",
             }}
             style={{ marginLeft: isMobile ? "10px" : "40px" }}
           >
@@ -54,24 +54,31 @@ const BabyDetails = () => {
                   alt="baby"
                 />
               </Box>
-              <Box sx={{ marginTop: "50px" }}>
-                <TextField id="baby Name" label="Baby Name" variant="standard" fullWidth />
+              <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem", marginTop: "50px" }}>
+                <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Baby Name</Typography>
+                <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>Baby Name</Typography>
               </Box>
 
-              <Box sx={{ marginTop: "50px" }}>
-                <TextField id="date of Birth" label="Date of Birth" variant="standard" fullWidth />
+              <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem", marginTop: "50px" }}>
+                <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Date of Birth</Typography>
+                <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>Date of Birth</Typography>
               </Box>
-              <Box sx={{ marginTop: "50px" }}>
-                <TextField id="time of Birth" label="Time of Birth" variant="standard" fullWidth />
+
+              <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem", marginTop: "50px" }}>
+                <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Time of Birth</Typography>
+                <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>Time of Birth</Typography>
               </Box>
-              <Box sx={{ marginTop: "50px" }}>
-                <TextField id="weight" label="Weight" variant="standard" fullWidth />
+              <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem", marginTop: "50px" }}>
+                <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Weight</Typography>
+                <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>Weight</Typography>
               </Box>
-              <Box sx={{ marginTop: "50px" }}>
-                <TextField id="Delivery Doctor Name" label="Delivery Doctor Name" variant="standard" fullWidth />
+              <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem", marginTop: "50px" }}>
+                <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Delivery Doctor Name</Typography>
+                <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>Delivery Doctor Name</Typography>
               </Box>
-              <Box sx={{ marginTop: "50px" }}>
-                <TextField id="Delivery Doctor Name" label="Place of Birth" variant="standard" fullWidth />
+              <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem", marginTop: "50px" }}>
+                <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Place of Birth</Typography>
+                <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>Place of Birth</Typography>
               </Box>
             </CardContent>
           </Card>
@@ -84,7 +91,7 @@ const BabyDetails = () => {
               borderRadius: "20px",
               margin: isMobile ? "20px" : "0px",
               height: isMobile ? "100%" : "100%",
-              backgroundColor:"#F8F9FC"
+              backgroundColor: "#F8F9FC",
             }}
             style={{ marginLeft: isMobile ? "10px" : "150px" }}
           >
@@ -115,17 +122,22 @@ const BabyDetails = () => {
                   alt="doctor"
                 />
               </Box>
-              <Box sx={{ marginTop: "50px" }}>
-                <TextField id="Doctor's Name" label="Doctor's Name" variant="standard" fullWidth />
+
+              <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem", marginTop: "50px" }}>
+                <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Doctor's Name</Typography>
+                <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>Doctor's Name</Typography>
               </Box>
-              <Box sx={{ marginTop: "50px" }}>
-                <TextField id="Hospital Name" label="Hospital Name" variant="standard" fullWidth />
+              <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem", marginTop: "50px" }}>
+                <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Hospital Name</Typography>
+                <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>Hospital Name</Typography>
               </Box>
-              <Box sx={{ marginTop: "50px" }}>
-                <TextField id="Hospital Address Line-1" label="Hospital Address Line-1" variant="standard" fullWidth />
+              <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem", marginTop: "50px" }}>
+                <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Hospital Address Line-1</Typography>
+                <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>Hospital Address Line-1</Typography>
               </Box>
-              <Box sx={{ marginTop: "50px" }}>
-                <TextField id="Hospital Address Line-2" label="Hospital Address Line-2" variant="standard" fullWidth />
+              <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem", marginTop: "50px" }}>
+                <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Hospital Address Line-2</Typography>
+                <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>Hospital Address Line-2</Typography>
               </Box>
             </CardContent>
           </Card>

@@ -39,7 +39,7 @@ const FirstTrimester = () => {
       <Box className="py-5">
         <Box className="container">
           <Box className="section-title section-center pregnan_title">
-            <Typography variant="h4">First Trimester​</Typography>
+            <Typography variant="h4" sx={{fontWeight:"600"}}>First Trimester​</Typography>
             <Typography variant="h3">0-3 Months​</Typography>
             <Box className="shape_in shape_in-bk excer_ot">
               {" "}
@@ -56,7 +56,7 @@ const FirstTrimester = () => {
                     <img src="assets/images/1.webp" />
                     <Box className="babi_out">
                       <Typography variant="h3" sx={{ textAlign: isMobile ? "center" : "start" }}>
-                        BABY GETS ITS “SHAPE”
+                        BABY GETS ITS &nbsp; “SHAPE”
                       </Typography>
                       <Typography variant="body1">
                         Cell Division takes place and at the end of two weeks the baby is the size of a pin-head.
@@ -132,7 +132,7 @@ const FirstTrimester = () => {
             </Box>
           </Box>
 
-          <Box className="row align-items-center mt-4">
+          <Box sx={{alignItems:"start !important"}} className="row  mt-4">
             <Box className="col-md-6">
               <img src="assets/images/0-3months.webp" />
             </Box>

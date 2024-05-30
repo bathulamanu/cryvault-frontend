@@ -157,3 +157,20 @@ code {
 .layoutItem {
   margin: '6px !important';
 }
+
+/* reach us border */
+.reachus {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+.reachus::before {
+  width: 162px;
+  background: #B70040 !important;
+  top: 20px;
+}
+.reachus::after {
+  width: 162px;
+  background: #B70040 !important;
+  top: 20px;
+}

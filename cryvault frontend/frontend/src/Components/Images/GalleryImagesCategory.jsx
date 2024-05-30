@@ -8,22 +8,21 @@ import "swiper/css/scrollbar";
 import { A11y, Navigation, Pagination, Scrollbar } from "swiper/modules";
 import useDeviceSize from "../../Utilities/useDeviceSize";
 import SwiperCore from "swiper";
-import './Images.css'
+import "./Images.css";
 
 const GalleryImagesCategory = () => {
-  const isMobile = useDeviceSize() === "xs"
+  const isMobile = useDeviceSize() === "xs";
   const [categoryActiveTab, setCategoryActiveTab] = useState("All");
-  const categories = ["All", "Mothers", "Cat 3", "Cat 4", "Cat 5"];
+  const categories = ["All", "Mother's Day", "Yoga Program", "5k run "];
 
   const handleCategoryClick = (category) => {
     setCategoryActiveTab(category);
   };
 
-
   return (
-    <Container>
+    <Container sx={{ paddingLeft: "200px !important", paddingRight: "200px !important" }}>
       <Swiper
-        slidesPerView={ isMobile ? 3 : categories.length}
+        slidesPerView={isMobile ? 3 : categories.length}
         modules={[Navigation, Pagination, A11y]}
         spaceBetween={10}
         autoplay={{
