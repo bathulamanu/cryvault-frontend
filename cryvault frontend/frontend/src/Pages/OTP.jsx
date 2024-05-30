@@ -41,7 +41,7 @@ export const OTP = () => {
     dispatch(login({ payload: dataToSend }));
   };
   const goTodashBoard = () => {
-    const isCheckingOut = localStorage.getItem("isCheckingOut");
+    const isCheckingOut = localStorage.getItem("isCheckingOut") == 'true';
     if (isCheckingOut) navigate("/checkout");
     else if (userDetails?.subscriptionPlanId?.toString()?.length > 0) navigate("/dashboard");
     else navigate("/plan");
