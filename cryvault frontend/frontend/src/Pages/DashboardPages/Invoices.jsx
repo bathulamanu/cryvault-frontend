@@ -138,7 +138,7 @@ const Invoices = () => {
                     <TableCell style={{ border: "none", textAlign: "center", fontSize: "1.5rem" }}>{invoice.date}</TableCell>
                     <TableCell style={{ border: "none", textAlign: "center", fontSize: "1.5rem" }}>{invoice.amount}</TableCell>
                     <TableCell style={{ border: "none", textAlign: "center", fontSize: "1.5rem" }}>
-                      <Box className="tableCellWithCircle" sx={{ width: isMobile ? "100%" : "50%", backgroundColor: isMobile ? (invoice.status === "Completed" ? "#01d501" : invoice.status === "Pending" ? "yellow" : "#ff9e9e ") : "none" }}>
+                      <Box className="tableCellWithCircle" sx={{ width: isMobile ? "100%" : "50%", backgroundColor: invoice.status === "Completed" ? "#01d501" : invoice.status === "Pending" ? "yellow" : "#ff9e9e " }}>
                         {" "}
                         {invoice.status}
                       </Box>

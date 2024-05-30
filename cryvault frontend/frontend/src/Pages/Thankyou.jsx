@@ -15,31 +15,41 @@ const ThankYouPage = () => {
   const invoice = location.state;
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const orderDetails = useSelector((state)=>state.payment.orderDetails)
+  const orderDetails = useSelector((state) => state.payment.orderDetails);
 
-  console.log(orderDetails)
-
-  const data = useMemo(()=>{
-
-    // const method= orderDetails && orderDetails[0]?.PaymentDetails?.[0]?.Method
-    // const totalAmount= orderDetails && orderDetails[0]?.PaymentDetails?.[0]?.totalAmount
-    // const name= orderDetails && orderDetails[0]?.firstName
-    // const email= orderDetails && orderDetails[0]?.email
-    // const phone= orderDetails && orderDetails[0]?.phoneNumber
-    
-//     Order ID:
-
-// Subscription Plan:
-
-// Payment Method: sddfsd
-
-// vaishnavi dwivedi
-// 7879186483
-// vaish@gmail.com
-// Sub Total
-// 213423 INR
-// Total
-  },[])
+  const data = useMemo(() => {
+    const orderID = orderDetails && orderDetails?.PaymentDetails?.[0]?.OrderCode;
+    const plan = orderDetails && orderDetails?.PaymentDetails?.[0]?.subscriptionPlanId;
+    const method = orderDetails && orderDetails?.PaymentDetails?.[0]?.Method;
+    const totalAmount = orderDetails && orderDetails?.PaymentDetails?.[0]?.totalAmount;
+    const fname = orderDetails && orderDetails?.firstName;
+    const lname = orderDetails && orderDetails?.lastName;
+    const email = orderDetails && orderDetails?.email;
+    const phone = orderDetails && orderDetails?.phoneNumber;
+    const address1 = orderDetails && orderDetails?.addressLine1;
+    const address2 = orderDetails && orderDetails?.addressLine2;
+    const pincode = orderDetails && orderDetails?.pincode;
+    const country = orderDetails && orderDetails?.LocationInfo?.countryName;
+    const stateName = orderDetails && orderDetails?.LocationInfo?.stateName;
+    const cityName = orderDetails && orderDetails?.LocationInfo?.cityName;
+    return {
+      orderID,
+      plan,
+      method,
+      totalAmount,
+      fname,
+      lname,
+      email,
+      phone,
+      address1,
+      address1,
+      address2,
+      pincode,
+      country,
+      stateName,
+      cityName,
+    };
+  }, [orderDetails]);
 
   useEffect(() => {
     dispatch(getOrderDetails());
@@ -71,7 +81,7 @@ const ThankYouPage = () => {
   const isMobile = useDeviceSize() === "xs";
 
   return (
-    <Container sx={{ boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)", margin: isMobile ?'3rem 0rem' : "15rem auto" }} minHeight="100vh" py={4} px={2}>
+    <Container sx={{ boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)", margin: isMobile ? "3rem 0rem" : "15rem auto" }} minHeight="100vh" py={4} px={2}>
       <Stack spacing={4}>
         {details && details[0] && (
           <Card sx={{ backgroundColor: bg, boxShadow: "none", borderRadius: "lg", padding: 0 }}>
@@ -87,37 +97,38 @@ const ThankYouPage = () => {
             <CardContent>
               <Stack spacing={4}>
                 <Stack direction="column" spacing={3}>
-                  <Typography sx={{ fontWeight: "500", fontSize: "18px" }}>Order ID: {invoice?.orderid || "XYZ123"}</Typography>
-                  <Typography sx={{ fontWeight: "500", fontSize: "18px" }}>Subscription Plan: {invoice?.plan || " 2"}</Typography>
-                  <Typography sx={{ fontWeight: "500", fontSize: "18px" }}>Payment Method: {details[0].PaymentDetails[0].paymentType || 'card'}</Typography>
+                  <Typography sx={{ fontWeight: "500", fontSize: "18px", margin: "0 !important" }}>Order ID: {data?.orderID || "NULL"}</Typography>
+                  <Typography sx={{ fontWeight: "500", fontSize: "18px", margin: "0 !important" }}>Subscription Plan: {data?.plan || "2"}</Typography>
+                  <Typography sx={{ fontWeight: "500", fontSize: "18px", margin: "0 !important" }}>Payment Method: {data?.paymentType || "Card"}</Typography>
                 </Stack>
-                <Typography sx={{ fontWeight: "500", fontSize: "18px" }}>Thank you!</Typography>
-                <Typography sx={{ fontWeight: "500", fontSize: "18px" }}>Your order is confirmed.</Typography>
+                <br />
+                <Typography sx={{ fontWeight: "500", fontSize: "18px", margin: "0 !important" }}>Thank you!</Typography>
+                <Typography sx={{ fontWeight: "500", fontSize: "18px", margin: "0 !important" }}>Your order is confirmed.</Typography>
                 <Divider />
                 <Stack spacing={4} w="full">
                   <Stack sx={{ display: "flex", flexDirection: "column", gap: "1rem" }} align="start" spacing={4} flex="4" pr={2}>
-                    <Section title="" style={{ fontSize: "20" }}>
-                      <SubSection title="Customer information" content={`${details[0].firstName} ${details[0].lastName}\n ${details[0].phoneNumber}\n ${details[0].email}`} />
-                      <SubSection title="Bill address" content={`${details[0].address}`} />
+                    <Section style={{ flexDirection: "column", fontSize: "20", display: "flex" }}>
+                      <SubSection isAddress={false} title="Customer information" content={`${data?.fname} ${data?.lname}\n ${data?.phone}\n ${data?.email}`} />
+                      <SubSection isAddress={true} title="Bill address" content={`${data?.address1}\n  ${data?.address2}\n   ${data?.pincode}\n  ${data?.cityName}\n  ${data?.stateName}\n  ${data?.country}`} />
                     </Section>
                   </Stack>
                 </Stack>
-                <Typography sx={{fontSize:"2rem"}} variant="h3" fontWeight="bold">
+                <Typography sx={{ fontSize: "2rem" }} variant="h3" fontWeight="bold">
                   Summary
                 </Typography>
 
                 <Stack direction="row" justifyContent="space-between">
-                  <Typography sx={{fontSize:"2rem"}} variant="h3" fontWeight="bold">
+                  <Typography sx={{ fontSize: "2rem" }} variant="h3" fontWeight="bold">
                     Sub Total
                   </Typography>
-                  <Typography variant="h3">{details[0].PaymentDetails[0].paidAmount} INR</Typography>
+                  <Typography variant="h3">{data?.totalAmount} INR</Typography>
                 </Stack>
                 <Divider />
                 <Stack direction="row" justifyContent="space-between">
-                  <Typography sx={{fontSize:"2rem"}} variant="h3" fontWeight="bold">
+                  <Typography sx={{ fontSize: "2rem" }} variant="h3" fontWeight="bold">
                     Total
                   </Typography>
-                  <Typography variant="h3">{details[0].PaymentDetails[0].paidAmount} INR</Typography>
+                  <Typography variant="h3">{data?.totalAmount} INR</Typography>
                 </Stack>
               </Stack>
             </CardContent>
@@ -127,21 +138,14 @@ const ThankYouPage = () => {
     </Container>
   );
 };
-const Section = ({ title, children }) => (
-  <Box sx={{ display: "flex", flexDirection: "column", gap: "2rem" }} w="full">
-    <Typography sx={{fontSize:"2rem"}} variant="h3" size="md" fontWeight="bold" mb={2}>
-      {title}
-    </Typography>
-    {children}
-  </Box>
-);
+const Section = ({ children }) => <Box sx={{ display: "flex", flexDirection: "row", gap: "2rem", width: "100%" }}>{children}</Box>;
 
-const SubSection = ({ title, content }) => (
-  <Stack sx={{ flexDirection: "column", justifyContent: "space-between", gap: "2rem" }} align="start" spacing={0}>
-    <Typography sx={{fontSize:"2rem"}} variant="h3" fontWeight="bold">
+const SubSection = ({ title, content, isAddress }) => (
+  <Stack sx={{ alignItems: isAddress ? "end" : "start", flexDirection: "column", justifyContent: "start", gap: "2rem", width: "50%" }} align="start" spacing={0}>
+    <Typography sx={{ fontSize: "2rem" }} variant="h3" fontWeight="bold">
       {title}
     </Typography>
-    <Typography sx={{fontSize:"2rem", lineHeight: "1.5"}} variant="h3" whiteSpace="pre-line">
+    <Typography sx={{ fontSize: "2rem", lineHeight: "1.5", textAlign: isAddress ? "end" : "start" }} variant="h3" whiteSpace="pre-line">
       {content}
     </Typography>
   </Stack>

@@ -16,13 +16,12 @@ const Subscription = () => {
           width: isMobile ? "sd%" : "80vw",
           height: isMobile ? "100%" : "100%",
           flexDirection: isMobile ? "column" : "row",
-          marginLeft: isMobile ? "none" : "20px",
-          margin:  isMobile ? "10px" : '0px'
-        
+          margin: isMobile ? "10px" : "0px",
+          marginLeft: isMobile ? "none" : "24px !important",
         }}
       >
         <Box p={2} sx={{ backgroundColor: "#2b2e64" }}>
-          <Typography sx={{ color: "white"}} variant="h4">
+          <Typography sx={{ color: "white" }} variant="h4">
             Plans Details
           </Typography>
         </Box>
@@ -34,7 +33,7 @@ const Subscription = () => {
             justifyContent: "start",
             height: "100%",
             gap: "10rem",
-            padding: isMobile ? '5rem' :  "0rem 5rem",
+            padding: isMobile ? "5rem" : "0rem 5rem",
           }}
         >
           <Card
@@ -79,7 +78,7 @@ const Subscription = () => {
                     color: "white",
                     textAlign: "center",
                     backgroundColor: "#13811E",
-                    height:"100%"
+                    height: "100%",
                   }}
                   style={{ fontSize: "16px" }}
                 >

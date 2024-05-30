@@ -65,7 +65,7 @@ const UserReducer = createSlice({
       .addCase(verifyOTP.fulfilled, (state, action) => {
         state.loading = false;
         const userData = action?.payload?.data;
-        state.userDetails = action?.payload?.data;
+        state.userDetails = userData;
         localStorage.setItem("userData", JSON.stringify(userData));
         sessionStorage.setItem("token",userData?.token)
         localStorage.setItem("token", userData?.token);

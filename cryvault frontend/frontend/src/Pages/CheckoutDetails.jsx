@@ -25,7 +25,6 @@ const CheckoutDetails = () => {
   }, []);
 
   const data = detail;
-  console.log(data, detail);
   const id = xyz?.registrationCRNid;
   const number = xyz?.phoneNumber;
   const theme = useTheme();
@@ -382,7 +381,6 @@ const CheckoutDetails = () => {
       amount: Number(localStorage.getItem("planAmount")),
       currency: "INR",
     };
-    console.log(dataToSend);
     dispatch(createOrder({ payload: dataToSend }));
   };
 

@@ -9,7 +9,7 @@ import { MdKeyboardDoubleArrowLeft, MdKeyboardDoubleArrowRight, MdOutlineKeyboar
 import MenuSharpIcon from "@mui/icons-material/MenuSharp";
 import CloseIcon from "@mui/icons-material/Close";
 import { List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
-import { ExpandLess, ExpandMore } from "@mui/icons-material";
+import { ExpandLess, ExpandMore, SignalCellularNullOutlined } from "@mui/icons-material";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchHeaderSocialIcons, getPageMetaInfo } from "../../redux/reducers/HomePageReducer";
 import { AppBar, Toolbar, Menu, MenuItem, Divider, Avatar } from "@mui/material";
@@ -82,9 +82,18 @@ const Header = () => {
   const bestStemCellBankInIndiaStemCellBankingCryovault = pageInfo?.[23]?.[25]?.urlSlug;
   const accreditationsCertifications = pageInfo?.[24]?.[13]?.urlSlug;
   const whenAndHowIsCordBloodCollected = pageInfo?.[25]?.[26]?.urlSlug;
-  const isUserLoggedIn = localStorage.getItem("token")?.length > 0;
+
+  const userDetails = useSelector((state) => state.user.userDetails);
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(userDetails?.customerID?.toString()?.length > 0 || false);
+  const [isSubscribedUser, setiIsSubscribedUser] = useState(userDetails?.subscriptionPlanId?.toString()?.length > 0 || false);
+
+  useEffect(() => {
+    setIsUserLoggedIn(userDetails?.customerID?.toString()?.length > 0);
+    setiIsSubscribedUser(userDetails?.subscriptionPlanId?.toString()?.length > 0);
+  }, [userDetails]);
 
   const handleLogout = () => {
+    setIsUserLoggedIn(false);
     localStorage.clear();
     sessionStorage.clear();
   };
@@ -189,7 +198,7 @@ const Header = () => {
                       </ul>
                     </li>
                     <li className="has-droupdown">
-                      <Link onClick={useScrollToTop()} to="#">
+                      <Link onClick={useScrollToTop()} to={`/${stemCellBanking}`}>
                         {" "}
                         STEM CELL BANKING
                       </Link>
@@ -237,7 +246,7 @@ const Header = () => {
                       </ul>
                     </li>
                     <li className="has-droupdown">
-                      <Link onClick={useScrollToTop()} to="/">
+                      <Link onClick={useScrollToTop()} to="/plan">
                         {" "}
                         GETTING STARTED
                       </Link>
@@ -335,9 +344,11 @@ const Header = () => {
                       <ul className="submenu" style={{ left: "-75%", minWidth: "200px" }}>
                         {isUserLoggedIn ? (
                           <>
-                            <li>
-                              <Link to="/dashboard">Dashboard</Link>
-                            </li>
+                            {isSubscribedUser ? (
+                              <li>
+                                <Link to="/dashboard">Dashboard</Link>
+                              </li>
+                            ) : null}
 
                             <li>
                               <Link to="/" onClick={handleLogout}>
@@ -374,13 +385,21 @@ export const MobileHeader = React.memo(() => {
 
   const handleDrawerOpen = () => setDrawerOpen(true);
   const handleDrawerClose = () => setDrawerOpen(false);
-  const isUserLoggedIn = localStorage.getItem("token")?.length > 0;
+
+  const userDetails = useSelector((state) => state.user.userDetails);
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(userDetails?.customerID?.toString()?.length > 0 || false);
+  const [isSubscribedUser, setiIsSubscribedUser] = useState(userDetails?.subscriptionPlanId?.toString()?.length > 0 || false);
+
+  useEffect(() => {
+    setIsUserLoggedIn(userDetails?.customerID?.toString()?.length > 0);
+    setiIsSubscribedUser(userDetails?.subscriptionPlanId?.toString()?.length > 0);
+  }, [userDetails]);
 
   const handleLogout = () => {
+    setIsUserLoggedIn(false);
     localStorage.clear();
-    setDrawerOpen(false);
+    sessionStorage.clear();
   };
-
   const handleNestedClick = (clickedIndex) => {
     if (clickedIndex === openNestedListIndex) {
       setOpenNestedListIndex(null);
@@ -744,47 +763,51 @@ export const MobileHeader = React.memo(() => {
             <List dense disablePadding>
               {isUserLoggedIn ? (
                 <>
-                  <Link to={`/dashboard`} onClick={handleDrawerClose}>
-                    <ListItemButton>
-                      <ListItemIcon>{<ChevronRightIcon style={{ fontSize: "3.5rem", height: "4rem" }} />}</ListItemIcon>
+                  {isSubscribedUser ? (
+                    <Link to={`/dashboard`} onClick={handleDrawerClose}>
+                      <ListItemButton>
+                        <ListItemIcon>{<ChevronRightIcon style={{ fontSize: "3.5rem", height: "4rem" }} />}</ListItemIcon>
 
-                      <ListItemText
-                        sx={{ color: selectedItem == "Dashboard" ? "#550059" : "black" }}
-                        onClick={() => {
-                          setSelectedItem("Dashboard");
-                        }}
-                        primary="Dashboard"
-                      />
-                    </ListItemButton>
-                  </Link>
-                  <Link to={`/`} onClick={handleLogout}>
-                    <ListItemButton>
-                      <ListItemIcon>{<ChevronRightIcon style={{ fontSize: "3.5rem", height: "4rem" }} />}</ListItemIcon>
-
-                      <ListItemText
-                        sx={{ color: selectedItem == "Logout" ? "#550059" : "black" }}
-                        onClick={() => {
-                          setSelectedItem("Logout");
-                        }}
-                        primary="Logout"
-                      />
-                    </ListItemButton>
-                  </Link>
+                        <ListItemText
+                          sx={{ color: selectedItem == "Dashboard" ? "#550059" : "black" }}
+                          onClick={() => {
+                            setSelectedItem("Dashboard");
+                          }}
+                          primary="Dashboard"
+                        />
+                      </ListItemButton>
+                    </Link>
+                  ) : null}
                 </>
               ) : (
-                <Link to={`/login`} onClick={handleDrawerClose}>
+                <Link to={`/`} onClick={handleLogout}>
                   <ListItemButton>
                     <ListItemIcon>{<ChevronRightIcon style={{ fontSize: "3.5rem", height: "4rem" }} />}</ListItemIcon>
 
                     <ListItemText
-                      sx={{ color: selectedItem == "Get Started" ? "#550059" : "black" }}
+                      sx={{ color: selectedItem == "Logout" ? "#550059" : "black" }}
                       onClick={() => {
-                        setSelectedItem("Get Started");
+                        setSelectedItem("Logout");
                       }}
-                      primary="Get Started"
+                      primary="Logout"
                     />
                   </ListItemButton>
                 </Link>
+              )}
+              ) : (
+              <Link to={`/login`} onClick={handleDrawerClose}>
+                <ListItemButton>
+                  <ListItemIcon>{<ChevronRightIcon style={{ fontSize: "3.5rem", height: "4rem" }} />}</ListItemIcon>
+
+                  <ListItemText
+                    sx={{ color: selectedItem == "Get Started" ? "#550059" : "black" }}
+                    onClick={() => {
+                      setSelectedItem("Get Started");
+                    }}
+                    primary="Get Started"
+                  />
+                </ListItemButton>
+              </Link>
               )}
             </List>
           )}

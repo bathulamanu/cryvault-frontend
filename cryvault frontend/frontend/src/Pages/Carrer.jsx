@@ -30,7 +30,6 @@ const Carrers = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const { title, firstName, lastName, ...rest } = formData; // Destructure file separately
-    console.log("Submitted data:", { title, firstName, lastName, ...rest });
     // Handle file upload (if applicable)
     // ...
   };

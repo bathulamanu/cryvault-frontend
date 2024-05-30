@@ -19,7 +19,7 @@ const BabyDetails = () => {
         container
         spacing={3}
       >
-        <Grid item xs={12} sm={6} md={4}>
+        <Grid sx={{padding:"0 !important", paddingTop:"24px !important"}} item xs={12} sm={6} md={4}>
           <Card
             sx={{
               width: isMobile ? "9a0%" : "35vw",
