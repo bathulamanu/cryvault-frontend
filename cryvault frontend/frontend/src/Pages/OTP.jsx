@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Box, Button, TextField, Typography, useTheme } from "@mui/material";
 import { Image } from "@mui/icons-material";
 import { Input } from "../styles/Input";
@@ -13,6 +13,9 @@ export const OTP = () => {
   const isMobile = useDeviceSize() === "xs";
   const userData = useSelector((state) => state.user.userData);
   const userDetails = useSelector((state) => state.user.userDetails);
+  const subscriptionPlanId = useSelector((state) => state.user.subscriptionPlanId);
+
+  const [isSubscribedUser, setIsSubscribedUser] = useState(false);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -46,13 +49,43 @@ export const OTP = () => {
       navigate("/checkout");
       return;
     }
+    console.log(subscriptionPlanId,userDetails,'1',userDetails?.subscriptionPlanId?.toString()?.length > 0)
     if (userDetails?.subscriptionPlanId?.toString()?.length > 0) {
+      console.log("coming");
       navigate("/dashboard");
       return;
     }
+    console.log('2',userDetails?.subscriptionPlanId?.toString()?.length > 0)
+
     navigate("/plan");
   };
 
+  // const goTodashBoard = useCallback(async () => {
+  //   const isCheckingOut = localStorage.getItem("isCheckingOut") === "true";
+  //   if (isCheckingOut) {
+  //     navigate("/checkout");
+  //     return;
+  //   }
+
+  //   const subscriptionStatus = userDetails?.subscriptionPlanId?.toString()?.length > 0;
+  //   setIsSubscribedUser(subscriptionStatus);
+  //   console.log({ subscriptionStatus, isSubscribedUser, subscriptionPlanId });
+
+  //   if (subscriptionStatus || subscriptionPlanId) {
+  //     console.log("coming");
+  //     navigate("/dashboard");
+  //   } else {
+  //     console.log("running");
+
+  //     navigate("/plan");
+  //   }
+  // }, [userDetails]);
+
+  // console.log(userDetails?.subscriptionPlanId?.toString()?.length > 0, userDetails?.subscriptionPlanId?.toString()?.length, userDetails?.subscriptionPlanId);
+
+  // useEffect(() => {
+  //   setIsSubscribedUser(userDetails?.subscriptionPlanId?.toString()?.length > 0);
+  // }, [userDetails]);
   return (
     <Box
       sx={{
