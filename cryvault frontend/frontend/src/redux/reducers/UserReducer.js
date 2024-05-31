@@ -23,9 +23,9 @@ export const verifyOTP = createAsyncThunk("verify", async (payload = {}, thunkAP
     const response = await axios.post(apiUrl, payload.payload);
     const { status, problem, data } = response;
     if (data?.status == 200) {
-      setTimeout(() => {
-        payload.callback();
-      }, 3000);
+      // setTimeout(() => {
+      payload.callback();
+      // }, 3000);
       return data;
     } else {
       return thunkAPI.rejectWithValue({ data, problem });
@@ -40,7 +40,7 @@ const initialState = {
   userDetails: {},
   loading: false,
   error: null,
-  subscriptionPlanId: null,
+  subscriptionPlanId: "",
 };
 const UserReducer = createSlice({
   name: "user",
@@ -68,7 +68,7 @@ const UserReducer = createSlice({
         state.loading = false;
         const userData = action.payload.data;
         state.userDetails = action.payload.data;
-        state.subscriptionPlanId = userData.subscriptionPlanId;
+        state.subscriptionPlanId = action.payload.data.subscriptionPlanId;
         localStorage.setItem("userData", JSON.stringify(userData));
         sessionStorage.setItem("token", userData?.token);
         localStorage.setItem("token", userData?.token);
