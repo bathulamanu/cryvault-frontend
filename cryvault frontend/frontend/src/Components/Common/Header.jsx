@@ -82,15 +82,15 @@ const Header = () => {
   const bestStemCellBankInIndiaStemCellBankingCryovault = pageInfo?.[23]?.[25]?.urlSlug;
   const accreditationsCertifications = pageInfo?.[24]?.[13]?.urlSlug;
   const whenAndHowIsCordBloodCollected = pageInfo?.[25]?.[26]?.urlSlug;
+  const orderDetails = useSelector((state) => state.payment.orderDetails);
 
   const userDetails = useSelector((state) => state.user.userDetails);
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(userDetails?.customerID?.toString()?.length > 0 || false);
-  const [isSubscribedUser, setiIsSubscribedUser] = useState(userDetails?.subscriptionPlanId?.toString()?.length > 0 || false);
-
+  const [isSubscribedUser, setiIsSubscribedUser] = useState(userDetails?.subscriptionPlanId?.toString()?.length > 0 || orderDetails && orderDetails?.PaymentDetails?.[0]?.subscriptionPlanId?.toString()?.length > 0 || false);
   useEffect(() => {
-    setIsUserLoggedIn(userDetails?.customerID?.toString()?.length > 0);
-    setiIsSubscribedUser(userDetails?.subscriptionPlanId?.toString()?.length > 0);
-  }, [userDetails]);
+    setIsUserLoggedIn(userDetails?.customerID?.toString()?.length > 0 || orderDetails && orderDetails?.PaymentDetails?.[0]?.subscriptionPlanId?.toString()?.length > 0 );
+    setiIsSubscribedUser(userDetails?.subscriptionPlanId?.toString()?.length > 0 || orderDetails && orderDetails?.PaymentDetails?.[0]?.subscriptionPlanId?.toString()?.length > 0 );
+  }, [userDetails,orderDetails]);
 
   const handleLogout = () => {
     setIsUserLoggedIn(false);

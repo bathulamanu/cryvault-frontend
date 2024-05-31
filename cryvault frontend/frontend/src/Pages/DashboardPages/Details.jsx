@@ -435,7 +435,6 @@ export const MobileDetails = () => {
 
     return clientInfo;
   }, [clientData]);
-  // console.log(clientData, info);
   useEffect(() => {
     dispatch(getClientInfo());
   }, []);

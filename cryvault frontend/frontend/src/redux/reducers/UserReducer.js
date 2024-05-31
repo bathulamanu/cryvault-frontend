@@ -22,7 +22,6 @@ export const verifyOTP = createAsyncThunk("verify", async (payload = {}, thunkAP
   try {
     const response = await axios.post(apiUrl, payload.payload);
     const { status, problem, data } = response;
-    console.log(response)
     if (data?.status == 200) {
       if (payload.callback) payload.callback();
       return data;
