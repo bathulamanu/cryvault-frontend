@@ -160,10 +160,8 @@ export const createOrder = createAsyncThunk("createOrder", async (payload, thunk
           };
 
           try {
-            console.log("kkkkkkkkkkkkkkk ",postData);
             const apiResponse = await axios.post(PaymentStatus(), postData, { headers });
             const { status, data } = apiResponse;
-            console.log("apiResponseapiResponseapiResponseapiResponse  ",apiResponse);
             if (status === 200) {
               console.log("Payment successful!");
               window.location.href = "/thankyou";
