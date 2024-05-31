@@ -98,7 +98,7 @@
 .basketball {
   position: absolute;
   top: -7rem;
-  margin-left: 6rem;
+  margin-left: -4rem;
   animation-name: ekit-rotate;
   opacity: 1;
   animation-duration: 5s;
