@@ -1,4 +1,4 @@
-import { Box, FormControl, FormHelperText, InputLabel, OutlinedInput, TextField, Typography } from "@mui/material";
+import { Box, FormControl, FormHelperText, InputLabel, OutlinedInput, Stack, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 
 const FatherDetails = () => {
@@ -71,22 +71,48 @@ const FatherDetails = () => {
   const handleOnChange = () => {};
   return (
     <Box sx={{ display: "flex", width: "100%", gap: "2rem" }} className="conatiner">
-      <Box sx={{border:"1px sold #e5e5e5", borderRadius:"1rem"}}>
-        <Typography sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Father Details</Typography>
-        <Box sx={{ flexDirection: "column", display: "flex", width: "60%" }} className="fatherDetails">
-          <form>
-            {Object.entries(data).map(([fieldName, fieldData]) => (
-              <FormControl key={fieldName} variant="outlined" margin="dense" error={fieldData.errorStatus}>
-                <Typography sx={{ fontSize: "2rem" }} htmlFor={fieldData.id}>
-                  {fieldData.placeholder}
-                </Typography>
-                <br />
-                <br />
-                <TextField style={{ height: "40px", fontSize: "2rem", padding: "25px !important" }} id="outlined-basic" label="" variant="outlined" />
-                {fieldData.errorStatus && <FormHelperText>{fieldData.errorMessage}</FormHelperText>}
+      <Box sx={{ width: "60%", border: "1px solid #e5e5e5", margin: "2rem", padding: "2rem", borderRadius: "1rem" }}>
+        <Typography sx={{ fontSize: "2rem", fontWeight: "600", color: "black", textTransform: "uppercase" }}>Father Details</Typography>
+        <Box sx={{ display: "grid", gridTemplateColumns: "auto auto" }} className="fatherDetails">
+          {Object.entries(data).map(([fieldName, fieldData]) => (
+            // <Box>
+            //   <Typography sx={{ fontSize: "2rem" }} htmlFor={fieldData.id}>
+            //     {fieldData.placeholder}
+            //   </Typography>
+            //   <br />
+            //   <br />
+            //   <TextField
+            //     style={{
+            //       "& .MuiInputBase-root-MuiOutlinedInput-root": {
+            //         height: "40px",
+            //         border:"1px solid green"
+
+            //       },
+            //       "& .MuiInputBase-input-MuiOutlinedInput-input": {
+            //         height: "40px",
+            //         border:"1px solid red"
+            //       },
+            //       border: "1px solid #e5e5e5",
+            //       borderRadius: "0.5rem",
+            //       fontSize: "2rem",
+            //     }}
+            //     id="outlined-basic"
+            //     label=""
+            //     variant="outlined"
+            //   />
+            //   {fieldData.errorStatus && <Typography>{fieldData.errorMessage}</Typography>}
+
+            // </Box>
+            <Stack key={"pincode"}>
+              <InputLabel sx={{ fontSize: "2rem" }} htmlFor={"pincode"}>
+                Pincode
+              </InputLabel>
+              <FormControl variant="outlined" size="small">
+                <OutlinedInput readOnly={false} type={"text"} value={fieldData.value} name={fieldData.name} id="outlined-adornment-password" placeholder={fieldData.placeholder} sx={{ border: fieldData.errorStatus ? "1px solid red" : "", height: "57px" }} onChange={handleOnChange} />
+                {fieldData.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}> {fieldData.errorMessage} </Typography> : null}
               </FormControl>
-            ))}
-          </form>
+            </Stack>
+          ))}
         </Box>
       </Box>
 

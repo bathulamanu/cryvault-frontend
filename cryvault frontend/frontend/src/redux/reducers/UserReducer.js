@@ -24,8 +24,8 @@ export const verifyOTP = createAsyncThunk("verify", async (payload = {}, thunkAP
     const { problem, data } = response;
     if (data?.status == 200) {
       console.log({data})
-      localStorage.setItem("subscriptionPlanId", data.subscriptionPlanId);
-      sessionStorage.setItem("subscriptionPlanId", data.subscriptionPlanId);
+      localStorage.setItem("subscriptionPlanId", data.data.subscriptionPlanId);
+      sessionStorage.setItem("subscriptionPlanId", data.data.subscriptionPlanId);
       payload.callback();
       return data;
     } else {
