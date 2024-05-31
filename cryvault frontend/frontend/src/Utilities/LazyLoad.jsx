@@ -162,9 +162,10 @@ const LazyLoad = () => {
         {hasPlan ? (
           <>
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/popup" element={<PopupLayout />} />
+            {/* <Route path="/popup" element={<PopupLayout />} /> */}
           </>
         ) : null}
+            <Route path="/popup" element={<PopupLayout />} />
 
         {/*<Route path="/faq" element={<Faq />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />

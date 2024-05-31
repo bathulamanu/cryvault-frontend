@@ -23,6 +23,9 @@ export const verifyOTP = createAsyncThunk("verify", async (payload = {}, thunkAP
     const response = await axios.post(apiUrl, payload.payload);
     const { problem, data } = response;
     if (data?.status == 200) {
+      console.log({data})
+      localStorage.setItem("subscriptionPlanId", data.subscriptionPlanId);
+      sessionStorage.setItem("subscriptionPlanId", data.subscriptionPlanId);
       payload.callback();
       return data;
     } else {
@@ -53,7 +56,7 @@ const initialState = {
   userDetails: {},
   loading: false,
   error: null,
-  subscriptionPlanId: null,
+  subscriptionPlanId: null || localStorage.getItem('subscriptionPlanId') ,
 };
 const UserReducer = createSlice({
   name: "user",

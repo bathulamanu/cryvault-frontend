@@ -46,6 +46,7 @@ export const OTP = () => {
   const goTodashBoard = () => {
     const isCheckingOut = localStorage.getItem("isCheckingOut") === "true";
     const subscriptionPlanId = sessionStorage.getItem("subscriptionPlanId");
+    console.log(subscriptionPlanId)
 
     if (isCheckingOut) {
       navigate("/checkout");
