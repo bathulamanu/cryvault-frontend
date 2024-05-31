@@ -69,4 +69,6 @@ export const getClientInfoApi = () => {
 export const addClientInfoApi = () => {
   return `${BASE_URL}/flyingbyts/api/customer/addOrupdateAnnexureInfo`;
 };
-
+export const getCustomerInfoApi = () => {
+  return `${BASE_URL}/flyingbyts/api/customer/getCustomerInfo`;
+};

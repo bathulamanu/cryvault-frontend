@@ -85,11 +85,11 @@ const Header = () => {
   const orderDetails = useSelector((state) => state.payment.orderDetails);
 
   const userDetails = useSelector((state) => state.user.userDetails);
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(userDetails?.customerID?.toString()?.length > 0 || false);
-  const [isSubscribedUser, setiIsSubscribedUser] = useState(userDetails?.subscriptionPlanId?.toString()?.length > 0 || orderDetails && orderDetails?.PaymentDetails?.[0]?.subscriptionPlanId?.toString()?.length > 0 || false);
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(localStorage.getItem("token")?.length > 0);
+  const isSubscribedUser =  localStorage.getItem("subscriptionPlanId") !== 'null' && localStorage.getItem("subscriptionPlanId")?.length > 0;
+
   useEffect(() => {
-    setIsUserLoggedIn(userDetails?.customerID?.toString()?.length > 0 || orderDetails && orderDetails?.PaymentDetails?.[0]?.subscriptionPlanId?.toString()?.length > 0 );
-    setiIsSubscribedUser(userDetails?.subscriptionPlanId?.toString()?.length > 0 || orderDetails && orderDetails?.PaymentDetails?.[0]?.subscriptionPlanId?.toString()?.length > 0 );
+    setIsUserLoggedIn(localStorage.getItem("token")?.length > 0 || userDetails?.customerID?.toString()?.length > 0 || orderDetails && orderDetails?.PaymentDetails?.[0]?.subscriptionPlanId?.toString()?.length > 0 );
   }, [userDetails,orderDetails]);
 
   const handleLogout = () => {
@@ -168,9 +168,7 @@ const Header = () => {
                       </Link>
                     </li>
                     <li className="has-droupdown">
-                      <Link onClick={useScrollToTop()} >
-                        ABOUT
-                      </Link>
+                      <Link onClick={useScrollToTop()}>ABOUT</Link>
 
                       <ul className="submenu">
                         <li>
@@ -201,10 +199,7 @@ const Header = () => {
                       </ul>
                     </li>
                     <li className="has-droupdown">
-                      <Link onClick={useScrollToTop()} >
-                        {" "}
-                        STEM CELL BANKING
-                      </Link>
+                      <Link onClick={useScrollToTop()}> STEM CELL BANKING</Link>
                       <ul className="submenu">
                         <li>
                           <Link onClick={useScrollToTop()} to={`/${stemCellBanking}`}>
@@ -249,10 +244,7 @@ const Header = () => {
                       </ul>
                     </li>
                     <li className="has-droupdown">
-                      <Link onClick={useScrollToTop()} >
-                        {" "}
-                        GETTING STARTED
-                      </Link>
+                      <Link onClick={useScrollToTop()}> GETTING STARTED</Link>
                       <ul className="submenu">
                         <li>
                           <Link onClick={useScrollToTop()} to="/plan">

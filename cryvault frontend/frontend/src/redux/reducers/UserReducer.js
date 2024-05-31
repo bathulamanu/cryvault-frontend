@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { LoginAPI, OTP } from "./api";
+import { LoginAPI, OTP, getCustomerInfoApi } from "./api";
 import axios from "axios";
 
 export const login = createAsyncThunk("login", async (payload, thunkAPI) => {
@@ -19,6 +19,21 @@ export const login = createAsyncThunk("login", async (payload, thunkAPI) => {
 });
 export const verifyOTP = createAsyncThunk("verify", async (payload = {}, thunkAPI) => {
   const apiUrl = OTP();
+  try {
+    const response = await axios.post(apiUrl, payload.payload);
+    const { problem, data } = response;
+    if (data?.status == 200) {
+      payload.callback();
+      return data;
+    } else {
+      return thunkAPI.rejectWithValue({ data, problem });
+    }
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+export const getCustomerInfo = createAsyncThunk("getCustomerInfo", async (payload = {}, thunkAPI) => {
+  const apiUrl = getCustomerInfoApi();
   try {
     const response = await axios.post(apiUrl, payload.payload);
     const { problem, data } = response;
@@ -68,12 +83,35 @@ const UserReducer = createSlice({
         state.userDetails = action.payload.data;
         state.subscriptionPlanId = action.payload.data.subscriptionPlanId;
         localStorage.setItem("userData", JSON.stringify(userData));
+        localStorage.setItem("subscriptionPlanId", action.payload.data.subscriptionPlanId);
+        sessionStorage.setItem("subscriptionPlanId", JSON.stringify(action.payload.data.subscriptionPlanId));
         sessionStorage.setItem("token", userData?.token);
         localStorage.setItem("token", userData?.token);
         sessionStorage.setItem("userData", JSON.stringify(userData));
         state.optid = action.payload.optid;
       })
       .addCase(verifyOTP.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(getCustomerInfo.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getCustomerInfo.fulfilled, (state, action) => {
+        state.loading = false;
+        const userData = action.payload.data;
+        state.userDetails = action.payload.data;
+        state.subscriptionPlanId = action.payload.data.subscriptionPlanId;
+        console.log(action.payload.data.subscriptionPlanId);
+        localStorage.setItem("userData", JSON.stringify(userData));
+        localStorage.setItem("subscriptionPlanId", JSON.stringify(action.payload.data.subscriptionPlanId));
+        sessionStorage.setItem("token", userData?.token);
+        localStorage.setItem("token", userData?.token);
+        sessionStorage.setItem("userData", JSON.stringify(userData));
+        state.optid = action.payload.optid;
+      })
+      .addCase(getCustomerInfo.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });
