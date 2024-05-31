@@ -49,8 +49,9 @@ export const OTP = () => {
       navigate("/checkout");
       return;
     }
-    console.log(subscriptionPlanId,userDetails,'1',userDetails?.subscriptionPlanId?.toString()?.length > 0)
-    if (userDetails?.subscriptionPlanId?.toString()?.length > 0) {
+    setIsSubscribedUser(userDetails?.subscriptionPlanId?.toString()?.length > 0)
+    console.log(subscriptionPlanId,userDetails,'1')
+    if (userDetails?.subscriptionPlanId?.toString()?.length > 0 || isSubscribedUser) {
       console.log("coming");
       navigate("/dashboard");
       return;
@@ -60,32 +61,7 @@ export const OTP = () => {
     navigate("/plan");
   };
 
-  // const goTodashBoard = useCallback(async () => {
-  //   const isCheckingOut = localStorage.getItem("isCheckingOut") === "true";
-  //   if (isCheckingOut) {
-  //     navigate("/checkout");
-  //     return;
-  //   }
 
-  //   const subscriptionStatus = userDetails?.subscriptionPlanId?.toString()?.length > 0;
-  //   setIsSubscribedUser(subscriptionStatus);
-  //   console.log({ subscriptionStatus, isSubscribedUser, subscriptionPlanId });
-
-  //   if (subscriptionStatus || subscriptionPlanId) {
-  //     console.log("coming");
-  //     navigate("/dashboard");
-  //   } else {
-  //     console.log("running");
-
-  //     navigate("/plan");
-  //   }
-  // }, [userDetails]);
-
-  // console.log(userDetails?.subscriptionPlanId?.toString()?.length > 0, userDetails?.subscriptionPlanId?.toString()?.length, userDetails?.subscriptionPlanId);
-
-  // useEffect(() => {
-  //   setIsSubscribedUser(userDetails?.subscriptionPlanId?.toString()?.length > 0);
-  // }, [userDetails]);
   return (
     <Box
       sx={{

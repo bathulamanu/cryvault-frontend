@@ -21,11 +21,9 @@ export const verifyOTP = createAsyncThunk("verify", async (payload = {}, thunkAP
   const apiUrl = OTP();
   try {
     const response = await axios.post(apiUrl, payload.payload);
-    const { status, problem, data } = response;
+    const { problem, data } = response;
     if (data?.status == 200) {
-      // setTimeout(() => {
       payload.callback();
-      // }, 3000);
       return data;
     } else {
       return thunkAPI.rejectWithValue({ data, problem });
@@ -40,7 +38,7 @@ const initialState = {
   userDetails: {},
   loading: false,
   error: null,
-  subscriptionPlanId: "",
+  subscriptionPlanId: null,
 };
 const UserReducer = createSlice({
   name: "user",

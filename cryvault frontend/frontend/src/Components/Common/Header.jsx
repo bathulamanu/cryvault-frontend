@@ -168,7 +168,7 @@ const Header = () => {
                       </Link>
                     </li>
                     <li className="has-droupdown">
-                      <Link onClick={useScrollToTop()} to={`/${aboutCryovault}`}>
+                      <Link onClick={useScrollToTop()} >
                         ABOUT
                       </Link>
 
@@ -201,7 +201,7 @@ const Header = () => {
                       </ul>
                     </li>
                     <li className="has-droupdown">
-                      <Link onClick={useScrollToTop()} to={`/${stemCellBanking}`}>
+                      <Link onClick={useScrollToTop()} >
                         {" "}
                         STEM CELL BANKING
                       </Link>
@@ -249,7 +249,7 @@ const Header = () => {
                       </ul>
                     </li>
                     <li className="has-droupdown">
-                      <Link onClick={useScrollToTop()} to="/plan">
+                      <Link onClick={useScrollToTop()} >
                         {" "}
                         GETTING STARTED
                       </Link>
