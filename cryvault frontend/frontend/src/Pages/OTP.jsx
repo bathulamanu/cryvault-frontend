@@ -12,10 +12,6 @@ export const OTP = () => {
   const [otp, setOTP] = useState("");
   const isMobile = useDeviceSize() === "xs";
   const userData = useSelector((state) => state.user.userData);
-  const userDetails = useSelector((state) => state.user.userDetails);
-  const subscriptionPlanId = useSelector((state) => state.user.subscriptionPlanId);
-
-  const [isSubscribedUser, setIsSubscribedUser] = useState(false);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -43,25 +39,24 @@ export const OTP = () => {
 
     dispatch(login({ payload: dataToSend }));
   };
+
+  const userDetails = useSelector((state) => state.user.userDetails);
+  const isSubscribedUser = localStorage.getItem("subscriptionPlanId") !== "null" && localStorage.getItem("subscriptionPlanId")?.length > 0;
+
   const goTodashBoard = () => {
-    const isCheckingOut = localStorage.getItem("isCheckingOut") == "true";
+    const isCheckingOut = localStorage.getItem("isCheckingOut") === "true";
+    const subscriptionPlanId = sessionStorage.getItem("subscriptionPlanId");
+
     if (isCheckingOut) {
       navigate("/checkout");
-      return;
-    }
-    setIsSubscribedUser(userDetails?.subscriptionPlanId?.toString()?.length > 0)
-    console.log(subscriptionPlanId,userDetails,'1')
-    if (userDetails?.subscriptionPlanId?.toString()?.length > 0 || isSubscribedUser) {
+    } else if (isSubscribedUser || subscriptionPlanId) {
       console.log("coming");
       navigate("/dashboard");
-      return;
+    } else {
+      console.log("comng");
+      navigate("/plan");
     }
-    console.log('2',userDetails?.subscriptionPlanId?.toString()?.length > 0)
-
-    navigate("/plan");
   };
-
-
 
   return (
     <Box

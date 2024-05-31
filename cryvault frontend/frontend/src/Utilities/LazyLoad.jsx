@@ -114,17 +114,13 @@ const LazyLoad = () => {
   const whenAndHowIsCordBloodCollected = pageInfo?.[25]?.[26]?.urlSlug;
   const userDetails = useSelector((state) => state.user.userDetails);
   const orderDetails = useSelector((state) => state.payment.orderDetails);
-  const plan = orderDetails && orderDetails?.PaymentDetails?.[0]?.subscriptionPlanId;
-  
-  const [hasPlan, setHasPaln] = useState(false)
-  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false)
-  
-  useEffect(()=>{
-    const planCondition = userDetails?.subscriptionPlanId?.toString()?.length > 0 || orderDetails?.PaymentDetails?.[0]?.subscriptionPlanId
-    setHasPaln(planCondition)
-    setIsUserLoggedIn(userDetails?.customerID?.toString()?.length > 0)
-  },[orderDetails,userDetails])
 
+  const [hasPlan, setHasPaln] = useState(false);
+
+  useEffect(() => {
+    const planCondition = userDetails?.subscriptionPlanId?.toString()?.length > 0 || orderDetails?.PaymentDetails?.[0]?.subscriptionPlanId;
+    setHasPaln(planCondition);
+  }, [orderDetails, userDetails]);
 
 
   return (
@@ -162,7 +158,7 @@ const LazyLoad = () => {
         <Route path={images} element={<Images />} />
         <Route path={videos} element={<Videos />} />
         <Route path={contact} element={<Contact />} />
-        
+
         {hasPlan ? (
           <>
             <Route path="/dashboard" element={<Dashboard />} />
