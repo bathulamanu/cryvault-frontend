@@ -111,7 +111,7 @@ const BabyDetails = () => {
                 <img
                   style={{
                     marginTop: "10px",
-                    marginLeft: isMobile ? "0px" : "150px",
+                    marginLeft: isMobile ? "0px" : "0px",
                     width: "120px",
                     height: "180px",
                     borderRadius: "50px",
