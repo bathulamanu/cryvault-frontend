@@ -113,9 +113,19 @@ const LazyLoad = () => {
   const accreditationsCertifications = pageInfo?.[24]?.[13]?.urlSlug;
   const whenAndHowIsCordBloodCollected = pageInfo?.[25]?.[26]?.urlSlug;
   const userDetails = useSelector((state) => state.user.userDetails);
+  const orderDetails = useSelector((state) => state.payment.orderDetails);
+  const plan = orderDetails && orderDetails?.PaymentDetails?.[0]?.subscriptionPlanId;
+  
+  const [hasPlan, setHasPaln] = useState(false)
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false)
+  
+  useEffect(()=>{
+    const planCondition = userDetails?.subscriptionPlanId?.toString()?.length > 0 || orderDetails?.PaymentDetails?.[0]?.subscriptionPlanId
+    setHasPaln(planCondition)
+    setIsUserLoggedIn(userDetails?.customerID?.toString()?.length > 0)
+  },[orderDetails,userDetails])
 
-  const isUserLoggedIn = userDetails?.customerID?.toString()?.length > 0 || false;
-  const isSubscribedUser = userDetails?.subscriptionPlanId?.toString()?.length > 0 || false;
+
 
   return (
     <Suspense fallback={<Loader />}>
@@ -152,12 +162,13 @@ const LazyLoad = () => {
         <Route path={images} element={<Images />} />
         <Route path={videos} element={<Videos />} />
         <Route path={contact} element={<Contact />} />
-        {isUserLoggedIn && isSubscribedUser && (
+        
+        {hasPlan ? (
           <>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/popup" element={<PopupLayout />} />
           </>
-        )}
+        ) : null}
 
         {/*<Route path="/faq" element={<Faq />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />

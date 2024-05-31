@@ -41,13 +41,18 @@ export const OTP = () => {
     dispatch(login({ payload: dataToSend }));
   };
   const goTodashBoard = () => {
-    const isCheckingOut = localStorage.getItem("isCheckingOut") == 'true';
-    if (isCheckingOut) navigate("/checkout");
-    else if (userDetails?.subscriptionPlanId?.toString()?.length > 0) navigate("/dashboard");
-    else navigate("/plan");
+    const isCheckingOut = localStorage.getItem("isCheckingOut") == "true";
+    if (isCheckingOut) {
+      navigate("/checkout");
+      return;
+    }
+    if (userDetails?.subscriptionPlanId?.toString()?.length > 0) {
+      navigate("/dashboard");
+      return;
+    }
+    navigate("/plan");
   };
 
-  console.log(userDetails?.subscriptionPlanId !== null || userDetails?.subscriptionPlanId !== undefined, userDetails?.subscriptionPlanId);
   return (
     <Box
       sx={{

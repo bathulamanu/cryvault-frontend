@@ -59,31 +59,13 @@ const ThankYouPage = () => {
     navigate("/dashboard");
     window.location.reload(); // Remove if you don't need hard reload (consider controlled state updates or soft reload)
   };
-  const details = [
-    {
-      invoice: {
-        orderid: "sdaasdasdas",
-        plan: "basic",
-      },
-      PaymentDetails: [
-        {
-          paymentType: "sddfsd",
-          paidAmount: "213423",
-        },
-      ],
-      firstName: "vaishnavi",
-      lastName: "dwivedi",
-      email: "vaish@gmail.com",
-      address: "inodere",
-      phoneNumber: "7879186483",
-    },
-  ];
+ 
   const isMobile = useDeviceSize() === "xs";
 
   return (
     <Container sx={{ boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)", margin: isMobile ? "2rem 0rem" : "15rem auto", width: isMobile ? "100%" : "50%" }} py={4} px={2}>
       <Stack spacing={4}>
-        {details && details[0] && (
+        {data&& (
           <Card sx={{ backgroundColor: bg, boxShadow: "none", borderRadius: "lg", padding: 0 }}>
             <CardHeader
               title={
@@ -134,7 +116,7 @@ const ThankYouPage = () => {
             </CardContent>
 
             <CardActions>
-              <Button onClick={()=> navigate('/dashboard')} className="edu-btn" size="small">
+              <Button sx={{margin:"auto"}} onClick={()=> navigate('/dashboard')} className="edu-btn" size="small">
                 Go To Dashboard
               </Button>
             </CardActions>
