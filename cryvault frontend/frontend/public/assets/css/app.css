@@ -1590,14 +1590,15 @@ select {
   -moz-appearance: none;
   -webkit-appearance: none;
   appearance: none;
-  border: 0 none;
+  /* border: 0 none; */
   border-radius: 3px;
-  color: var(--color-heading);
+  /* color: var(--color-heading); */
   font-family: var(--font-secondary);
   font-size: 15px;
   font-weight: 600;
-  background: url(../images/icons/arrow-icon.png) 88% center no-repeat transparent;
-  background-color: var(--color-lighten01);
+  background: url(../images/dwn-arrow.png) 95% center no-repeat transparent;
+  background-size: 25px;
+  /* background-color: var(--color-lighten01); */
   min-width: 160px;
   cursor: pointer;
 }
@@ -16226,7 +16227,7 @@ body .tpd-size-medium .tpd-content {
   border: 1px solid var(--color-border);
   color: var(--color-body);
   font-weight: 400;
-  background: url(../images/icons/arrow-icon.png) 92% center no-repeat transparent;
+  background: url(../images/dwn-arrow.png) 92% center no-repeat transparent;
 }
 .order-payment {
   border: 1px solid var(--color-border);
@@ -31828,7 +31829,7 @@ body.dark-mode {
 }
 .dark-mode select {
   border: 1px solid var(--dark-color-border);
-  background: url(../images/icons/Down-Arrow.png) 88% center no-repeat transparent;
+  background: url(../images/dwn-arrow.png) 88% center no-repeat transparent;
 }
 .dark-mode .edu-product .inner > .thumbnail .product-hover-info ul li a {
   background-color: var(--bg-color-2);
@@ -31870,7 +31871,7 @@ body.dark-mode {
   background-color: transparent;
 }
 .dark-mode .checkout-billing .form-group select {
-  background: url(../images/icons/Down-Arrow.png) 88% center no-repeat transparent;
+  background: url(../images/dwn-arrow.png) 88% center no-repeat transparent;
 }
 .dark-mode .order-payment .payment-method {
   background-color: var(--bg-color-2);
@@ -35068,7 +35069,7 @@ html[dir="rtl"] .edu-sorting-area .sorting-right .layout-switcher label {
   margin-left: 10px;
 }
 html[dir="rtl"] select {
-  background: url(../images/icons/arrow-icon.png) 10% center no-repeat;
+  background: url(../images/dwn-arrow.png) 10% center no-repeat;
   background-color: var(--color-lighten01);
 }
 html[dir="rtl"] .product-details-area .content .product-action .add-to-cart-btn a {
@@ -35098,7 +35099,7 @@ html[dir="rtl"] .contact-me .thumbnail {
   }
 }
 html[dir="rtl"] .checkout-billing .form-group select {
-  background: url(../images/icons/arrow-icon.png) 11% center no-repeat transparent;
+  background: url(../images/dwn-arrow.png) 11% center no-repeat transparent;
 }
 html[dir="rtl"] .rn-progress-parent {
   right: inherit;
