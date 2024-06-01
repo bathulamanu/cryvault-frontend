@@ -15,7 +15,7 @@ const WhyShould = () => {
               {" "}
               <img src="assets/images/med-img blk.svg" width="30" />
             </Box>
-            <Typography>
+            <Typography sx={{ marginBottom: "40px !important" }}>
               Cord blood provides a valuable source of stem cells that can be used in the treatment of various medical conditions, such as leukemia and<br></br> other blood disorders. These stem cells, collected from the umbilical cord at birth, offer potential therapeutic options for both the child and, in some cases, compatible family members.
             </Typography>
             <Box className="about-btn sal-animate" data-sal-delay="400" data-sal="slide-up" data-sal-duration="1000">

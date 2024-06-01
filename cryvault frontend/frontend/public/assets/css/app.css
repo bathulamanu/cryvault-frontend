@@ -35235,7 +35235,7 @@ span.numbr_txt {
 }
 
 .carousel-itemm img {
-  height: 100vh;
+  /* height: 100vh; */
   width: 100%;
   object-fit: cover;
 }
@@ -35363,7 +35363,7 @@ span.numbr_txt {
 
 .shape_in::before {
   content: "";
-  width: 200px;
+  width: 185px;
   height: 1.3px;
   background: #fff;
   position: absolute;
@@ -35374,7 +35374,7 @@ span.numbr_txt {
 }
 .shape_in::after {
   content: "";
-  width: 200px;
+  width: 185px;
   height: 1.3px;
   background: #fff;
   position: absolute;
@@ -36608,7 +36608,7 @@ img.position-ab.butterfly_ot {
   transform: rotateX(150deg);
 }
 .cloud-smle {
-  animation-name: jello;
+  /* animation-name: jello; */
   opacity: 1;
   animation-duration: 5s;
   animation-iteration-count: infinite;

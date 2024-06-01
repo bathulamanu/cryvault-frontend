@@ -156,14 +156,14 @@ const HomeBlog = () => {
             </>
           )}
 
-          <ul className="shape-group">
+          {/* <ul className="shape-group">
             <li className="shape-1 sal-animate">
               <img className="rotateit" src="assets/images/about/shape-13.png" alt="Shape" />
             </li>
             <li className="shape-2 scene sal-animate">
               <span data-depth=".9"></span>
             </li>
-          </ul>
+          </ul> */}
         </Box>
       </Box>
     </>

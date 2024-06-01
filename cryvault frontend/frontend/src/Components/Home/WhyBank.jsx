@@ -21,20 +21,24 @@ const WhyBank = () => {
           Newborn stem cells <br /> are a powerful resource
         </Typography>
 
-        <Box className={isMobile ? "shape_inMobile shape_inMobile-bk " : "shape_in shape_in-bk"} style={{ display: "flex", justifyContent: "center" }}>
+        {/* <Box className={isMobile ? "shape_inMobile shape_inMobile-bk " : "shape_in shape_in-bk"} style={{ display: "flex", justifyContent: "center" }}>
           <img src="assets/images/med-img blk.svg" width="30" />
-        </Box>
+        </Box> */}
+
+        <div className="shape_in shape_in-bk" style={{ display: "flex", justifyContent: "center" }}>
+          {" "}
+          <img src="assets/images/med-img blk.svg" width="30" />
+        </div>
         <Typography variant="h5" sx={{ textAlign: "center", fontWeight: "500", fontSize: "19px" }}>
           Your baby’s umbilical cord contains both cord blood and cord tissue, <br />
           which are rich sources of unique stem cells that have potential for healing.
         </Typography>
 
-        <Box columnSpacing={4} container spacing={4} xs={12} md={4} sm={4} sx={{ display: "flex",
-         flexDirection: isMobile ? "column" : "row", gap: "1rem",
-         padding: isMobile ? "4rem 1rem" : "3rem 11rem", margin: "0 !important", flexGrow: 1, maxWidth: "100% !important" }}>
+        <Box columnSpacing={4} container spacing={4} xs={12} md={4} sm={4} sx={{ display: "flex", flexDirection: isMobile ? "column" : "row", gap: "1rem", padding: isMobile ? "4rem 1rem" : "3rem 11.5rem", margin: "0 !important", flexGrow: 1, maxWidth: "100% !important" }}>
           <Box item className="card1" xs={12} md={4} sm={4} sx={{ maxWidth: isMobile ? "100%" : "33%" }}>
             <Box className="cardContainer">
-              <HelpOutlineIcon style={{ fontSize: "2.5rem" }} />
+              {/* <HelpOutlineIcon style={{ fontSize: "2.5rem" }} /> */}
+              <HelpOutlineIcon style={{ fontSize: "2.5rem" }}  />
               <Box>
                 <Typography variant="h4" sx={{ color: "white" }} gutterBottom>
                   Why Bank?
@@ -47,7 +51,7 @@ const WhyBank = () => {
           </Box>
           <Box className="card2" xs={12} md={4} sm={4} sx={{ maxWidth: isMobile ? "100%" : "33%" }}>
             <Box className="cardContainer">
-              <LuMailQuestion style={{ fontSize: "6.5rem" }} />
+              <LuMailQuestion style={{ fontSize: "2.5rem", width: "3em", height: "1em" }} />
 
               <Box>
                 <Typography variant="h4" sx={{ color: "white" }} gutterBottom>
@@ -61,7 +65,7 @@ const WhyBank = () => {
           </Box>
           <Box className="card3" xs={12} md={4} sm={4} sx={{ maxWidth: isMobile ? "100%" : "33%" }}>
             <Box className="cardContainer">
-              <FaHandshake style={{ fontSize: "6.5rem" }} />
+              <FaHandshake style={{ fontSize: "2.5rem", width: "3em", height: "1em" }}  />
               <Box>
                 <Typography variant="h4" sx={{ color: "white" }} gutterBottom>
                   Cord Blood & Tissue

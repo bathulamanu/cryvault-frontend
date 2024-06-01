@@ -75,7 +75,7 @@ const GoogleReviews = () => {
           modules={[Navigation, Pagination, Scrollbar, A11y,Autoplay]}
           spaceBetween={10}
           // navigation={true}
-          pagination={true}
+          pagination={{ clickable: true }}
           autoplay={{
             delay: 2500,
             disableOnInteraction: false,
