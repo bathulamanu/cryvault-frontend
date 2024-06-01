@@ -146,7 +146,7 @@ code {
   }
 }
 /* phone input */
-.borderPhoneInput{
+.borderPhoneInput {
   width: 100% !important;
   padding: 10px !important;
   border-radius: 0.25rem !important;
@@ -155,7 +155,7 @@ code {
   border: none !important;
 }
 .layoutItem {
-  margin: '6px !important';
+  margin: "6px !important";
 }
 
 /* reach us border */
@@ -166,11 +166,16 @@ code {
 }
 .reachus::before {
   width: 162px;
-  background: #B70040 !important;
+  background: #b70040 !important;
   top: 20px;
 }
 .reachus::after {
   width: 162px;
-  background: #B70040 !important;
+  background: #b70040 !important;
   top: 20px;
+}
+
+.react-tel-input .flag-dropdown {
+  background-color: white !important;
+  border: none !important;
 }

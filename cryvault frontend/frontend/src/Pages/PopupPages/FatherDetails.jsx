@@ -1,6 +1,7 @@
-import { Box, FormControl, FormHelperText, InputLabel, OutlinedInput, Stack, TextField, Typography } from "@mui/material";
+import { Box, Button, FormControl, FormHelperText, InputLabel, OutlinedInput, Stack, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
-
+import fatherImage from "../../assets/images/father image.png";
+import card from "../../assets/images/card.png";
 const FatherDetails = () => {
   const [data, setData] = useState({
     name: {
@@ -26,6 +27,14 @@ const FatherDetails = () => {
       errorStatus: false,
       name: "email",
       id: "email",
+    },
+    phone: {
+      value: "",
+      placeholder: "Phone Number *",
+      errorMessage: "",
+      errorStatus: false,
+      name: "phone",
+      id: "phone",
     },
     occupation: {
       value: "",
@@ -59,6 +68,15 @@ const FatherDetails = () => {
       name: "idValue",
       id: "idValue",
     },
+
+    idType: {
+      value: "",
+      placeholder: "ID Type",
+      errorMessage: "",
+      errorStatus: false,
+      name: "idType",
+      id: "idType",
+    },
     other: {
       value: "",
       placeholder: "If Other, please specify",
@@ -69,56 +87,113 @@ const FatherDetails = () => {
     },
   });
   const handleOnChange = () => {};
+  const [deliveryinputType, setDeliveryInputType] = useState("text");
+
   return (
-    <Box sx={{ display: "flex", width: "100%", gap: "2rem" }} className="conatiner">
+    <Box sx={{ display: "flex", width: "100%" }} className="conatiner">
       <Box sx={{ width: "60%", border: "1px solid #e5e5e5", margin: "2rem", padding: "2rem", borderRadius: "1rem" }}>
         <Typography sx={{ fontSize: "2rem", fontWeight: "600", color: "black", textTransform: "uppercase" }}>Father Details</Typography>
-        <Box sx={{ display: "grid", gridTemplateColumns: "auto auto" }} className="fatherDetails">
-          {Object.entries(data).map(([fieldName, fieldData]) => (
-            // <Box>
-            //   <Typography sx={{ fontSize: "2rem" }} htmlFor={fieldData.id}>
-            //     {fieldData.placeholder}
-            //   </Typography>
-            //   <br />
-            //   <br />
-            //   <TextField
-            //     style={{
-            //       "& .MuiInputBase-root-MuiOutlinedInput-root": {
-            //         height: "40px",
-            //         border:"1px solid green"
-
-            //       },
-            //       "& .MuiInputBase-input-MuiOutlinedInput-input": {
-            //         height: "40px",
-            //         border:"1px solid red"
-            //       },
-            //       border: "1px solid #e5e5e5",
-            //       borderRadius: "0.5rem",
-            //       fontSize: "2rem",
-            //     }}
-            //     id="outlined-basic"
-            //     label=""
-            //     variant="outlined"
-            //   />
-            //   {fieldData.errorStatus && <Typography>{fieldData.errorMessage}</Typography>}
-
-            // </Box>
-            <Stack key={"pincode"}>
-              <InputLabel sx={{ fontSize: "2rem" }} htmlFor={"pincode"}>
-                Pincode
-              </InputLabel>
-              <FormControl variant="outlined" size="small">
-                <OutlinedInput readOnly={false} type={"text"} value={fieldData.value} name={fieldData.name} id="outlined-adornment-password" placeholder={fieldData.placeholder} sx={{ border: fieldData.errorStatus ? "1px solid red" : "", height: "57px" }} onChange={handleOnChange} />
-                {fieldData.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}> {fieldData.errorMessage} </Typography> : null}
-              </FormControl>
-            </Stack>
-          ))}
+        <Box sx={{ marginTop: "3rem", display: "grid", gridTemplateColumns: "auto auto", gridColumnGap: "2rem", gridRowGap: "3rem" }} className="fatherDetails">
+          {Object.entries(data).map(([key, fieldData]) =>
+            fieldData.name == "dob" ? (
+              <Stack sx={{ width: "100%", gap: "0.5rem" }} key={key}>
+                <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>{fieldData.placeholder}</InputLabel>
+                <FormControl variant="outlined" size="small">
+                  <OutlinedInput
+                    readOnly={false}
+                    type={fieldData.type || "text"}
+                    value={fieldData.value}
+                    name={fieldData.name}
+                    id={`outlined-adornment-${key}`}
+                    placeholder={fieldData.placeholder}
+                    type={deliveryinputType}
+                    onFocus={() => setDeliveryInputType("date")}
+                    onBlur={() => setDeliveryInputType("text")}
+                    sx={{
+                      border: fieldData.errorStatus ? "1px solid red" : "",
+                      height: "40px",
+                      width: "100%",
+                      padding: "10px",
+                      borderRadius: "8px",
+                    }}
+                    onChange={handleOnChange}
+                  />
+                  {fieldData.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{fieldData.errorMessage}</Typography> : null}
+                </FormControl>
+              </Stack>
+            ) : (
+              <>
+                <Stack sx={{ width: fieldData.name == "organization" || fieldData.name == "other" ? "208%" : "100%", gap: "0.5rem" }} key={key}>
+                  <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>{fieldData.placeholder}</InputLabel>
+                  <FormControl variant="outlined" size="small">
+                    <OutlinedInput
+                      readOnly={false}
+                      type={fieldData.type || "text"}
+                      value={fieldData.value}
+                      name={fieldData.name}
+                      id={`outlined-adornment-${key}`}
+                      placeholder={fieldData.placeholder}
+                      sx={{
+                        border: fieldData.errorStatus ? "1px solid red" : "",
+                        height: "40px",
+                        width: "100%",
+                        padding: "10px",
+                        borderRadius: "8px",
+                      }}
+                      onChange={handleOnChange}
+                    />
+                    {fieldData.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{fieldData.errorMessage}</Typography> : null}
+                  </FormControl>
+                </Stack>
+                {fieldData.name == "organization" || fieldData.name == "other" ? <br /> : null}
+              </>
+            )
+          )}
         </Box>
       </Box>
 
-      <Box sx={{ flexDirection: "column", display: "flex", width: "40%" }} className="fatherPicture">
-        <Box className="fatherPhoto"></Box>
-        <Box className="fatherID"></Box>
+      <Box sx={{ flexDirection: "column", display: "flex", width: "45%" }} className="fatherPicture">
+        <Box className="fatherPhoto" sx={{ border: "1px solid #e5e5e5", gap: "1rem", margin: "2rem", padding: "2rem", borderRadius: "1rem" }}>
+          <Typography sx={{ fontSize: "2rem", fontWeight: "600", color: "black", textTransform: "uppercase" }}>Upload Father Picture</Typography>
+
+          <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem", marginTop: "1rem" }}>
+            <Box sx={{ border: "1px solid #e5e5e5", gap: "1rem", display: "flex", padding: "2rem", borderRadius: "1rem" }}>
+              <Box>
+                <img src={fatherImage} />
+              </Box>
+              <Box sx={{ display: "flex", flexDirection: "column" }}>
+                <Typography sx={{ fontSize: "1.5rem", textAlign: "center", color: "gray" }}>Drop your new Profile Image here maximum (2MB)</Typography>
+                <Typography sx={{ fontSize: "1.5rem", textAlign: "center", color: "gray" }}>Supported Formats: JPG, PNG, SVG</Typography>
+                <Button sx={{ alignSelf: "center", fontSize: "1rem", textTransform: "none", marginTop: "1rem" }} variant="contained">
+                  Choose File
+                </Button>
+              </Box>
+            </Box>
+            <Button variant="contained" sx={{ alignSelf: "end", fontSize: "1rem", textTransform: "none" }}>
+              Upload Image
+            </Button>
+          </Box>
+        </Box>
+        <Box className="fatherID" sx={{ border: "1px solid #e5e5e5", margin: "2rem", padding: "2rem", borderRadius: "1rem" }}>
+          <Typography sx={{ fontSize: "2rem", fontWeight: "600", color: "black", textTransform: "uppercase" }}>Upload Id Proof</Typography>
+          <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem", marginTop: "1rem" }}>
+            <Box sx={{ border: "1px solid #e5e5e5", gap: "1rem", display: "flex", padding: "2rem", borderRadius: "1rem" }}>
+              <Box>
+                <img src={card} />
+              </Box>
+              <Box sx={{ display: "flex", flexDirection: "column" }}>
+                <Typography sx={{ fontSize: "1.5rem", textAlign: "center", color: "gray" }}>Drop your ID Proof here maximum (2MB)</Typography>
+                <Typography sx={{ fontSize: "1.5rem", textAlign: "center", color: "gray" }}>Supported Formats: JPG, PNG, SVG</Typography>
+                <Button sx={{ alignSelf: "center", fontSize: "1rem", textTransform: "none", marginTop: "1rem" }} variant="contained">
+                  Choose File
+                </Button>
+              </Box>
+            </Box>
+            <Button variant="contained" sx={{ alignSelf: "end", fontSize: "1rem", textTransform: "none" }}>
+              Upload Image
+            </Button>
+          </Box>
+        </Box>
       </Box>
     </Box>
   );

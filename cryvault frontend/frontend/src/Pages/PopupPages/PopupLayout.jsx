@@ -24,8 +24,8 @@ const PopupLayout = ({ children }) => {
   };
 
   return (
-    <Box sx={{ height: "100vh", margin: "13rem", display: "flex", flexDirection: "column", gap: "1rem", border: "1px solid #e5e5e5" }}>
-      <Box sx={{ height: "90vh" }}>
+    <Box sx={{  margin: "13rem", display: "flex", flexDirection: "column", gap: "1rem", border: "1px solid #e5e5e5" }}>
+      <Box >
         
       {currentPage == 1 && <FatherDetails />}
       {currentPage == 2 && <MotherDetails />}
