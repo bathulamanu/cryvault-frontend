@@ -106,7 +106,7 @@ const BookAppointment = () => {
         {isMobile ? null : <img src="assets/images/note.webp" className="position-ab notes-img" alt="pencil" />}
 
         <Box className="container">
-          <Box className="row g-5 align-items-center">
+          <Box sx={{marginTop:"2rem !important"}} className="row g-5 align-items-center">
             <Box className="col-lg-6">
               <Box sx={{ padding: isMobile ? "20px !important" : "40px" }} className="contact-form form-style-2">
                 <Box style={{ width: "100%" }}>
@@ -132,7 +132,7 @@ const BookAppointment = () => {
               </Box>
             </Box>
             <Box className="col-lg-6 sal-animate" data-sal-delay="50" data-sal="slide-up" data-sal-duration="800">
-              <Box className="about-content">
+              <Box  className="about-content">
                 <Box className="section-title section-left" sx={{ textAlign: isMobile ? "center !important" : "left" }}>
                   <span className="pre-title cur_font">How We Can Help You?</span>
                   <Typography variant="h2" className="title">

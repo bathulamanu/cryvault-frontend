@@ -1,5 +1,3 @@
-
-
 import { Box, Typography } from "@mui/material";
 import React from "react";
 import useDeviceSize from "../../Utilities/useDeviceSize";
@@ -10,8 +8,8 @@ const HowitWorks = () => {
       <Box className="edu-categorie-area categorie-area-5 edu-section-gap">
         {isMobile ? null : <img className=" position-ab spectrum-circl" src="assets/images/anim-icon-10.webp" alt="Shape" />}
 
-        <Box className="container how-ts-containr">
-          <Box className="section-title section-center sal-animate cd-headline">
+        <Box sx={{ marginTop: "2rem" }} className="container how-ts-containr">
+          <Box sx={{ marginBottom: "20px !important" }} className="section-title section-center sal-animate cd-headline">
             <Typography variant="h2" className="title">
               How it works{" "}
             </Typography>
@@ -76,7 +74,9 @@ const HowitWorks = () => {
                       <img src="assets/images/kit-pregnant-mom.webp" />
                     </Box>
                     <Box className="content">
-                      <Typography variant="h5"  className="title">Preserve</Typography>
+                      <Typography variant="h5" className="title">
+                        Preserve
+                      </Typography>
                       <Typography>
                         Following delivery and collection of stem cells, you will need to call our medical courier at{" "}
                         <b>

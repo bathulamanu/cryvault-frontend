@@ -103,7 +103,7 @@ const Header = () => {
   }, []);
 
   const changeBackground = () => {
-    if (window.scrollY >= 400) {
+    if (window.scrollY >= 200) {
       setNavbar(true);
     } else setNavbar(false);
   };
@@ -155,7 +155,8 @@ const Header = () => {
         </Box>
       </Box>
       <div id="edu-sticky-placeholder"></div>
-      <Box sx={{ backgroundColor: navbar ? "white !important" : "transparent !important" }} top={isScrolled ? "0" : "40px"} position="fixed" left="0" width="100%" zIndex="999" transition="top 0.3s ease-in-out">
+      {/* <div style={{ marginTop: "80px" }}></div> */}
+      <Box sx={{ marginBottom: "80px", backgroundColor: navbar ? "white !important" : "transparent !important" }} top={isScrolled ? "0" : "40px"} position="fixed" left="0" width="100%" zIndex="999" transition="top 0.3s ease-in-out">
         <Box className="header-mainmenu">
           <Box className="container-fluid">
             <Box className="header-navbar">
