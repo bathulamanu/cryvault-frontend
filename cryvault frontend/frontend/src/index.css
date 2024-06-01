@@ -179,4 +179,10 @@ code {
   background-color: white !important;
   border: none !important;
 }
-
+.custom-select {
+  font-size: 15px !important; /* Increase the font size of the select */
+  font-weight: 400 !important;
+  color: #181818 !important;
+  font-family: "Roboto", "Helvetica", "Arial", sans-serif !important;
+  border: 1px solid rgba(0, 0, 0, 0.23);
+}

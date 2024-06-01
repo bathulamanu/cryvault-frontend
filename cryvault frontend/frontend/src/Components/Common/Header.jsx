@@ -51,6 +51,7 @@ const Header = () => {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.home);
   const headerSocialIcons = data && data.socialIcons && data.socialIcons && data.socialIcons.data && data.socialIcons.data[0];
+  const socialIcons = data && data.headerIcons && data.headerIcons && data.headerIcons.data && data.headerIcons.data[0];
   useEffect(() => {
     dispatch(fetchHeaderSocialIcons());
     dispatch(getPageMetaInfo());
@@ -109,6 +110,8 @@ const Header = () => {
   };
 
   window.addEventListener("scroll", changeBackground);
+
+  console.log(socialIcons);
   return (
     <header className="edu-header header-style-1 header-fullwidth">
       <Box className="header-top-bar">
@@ -117,7 +120,9 @@ const Header = () => {
             <Box className="header-top-left">
               <ul className="header-info">
                 {headerSocialIcons && headerSocialIcons?.length === 0 ? (
-                  <Typography fontSize={20}>No Icons Available</Typography>
+                  <Typography sx={{ color: "white" }} fontSize={20}>
+                    No Icons Available
+                  </Typography>
                 ) : (
                   headerSocialIcons &&
                   headerSocialIcons?.footerPara?.[0]?.contactIconAndInfo
@@ -141,8 +146,8 @@ const Header = () => {
                   {headerSocialIcons && headerSocialIcons?.length === 0 ? (
                     <Typography fontSize={20}>No Icons Available</Typography>
                   ) : (
-                    headerSocialIcons &&
-                    headerSocialIcons?.footerPara?.[0]?.socialMediaIcons?.map((socialicon) => (
+                    socialIcons &&
+                    socialIcons?.SocialMedia?.map((socialicon) => (
                       <Link to={socialicon.iconUrl}>
                         <i className={socialicon.className}></i>
                       </Link>

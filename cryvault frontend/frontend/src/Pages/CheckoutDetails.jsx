@@ -395,22 +395,6 @@ const CheckoutDetails = () => {
     script.async = true;
     document.body.appendChild(script);
   }, []);
-  const ITEM_HEIGHT = 48;
-  const ITEM_PADDING_TOP = 8;
-  const MenuProps = {
-    PaperProps: {
-      style: {
-        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-        width: 250,
-      },
-    },
-  };
-
-  function getStyles(name, personName, theme) {
-    return {
-      fontWeight: personName.indexOf(name) === -1 ? theme.typography.fontWeightRegular : theme.typography.fontWeightMedium,
-    };
-  }
 
   return (
     <Box style={{ marginTop: isMobile ? "3rem" : "10rem", padding: isMobile ? "0rem 2rem" : "3rem 5rem" }}>
@@ -431,69 +415,11 @@ const CheckoutDetails = () => {
               </FormControl>
             </Stack>
           ))}
-          <FormControl fullWidth>
-            <InputLabel sx={{ fontSize: "2rem" }} id="demo-simple-select-autowidth-label">
-              Countries
-            </InputLabel>
-            <Select sx={{ fontSize: "2rem", border: userData.country?.errorStatus ? "1px solid red" : "" }} labelId="demo-simple-select-autowidth-label" id="demo-simple-select-autowidth" value={userData.country?.value} onChange={handleCountryChange} autoWidth label="Countries">
-              {countries?.map((country) => (
-                <MenuItem sx={{ fontSize: "2rem" }} name={country.name} id={country._id} key={country.name} value={country.countryID}>
-                  {country.name}
-                </MenuItem>
-              ))}
-            </Select>
-            {userData.country?.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}> {userData.country?.errorMessage} </Typography> : null}
-          </FormControl>
 
-          <FormControl sx={{}} fullWidth>
-            <InputLabel sx={{ fontSize: "2rem" }} id="demo-simple-select-autowidth-label">
-              States
-            </InputLabel>
-            <Select sx={{ fontSize: "2rem", border: userData.state?.errorStatus ? "1px solid red" : "" }} labelId="demo-simple-select-autowidth-label" id="demo-simple-select-autowidth" value={userData.state?.value} onChange={handleStateChange} autoWidth label="State">
-              {states?.map((state) => (
-                <MenuItem sx={{ fontSize: "2rem" }} name={state.name} id={state._id} key={state.name} value={state.stateID}>
-                  {state.name}
-                </MenuItem>
-              ))}
-            </Select>
-            {userData.state?.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}> {userData.state?.errorMessage} </Typography> : null}
-          </FormControl>
-          {/* <FormControl fullWidth>
-            <InputLabel sx={{ fontSize: "2rem" }} id="demo-simple-select-autowidth-label">
-              cities
-            </InputLabel>
-            <Select
-              sx={{ fontSize: "2rem", border: userData.city?.errorStatus ? "1px solid red" : "" }}
-              // labelId="demo-simple-select-autowidth-label"
-              labelId="demo-multiple-name-label"
-              id="demo-simple-select-autowidth"
-              value={userData.city?.value}
-              onChange={handleCityChange}
-              // autoWidth
-              label="Cities"
-            >
-              {cities?.map((city) => (
-                <MenuItem sx={{ fontSize: "2rem" }} name={city.name} id={city._id} key={city.name} value={city.cityID}>
-                  {city.name}
-                </MenuItem>
-              ))}
-            </Select>
-            {userData.city?.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}> {userData.city?.errorMessage} </Typography> : null}
-          </FormControl> */}
-          <MultipleSelect title={"City"} userData={userData} dataArray={cities} handleChange={handleCityChange} />
-
-          <FormControl fullWidth>
-            <InputLabel sx={{ fontSize: "2rem" }} id="demo-simple-select-autowidth-label">
-              Gender
-            </InputLabel>
-            <Select sx={{ fontSize: "2rem" }} labelId="demo-simple-select-autowidth-label" id="demo-simple-select-autowidth" value={userData.gender?.value} onChange={handleGenderChange} autoWidth label="Gender">
-              {genders?.map((gender) => (
-                <MenuItem sx={{ fontSize: "2rem" }} key={gender.value} value={gender.masterConfigurationID}>
-                  {gender.value}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+          <MultipleSelect type={"country"} title={"Country"} userData={userData} dataArray={countries} handleChange={handleCountryChange} />
+          <MultipleSelect type={"state"} title={"State"} userData={userData} dataArray={states} handleChange={handleStateChange} />
+          <MultipleSelect type={"city"} title={"City"} userData={userData} dataArray={cities} handleChange={handleCityChange} />
+          <MultipleSelect type={"gender"} title={"Gender"} userData={userData} dataArray={genders} handleChange={handleGenderChange} />
 
           <Stack key={"pincode"}>
             <InputLabel sx={{ fontSize: "2rem" }} htmlFor={"pincode"}>
@@ -606,20 +532,77 @@ const CheckoutDetails = () => {
 };
 
 export function MultipleSelect(props) {
-  const { title, dataArray, handleChange, userData } = props;
-console.log(props)
+  const { title, dataArray, handleChange, userData, type } = props;
+  console.log(dataArray);
+  const dispatch = useDispatch();
+
   return (
-    <>
-      <select name={title} id={title} className="custom-select">
-        <option> Select {title}</option>
-        {dataArray.map((data, index) => (
-          <option value={userData.gender?.value} onChange={handleChange} autoWidth label={data.value} key={data.value}>
-            {data.value}
+    <Box>
+      <Typography> {title}</Typography>
+      <select onChange={handleChange} name={title} id={title} className="custom-select custom-select-dropdown">
+        <option value="" disabled="disabled" selected="selected">
+          Please select a {title}
+        </option>
+        {dataArray?.map((data) => (
+          <option key={data.name} value={type === "city" ? data.cityID : type === "state" ? data.stateID : type === "country" ? data.countryID : data.masterConfigurationID} label={data.name}>
+            {data.name}
           </option>
         ))}
       </select>
-    </>
+    </Box>
   );
 }
 
 export default CheckoutDetails;
+{
+  /* <FormControl fullWidth>
+            <InputLabel sx={{ fontSize: "2rem" }} id="demo-simple-select-autowidth-label">
+              cities
+            </InputLabel>
+            <Select
+              sx={{ fontSize: "2rem", border: userData.city?.errorStatus ? "1px solid red" : "" }}
+              // labelId="demo-simple-select-autowidth-label"
+              labelId="demo-multiple-name-label"
+              id="demo-simple-select-autowidth"
+              value={userData.city?.value}
+              onChange={handleCityChange}
+              // autoWidth
+              label="Cities"
+            >
+              {cities?.map((city) => (
+                <MenuItem sx={{ fontSize: "2rem" }} name={city.name} id={city._id} key={city.name} value={city.cityID}>
+                  {city.name}
+                </MenuItem>
+              ))}
+            </Select>
+            {userData.city?.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}> {userData.city?.errorMessage} </Typography> : null}
+          </FormControl> */
+}
+
+//   <FormControl fullWidth>
+//   <InputLabel sx={{ fontSize: "2rem" }} id="demo-simple-select-autowidth-label">
+//     Countries
+//   </InputLabel>
+//   <Select sx={{ fontSize: "2rem", border: userData.country?.errorStatus ? "1px solid red" : "" }} labelId="demo-simple-select-autowidth-label" id="demo-simple-select-autowidth" value={userData.country?.value} onChange={handleCountryChange} autoWidth label="Countries">
+//     {countries?.map((country) => (
+//       <MenuItem sx={{ fontSize: "2rem" }} name={country.name} id={country._id} key={country.name} value={country.countryID}>
+//         {country.name}
+//       </MenuItem>
+//     ))}
+//   </Select>
+//   {userData.country?.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}> {userData.country?.errorMessage} </Typography> : null}
+// </FormControl>
+
+// <FormControl sx={{}} fullWidth>
+//   <InputLabel sx={{ fontSize: "2rem" }} id="demo-simple-select-autowidth-label">
+//     States
+//   </InputLabel>
+//   <Select sx={{ fontSize: "2rem", border: userData.state?.errorStatus ? "1px solid red" : "" }} labelId="demo-simple-select-autowidth-label" id="demo-simple-select-autowidth" value={userData.state?.value} onChange={handleStateChange} autoWidth label="State">
+//     {states?.map((state) => (
+//       <MenuItem sx={{ fontSize: "2rem" }} name={state.name} id={state._id} key={state.name} value={state.stateID}>
+//         {state.name}
+//       </MenuItem>
+//     ))}
+//   </Select>
+//   {userData.state?.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}> {userData.state?.errorMessage} </Typography> : null}
+// </FormControl>
