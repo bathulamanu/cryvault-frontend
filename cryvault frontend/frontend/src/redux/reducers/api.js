@@ -61,7 +61,12 @@ export const getHelpDetailsApi = () => {
 export const IsSubscribedUserApi = () => {
   return `${BASE_URL}/flyingbyts/api/customer/getAnnexureInfo`;
 };
-
+export const getImagesApi = () => {
+  return `${BASE_URL}/flyingbyts/api/user/getGalleryImages `;
+};
+export const getVideosApi = () => {
+  return `${BASE_URL}/flyingbyts/api/user/getGalleryVideo`;
+};
 // dashboard api
 export const getClientInfoApi = () => {
   return `${BASE_URL}/flyingbyts/api/customer/getAnnexureInfo`;

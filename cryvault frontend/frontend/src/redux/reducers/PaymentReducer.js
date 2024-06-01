@@ -165,7 +165,6 @@ export const createOrder = createAsyncThunk("createOrder", async (payload, thunk
             if (status === 200) {
               console.log("Payment successful!");
               window.location.href = "/thankyou";
-              // goToThankyouPage();
             } else {
               console.error("Payment failed:");
               alert("Payment failed. Please try again or contact support.");

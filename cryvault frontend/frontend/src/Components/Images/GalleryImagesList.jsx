@@ -1,7 +1,9 @@
 import { Box, Container, ImageList, ImageListItem, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import useDeviceSize from "../../Utilities/useDeviceSize";
+import { useDispatch, useSelector } from "react-redux";
+import { getImages } from "../../redux/reducers/HomePageReducer";
 const itemData = [
   {
     img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
@@ -71,16 +73,21 @@ function srcset(image, size, rows = 1, cols = 1) {
 }
 const GalleryImagesList = () => {
   const isMobile = useDeviceSize() === "xs";
+  const dispatch = useDispatch();
+  const images = useSelector((state) => state.home.images);
+  useEffect(() => {
+    dispatch(getImages());
+  }, []);
 
   return (
     <Container sx={{ display: "flex", justifyContent: "center" }}>
       <ImageList className="thumbnail" sx={{ width: "100%", height: "100%" }} variant="quilted" cols={4}>
-        {itemData.map((item) => (
-          <ImageListItem key={item.img} cols={item.cols || 1} rows={item.rows || 1} sx={{margin:"0 !important"}}>
-            <Box className={"edu-blog gallerImg blog-style-list sal-animate"} sx={{margin:"0 !important"}}>
-              <Box className="thumbnail" sx={{margin:"0 !important"}}>
-                <Link to="#">
-                  <img {...srcset(item.img, 121, item.rows, item.cols)} style={{ border: "1px solid #FF003F", borderRadius: "4px", width:"100%", height:"100%" }} alt={item.title} loading="lazy" />
+        {images.map((item) => (
+          <ImageListItem key={item.img} cols={item.cols || 1} rows={item.rows || 1} sx={{ margin: "0 !important" }}>
+            <Box className={"edu-blog gallerImg blog-style-list sal-animate"} sx={{height:"100%", margin: "0 !important" }}>
+              <Box className="thumbnail" sx={{height:"100%", margin: "0 !important" }}>
+                <Link style={{height:"100%"}} to="#">
+                  <img {...srcset(`https://flyingbyts.s3.ap-south-2.amazonaws.com/s3/${item.imageKey}`, 121, item.rows, item.cols)} style={{ border: "1px solid #FF003F", borderRadius: "4px", width: "100%", height: "100%" }} alt={item.title} loading="lazy" />
                 </Link>
               </Box>
             </Box>

@@ -29,14 +29,16 @@ const GalleryImagesCategory = () => {
           delay: 2500,
           disableOnInteraction: false,
         }}
+        style={{ width: "100%" }}
       >
         {categories.map((category) => (
-          <SwiperSlide key={category} style={{ width:"200px !important"}}>
+          <SwiperSlide key={category} style={{ width: "200px !important" }}>
             <Box
               style={{
                 border: "1px solid red",
                 cursor: "pointer",
-                whiteSpace:"nowrap"
+                whiteSpace: "nowrap",
+                fontSize: isMobile ? "1.5rem" : "2.5rem",
               }}
               onClick={() => handleCategoryClick(category)}
               className={categoryActiveTab === category ? " activeSingleCategory" : "singleCategory"}

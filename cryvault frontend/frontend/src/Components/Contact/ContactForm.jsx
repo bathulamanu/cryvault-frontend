@@ -79,7 +79,7 @@ const ContactForm = () => {
   });
 
   const isMobile = useDeviceSize() === "xs";
-
+  const [inputType, setInputType] = useState('text');
   const userDetails = Object.entries(userData);
   const isOdd = userDetails.length % 2 !== 0;
   return (
@@ -91,25 +91,47 @@ const ContactForm = () => {
               <Box className="section-title section-center sal-animate">
                 <Typography
                   sx={{
-                    color: "#6F6F6F !important" ,
+                    color: "#6F6F6F !important",
                     fontFamily: '"Roboto", Sans-serif !important',
                     fontSize: "2rem !important",
                     fontWeight: "400 !important",
                     letterSpacing: "1.2px !important",
-                    margin:"0 !important"
+                    margin: "0 !important",
                   }}
                   // className="pre-title pre-textsecondary"
                 >
                   Need emergency?
                 </Typography>
-                <Typography sx={{ color: "#FF0061 !important", fontFamily: '"Sacramento", Sans-serif !important', fontSize: "46px !important", fontWeight: "500 !important" }} variant="h2" >
-                  Drop us a Mail
+                <Typography sx={{ color: "#FF0061 !important", fontFamily: '"Sacramento", Sans-serif !important', fontSize: "46px !important", fontWeight: "500 !important" }} variant="h2">
+                  Drop us a Mail[]
                 </Typography>
                 <img className="logo-light" src="assets/images/heading-icon1.webp" alt="" />
               </Box>
 
               <Box className="row" sx={{ display: "flex", gap: "4rem" }}>
-                <Box style={{ display: "grid", gridTemplateColumns: isMobile ? "auto" : "auto auto", columnGap: "20px", rowGap: "20px", width: "100%" }}>{userDetails.map((data, index) => (data[1].component ? data[1].component : <input key={data[0]} placeholder={data[1].placeholder} className={`appointmentInput ${isOdd && index === userDetails.length - 1 ? "fullWidth" : ""}`} label={data[1].placeholder} type={data[1].type} value={data[1].value} name={data[1].name} size="small" />))}</Box>
+                <Box style={{ display: "grid", gridTemplateColumns: isMobile ? "auto" : "auto auto", columnGap: "20px", rowGap: "20px", width: "100%" }}>
+                  {userDetails.map((data, index) =>
+                    data[1].component ? (
+                      data[1].component
+                    ) : data[1].name == "appointmentDate" ? (
+                      <input
+                      key={data[0]}
+                      placeholder={data[1].placeholder}
+                      className={`appointmentInput ${isOdd && index === userDetails.length - 1 ? "fullWidth" : ""}`}
+                      label={data[1].placeholder}
+                      type={inputType}
+                      onFocus={() => setInputType('date')}
+                      onBlur={() => setInputType('text')}
+                      value={data[1].value}
+                      name={data[1].name}
+                      size="small"
+                    />
+                    
+                    ) : (
+                      <input key={data[0]} placeholder={data[1].placeholder} className={`appointmentInput ${isOdd && index === userDetails.length - 1 ? "fullWidth" : ""}`} label={data[1].placeholder} type={data[1].type} value={data[1].value} name={data[1].name} size="small" />
+                    )
+                  )}
+                </Box>
 
                 <Box className="form-group col-md-12">
                   <textarea name="contact-message" id="contact-message" cols="30" rows="6" placeholder="Type your message"></textarea>

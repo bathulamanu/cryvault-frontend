@@ -43,24 +43,17 @@ export const OTP = () => {
   const userDetails = useSelector((state) => state.user.userDetails);
 
   const goTodashBoard = () => {
-    console.log("localStorage.getItem(subscriptionPlanId) ", localStorage.getItem("subscriptionPlanId"));
-    console.log("sessionStorage.getItem(subscriptionPlanId) ", sessionStorage.getItem("subscriptionPlanId"));
-
     const isCheckingOut = localStorage.getItem("isCheckingOut") === "true";
     const subscriptionPlanId = sessionStorage.getItem("subscriptionPlanId");
     const isSubscribedUser = localStorage.getItem("subscriptionPlanId");
-    console.log(subscriptionPlanId);
-    // "null"
     let str = isSubscribedUser;
     let value = str === "null" ? null : str;
 
     if (isCheckingOut) {
       navigate("/checkout");
     } else if (value) {
-      console.log("coming");
       navigate("/dashboard");
     } else {
-      console.log("comng");
       navigate("/plan");
     }
   };

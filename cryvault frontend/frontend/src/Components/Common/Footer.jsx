@@ -32,7 +32,6 @@ const Footer = () => {
   const data = useSelector((state) => state.home);
   const socialIcons = data && data.socialIcons && data.socialIcons && data.socialIcons.data && data.socialIcons.data[0];
 
-  // console.log(socialIcons);
   // const contactInfo = useMemo(() => {
   //   // const title = socialIcons?.footerPara && footerPara[0]?.title;
   // }, [socialIcons, data]);

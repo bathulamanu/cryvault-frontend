@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { GetFooter, GetHeaderSocialMediaIcon, getPageMetaInfoApi } from "./api";
+import { GetFooter, GetHeaderSocialMediaIcon, getImagesApi, getPageMetaInfoApi, getVideosApi } from "./api";
 import axios from "axios";
 
 export const fetchSocialIcons = createAsyncThunk("socialIcons/fetchSocialIcons", async (payload = {}, thunkAPI) => {
@@ -53,10 +53,50 @@ export const getPageMetaInfo = createAsyncThunk("getPageMetaInfo", async (payloa
     return thunkAPI.rejectWithValue(error);
   }
 });
+export const getImages = createAsyncThunk("getImages", async (payload = {}, thunkAPI) => {
+  const apiUrl = getImagesApi();
+  const token = sessionStorage.getItem("token");
+  const headers = {
+    authorization: `${token}`,
+  };
+  try {
+    const response = await axios.get(apiUrl, {headers});
+    const { ok, problem, data } = response;
+    if (data) {
+      if (payload?.callback) payload.callback();
+      return data;
+    } else {
+      return thunkAPI.rejectWithValue({ data, problem });
+    }
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+export const getVideos = createAsyncThunk("getVideos", async (payload = {}, thunkAPI) => {
+  const apiUrl = getVideosApi();
+  const token = sessionStorage.getItem("token");
+  const headers = {
+    authorization: `${token}`,
+  };
+  try {
+    const response = await axios.get(apiUrl, {headers});
+    const { ok, problem, data } = response;
+    if (data) {
+      if (payload?.callback) payload.callback();
+      return data;
+    } else {
+      return thunkAPI.rejectWithValue({ data, problem });
+    }
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
 
 const initialState = {
   socialIcons: [],
   headerIcons: [],
+  images: [],
+  videos: [],
   pageInfo: {},
   copyrights: "",
   loading: false,
@@ -103,7 +143,31 @@ const HomeReducer = createSlice({
       .addCase(getPageMetaInfo.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
-      });
+      })
+      .addCase(getImages.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getImages.fulfilled, (state, action) => {
+        state.loading = false;
+        state.images = action.payload.data;
+      })
+      .addCase(getImages.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(getVideos.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getVideos.fulfilled, (state, action) => {
+        state.loading = false;
+        state.videos = action.payload.data;
+      })
+      .addCase(getVideos.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
   },
 });
 export const {} = HomeReducer.actions;

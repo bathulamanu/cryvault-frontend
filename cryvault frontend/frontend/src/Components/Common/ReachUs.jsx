@@ -58,7 +58,7 @@ const ReachUs = () => {
   return (
     <>
       <Box sx={{ display: "flex", width: "100%", justifyContent: "center" }} className="edu-cta-banner-area home-gym-cta-wrapper bg-image">
-        <Box sx={{ justifyContent: "start",marginLeft:"15rem", gap: "1rem", width: "100%", textAlign: "center", display: "flex", alignItems: "center" }} className="section-title section-left sal-animate" data-sal-delay="150" data-sal="slide-up" data-sal-duration="800">
+        <Box sx={{ flexDirection: isMobile ? "column" : "row", justifyContent: "start", marginLeft: isMobile ? "0rem" : "15rem", gap: "1rem", width: "100%", textAlign: "center", display: "flex", alignItems: "center" }} className="section-title section-left sal-animate" data-sal-delay="150" data-sal="slide-up" data-sal-duration="800">
           <Box className="col-lg-4">
             <Box className="playiocn">
               <Link TO="#">
@@ -66,7 +66,7 @@ const ReachUs = () => {
               </Link>
             </Box>
           </Box>
-          <Box>
+          <Box sx={{ alignItems: "center", display: isMobile ? "flex" : "block", flexDirection: "column" }}>
             <Typography variant="h2" className="title mb-4">
               Ready to Get Started?
             </Typography>
@@ -77,12 +77,12 @@ const ReachUs = () => {
           </Box>
         </Box>
       </Box>
-      <Box className="edu-section-gap contact-form-area">
+      <Box  className="edu-section-gap contact-form-area">
         <Box className="container">
           <Box className="row justify-content-center">
             <Box className="col-lg-8">
               <Box className="contact-form contact-form-reach">
-                <Box className="section-title section-center">
+                <Box  className="section-title section-center">
                   <Typography variant="h3" className="title">
                     Reach Us
                   </Typography>

@@ -43,6 +43,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getPageMetaInfo } from "../redux/reducers/HomePageReducer";
 import PopupLayout from "../Pages/PopupPages/PopupLayout";
 import PopupLazyLoad from "./PopupLazyLoad";
+import SingleBlog from "../Pages/SingleBlog";
 
 const LazyLoad = () => {
   const [hasToken, setHasToken] = useState(false);
@@ -158,7 +159,7 @@ const LazyLoad = () => {
         <Route path={images} element={<Images />} />
         <Route path={videos} element={<Videos />} />
         <Route path={contact} element={<Contact />} />
-
+        <Route path="/blog-single" element={<SingleBlog />} />
         {hasPlan ? (
           <>
             <Route path="/dashboard" element={<Dashboard />} />
@@ -173,7 +174,7 @@ const LazyLoad = () => {
         <Route path="/terms-and-conditions" element={<TermsCondition />} />
         <Route path="/cancellation-refund-replacement-policy" element={<CancellatioRefund />} /> */}
         {/* 
-        <Route path="/blog-single" element={<SingleBlog />} />
+       
         <Route path="/registration" element={<Registration />} />
         <Route path="/" element={<Home />} />
          */}

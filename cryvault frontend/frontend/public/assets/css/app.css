@@ -38898,11 +38898,11 @@ body .hr_line {
   font-family: "Source Sans Pro", Sans-serif;
   font-size: 15px;
   line-height: 1.5;
-  padding: 10px 32px;
-  height: 60px;
+  /* padding: 10px 32px; */
+  height: 53px;
   letter-spacing: 0.3px;
   border: none;
-  border-bottom: 1px solid #ddd !important;
+  /* border-bottom: 1px solid #ddd !important; */
 }
 
 .requ_inform button{
