@@ -1,19 +1,26 @@
 import { Button, Container, Link, Typography, Box } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
-import { A11y, Navigation, Pagination, Scrollbar } from "swiper/modules";
+import { A11y, Autoplay, Navigation, Pagination, Scrollbar } from "swiper/modules";
 import useDeviceSize from "../../Utilities/useDeviceSize";
 import "./Home.css";
+import { getTestimonial } from "../../redux/reducers/HomePageReducer";
+import { useDispatch, useSelector } from "react-redux";
 
 const Testimonial = () => {
   const isMobile = useDeviceSize() === "xs";
+  const dispatch = useDispatch();
+  const testimonials = useSelector((state) => state.home.testimonials);
+  useEffect(() => {
+    dispatch(getTestimonial());
+  }, []);
 
   return (
-    <Box style={{ position: "relative", marginBottom: isMobile ? "5rem" : "15rem", marginTop: isMobile ? "5rem" : "10rem", paddingTop: "10rem", paddingBottom: isMobile ? "0rem" : "10rem" }} className="testimonailContainer">
+    <Box style={{ position: "relative", marginBottom: isMobile ? "5rem" : "8rem", marginTop: isMobile ? "5rem" : "10rem", paddingTop: "10rem", paddingBottom: isMobile ? "0rem" : "10rem" }} className="testimonailContainer">
       {isMobile ? null : (
         <>
           {" "}
@@ -23,7 +30,7 @@ const Testimonial = () => {
         </>
       )}
       <Box className=" testimonialAboveImage" data-negative="false">
-        <svg style={{ position: "absolute",display:"none", top: "100px" }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none">
+        <svg style={{ position: "absolute", display: "none", top: "100px" }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" preserveAspectRatio="none">
           <path
             style={{
               fill: "#FFF7EF61",
@@ -51,30 +58,27 @@ const Testimonial = () => {
       <Container>
         <Swiper
           slidesPerView={1}
-          modules={[Navigation, Pagination, Scrollbar, A11y]}
+          modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
           spaceBetween={10}
           pagination={true}
+          loop={true}
           autoplay={{
-            delay: 2500,
+            delay: 1500,
             disableOnInteraction: false,
           }}
         >
-          <SwiperSlide style={{ display: "flex", justifyContent: "center", height: "45rem" }}>
-            <SingleSlide />
-          </SwiperSlide>
-          <SwiperSlide style={{ display: "flex", justifyContent: "center" }}>
-            <SingleSlide />
-          </SwiperSlide>
-          <SwiperSlide style={{ display: "flex", justifyContent: "center" }}>
-            <SingleSlide />
-          </SwiperSlide>
+          {testimonials?.map((testimonial) => (
+            <SwiperSlide style={{ display: "flex", justifyContent: "center", height: "45rem" }}>
+              <SingleSlide testimonial={testimonial} />
+            </SwiperSlide>
+          ))}
         </Swiper>
       </Container>
     </Box>
   );
 };
 
-export const SingleSlide = React.memo(() => {
+export const SingleSlide = React.memo(({ testimonial }) => {
   const isMobile = useDeviceSize() === "xs";
 
   return (
@@ -84,10 +88,10 @@ export const SingleSlide = React.memo(() => {
           <img src="assets/images/quote.svg" alt="quote svg" style={{ width: "4rem" }} />
         </Box>
         <Typography sx={{ fontSize: "2rem" }} variant="body1">
-          "I am grateful to Cryovault for providing top-notch stem cell storage services. Their knowledgeable staff guided us through the process with ease, giving us peace of mind knowing that our baby's future health is in good hands."
+          {testimonial.Content}
         </Typography>
         <Box className="d-flex align-items-center avatr_blk">
-          <img src="assets/images/Praveen-Kumar.webp" alt="quote svg" /> <h5 className="title">Praveen</h5>
+          <img style={{ borderRadius: "50%", width: "5rem", height: "5rem" }} src={`https://flyingbyts.s3.ap-south-2.amazonaws.com/s3/${testimonial.customerImage}`} alt="quote svg" /> <h5 className="title">{testimonial.customerName}</h5>
         </Box>
       </Box>
     </>

@@ -23,6 +23,7 @@ const Header = () => {
   const [socialicons, setSocialIcons] = useState([]);
   const [userType, setUserType] = useState(false);
   const [isActive, setIsActive] = useState(false);
+  const [navbar, setNavbar] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
   const onAddClick = (e) => {
     setIsActive(!isActive);
@@ -86,11 +87,11 @@ const Header = () => {
 
   const userDetails = useSelector((state) => state.user.userDetails);
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(localStorage.getItem("token")?.length > 0);
-  const isSubscribedUser =  localStorage.getItem("subscriptionPlanId") !== 'null' && localStorage.getItem("subscriptionPlanId")?.length > 0;
+  const isSubscribedUser = localStorage.getItem("subscriptionPlanId") !== "null" && localStorage.getItem("subscriptionPlanId")?.length > 0;
 
   useEffect(() => {
-    setIsUserLoggedIn(localStorage.getItem("token")?.length > 0 || userDetails?.customerID?.toString()?.length > 0 || orderDetails && orderDetails?.PaymentDetails?.[0]?.subscriptionPlanId?.toString()?.length > 0 );
-  }, [userDetails,orderDetails]);
+    setIsUserLoggedIn(localStorage.getItem("token")?.length > 0 || userDetails?.customerID?.toString()?.length > 0 || (orderDetails && orderDetails?.PaymentDetails?.[0]?.subscriptionPlanId?.toString()?.length > 0));
+  }, [userDetails, orderDetails]);
 
   const handleLogout = () => {
     setIsUserLoggedIn(false);
@@ -100,6 +101,14 @@ const Header = () => {
   useEffect(() => {
     localStorage.setItem("isCheckingOut", "false");
   }, []);
+
+  const changeBackground = () => {
+    if (window.scrollY >= 400) {
+      setNavbar(true);
+    } else setNavbar(false);
+  };
+
+  window.addEventListener("scroll", changeBackground);
   return (
     <header className="edu-header header-style-1 header-fullwidth">
       <Box className="header-top-bar">
@@ -145,8 +154,8 @@ const Header = () => {
           </Box>
         </Box>
       </Box>
-
-      <Box position="absolute" left="0" width="100%" zIndex="999" transition="top 0.3s ease-in-out">
+      <div id="edu-sticky-placeholder"></div>
+      <Box sx={{ backgroundColor: navbar ? "white !important" : "transparent !important" }} top={isScrolled ? "0" : "40px"} position="fixed" left="0" width="100%" zIndex="999" transition="top 0.3s ease-in-out">
         <Box className="header-mainmenu">
           <Box className="container-fluid">
             <Box className="header-navbar">

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { GetFooter, GetHeaderSocialMediaIcon, getImagesApi, getPageMetaInfoApi, getVideosApi } from "./api";
+import { GetFooter, GetHeaderSocialMediaIcon, getGoogleReviewsApi, getImagesApi, getPageMetaInfoApi, getTestimonialApi, getVideosApi } from "./api";
 import axios from "axios";
 
 export const fetchSocialIcons = createAsyncThunk("socialIcons/fetchSocialIcons", async (payload = {}, thunkAPI) => {
@@ -41,7 +41,7 @@ export const getPageMetaInfo = createAsyncThunk("getPageMetaInfo", async (payloa
     authorization: `${token}`,
   };
   try {
-    const response = await axios.get(apiUrl, {headers});
+    const response = await axios.get(apiUrl, { headers });
     const { ok, problem, data } = response;
     if (data) {
       if (payload?.callback) payload.callback();
@@ -60,7 +60,7 @@ export const getImages = createAsyncThunk("getImages", async (payload = {}, thun
     authorization: `${token}`,
   };
   try {
-    const response = await axios.get(apiUrl, {headers});
+    const response = await axios.get(apiUrl, { headers });
     const { ok, problem, data } = response;
     if (data) {
       if (payload?.callback) payload.callback();
@@ -79,7 +79,45 @@ export const getVideos = createAsyncThunk("getVideos", async (payload = {}, thun
     authorization: `${token}`,
   };
   try {
-    const response = await axios.get(apiUrl, {headers});
+    const response = await axios.get(apiUrl, { headers });
+    const { ok, problem, data } = response;
+    if (data) {
+      if (payload?.callback) payload.callback();
+      return data;
+    } else {
+      return thunkAPI.rejectWithValue({ data, problem });
+    }
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+export const getGoogleReviews = createAsyncThunk("getGoogleReviews", async (payload = {}, thunkAPI) => {
+  const apiUrl = getGoogleReviewsApi();
+  const token = sessionStorage.getItem("token");
+  const headers = {
+    authorization: `${token}`,
+  };
+  try {
+    const response = await axios.get(apiUrl, { headers });
+    const { ok, problem, data } = response;
+    if (data) {
+      if (payload?.callback) payload.callback();
+      return data;
+    } else {
+      return thunkAPI.rejectWithValue({ data, problem });
+    }
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+export const getTestimonial = createAsyncThunk("getTestimonial", async (payload = {}, thunkAPI) => {
+  const apiUrl = getTestimonialApi();
+  const token = sessionStorage.getItem("token");
+  const headers = {
+    authorization: `${token}`,
+  };
+  try {
+    const response = await axios.get(apiUrl);
     const { ok, problem, data } = response;
     if (data) {
       if (payload?.callback) payload.callback();
@@ -97,6 +135,8 @@ const initialState = {
   headerIcons: [],
   images: [],
   videos: [],
+  reviews:[],
+  testimonials:[],
   pageInfo: {},
   copyrights: "",
   loading: false,
@@ -168,6 +208,31 @@ const HomeReducer = createSlice({
         state.loading = false;
         state.error = action.error.message;
       })
+      .addCase(getGoogleReviews.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getGoogleReviews.fulfilled, (state, action) => {
+        state.loading = false;
+        state.reviews = action.payload.data;
+      })
+      .addCase(getGoogleReviews.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(getTestimonial.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getTestimonial.fulfilled, (state, action) => {
+        state.loading = false;
+        state.testimonials = action.payload.data;
+      })
+      .addCase(getTestimonial.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      
   },
 });
 export const {} = HomeReducer.actions;

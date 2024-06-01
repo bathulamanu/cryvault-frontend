@@ -1,102 +1,28 @@
 import { Avatar, Box, Button, Container, Link, Rating, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/scrollbar";
-import { A11y, Navigation, Pagination, Scrollbar } from "swiper/modules";
+import { A11y, Navigation, Pagination, Scrollbar, Autoplay } from "swiper/modules";
 import useDeviceSize from "../../Utilities/useDeviceSize";
 import SwiperCore from "swiper";
 import { FcGoogle } from "react-icons/fc";
-const reviews = [
-  {
-    userImage: "",
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getGoogleReviews, getTestimonial } from "../../redux/reducers/HomePageReducer";
 
-    alterImage: "",
-
-    userName: "Vikram goud",
-
-    userEmail: "",
-
-    googleMapLocation: "https://www.google.com/maps/contrib/103344430736844963744/reviews",
-
-    content: "Srinivas is doing great job… thank you for your service Srinivas am really happy with your service thank you ",
-
-    customerID: null,
-
-    rating: 4,
-
-    photoOrVideo: [],
-
-    _id: "662237b63be61d6d5e15a5ae",
-  },
-  {
-    userImage: "",
-
-    alterImage: "",
-
-    userName: "Vikram goud",
-
-    userEmail: "",
-
-    googleMapLocation: "https://www.google.com/maps/contrib/103344430736844963744/reviews",
-
-    content: "Srinivas is doing great job… thank you for your service Srinivas am really happy with your service thank you ",
-
-    customerID: null,
-
-    rating: 4,
-
-    photoOrVideo: [],
-
-    _id: "662237b63be61d6d5e15a5ae",
-  },
-  {
-    userImage: "",
-
-    alterImage: "",
-
-    userName: "Vikram goud",
-
-    userEmail: "",
-
-    googleMapLocation: "https://www.google.com/maps/contrib/103344430736844963744/reviews",
-
-    content: "Srinivas is doing great job… thank you for your service Srinivas am really happy with your service thank you ",
-
-    customerID: null,
-
-    rating: 4,
-
-    photoOrVideo: [],
-
-    _id: "662237b63be61d6d5e15a5ae",
-  },
-  {
-    userImage: "",
-
-    alterImage: "",
-
-    userName: "Vikram goud",
-
-    userEmail: "",
-
-    googleMapLocation: "https://www.google.com/maps/contrib/103344430736844963744/reviews",
-
-    content: "Srinivas is doing great job… thank you for your service Srinivas am really happy with your service thank you ",
-
-    customerID: null,
-
-    rating: 4,
-
-    photoOrVideo: [],
-
-    _id: "662237b63be61d6d5e15a5ae",
-  },
-];
 const GoogleReviews = () => {
   const isMobile = useDeviceSize() === "xs";
+  const dispatch = useDispatch();
+  const reviews = useSelector((state) => state.home.reviews);
+  const reviewByUser = reviews?.reviewByUser;
+  const reviewOn = reviews?.reviewOn;
+  
+  useEffect(() => {
+    dispatch(getGoogleReviews());
+  }, []);
 
   SwiperCore.use([Navigation, Pagination, A11y]);
   const stars = Array.from({ length: 5 }, () => (
@@ -114,7 +40,7 @@ const GoogleReviews = () => {
         <Box style={{ display: "flex", alignItems: "start !important", flexDirection: "column", gap: "0.5rem" }}>
           <Link href="https://maps.google.com/?cid=1616921368839435671" target="_blank" rel="nofollow noopener">
             <Typography sx={{ fontWeight: "600", fontSize: "1.5rem" }} variant="h4">
-              Cryovault | Best Stem Cell Banking in Hyderabad | India
+              {reviewOn?.title}
             </Typography>
           </Link>
           <Box style={{ display: "flex", alignItems: "center" }}>
@@ -124,10 +50,10 @@ const GoogleReviews = () => {
             {stars.map((star, index) => star)}{" "}
           </Box>
 
-          <Typography variant="h4">Based on 284 reviews</Typography>
+          <Typography variant="h4">{reviewOn?.content}</Typography>
           <img loading="lazy" decoding="async" src="https://www.cryovault.in/wp-content/plugins/widget-google-reviews/assets/img/powered_by_google_on_white.png" alt="powered by Google" style={{ maxWidth: "144px", height: "auto" }} />
-          <Button variant="contained" sx={{ display: "flex", gap: "0.5rem", marginTop: "15px", width: isMobile ? "40%" : "70%" }} className="googleBtn">
-            <Link sx={{ textDecoration: "none", color: "white" }} href="https://search.google.com/local/writereview?placeid=ChIJH5WwOMiWyzsRl7VpC2t1cBY" onClick="return rplg_leave_review_window.call(this)" target="_blank" rel="noopener">
+          <Link sx={{ textDecoration: "none", color: "white" }} href="https://search.google.com/local/writereview?placeid=ChIJH5WwOMiWyzsRl7VpC2t1cBY" target="_blank" rel="noopener">
+            <Button variant="contained" sx={{ display: "flex", gap: "0.5rem", marginTop: "15px", width: isMobile ? "40%" : "70%" }} className="googleBtn">
               Review us on
               <svg style={{ background: "White", borderRadius: "50%", padding: "0.2rem," }} viewBox="0 0 512 512" height="18" width="18">
                 <g fill="none" fill-rule="evenodd">
@@ -138,15 +64,15 @@ const GoogleReviews = () => {
                   <path d="M20 20h472v472H20V20z"></path>
                 </g>
               </svg>
-            </Link>
-          </Button>
+            </Button>
+          </Link>
         </Box>
       </Box>
 
       <Box style={{ width: isMobile ? "100%" : "70%" }}>
         <Swiper
           slidesPerView={isMobile ? 1 : 3}
-          modules={[Navigation, Pagination, Scrollbar, A11y]}
+          modules={[Navigation, Pagination, Scrollbar, A11y,Autoplay]}
           spaceBetween={10}
           // navigation={true}
           pagination={true}
@@ -155,7 +81,7 @@ const GoogleReviews = () => {
             disableOnInteraction: false,
           }}
         >
-          {reviews.map((review) => (
+          {reviewByUser?.map((review) => (
             <SwiperSlide style={{ height: "23rem" }}>
               <SingleReview review={review} />
             </SwiperSlide>
@@ -176,7 +102,7 @@ export const SingleReview = React.memo(({ review }) => {
           {review?.userImage ? <img src={review?.userImage || "default-user-image.png"} alt="User avatar" style={{ width: 50, height: 50, borderRadius: "50%" }} /> : <Avatar sx={{ bgcolor: "orange" }}>{capitalizeFirstLetter(review?.userName)}</Avatar>}
           {/* Handle missing user image gracefully */}
           <Box sx={{ display: "flex", flexDirection: "column", marginLeft: 1 }}>
-            <Typography variant="body1" sx={{ fontSize: "2rem !important",fontWeight:"600", color: "#154fc1 !important" }}>
+            <Typography variant="body1" sx={{ fontSize: "2rem !important", fontWeight: "600", color: "#154fc1 !important" }}>
               {review?.userName}
             </Typography>
             <Typography variant="caption" color="text.secondary">

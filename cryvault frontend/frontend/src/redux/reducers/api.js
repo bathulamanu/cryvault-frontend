@@ -67,6 +67,13 @@ export const getImagesApi = () => {
 export const getVideosApi = () => {
   return `${BASE_URL}/flyingbyts/api/user/getGalleryVideo`;
 };
+export const getGoogleReviewsApi = () => {
+  return `${BASE_URL}/flyingbyts/api/user/getReview`;
+};
+export const getTestimonialApi = () => {
+  return `${BASE_URL}/flyingbyts/api/user/getTestimony`;
+};
+
 // dashboard api
 export const getClientInfoApi = () => {
   return `${BASE_URL}/flyingbyts/api/customer/getAnnexureInfo`;

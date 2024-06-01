@@ -7,8 +7,8 @@ const Franchise = () => {
 
   return (
     <>
-      <Box sx={{ padding: isMobile ? " 50px 7px !important" : "120px 0px !important" }} className="edu-breadcrumb-area breadcrumb-style-2 bg-image bg-image--19">
-        <Box className="container">
+      <Box sx={{ padding: isMobile ? " 50px 7px !important" : "120px 40px !important" }} className="edu-breadcrumb-area breadcrumb-style-2 bg-image bg-image--19">
+        <Box className="container" sx={{ margin: "0 !important", padding: "0 !important" }}>
           <Box className="breadcrumb-inner">
             <Box className="page-title d-flex align-items-center">
               <Box sx={{ textAlign: isMobile ? " center" : "start ", width: isMobile ? "100% !important" : "70% !important" }}>
