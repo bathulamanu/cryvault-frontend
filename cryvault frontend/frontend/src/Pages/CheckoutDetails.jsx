@@ -395,6 +395,22 @@ const CheckoutDetails = () => {
     script.async = true;
     document.body.appendChild(script);
   }, []);
+  const ITEM_HEIGHT = 48;
+  const ITEM_PADDING_TOP = 8;
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+        width: 250,
+      },
+    },
+  };
+
+  function getStyles(name, personName, theme) {
+    return {
+      fontWeight: personName.indexOf(name) === -1 ? theme.typography.fontWeightRegular : theme.typography.fontWeightMedium,
+    };
+  }
 
   return (
     <Box style={{ marginTop: isMobile ? "3rem" : "10rem", padding: isMobile ? "0rem 2rem" : "3rem 5rem" }}>
@@ -442,11 +458,20 @@ const CheckoutDetails = () => {
             </Select>
             {userData.state?.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}> {userData.state?.errorMessage} </Typography> : null}
           </FormControl>
-          <FormControl fullWidth>
+          {/* <FormControl fullWidth>
             <InputLabel sx={{ fontSize: "2rem" }} id="demo-simple-select-autowidth-label">
               cities
             </InputLabel>
-            <Select sx={{ fontSize: "2rem", border: userData.city?.errorStatus ? "1px solid red" : "" }} labelId="demo-simple-select-autowidth-label" id="demo-simple-select-autowidth" value={userData.city?.value} onChange={handleCityChange} autoWidth label="Cities">
+            <Select
+              sx={{ fontSize: "2rem", border: userData.city?.errorStatus ? "1px solid red" : "" }}
+              // labelId="demo-simple-select-autowidth-label"
+              labelId="demo-multiple-name-label"
+              id="demo-simple-select-autowidth"
+              value={userData.city?.value}
+              onChange={handleCityChange}
+              // autoWidth
+              label="Cities"
+            >
               {cities?.map((city) => (
                 <MenuItem sx={{ fontSize: "2rem" }} name={city.name} id={city._id} key={city.name} value={city.cityID}>
                   {city.name}
@@ -454,7 +479,9 @@ const CheckoutDetails = () => {
               ))}
             </Select>
             {userData.city?.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}> {userData.city?.errorMessage} </Typography> : null}
-          </FormControl>
+          </FormControl> */}
+          <MultipleSelect title={"City"} userData={userData} dataArray={cities} handleChange={handleCityChange} />
+
           <FormControl fullWidth>
             <InputLabel sx={{ fontSize: "2rem" }} id="demo-simple-select-autowidth-label">
               Gender
@@ -488,7 +515,7 @@ const CheckoutDetails = () => {
             <br />
 
             <RadioGroup sx={{ width: "90%" }}>
-              <Box sx={{ display: "flex", flexDirection:isMobile ? 'column' :  "row", gap: "1rem" }}>
+              <Box sx={{ display: "flex", flexDirection: isMobile ? "column" : "row", gap: "1rem" }}>
                 <FormControlLabel
                   control={
                     <Radio
@@ -577,5 +604,22 @@ const CheckoutDetails = () => {
     </Box>
   );
 };
+
+export function MultipleSelect(props) {
+  const { title, dataArray, handleChange, userData } = props;
+console.log(props)
+  return (
+    <>
+      <select name={title} id={title} className="custom-select">
+        <option> Select {title}</option>
+        {dataArray.map((data, index) => (
+          <option value={userData.gender?.value} onChange={handleChange} autoWidth label={data.value} key={data.value}>
+            {data.value}
+          </option>
+        ))}
+      </select>
+    </>
+  );
+}
 
 export default CheckoutDetails;
