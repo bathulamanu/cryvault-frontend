@@ -60,7 +60,7 @@ const Testimonial = () => {
           slidesPerView={1}
           modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
           spaceBetween={10}
-          pagination={true}
+          pagination={{ clickable: true }}
           loop={true}
           autoplay={{
             delay: 1500,
