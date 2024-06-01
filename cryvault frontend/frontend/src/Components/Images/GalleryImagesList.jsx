@@ -82,7 +82,7 @@ const GalleryImagesList = () => {
   return (
     <Container sx={{ display: "flex", justifyContent: "center" }}>
       <ImageList className="thumbnail" sx={{ width: "100%", height: "100%" }} variant="quilted" cols={4}>
-        {images.map((item) => (
+        {images?.map((item) => (
           <ImageListItem key={item.img} cols={item.cols || 1} rows={item.rows || 1} sx={{ margin: "0 !important" }}>
             <Box className={"edu-blog gallerImg blog-style-list sal-animate"} sx={{height:"100%", margin: "0 !important" }}>
               <Box className="thumbnail" sx={{height:"100%", margin: "0 !important" }}>

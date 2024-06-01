@@ -90,20 +90,20 @@ const Footer = () => {
                       <span>
                         <FaMapMarkerAlt color="#FF0046" />
                       </span>
-                      <Link to="tel:+011235641231">No.:52/65, Swami Vivekananda road, Srinivasa layout, Bagalur, North Bengaluru, Karnataka- 562149.</Link>
+                      <Link style={{fontSize:"13px"}} to="tel:+011235641231">No.:52/65, Swami Vivekananda road, Srinivasa layout, Bagalur, North Bengaluru, Karnataka- 562149.</Link>
                     </Container>
                   </li>
                   <li>
                     <span>
                       <i className="icon-phone" style={{ color: "#FF0046" }}></i>
                     </span>
-                    <Link to="tel:+011235641231">+91 73311 61886</Link>
+                    <Link style={{fontSize:"13px"}} to="tel:+011235641231">+91 73311 61886</Link>
                   </li>
                   <li>
                     <span>
                       <i className="icon-envelope" style={{ color: "#FF0046" }}></i>
                     </span>
-                    <Link to="mailto:info@edublink.com" target="_blank">
+                    <Link style={{fontSize:"13px"}} to="mailto:info@edublink.com" target="_blank">
                       info@cryovault.in
                     </Link>
                   </li>

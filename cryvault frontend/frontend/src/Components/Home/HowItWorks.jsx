@@ -76,7 +76,7 @@ const HowitWorks = () => {
                       <img src="assets/images/kit-pregnant-mom.webp" />
                     </Box>
                     <Box className="content">
-                      <Typography className="title">Preserve</Typography>
+                      <Typography variant="h5"  className="title">Preserve</Typography>
                       <Typography>
                         Following delivery and collection of stem cells, you will need to call our medical courier at{" "}
                         <b>

@@ -38,8 +38,8 @@ const Carrers = () => {
   const url = `https://flyingbyts.s3.ap-south-2.amazonaws.com/s3/${pageInfo?.[7]?.[7]?.pageHeaderImage}`;
   return (
     <>
-      <Box  sx={{  backgroundImage: `url(${url})`,padding: isMobile ? " 50px 7px !important" : "120px 0px !important" }} className="edu-breadcrumb-area breadcrumb-style-2 bg-image bg-image--19">
-        <Box className="container">
+      <Box  sx={{  backgroundImage: `url(${url})`,padding: isMobile ? " 50px 7px !important" : "120px 40px !important" }} className="edu-breadcrumb-area breadcrumb-style-2 bg-image bg-image--19">
+        <Box className="container" sx={{ margin: "0 !important", padding: "0 !important" }}>
           <Box className="breadcrumb-inner">
             <Box className="page-title d-flex align-items-center">
               <Box sx={{ textAlign: isMobile ? " center" : "start ", width: isMobile ? "100% !important" : "70% !important" }}>
