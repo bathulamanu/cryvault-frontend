@@ -67,8 +67,8 @@ const Testimonial = () => {
             disableOnInteraction: false,
           }}
         >
-          {testimonials?.map((testimonial) => (
-            <SwiperSlide style={{ display: "flex", justifyContent: "center", height: "45rem" }}>
+          {testimonials?.map((testimonial,index) => (
+            <SwiperSlide key={index} style={{ display: "flex", justifyContent: "center", height: "45rem" }}>
               <SingleSlide testimonial={testimonial} />
             </SwiperSlide>
           ))}

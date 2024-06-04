@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Breadcrumbs, Button, Link, Typography, Grid, Card, CardContent, CardMedia } from "@mui/material";
 import "./Common.css";
+import Stats from "../../Components/Home/Stats" ;//"../Components/Home/Stats";
 const OurStory = () => {
   return (
     <Box className="bg_counter_img">
@@ -14,9 +15,9 @@ const OurStory = () => {
           </Box>
         </Box>
 
-        <Box className="countr_out">
-          <Box className="row g-5">
-            <Box className="col-lg-3 col-sm-6 mt-0">
+        {/* <Box className="countr_out"> */}
+          {/* <Box className="row g-5"> */}         
+            {/* <Box className="col-lg-3 col-sm-6 mt-0">
               <Box className="edu-counterup counterup-style-4">
                 <Box  className="icon " sx={{backgrounColor:"transparent !important"}}>
                   <img src="assets/images/happy-moms.png" alt="baby" />
@@ -26,8 +27,8 @@ const OurStory = () => {
                 </Typography>
                 <Typography className="title">HAPPY MOMs</Typography>
               </Box>
-            </Box>
-            <Box className="col-lg-3 col-sm-6 mt-0">
+            </Box> */}
+            {/* <Box className="col-lg-3 col-sm-6 mt-0">
               <Box className="edu-counterup counterup-style-4">
                 <Box className="icon ">
                   <img src="assets/images/clinic-rooms.png" alt="baby" />
@@ -55,11 +56,15 @@ const OurStory = () => {
                 </Typography>
                 <Typography className="title">DEDICATED DOCTORS</Typography>
               </Box>
-            </Box>
-          </Box>
-        </Box>
+            </Box> */}
+          {/* </Box> */}
+        {/* </Box> */}
       </Box>
+      <div style={{ maxWidth: "100vw" }}>
+          <Stats />
+      </div>
     </Box>
+    
   );
 };
 export default OurStory;

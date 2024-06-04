@@ -1,10 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, Button, TextField, Typography, useTheme } from "@mui/material";
 import { Input } from "../styles/Input";
 import useDeviceSize from "../Utilities/useDeviceSize";
 import { useNavigate } from "react-router-dom";
-import { login } from "../redux/reducers/UserReducer";
-import { useDispatch } from "react-redux";
+import { decrementTimer, login, startTimerWithCallback } from "../redux/reducers/UserReducer";
+import { useDispatch, useSelector } from "react-redux";
 
 export const Login = () => {
   const theme = useTheme();
@@ -12,12 +12,26 @@ export const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [userData, setUserData] = useState({ countryCode: "+91", phoneNumber: "" });
-
+  const timer = useSelector((state) => state.user.timer);
+  const error = useSelector((state) => state.user.timerError);
   const handleUserData = (e) => setUserData({ ...userData, phoneNumber: e.target.value });
   const handleOTPScreen = () => navigate("/OTP", { state: { countryCode: "+91", phoneNumber: userData.phoneNumber } });
   const handleSendOTP = () => {
+    // dispatch(setTimer(60));
+    // dispatch(setError('Please wait for the countdown to finish before resending the OTP.'));
+    dispatch(startTimerWithCallback());
     dispatch(login({ payload: userData, callback: handleOTPScreen }));
   };
+
+  useEffect(() => {
+    let countdown;
+    if (timer > 0) {
+      countdown = setInterval(() => {
+        dispatch(decrementTimer());
+      }, 1000);
+    }
+    return () => clearInterval(countdown);
+  }, [timer, dispatch]);
   return (
     <Box
       sx={{

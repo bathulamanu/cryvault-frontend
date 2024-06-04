@@ -533,7 +533,6 @@ const CheckoutDetails = () => {
 
 export function MultipleSelect(props) {
   const { title, dataArray, handleChange, userData, type } = props;
-  console.log(dataArray);
   const dispatch = useDispatch();
 
   return (

@@ -54,7 +54,7 @@ const GoogleReviews = () => {
           <img loading="lazy" decoding="async" src="https://www.cryovault.in/wp-content/plugins/widget-google-reviews/assets/img/powered_by_google_on_white.png" alt="powered by Google" style={{ maxWidth: "144px", height: "auto" }} />
           <Link sx={{ textDecoration: "none", color: "white" }} href="https://search.google.com/local/writereview?placeid=ChIJH5WwOMiWyzsRl7VpC2t1cBY" target="_blank" rel="noopener">
             <Button variant="contained" sx={{ display: "flex", gap: "0.5rem", marginTop: "15px", width: isMobile ? "40%" : "70%" }} className="googleBtn">
-              Review us on
+              review us on
               <svg style={{ background: "White", borderRadius: "50%", padding: "0.2rem," }} viewBox="0 0 512 512" height="18" width="18">
                 <g fill="none" fill-rule="evenodd">
                   <path d="M482.56 261.36c0-16.73-1.5-32.83-4.29-48.27H256v91.29h127.01c-5.47 29.5-22.1 54.49-47.09 71.23v59.21h76.27c44.63-41.09 70.37-101.59 70.37-173.46z" fill="#4285f4"></path>

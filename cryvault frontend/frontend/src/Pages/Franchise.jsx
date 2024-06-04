@@ -1,10 +1,240 @@
-import React from "react";
+import React, { useState } from "react";
 import ReachUs from "../Components/Common/ReachUs";
 import useDeviceSize from "../Utilities/useDeviceSize";
-import { Box, Breadcrumbs, Link, Typography } from "@mui/material";
+import { Box, Breadcrumbs, Button, Link, Typography } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { addFranchiseRequest } from "../redux/reducers/HomePageReducer";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+import "./Franchise.css";
+
+const initialState = {
+  firstName: {
+    value: "",
+    placeholder: "First Name",
+    errorStatus: false,
+    errorMessage: "",
+    icon: "",
+    type: "text",
+    name: "firstName",
+    id: "firstName",
+  },
+  lastName: {
+    value: "",
+    placeholder: "Last Name",
+    errorStatus: false,
+    errorMessage: "",
+    icon: "",
+    type: "text",
+    name: "lastName",
+    id: "lastName",
+  },
+  email: {
+    value: "",
+    placeholder: "Email",
+    errorStatus: false,
+    errorMessage: "",
+    icon: "",
+    type: "email",
+    name: "email",
+    id: "email",
+  },
+  phone: {
+    value: "",
+    placeholder: "Phone Number",
+    errorStatus: false,
+    errorMessage: "",
+    icon: "",
+    type: "tel",
+    name: "phone",
+    id: "phone",
+  },
+
+  city: {
+    value: "",
+    placeholder: "city",
+    errorStatus: false,
+    errorMessage: "",
+    icon: "",
+    type: "text",
+    name: "city",
+    id: "city",
+  },
+  state: {
+    value: "",
+    placeholder: "State",
+    errorStatus: false,
+    errorMessage: "",
+    icon: "",
+    type: "text",
+    name: "hospitalName",
+    id: "hospitalName",
+  },
+};
 const Franchise = () => {
   const isMobile = useDeviceSize() === "xs";
+  const [userData, setUserData] = useState({
+    firstName: {
+      value: "",
+      placeholder: "First Name",
+      errorStatus: false,
+      errorMessage: "",
+      icon: "",
+      type: "text",
+      name: "firstName",
+      id: "firstName",
+    },
+    lastName: {
+      value: "",
+      placeholder: "Last Name",
+      errorStatus: false,
+      errorMessage: "",
+      icon: "",
+      type: "text",
+      name: "lastName",
+      id: "lastName",
+    },
 
+    phoneNumber: {
+      value: "",
+      placeholder: "Phone Number",
+      errorStatus: false,
+      errorMessage: "",
+      icon: "",
+      type: "tel",
+      name: "phoneNumber",
+      id: "phoneNumber",
+    },
+    email: {
+      value: "",
+      placeholder: "Email",
+      errorStatus: false,
+      errorMessage: "",
+      icon: "",
+      type: "email",
+      name: "email",
+      id: "email",
+    },
+    city: {
+      value: "",
+      placeholder: "City",
+      errorStatus: false,
+      errorMessage: "",
+      icon: "",
+      type: "text",
+      name: "city",
+      id: "city",
+    },
+    state: {
+      value: "",
+      placeholder: "State",
+      errorStatus: false,
+      errorMessage: "",
+      icon: "",
+      type: "text",
+      name: "state",
+      id: "state",
+    },
+    experience: {
+      value: "",
+      placeholder: "Professional Experience *",
+      errorStatus: false,
+      errorMessage: "",
+      icon: "",
+      type: "text",
+      name: "experience",
+      id: "experience",
+    },
+    comment: {
+      value: "",
+      placeholder: "Comment",
+      errorStatus: false,
+      errorMessage: "",
+      icon: "",
+      type: "text",
+      name: "comment",
+      id: "comment",
+    },
+  });
+  const [officeSpace, setOfficeSpace] = useState(false);
+  const [experienceInStemCellBanking, setExperienceInStemCellBanking] = useState(false);
+
+  const handleOfficeSpaceChange = (event) => {
+    setOfficeSpace(event.target.value);
+  };
+  const handleexperienceInStemCellBankingChange = (event) => {
+    setExperienceInStemCellBanking(event.target.value);
+  };
+  const userDetails = Object.entries(userData);
+  const dispatch = useDispatch();
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUserData((prevData) => ({
+      ...prevData,
+      [name]: { ...prevData[name], value: value, errorStatus: false, errorMessage: "" },
+    }));
+  };
+  const handleSubmit = () => {
+    const dataToSend = {
+      firstName: userData.firstName.value,
+      lastName: userData.lastName.value,
+      email: userData.email.value,
+      phoneNumber: userData.phoneNumber.value,
+      city: userData.city.value,
+      state: userData.state.value,
+      comment: userData.comment.value,
+      professionalExperience: userData.experience.value,
+      OfficeSpace: officeSpace,
+      ExperienceInStemCellBanking: experienceInStemCellBanking,
+    };
+
+    if (!userData.firstName.value) {
+      setUserData((prevData) => ({
+        ...prevData,
+        firstName: {
+          ...prevData.firstName,
+          errorStatus: true,
+          errorMessage: "Enter valid First Name",
+        },
+      }));
+      return;
+    }
+    // if (!userData.lastName.value) {
+    //   setUserData((prevData) => ({
+    //     ...prevData,
+    //     lastName: {
+    //       ...prevData.lastName,
+    //       errorStatus: true,
+    //       errorMessage: "Enter valid last Name",
+    //     },
+    //   }));
+    //   return;
+    // }
+    if (!userData.phoneNumber.value) {
+      setUserData((prevData) => ({
+        ...prevData,
+        phoneNumber: {
+          ...prevData.phone,
+          errorStatus: true,
+          errorMessage: "Enter valid phone number",
+        },
+      }));
+      return;
+    }
+
+    dispatch(addFranchiseRequest({ payload: dataToSend }));
+    setUserData(initialState);
+  };
+
+  const handlePhoneInput = (value, country) => {
+    const country_code = "91";
+    const phoneNumber = value.slice(country_code.length);
+    setUserData((prevData) => ({
+      ...prevData,
+      phoneNumber: { ...prevData.phoneNumber, value: phoneNumber, errorStatus: false, errorMessage: "" },
+    }));
+  };
   return (
     <>
       <Box sx={{ padding: isMobile ? " 50px 7px !important" : "120px 40px !important" }} className="edu-breadcrumb-area breadcrumb-style-2 bg-image bg-image--19">
@@ -49,80 +279,68 @@ const Franchise = () => {
                 </Box>
 
                 <form className="row">
-                  <Box className="form-group col-md-6">
-                    <label for="current-log-email">First Name*</label>
-                    <input type="text" name="current-log-email" id="current-log-email" />
-                  </Box>
-                  <Box className="form-group col-md-6">
-                    <label for="current-log-email">Last Name*</label>
-                    <input type="text" name="current-log-email" id="current-log-email" />
-                  </Box>
-                  <Box className="form-group col-md-6">
-                    <label for="current-log-email">Phone Number</label>
-                    <input type="email" name="current-log-email" id="current-log-email" />
-                  </Box>
-                  <Box className="form-group col-md-6">
-                    <label for="current-log-email">Enter Email</label>
-                    <input type="email" name="current-log-email" id="current-log-email" />
-                  </Box>
-                  <Box className="form-group col-md-6">
-                    <label for="current-log-password">Enter your City*</label>
-                    <input type="text" id="current-log-password" placeholder="Enter your City" />
-                  </Box>
-                  <Box className="form-group col-md-6">
-                    <label for="current-log-password">Enter Your State*</label>
-                    <input type="text" id="current-log-password" />
+                  <Box style={{ width: "100%" }}>
+                    <Box style={{ display: "grid", gridTemplateColumns: isMobile ? "auto auto" : "auto auto", columnGap: "20px", rowGap: "20px", width: "100%" }}>
+                      {userDetails.map((data, index) => (
+                        <Box key={data[1].name} sx={{ display: "flex", flexDirection: "column" }}>
+                          <Typography sx={{ marginBottom: "10px !important", fontWeight: "700", fontSize: "1.5rem", marginLeft: "2rem" }}>{data[1].placeholder}</Typography>
+
+                          {data[1].name == "phoneNumber" ? <PhoneInput value={"91" + userData.phoneNumber.value} onChange={handlePhoneInput} autoFormat inputProps={{ required: true }} inputClass={"borderPhoneInput"} specialLabel="" containerClass={"layoutItem"} country={"in"} defaultErrorMessage="Incorrect WhatsApp Number" /> : data[1].name != "comment" || data[1].name != "experience" ? <input style={{ border: data[1].errorStatus ? "1px solid red" : "1px solid #e5e5e5" }} onChange={handleChange} key={data[0]} placeholder={data[1].placeholder} className={`carrerInput `} label={data[1].placeholder} type={data[1].type} value={data[1].value} name={data[1].name} size="small" /> : null}
+                          {data[1].errorStatus ? <Typography style={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data[1].errorMessage}</Typography> : null}
+                        </Box>
+                      ))}
+                    </Box>
                   </Box>
 
-                  <Box className="form-group col-md-12">
-                    <label>Office Space *</label>
+                  <Box style={{ marginTop: "1rem" }} className="form-group col-md-12">
+                    <Typography sx={{ marginBottom: "10px !important", fontWeight: "700", fontSize: "1.5rem", marginLeft: "2rem" }}>Office Space *</Typography>
+
                     <Box className="d-flex">
                       <Box className="form-group mb-0 mr-4">
                         <Box className="edu-form-check">
-                          <input type="radio" id="mr" name="payment" />
-                          <label for="mr">Yes</label>
+                          <input type="radio" id="yes" name="officeSpace" value="true" checked={officeSpace} onChange={handleOfficeSpaceChange} />
+                          <label htmlFor="yes">Yes</label>
                         </Box>
                       </Box>
                       <Box className="form-group mb-0">
                         <Box className="edu-form-check">
-                          <input type="radio" id="mrs" name="payment" />
-                          <label for="mrs">No</label>
+                          <input type="radio" id="no" name="officeSpace" value="false" checked={officeSpace} onChange={handleOfficeSpaceChange} />
+                          <label htmlFor="no">No</label>
                         </Box>
                       </Box>
                     </Box>
                   </Box>
                   <Box className="form-group col-md-12">
-                    <label for="current-log-password">Professional Experience *</label>
+                    <Typography sx={{ marginBottom: "10px !important", fontWeight: "700", fontSize: "1.5rem", marginLeft: "2rem" }}>Professional Experience *</Typography>
                     <input type="text" id="current-log-password" />
                   </Box>
 
                   <Box className="form-group col-md-12">
-                    <label>Experience in Stem Cell Banking *</label>
+                    <Typography sx={{ marginBottom: "10px !important", fontWeight: "700", fontSize: "1.5rem", marginLeft: "2rem" }}>Experience in Stem Cell Banking *</Typography>
+
                     <Box className="d-flex">
                       <Box className="form-group mb-0 mr-4">
                         <Box className="edu-form-check">
-                          <input type="radio" id="mr" name="payment" />
-                          <label for="mr">Yes</label>
+                          <input type="radio" id="yes" name="officeSpace" value="true" checked={experienceInStemCellBanking} onChange={handleexperienceInStemCellBankingChange} />
+                          <label htmlFor="yes">Yes</label>
                         </Box>
                       </Box>
                       <Box className="form-group mb-0">
                         <Box className="edu-form-check">
-                          <input type="radio" id="mrs" name="payment" />
-                          <label for="mrs">No</label>
+                          <input type="radio" id="no" name="officeSpace" value="false" checked={experienceInStemCellBanking} onChange={handleexperienceInStemCellBankingChange} />
+                          <label htmlFor="no">No</label>
                         </Box>
                       </Box>
                     </Box>
                   </Box>
 
                   <Box className="form-group col-md-12">
-                    <label for="current-log-password">Comment</label>
+                    <Typography sx={{ marginBottom: "10px !important", fontWeight: "700", fontSize: "1.5rem", marginLeft: "2rem" }}>Comment</Typography>
                     <textarea name="contact-message" style={{ fontSize: "15px", height: "150px" }} id="contact-message" cols="30" rows="6" placeholder="Type your message"></textarea>
                   </Box>
-                  <Box className="form-group">
-                    <button type="button" className="edu-btn btn-medium">
-                      Submit
-                    </button>
-                  </Box>
+                  <Button onClick={handleSubmit} variant="contained" sx={{ fontSize: "2rem !important", textTransform: "none", backgroundColor: "#D5008D", color: "white", fontWeight: "700", width: isMobile ? "40%" : "100%", whiteSpace: "nowrap", padding: "15px 30px", borderRadius: "40px", marginTop: "3rem" }} size="lg">
+                    Submit
+                  </Button>
                 </form>
               </Box>
             </Box>

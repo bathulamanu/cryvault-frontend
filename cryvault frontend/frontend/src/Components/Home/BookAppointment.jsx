@@ -1,10 +1,10 @@
 import { Box, Button, Typography } from "@mui/material";
 import React, { useState } from "react";
 import useDeviceSize from "../../Utilities/useDeviceSize";
-import { bookAppointment } from "../../redux/reducers/HomePageReducer"
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { bookAppointment } from "../../redux/reducers/HomePageReducer";
 
-const initialUserData = {
+const initialState = {
   firstName: {
     value: "",
     placeholder: "First Name",
@@ -13,8 +13,7 @@ const initialUserData = {
     icon: "",
     type: "text",
     name: "firstName",
-    id: "firstName",
-    isMandatory: true
+    id: "firstName"
   },
   lastName: {
     value: "",
@@ -25,7 +24,6 @@ const initialUserData = {
     type: "text",
     name: "lastName",
     id: "lastName",
-    isMandatory: true
   },
   email: {
     value: "",
@@ -36,7 +34,6 @@ const initialUserData = {
     type: "email",
     name: "email",
     id: "email",
-    isMandatory: true
   },
   phoneNumber: {
     value: "",
@@ -57,7 +54,6 @@ const initialUserData = {
     type: "date",
     name: "appointmentDate",
     id: "appointmentDate",
-    isMandatory: true
   },
   expectedDeliveryDate: {
     value: "",
@@ -98,62 +94,92 @@ const initialUserData = {
     type: "text",
     name: "address",
     id: "address",
-  }
-}
+  },
+};
 const BookAppointment = () => {
-  const [userData, setUserData] = useState(initialUserData);
+  const [userData, setUserData] = useState(initialState);
   const isMobile = useDeviceSize() === "xs";
-  const [deliveryinputType, setDeliveryInputType] = useState('text');
-  const [inputType, setInputType] = useState('text');
+  const [deliveryinputType, setDeliveryInputType] = useState("text");
+  const [inputType, setInputType] = useState("text");
   const userDetails = Object.entries(userData);
   const isOdd = userDetails.length % 2 !== 0;
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUserData((prevState) => ({
-      ...prevState,
-      [name]: {
-        ...prevState[name],
-        value: value,
-        errorStatus: false,
-        errorMessage: '',
-      },
-    }));
+    const name = e?.target?.name;
+    const value = e?.target?.value;
+
+    setUserData({ ...userData, [name]: { ...userData[name], value: value, errorStatus: false, errorMessage: "" } });
+  };
+  const handleDateChange = (e) => {
+    const name = e?.target?.name;
+    const value = e?.target?.value;
+    setUserData({ ...userData, [name]: { ...userData[name], value: value, errorStatus: false, errorMessage: "" } });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = () => {
 
-    let isValid = true;
-    const updatedUserData = { ...userData };
 
-    Object.keys(updatedUserData).forEach((key) => {
-      if (updatedUserData[key].isMandatory && !updatedUserData[key].value.trim()) {
-        updatedUserData[key].errorStatus = true;
-        updatedUserData[key].errorMessage = 'This field is required.';
-        isValid = false;
-      }
-    });
-
-    if (!isValid) {
-      setUserData(updatedUserData);
+    if (!userData.firstName.value) {
+      setUserData((prevData) => ({
+        ...prevData,
+        firstName: {
+          ...prevData.firstName,
+          errorStatus: true,
+          errorMessage: "First name is required",
+        },
+      }));
       return;
     }
+    if (!userData.lastName.value) {
+      setUserData((prevData) => ({
+        ...prevData,
+        lastName: {
+          ...prevData.lastName,
+          errorStatus: true,
+          errorMessage: "Last Name is required",
+        },
+      }));
+      return;
+    }
+    if (!userData.email.value) {
+      setUserData((prevData) => ({
+        ...prevData,
+        email: {
+          ...prevData.email,
+          errorStatus: true,
+          errorMessage: "Email ID is required",
+        },
+      }));
+      return;
+    }
+    if (!userData.appointmentDate.value) {
+      setUserData((prevData) => ({
+        ...prevData,
+        appointmentDate: {
+          ...prevData.appointmentDate,
+          errorStatus: true,
+          errorMessage: "Appointment Date is required ",
+        },
+      }));
+      return;
+    }
+    
+    const dataToSend = {
+      firstName: userData.firstName.value,
+      lastName: userData.lastName.value,
+      email: userData.email.value,
+      phoneNumber: userData.phoneNumber.value,
+      expectedDeliveryDate: userData.expectedDeliveryDate.value,
+      appointmentDate: userData.appointmentDate.value,
+      doctorName: userData.doctorName.value,
+      hospitalName: userData.hospitalName.value,
+      address: userData.address.value,
+    };
 
-    const formData = {};
-    Object.keys(userData).forEach((key) => {
-      formData[key] = userData[key].value;
-    });
-
-    dispatch(bookAppointment({ payload: formData, callback: emptyDetails }));
+    dispatch(bookAppointment({ payload: dataToSend }));
+    setUserData(initialState);
   };
-
-  const emptyDetails = () => {
-    setUserData(initialUserData);
-  };
-
-
   return (
     <>
       <Box sx={{ marginBottom: "8rem !important", backgroundColor: "white !important" }} className="edu-section-gap edu-about-area about-style-4 position-relative">
@@ -165,55 +191,33 @@ const BookAppointment = () => {
             <Box className="col-lg-6">
               <Box onSubmit={handleSubmit} component="form" sx={{ padding: isMobile ? "20px !important" : "40px" }} className="contact-form form-style-2">
                 <Box style={{ width: "100%" }}>
-                  <Box style={{ display: "grid", gridTemplateColumns: isMobile ? "auto" : "auto auto", columnGap: "20px", rowGap: "20px", width: "100%" }}>
+                  <Box style={{ display: "grid", gridTemplateColumns: isMobile ? "auto auto" : "auto auto", columnGap: "20px", rowGap: "20px", width: "100%" }}>
                     {" "}
                     {userDetails.map((data, index) =>
                       data[1].name == "appointmentDate" ? (
-                        <input key={data[0]}
-                          placeholder={data[1].placeholder}
-                          className={`appointmentInput ${isOdd && index === userDetails.length - 1 ? "fullWidth" : ""}`}
-                          label={data[1].placeholder}
-                          type={inputType}
-                          onFocus={() => setInputType("date")} onBlur={() => setInputType("text")}
-                          value={data[1].value}
-                          onChange={handleChange}
-                          name={data[1].name}
-                          error={data[1].errorStatus}
-                          helperText={data[1].errorMessage}
-                          size="small" />
+                        <Box sx={{ display: "flex", flexDirection: "column" }}>
+                          <input style={{ border: data[1].errorStatus ? "1px solid red" : "none" }} onChange={handleDateChange} key={data[0]} placeholder={data[1].placeholder} className={`appointmentInput ${isOdd && index === userDetails.length - 1 ? "fullWidth" : ""}`} label={data[1].placeholder} type={inputType} onFocus={() => setInputType("date")} onBlur={() => setInputType("text")} value={data[1].value} name={data[1].name} size="small" />
+
+                          {data[1].errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data[1].errorMessage}</Typography> : null}
+                        </Box>
                       ) : data[1].name == "expectedDeliveryDate" ? (
-                        <input key={data[0]}
-                          placeholder={data[1].placeholder}
-                          className={`appointmentInput ${isOdd && index === userDetails.length - 1 ? "fullWidth" : ""}`}
-                          label={data[1].placeholder}
-                          type={deliveryinputType}
-                          onFocus={() => setDeliveryInputType("date")} onBlur={() => setDeliveryInputType("text")}
-                          value={data[1].value}
-                          onChange={handleChange}
-                          name={data[1].name}
-                          error={data[1].errorStatus}
-                          helperText={data[1].errorMessage}
-                          size="small" />
+                        <Box sx={{ display: "flex", flexDirection: "column" }}>
+                          <input style={{ border: data[1].errorStatus ? "1px solid red" : "none" }} onChange={handleDateChange} key={data[0]} placeholder={data[1].placeholder} className={`appointmentInput ${isOdd && index === userDetails.length - 1 ? "fullWidth" : ""}`} label={data[1].placeholder} type={deliveryinputType} onFocus={() => setDeliveryInputType("date")} onBlur={() => setDeliveryInputType("text")} value={data[1].value} name={data[1].name} size="small" />
+
+                          {data[1].errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data[1].errorMessage}</Typography> : null}
+                        </Box>
                       ) : (
-                        <input key={data[0]}
-                          placeholder={data[1].placeholder}
-                          className={`appointmentInput ${isOdd && index === userDetails.length - 1 ? "fullWidth" : ""}`}
-                          label={data[1].placeholder}
-                          type={data[1].type}
-                          value={data[1].value}
-                          onChange={handleChange}
-                          name={data[1].name}
-                          error={data[1].errorStatus}
-                          helperText={data[1].errorMessage}
-                          size="small" />
+                        <Box sx={{ display: "flex", flexDirection: "column" }}>
+                          <input style={{ border: data[1].errorStatus ? "1px solid red" : "none" }} onChange={handleChange} key={data[0]} placeholder={data[1].placeholder} className={`appointmentInput ${isOdd && index === userDetails.length - 1 ? "fullWidth" : ""}`} label={data[1].placeholder} type={data[1].type} value={data[1].value} name={data[1].name} size="small" />
+                          {data[1].errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data[1].errorMessage}</Typography> : null}
+                        </Box>
                       )
                     )}
                   </Box>
                   <Box className="form-group col-12">
                     <iframe title="reCAPTCHA" width="304" height="78" role="presentation" name="a-rax7gaw23nj6" frameBorder="0" scrolling="no" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox allow-storage-access-by-user-activation" src="https://www.google.com/recaptcha/api2/anchor?ar=2&amp;k=6LfPixwaAAAAABFFuOob52Mh463Oy3rZEtYUr4oJ&amp;co=aHR0cHM6Ly93d3cuY3J5b3ZhdWx0LmluOjQ0Mw..&amp;hl=en&amp;v=Hq4JZivTyQ7GP8Kt571Tzodj&amp;size=normal&amp;cb=oh1vpc5nfiib" data-gtm-yt-inspected-6="true"></iframe>
                   </Box>
-                  <Button type="submit" sx={{ fontWeight: "600", textTransform: "none" }}
-                    variant="contained" className="appointmentBtn">
+                  <Button onClick={handleSubmit} sx={{ fontWeight: "600", textTransform: "none" }} variant="contained" className="appointmentBtn">
                     Make An Appointment
                   </Button>
                 </Box>

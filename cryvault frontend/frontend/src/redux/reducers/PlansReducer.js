@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { GetFooter, GetHeaderSocialMediaIcon, Plans } from "./api";
+import { GetFooter, GetHeaderSocialMediaIcon, Plans,GetAdditonalServicesDetails } from "./api";
 import axios from "axios";
 
 export const getAllPlans = createAsyncThunk("getPlans", async (payload = {}, thunkAPI) => {
@@ -10,6 +10,26 @@ export const getAllPlans = createAsyncThunk("getPlans", async (payload = {}, thu
     const { ok, problem, data } = response;
     if (data) {
       if (payload.callback) payload.callback();
+      return data;
+    } else {
+      return thunkAPI.rejectWithValue({ data, problem });
+    }
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+
+export const getAdditonalServicesDetails = createAsyncThunk("getAdditonalServicesDetails", async (payload, thunkAPI) => {
+  const apiUrl = GetAdditonalServicesDetails();
+  const token = sessionStorage.getItem("token");
+  const headers = {
+    authorization: `${token}`,
+  };
+  try {
+    const response = await axios.get(apiUrl, { headers });
+    const { ok, problem, data } = response;
+    if (data) {
+      if (payload?.callback) payload.callback();
       return data;
     } else {
       return thunkAPI.rejectWithValue({ data, problem });

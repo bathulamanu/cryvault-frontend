@@ -3,13 +3,15 @@ import { Box, Button, TextField, Typography, useTheme } from "@mui/material";
 import { Image } from "@mui/icons-material";
 import { Input } from "../styles/Input";
 import useDeviceSize from "../Utilities/useDeviceSize";
-import { login, verifyOTP } from "../redux/reducers/UserReducer";
+import { login, setError, setTimer, startTimerWithCallback, verifyOTP } from "../redux/reducers/UserReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { Navigate, useLocation, useNavigate } from "react-router-dom";
 
 export const OTP = () => {
   const theme = useTheme();
   const [otp, setOTP] = useState("");
+  const [timer, setTimer] = useState(0);
+  const [error, setError] = useState("");
   const isMobile = useDeviceSize() === "xs";
   const userData = useSelector((state) => state.user.userData);
 
@@ -31,6 +33,48 @@ export const OTP = () => {
   };
   const hiddenDigits = "*".repeat(phonenumber?.length - 4);
   const lastFourDigits = phonenumber?.slice(-4);
+
+  // const timer = useSelector((state) => state.user.timer);
+  // const error = useSelector((state) => state.user.timerError);
+  // useEffect(() => {
+  //   let countdown;
+  //   if (timer > 0) {
+  //     countdown = setInterval(() => {
+  //       setTimer((prev) => prev - 1);
+  //     }, 1000);
+  //   }
+  //   return () => clearInterval(countdown);
+  // }, [timer]);
+  // const handleResendClick = () => {
+  //   if (timer === 0) {
+  //     // Call the ResendOTP function
+  //     ResendOTP();
+  //     dispatch(startTimerWithCallback()); // Start timer and clear error
+  //   } else {
+  //     dispatch(setError(`Please wait for the ${timer}sec before resending the OTP.`));
+  //   }
+  // };
+  const handleResendClick = () => {
+    if (timer === 0) {
+      ResendOTP();
+      setTimer(60);
+      setError("");
+    } else {
+      setError(`Please wait for the ${timer}sec before resending the OTP.`);
+    }
+  };
+  useEffect(() => {
+    let countdown;
+    if (timer > 0) {
+      countdown = setInterval(() => {
+        setTimer((prev) => prev - 1);
+      }, 1000);
+    }
+    return () => clearInterval(countdown);
+  }, [timer]);
+  useEffect(() => {
+    setTimer(60);
+  }, []);
   const ResendOTP = () => {
     const dataToSend = {
       countryCode: countrycode,
@@ -40,11 +84,8 @@ export const OTP = () => {
     dispatch(login({ payload: dataToSend }));
   };
 
-  const userDetails = useSelector((state) => state.user.userDetails);
-
   const goTodashBoard = () => {
     const isCheckingOut = localStorage.getItem("isCheckingOut") === "true";
-    const subscriptionPlanId = sessionStorage.getItem("subscriptionPlanId");
     const isSubscribedUser = localStorage.getItem("subscriptionPlanId");
     let str = isSubscribedUser;
     let value = str === "null" ? null : str;
@@ -86,14 +127,27 @@ export const OTP = () => {
           style={{ fontSize: "2rem !important", ml: 1, "& .MuiOutlinedInput-root": { borderRadius: "0.25rem" } }} // Consistent border radius
           id="phoneNumberInput"
         />
-        <Box sx={{ mt: 2, display: "flex", alignItems: "center" }}>
+        {/* <Box sx={{ mt: 2, display: "flex", alignItems: "center" }}>
           <Typography variant="h4" fontWeight={500}>
             Didn&#39;t receive the OTP ?&nbsp;
           </Typography>
           <Button sx={{ fontSize: "1rem" }} variant="text" onClick={ResendOTP}>
             Resend OTP
           </Button>
+        </Box> */}
+        <Box sx={{ mt: 2, display: "flex", alignItems: "center" }}>
+          <Typography variant="h4" fontWeight={500}>
+            Didn&#39;t receive the OTP ?&nbsp;
+          </Typography>
+          <Button sx={{ fontSize: "1rem", textTransform: "none" }} variant="text" onClick={handleResendClick}>
+            Resend OTP {timer > 0 && `(${timer}s)`}
+          </Button>
         </Box>
+        {error && (
+          <Typography variant="body2" color="error" sx={{ fontSize: "1.5rem" }}>
+            {error}
+          </Typography>
+        )}
         <Button variant="contained" sx={{ mt: 4, mb: 2, width: "100%" }} onClick={handleSendOTP} className="edu-btn">
           Verify
         </Button>

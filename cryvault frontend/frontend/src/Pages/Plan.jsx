@@ -3,7 +3,7 @@ import ReachUs from "../Components/Common/ReachUs";
 import { FaHandPointRight } from "react-icons/fa";
 import useDeviceSize from "../Utilities/useDeviceSize";
 import { Box, List, ListItem, ListItemIcon, ListItemText, Breadcrumbs, Typography, Link, Button } from "@mui/material";
-import { getAllPlans } from "../redux/reducers/PlansReducer";
+import { getAllPlans ,getAdditonalServicesDetails} from "../redux/reducers/PlansReducer";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -17,6 +17,7 @@ const Plan = () => {
 
   useEffect(() => {
     dispatch(getAllPlans());
+    dispatch(getAdditonalServicesDetails());
   }, []);
   const handleAddClick = (plan) => {
     localStorage.setItem("planName", plan.title);
@@ -31,7 +32,7 @@ const Plan = () => {
           <Box className="breadcrumb-inner">
             <Box className="page-title d-flex align-items-center">
               <Box sx={{ textAlign: isMobile ? " center" : "start ", width: isMobile ? "100% !important" : "70% !important" }}>
-                <Typography  sx={{ fontSize: isMobile ? "24px !important" : "45px !important" }} variant='h1' className="title">Plan</Typography>
+                <Typography sx={{ fontSize: isMobile ? "24px !important" : "45px !important" }} variant='h1' className="title">Plan</Typography>
               </Box>
               {isMobile ? null : (
                 <Breadcrumbs aria-label="breadcrumb">
@@ -80,20 +81,30 @@ const Plan = () => {
                       >
                         <Box className={`pricing-header`} sx={{ margin: "0 !important" }}>
                           <Box className={`head_ot`}>
-                            <Typography variant="h6" className="title" style={{ backgroundColor: plan.color }}>
-                              {plan.title}
+                            <Typography variant="h6" className="title">
+                              {plan.durationYear}
                             </Typography>
 
-                            {plan.ribben !== "" && plan.ribbenStatus && <span className="best_vlu">{plan.ribben}</span>}
+                            {plan.ribben !== "" && plan.ribbenStatus &&  plan.ribbenStatusValue == "Active" && <span className="best_vlu">{plan.ribben}</span>}
+                          </Box>
+                          <Box>
+                            <Typography variant="h2" className="">
+                              {plan.title}
+                            </Typography>
+                          </Box>
+                          <Box className="price-wrap">
+                          <span className="amount">
+                              <sup>{plan.currencySymbol}</sup> {plan.price}
+                            </span>
                           </Box>
                           <Box className="price-wrap">
                             <span className="amount">
-                              <sup>{plan.currencySymbol}</sup> {plan.EMI}
+                            <span className="duration">{plan.durationYearText}</span> <sup>{plan.currencySymbol}</sup> {plan.EMI}
                             </span>
-                            <span className="duration">{plan.EMItext}</span>
+
                           </Box>
                         </Box>
-                        <List dense sx={{ padding: 0 }}>
+                        {/* <List dense sx={{ padding: 0 }}>
                           {plan.description
                             .split(/<\/?li>/)
                             .filter((item) => item.trim() !== "")
@@ -105,19 +116,20 @@ const Plan = () => {
                                 <ListItemText primary={<Typography sx={{ fontSize: "18px" }}>{item.trim()}</Typography>} />
                               </ListItem>
                             ))}
-                        </List>
+                        </List> */}
                         <Box style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", marginTop: "20px" }}>
                           <Button className="edu-btn" onClick={() => handleAddClick(plan)}>
-                            Get Started
+                            {/* Get Started */}
+                            {plan.btnText}
                           </Button>
-                          <Typography className="mt-4">{plan.additionalInfo}</Typography>
+                          {/* <Typography className="mt-4">{plan.additionalInfo}</Typography> */}
                         </Box>
                       </Box>
                     </Box>
                   ))
                 )}
               </Box>
-              <Typography className="text-right mt-5 gst_ot">* 18% GST extra is applicable on the above Price </Typography>
+              {/* <Typography className="text-right mt-5 gst_ot">* 18% GST extra is applicable on the above Price </Typography> */}
             </Box>
           </Box>
         </Box>

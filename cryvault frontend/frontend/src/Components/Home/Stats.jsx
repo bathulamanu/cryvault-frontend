@@ -1,10 +1,12 @@
 import { Box, Card, CardActionArea, CardContent, CardMedia, Grid, Typography } from "@mui/material";
-import React, { useMemo } from "react";
+import React, { useMemo, useEffect } from "react";
 import useDeviceSize from "../../Utilities/useDeviceSize";
+import { useDispatch, useSelector } from "react-redux";
+import { getCustomerCount } from "../../redux/reducers/HomePageReducer";
 
 const Stats = () => {
   const isMobile = useDeviceSize() === "xs";
-
+  const dispatch = useDispatch();
   const statsData = useMemo(() => {
     const data = [
       {
@@ -31,21 +33,25 @@ const Stats = () => {
 
     return data;
   }, []);
+  const customerCount = useSelector((state) => state.home.customerCount);
+  useEffect(() => {
+    dispatch(getCustomerCount());
+  }, []);
   return (
     <Box style={{ position: "relative", padding: isMobile ? "5rem 1rem" : "3rem 8rem", border: "1px solid #e5e5e5" }}>
       {isMobile ? null : <img className=" butterflyImage butter_fly" src="assets/images/butterfly-4.webp" alt="Shape" />}
       <Grid sx={{ marginTop: "5rem" }} spacing={3} container item rowSpacing={1} columnSpacing={{ xs: 1, sm: 4, md: 4 }}>
-        {statsData.map((data, index) => (
+        {customerCount?.map((data, index) => (
           <Grid key={data.title} spacing={3} xs={6} md={3} sm={4} sx={{ width: 50 }}>
             <Card className="statsCard" key={data.title}>
               <CardActionArea className="statsCardAction" sx={{ display: "flex", flexDirection: "column", textAlign: "center" }}>
-                <CardMedia component="img" height="140" sx={{ width: "5rem" }} image={data.image} alt="green iguana" />
+                <CardMedia component="img" height="140" sx={{ width: "5rem" }} image={`https://flyingbyts.s3.ap-south-2.amazonaws.com/s3/${data.CounterImage}`} alt="green iguana" />
                 <CardContent>
-                  <Typography sx={{fontSize:"52px", fontWeight:"500"}} className="statsNumber" gutterBottom variant="h5" component="Box">
-                    {data.number}
+                  <Typography sx={{ fontSize: "52px", fontWeight: "500" }} className="statsNumber" gutterBottom variant="h5" component="Box">
+                    {data.CounterCount}
                   </Typography>
                   <Typography className="statsTitle" sx={{ height: "5rem", whiteSpace: isMobile ? "wrap !important" : "nowrap" }} variant="body2" color="text.secondary">
-                    {data.title}
+                    {data.CounterTitle}
                   </Typography>
                 </CardContent>
               </CardActionArea>

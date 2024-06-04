@@ -49,18 +49,37 @@ export const getCustomerInfo = createAsyncThunk("getCustomerInfo", async (payloa
     return thunkAPI.rejectWithValue(error);
   }
 });
+export const startTimerWithCallback = createAsyncThunk("startTimerWithCallback", async (_, { dispatch }) => {
+  dispatch(setTimer(60));
+  dispatch(clearError());
+});
 
 const initialState = {
   optid: "",
   userDetails: {},
+  timer: 0,
+  timerError: "",
   loading: false,
   error: null,
-  subscriptionPlanId: null,
+  subscriptionPlanId: null || localStorage.getItem("subscriptionPlanId"),
 };
 const UserReducer = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    setTimer: (state, action) => {
+      state.timer = action.payload;
+    },
+    decrementTimer: (state) => {
+      if (state.timer > 0) state.timer -= 1;
+    },
+    setError: (state, action) => {
+      state.timerError = action.payload;
+    },
+    clearError: (state) => {
+      state.timerError = "";
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(login.pending, (state) => {
@@ -114,10 +133,13 @@ const UserReducer = createSlice({
       })
       .addCase(getCustomerInfo.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.message;
+        state.timerError = action.error.message;
+      })
+      builder.addCase(startTimerWithCallback.fulfilled, (state) => {
+        state.timerError = '';
       });
   },
 });
-export const {} = UserReducer.actions;
+export const { setTimer, decrementTimer, setError, clearError } = UserReducer.actions;
 const userReducer = UserReducer.reducer;
 export default userReducer;

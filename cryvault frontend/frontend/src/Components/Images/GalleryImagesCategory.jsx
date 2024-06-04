@@ -10,14 +10,16 @@ import useDeviceSize from "../../Utilities/useDeviceSize";
 import SwiperCore from "swiper";
 import "./Images.css";
 
-const GalleryImagesCategory = () => {
+const GalleryImagesCategory = ({setCategory, category}) => {
   const isMobile = useDeviceSize() === "xs";
   const [categoryActiveTab, setCategoryActiveTab] = useState("All");
   const categories = ["All", "Mother's Day", "Yoga Program", "5k run "];
 
   const handleCategoryClick = (category) => {
     setCategoryActiveTab(category);
+    setCategory(category)
   };
+
 
   return (
     <Container sx={{ paddingLeft: isMobile ? "" : "200px !important", paddingRight: isMobile ? "" : "200px !important" }}>

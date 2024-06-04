@@ -1,5 +1,5 @@
 import { Box, Container, ImageList, ImageListItem, Typography } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import useDeviceSize from "../../Utilities/useDeviceSize";
 import { useDispatch, useSelector } from "react-redux";
@@ -71,22 +71,29 @@ function srcset(image, size, rows = 1, cols = 1) {
     srcSet: `${image}?w=${size * cols}&h=${size * rows}&fit=crop&auto=format&dpr=2 2x`,
   };
 }
-const GalleryImagesList = () => {
+const GalleryImagesList = ({ category }) => {
   const isMobile = useDeviceSize() === "xs";
   const dispatch = useDispatch();
+  const [imagesSetToshow, setImagesSetToShow] = useState([]);
   const images = useSelector((state) => state.home.images);
   useEffect(() => {
     dispatch(getImages());
   }, []);
+  useEffect(() => {
+    if (category == "All") setImagesSetToShow(images?.["All CryoVault Images"]);
+    if (category == "Mother’s Day") setImagesSetToShow(images?.["Mother’s Day"]);
+    if (category == "Yoga Program") setImagesSetToShow(images?.["Yoga Program"]);
+    if (category == "5k Run") setImagesSetToShow(images?.["5k Run"]);
+  }, [category, images]);
 
   return (
     <Container sx={{ display: "flex", justifyContent: "center" }}>
       <ImageList className="thumbnail" sx={{ width: "100%", height: "100%" }} variant="quilted" cols={4}>
-        {images?.map((item) => (
-          <ImageListItem key={item.img} cols={item.cols || 1} rows={item.rows || 1} sx={{ margin: "0 !important" }}>
-            <Box className={"edu-blog gallerImg blog-style-list sal-animate"} sx={{height:"100%", margin: "0 !important" }}>
-              <Box className="thumbnail" sx={{height:"100%", margin: "0 !important" }}>
-                <Link style={{height:"100%"}} to="#">
+        {imagesSetToshow?.map((item) => (
+          <ImageListItem key={item.img} cols={ Math.floor(Math.random() * (1)) + 1 || 1} rows={ Math.floor(Math.random() * (3)) + 1 || 1} sx={{ margin: "0 !important" }}>
+            <Box className={"edu-blog gallerImg blog-style-list sal-animate"} sx={{ height: "100%", margin: "0 !important" }}>
+              <Box className="thumbnail" sx={{ height: "100%", margin: "0 !important" }}>
+                <Link style={{ height: "100%" }} to="#">
                   <img {...srcset(`https://flyingbyts.s3.ap-south-2.amazonaws.com/s3/${item.imageKey}`, 121, item.rows, item.cols)} style={{ border: "1px solid #FF003F", borderRadius: "4px", width: "100%", height: "100%" }} alt={item.title} loading="lazy" />
                 </Link>
               </Box>
