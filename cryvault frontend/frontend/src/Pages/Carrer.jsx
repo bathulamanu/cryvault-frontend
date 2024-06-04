@@ -2,43 +2,262 @@ import { Box, Breadcrumbs, Button, FormControl, FormControlLabel, IconButton, Li
 import React, { useState } from "react";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import useDeviceSize from "../Utilities/useDeviceSize";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import "./Carrer.css";
+import { addCareerProfile } from "../redux/reducers/HomePageReducer";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
+const initialState = {
+  firstName: {
+    value: "",
+    placeholder: "First Name",
+    errorStatus: false,
+    errorMessage: "",
+    icon: "",
+    type: "text",
+    name: "firstName",
+    id: "firstName",
+  },
+  lastName: {
+    value: "",
+    placeholder: "Last Name",
+    errorStatus: false,
+    errorMessage: "",
+    icon: "",
+    type: "text",
+    name: "lastName",
+    id: "lastName",
+  },
+  email: {
+    value: "",
+    placeholder: "Email",
+    errorStatus: false,
+    errorMessage: "",
+    icon: "",
+    type: "email",
+    name: "email",
+    id: "email",
+  },
+  phone: {
+    value: "",
+    placeholder: "Phone Number",
+    errorStatus: false,
+    errorMessage: "",
+    icon: "",
+    type: "tel",
+    name: "phone",
+    id: "phone",
+  },
+
+  city: {
+    value: "",
+    placeholder: "city",
+    errorStatus: false,
+    errorMessage: "",
+    icon: "",
+    type: "text",
+    name: "city",
+    id: "city",
+  },
+  state: {
+    value: "",
+    placeholder: "State",
+    errorStatus: false,
+    errorMessage: "",
+    icon: "",
+    type: "text",
+    name: "state",
+    id: "state",
+  },
+  area: {
+    value: "",
+    placeholder: "Applying for ( Area of interest )",
+    errorStatus: false,
+    errorMessage: "",
+    icon: "",
+    type: "text",
+    name: "area",
+    id: "area",
+  },
+  resume: {
+    value: "",
+    placeholder: "Attach your Resume Here",
+    errorStatus: false,
+    errorMessage: "",
+    icon: "",
+    type: "file",
+    name: "resume",
+    id: "resume",
+  },
+};
+
 const Carrers = () => {
   const isMobile = useDeviceSize() === "xs";
-  const [formData, setFormData] = useState({
-    title: "",
-    firstName: "",
-    lastName: "",
-    phoneNumber: "",
-    email: "",
-    city: "",
-    state: "",
-    areaOfInterest: "",
-    file: null,
+  const [userData, setUserData] = useState({
+    firstName: {
+      value: "",
+      placeholder: "First Name",
+      errorStatus: false,
+      errorMessage: "",
+      icon: "",
+      type: "text",
+      name: "firstName",
+      id: "firstName",
+    },
+    lastName: {
+      value: "",
+      placeholder: "Last Name",
+      errorStatus: false,
+      errorMessage: "",
+      icon: "",
+      type: "text",
+      name: "lastName",
+      id: "lastName",
+    },
+
+    phoneNumber: {
+      value: "",
+      placeholder: "Phone Number",
+      errorStatus: false,
+      errorMessage: "",
+      icon: "",
+      type: "tel",
+      name: "phoneNumber",
+      id: "phoneNumber",
+    },
+    email: {
+      value: "",
+      placeholder: "Email",
+      errorStatus: false,
+      errorMessage: "",
+      icon: "",
+      type: "email",
+      name: "email",
+      id: "email",
+    },
+    city: {
+      value: "",
+      placeholder: "City",
+      errorStatus: false,
+      errorMessage: "",
+      icon: "",
+      type: "text",
+      name: "city",
+      id: "city",
+    },
+    state: {
+      value: "",
+      placeholder: "State",
+      errorStatus: false,
+      errorMessage: "",
+      icon: "",
+      type: "text",
+      name: "state",
+      id: "state",
+    },
+    area: {
+      value: "",
+      placeholder: "Applying for ( Area of interest )",
+      errorStatus: false,
+      errorMessage: "",
+      icon: "",
+      type: "text",
+      name: "area",
+      id: "area",
+    },
+    resume: {
+      value: "",
+      placeholder: "Attach your Resume Here",
+      errorStatus: false,
+      errorMessage: "",
+      icon: "",
+      type: "file",
+      name: "resume",
+      id: "resume",
+    },
   });
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
-  };
-
+  const radioOptions = [
+    { id: "mr", label: "Mr" },
+    { id: "mrs", label: "Mrs" },
+    { id: "ms", label: "Ms" },
+    { id: "dr", label: "Dr" },
+  ];
+  const userDetails = Object.entries(userData);
+  const dispatch = useDispatch();
   const handleFileUpload = (event) => {
-    setFormData(event.target.files[0]); // Assuming single file upload
+    // setFormData(event.target.files[0]); // Assuming single file upload
   };
 
-  // Form submission logic (replace with your implementation)
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const { title, firstName, lastName, ...rest } = formData; // Destructure file separately
-    // Handle file upload (if applicable)
-    // ...
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUserData((prevData) => ({
+      ...prevData,
+      [name]: { ...prevData[name], value: value, errorStatus: false, errorMessage: "" },
+    }));
   };
+  const handleSubmit = () => {
+    const dataToSend = {
+      firstName: userData.firstName.value,
+      lastName: userData.lastName.value,
+      email: userData.email.value,
+      phoneNumber: userData.phoneNumber.value,
+      city: userData.city.value,
+      state: userData.state.value,
+      area: userData.area.value,
+      resume: userData.resume.value,
+      countryCode: "91",
+    };
 
+    if (!userData.firstName.value) {
+      setUserData((prevData) => ({
+        ...prevData,
+        firstName: {
+          ...prevData.firstName,
+          errorStatus: true,
+          errorMessage: "Enter valid First Name",
+        },
+      }));
+      return;
+    }
+    // if (!userData.lastName.value) {
+    //   setUserData((prevData) => ({
+    //     ...prevData,
+    //     lastName: {
+    //       ...prevData.lastName,
+    //       errorStatus: true,
+    //       errorMessage: "Enter valid last Name",
+    //     },
+    //   }));
+    //   return;
+    // }
+    if (!userData.phoneNumber.value) {
+      setUserData((prevData) => ({
+        ...prevData,
+        phoneNumber: {
+          ...prevData.phone,
+          errorStatus: true,
+          errorMessage: "Enter valid phone number",
+        },
+      }));
+      return;
+    }
+
+    dispatch(addCareerProfile({ payload: dataToSend }));
+    setUserData(initialState);
+  };
   const pageInfo = useSelector((state) => state.home.pageInfo);
   const url = `https://flyingbyts.s3.ap-south-2.amazonaws.com/s3/${pageInfo?.[7]?.[7]?.pageHeaderImage}`;
+  const handlePhoneInput = (value, country) => {
+    const country_code = "91";
+    const phoneNumber = value.slice(country_code.length);
+    setUserData((prevData) => ({
+      ...prevData,
+      phoneNumber: { ...prevData.phoneNumber, value: phoneNumber, errorStatus: false, errorMessage: "" },
+    }));
+  };
   return (
     <>
-      <Box  sx={{  backgroundImage: `url(${url})`,padding: isMobile ? " 50px 7px !important" : "120px 40px !important" }} className="edu-breadcrumb-area breadcrumb-style-2 bg-image bg-image--19">
+      <Box sx={{ backgroundImage: `url(${url})`, padding: isMobile ? " 50px 7px !important" : "120px 40px !important" }} className="edu-breadcrumb-area breadcrumb-style-2 bg-image bg-image--19">
         <Box className="container" sx={{ margin: "0 !important", padding: "0 !important" }}>
           <Box className="breadcrumb-inner">
             <Box className="page-title d-flex align-items-center">
@@ -82,95 +301,39 @@ const Carrers = () => {
                   <Typography>join our mission to connect the right talent with the Right Opportunity.</Typography>
                 </Box>
 
-                <Box className="form-group col-md-12">
-                  <label>Let's build together the best place to work....! *</label>
+                <Box>
+                  <label style={{ fontSize: "2rem", fontWeight: "700" }}>Let's build together the best place to work....! *</label>
+
+                  <Box sx={{ marginTop: "2rem" }} className="d-flex">
+                    {radioOptions.map((option) => (
+                      <Box className="form-group mr-4" key={option.id}>
+                        <Box className="edu-form-check">
+                          <input type="radio" id={option.id} name="payment" />
+                          <label style={{ fontSize: "18px !important" }} htmlFor={option.id}>
+                            {option.label}
+                          </label>
+                        </Box>
+                      </Box>
+                    ))}
+                  </Box>
+
+                  <Box style={{ width: "100%" }}>
+                    <Box style={{ display: "grid", gridTemplateColumns: isMobile ? "auto auto" : "auto auto", columnGap: "20px", rowGap: "20px", width: "100%" }}>
+                      {userDetails.map((data, index) => (
+                        <Box key={data[1].name} sx={{ display: "flex", flexDirection: "column" }}>
+                          {data[1].name == "area" ? <Typography sx={{ marginBottom: "10px !important", fontWeight: "700", fontSize: "1.5rem", marginLeft: "2rem" }}>Applying for ( Area of interest ) *</Typography> : null}
+                          {data[1].name == "resume" ? <Typography sx={{ marginBottom: "10px !important", fontWeight: "700", fontSize: "1.5rem", marginLeft: "2rem" }}>Attach your Resume Here*</Typography> : null}
+
+                          {data[1].name == "phoneNumber" ? <PhoneInput value={"91" + userData.phoneNumber.value} onChange={handlePhoneInput} autoFormat inputProps={{ required: true }} inputClass={"borderPhoneInput"} specialLabel="" containerClass={"layoutItem"} country={"in"} defaultErrorMessage="Incorrect WhatsApp Number" /> : <input style={{ border: data[1].errorStatus ? "1px solid red" : "1px solid #e5e5e5" }} onChange={handleChange} key={data[0]} placeholder={data[1].placeholder} className={`carrerInput `} label={data[1].placeholder} type={data[1].type} value={data[1].value} name={data[1].name} size="small" />}
+                          {data[1].errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data[1].errorMessage}</Typography> : null}
+                        </Box>
+                      ))}
+                    </Box>
+                    <Button onClick={handleSubmit} variant="contained" sx={{ fontSize: "2rem !important", textTransform: "none", backgroundColor: "#D5008D", color: "white", fontWeight: "700", width: isMobile ? "40%" : "100%", whiteSpace: "nowrap", padding: "15px 30px", borderRadius: "40px", marginTop: "3rem" }} size="lg">
+                      Submit
+                    </Button>
+                  </Box>
                 </Box>
-                <form>
-                  <Box className="d-flex">
-                    <Box className="form-group mr-4">
-                      <Box className="edu-form-check">
-                        <input type="radio" id="mr" name="payment" />
-                        <label for="mr">Mr</label>
-                      </Box>
-                    </Box>
-                    <Box className="form-group mr-4">
-                      <Box className="edu-form-check">
-                        <input type="radio" id="mrs" name="payment" />
-                        <label for="mrs">Mrs</label>
-                      </Box>
-                    </Box>
-                    <Box className="form-group mr-4">
-                      <Box className="edu-form-check">
-                        <input type="radio" id="ms" name="payment" />
-                        <label for="ms">Ms</label>
-                      </Box>
-                    </Box>
-                    <Box className="form-group mr-4">
-                      <Box className="edu-form-check">
-                        <input type="radio" id="dr" name="payment" />
-                        <label for="dr">Dr</label>
-                      </Box>
-                    </Box>
-                  </Box>
-
-                  <Box className="row">
-                    <Box className="form-group col-md-6">
-                      <label for="current-log-email">First Name*</label>
-                      <input type="text" name="current-log-email" id="current-log-email" />
-                    </Box>
-                    <Box className="form-group col-md-6">
-                      <label for="current-log-email">Last Name*</label>
-                      <input type="text" name="current-log-email" id="current-log-email" />
-                    </Box>
-                    <Box className="form-group col-md-6">
-                      <label for="current-log-email">Phone Number</label>
-                      <input type="email" name="current-log-email" id="current-log-email" />
-                    </Box>
-                    <Box className="form-group col-md-6">
-                      <label for="current-log-email">Enter Email</label>
-                      <input type="email" name="current-log-email" id="current-log-email" />
-                    </Box>
-                    <Box className="form-group col-md-6">
-                      <label for="current-log-password">Enter your City*</label>
-                      <input type="text" id="current-log-password" placeholder="Enter your City " />
-                      <span className="password-show">
-                        <i className="icon-76"></i>
-                      </span>
-                    </Box>
-                    <Box className="form-group col-md-6">
-                      <label for="current-log-password">Enter Your State*</label>
-                      <input type="text" id="current-log-password" />
-                      <span className="password-show">
-                        <i className="icon-76"></i>
-                      </span>
-                    </Box>
-                    <Box className="form-group col-md-6">
-                      <label for="current-log-password">Applying for ( Area of interest ) *</label>
-                      <input type="text" id="current-log-password" />
-                      <span className="password-show">
-                        <i className="icon-76"></i>
-                      </span>
-                    </Box>
-                    <Box className="form-group col-md-6">
-                      <label for="current-log-password">Attach your Resume Here* *</label>
-                      <Box style={{ borderWidth: 1, display: "flex", justifyContent: "end", height: "50px", alignItems: "center", paddingRight: "2%" }}>
-                        <input
-                          type="file"
-                          display="none"
-                          // onChange={handleFileUpload}
-                        />
-
-                        <FaCloudUploadAlt fontSize={40} name="attachment" onClick={() => document.querySelector('input[type="file"]').click()} cursor="pointer" />
-                      </Box>
-                    </Box>
-
-                    <Box className="form-group">
-                      <Button type="button" className="edu-btn btn-medium">
-                        Submit 
-                      </Button>
-                    </Box>
-                  </Box>
-                </form>
               </Box>
             </Box>
           </Box>

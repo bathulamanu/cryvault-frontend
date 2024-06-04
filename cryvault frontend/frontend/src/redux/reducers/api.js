@@ -73,7 +73,30 @@ export const getGoogleReviewsApi = () => {
 export const getTestimonialApi = () => {
   return `${BASE_URL}/flyingbyts/api/user/getTestimony`;
 };
-
+export const getCustomerCountApi = () => {
+  return `${BASE_URL}/flyingbyts/api/user/getCustomerCount`;
+};
+export const bookAppointmentApi = () => {
+  return `${BASE_URL}/flyingbyts/api/user/bookAppointment`;
+};
+export const addReachUSApi = () => {
+  return `${BASE_URL}/flyingbyts/api/user/addReachUS`;
+};
+export const addCareerProfileApi = () => {
+  return `${BASE_URL}/flyingbyts/api/user/addCareerProfile`;
+};
+export const addFranchiseRequestApi = () => {
+  return `${BASE_URL}/flyingbyts/api/user/addFranchiseRequest`;
+};
+export const addInformationKitRequestApi = () => {
+  return `${BASE_URL}/flyingbyts/api/user/addInformationKitRequest`;
+};
+export const getBranchContactApi = () => {
+  return `${BASE_URL}/flyingbyts/api/user/getBranchContact`;
+};
+export const addEmergencyAppointmentApi = () => {
+  return `${BASE_URL}/flyingbyts/api/user/addEmergencyAppointment`;
+};
 // dashboard api
 export const getClientInfoApi = () => {
   return `${BASE_URL}/flyingbyts/api/customer/getAnnexureInfo`;

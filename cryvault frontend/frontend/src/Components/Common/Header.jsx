@@ -111,7 +111,6 @@ const Header = () => {
 
   window.addEventListener("scroll", changeBackground);
 
-  console.log(socialIcons);
   return (
     <header className="edu-header header-style-1 header-fullwidth">
       <Box className="header-top-bar">
@@ -160,8 +159,8 @@ const Header = () => {
         </Box>
       </Box>
       <div id="edu-sticky-placeholder"></div>
-      {/* <div style={{ marginTop: "80px" }}></div> */}
-      <Box sx={{ marginBottom: "80px", backgroundColor: navbar ? "white !important" : "transparent !important" }} top={isScrolled ? "0" : "40px"} position="fixed" left="0" width="100%" zIndex="999" transition="top 0.3s ease-in-out">
+      {/* <div style={{ marginTop: "80px" }}></div>marginBottom: "80px", */}
+      <Box sx={{  backgroundColor: navbar ? "white !important" : "transparent !important" }} top={isScrolled ? "0" : "40px"} position="sticky" left="0" width="100%" zIndex="999" transition="top 0.3s ease-in-out">
         <Box className="header-mainmenu">
           <Box className="container-fluid">
             <Box className="header-navbar">

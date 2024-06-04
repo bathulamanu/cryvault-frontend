@@ -65,14 +65,14 @@ const Banner = () => {
     <>
       <Carousel
         responsive={responsive}
-        // autoPlay={true}
+        autoPlay={true}
         autoPlaySpeed={5000}
         infinite={true}
         swipeable={true}
         className="header-content-banner carousel-itemm"
       >
         <Box className="items">
-          <Box className="banner_contnt" sx={{ left:"80px !important", top: "40% !important" }}>
+          <Box className="banner_contnt" sx={{ left: "80px !important", top: "40% !important" }}>
             <Box className="container">
               <Box className="banner_contnt-txt">
                 <Typography variant="h2" sx={{ fontSize: "36px !important" }}>
@@ -82,7 +82,7 @@ const Banner = () => {
               </Box>
             </Box>
           </Box>
-          <img src="assets/images/banner_cryovault_b.webp" alt="baby" />
+          <img style={{height:'none !important'}} src="assets/images/banner_cryovault_b.webp" alt="baby" />
         </Box>
         {/* <Box className="items banner_sec" sx={{ top: "45% !important" }}>
           <Box className="banner_contnt" sx={{ top: "45% !important" }}>
@@ -105,14 +105,14 @@ const Banner = () => {
 
         <div className="items banner_sec">
           <div className="banner_contnt">
-            <div className="container">
+            <div className="container" style={{ top: "35% !important" }}>
               <div className="banner_contnt-txt">
-                <h2 style={{ fontWeight:"500px !important",}}>
+                <h2 style={{ fontWeight: "500px !important" }}>
                   Sometimes the
                   <br />
                   Smallest Things{" "}
                 </h2>
-                <h3>
+                <h3 style={{ bottom: "30% !important" }}>
                   Take up the <br />
                   most place in your heart{" "}
                 </h3>
@@ -122,7 +122,7 @@ const Banner = () => {
           <img src="assets/images/baby.webp" alt="baby" />
         </div>
         <Box className="items banner_sec3">
-          <Box className="banner_contnt" sx={{ top: "45% !important" }}>
+          <Box className="banner_contnt" sx={{ top: "30% !important" }}>
             <Box className="container">
               <Box className="banner_contnt-txt">
                 <Typography variant="h3" sx={{ fontSize: "36px !important" }}>

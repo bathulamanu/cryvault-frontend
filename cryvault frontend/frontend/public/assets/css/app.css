@@ -35236,7 +35236,7 @@ span.numbr_txt {
 }
 
 .carousel-itemm img {
-  /* height: 100vh; */
+  height: 100vh;
   width: 100%;
   object-fit: cover;
 }

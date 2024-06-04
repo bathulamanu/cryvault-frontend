@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { GetFooter, GetHeaderSocialMediaIcon, getGoogleReviewsApi, getImagesApi, getPageMetaInfoApi, getTestimonialApi, getVideosApi } from "./api";
+import { GetFooter, GetHeaderSocialMediaIcon, addCareerProfileApi, addEmergencyAppointmentApi, addFranchiseRequestApi, addInformationKitRequestApi, addReachUSApi, bookAppointmentApi, getBranchContactApi, getCustomerCountApi, getGoogleReviewsApi, getImagesApi, getPageMetaInfoApi, getTestimonialApi, getVideosApi } from "./api";
 import axios from "axios";
 
 export const fetchSocialIcons = createAsyncThunk("socialIcons/fetchSocialIcons", async (payload = {}, thunkAPI) => {
@@ -129,18 +129,140 @@ export const getTestimonial = createAsyncThunk("getTestimonial", async (payload 
     return thunkAPI.rejectWithValue(error);
   }
 });
+export const getCustomerCount = createAsyncThunk("getCustomerCount", async (payload = {}, thunkAPI) => {
+  const apiUrl = getCustomerCountApi();
+  try {
+    const response = await axios.get(apiUrl);
+    const { ok, problem, data } = response;
+    if (data) {
+      if (payload?.callback) payload.callback();
+      return data;
+    } else {
+      return thunkAPI.rejectWithValue({ data, problem });
+    }
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+export const bookAppointment = createAsyncThunk("bookAppointment", async (payload = {}, thunkAPI) => {
+  const apiUrl = bookAppointmentApi();
+  try {
+    const response = await axios.post(apiUrl, payload.payload);
+    const { ok, problem, data } = response;
+    if (data) {
+      if (payload?.callback) payload.callback();
+      return data;
+    } else {
+      return thunkAPI.rejectWithValue({ data, problem });
+    }
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+export const addReachUS = createAsyncThunk("addReachUS", async (payload = {}, thunkAPI) => {
+  const apiUrl = addReachUSApi();
+  try {
+    const response = await axios.post(apiUrl, payload.payload);
+    const { ok, problem, data } = response;
+    if (data) {
+      if (payload?.callback) payload.callback();
+      return data;
+    } else {
+      return thunkAPI.rejectWithValue({ data, problem });
+    }
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
 
+export const addCareerProfile = createAsyncThunk("addCareerProfile", async (payload = {}, thunkAPI) => {
+  const apiUrl = addCareerProfileApi();
+  try {
+    const response = await axios.post(apiUrl, payload.payload);
+    const { ok, problem, data } = response;
+    if (data) {
+      if (payload?.callback) payload.callback();
+      return data;
+    } else {
+      return thunkAPI.rejectWithValue({ data, problem });
+    }
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+export const addFranchiseRequest = createAsyncThunk("addFranchiseRequest", async (payload = {}, thunkAPI) => {
+  const apiUrl = addFranchiseRequestApi();
+  try {
+    const response = await axios.post(apiUrl, payload.payload);
+    const { ok, problem, data } = response;
+    if (data) {
+      if (payload?.callback) payload.callback();
+      return data;
+    } else {
+      return thunkAPI.rejectWithValue({ data, problem });
+    }
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+export const addInformationKitRequest = createAsyncThunk("addInformationKitRequest", async (payload = {}, thunkAPI) => {
+  const apiUrl = addInformationKitRequestApi();
+  try {
+    const response = await axios.post(apiUrl, payload.payload);
+    const { ok, problem, data } = response;
+    if (data) {
+      if (payload?.callback) payload.callback();
+      return data;
+    } else {
+      return thunkAPI.rejectWithValue({ data, problem });
+    }
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+export const getBranchContact = createAsyncThunk("getBranchContact", async (payload = {}, thunkAPI) => {
+  const apiUrl = getBranchContactApi();
+  try {
+    const response = await axios.get(apiUrl, payload.payload);
+    const { ok, problem, data } = response;
+    if (data) {
+      if (payload?.callback) payload.callback();
+      return data;
+    } else {
+      return thunkAPI.rejectWithValue({ data, problem });
+    }
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+export const addEmergencyAppointment = createAsyncThunk("addEmergencyAppointment", async (payload = {}, thunkAPI) => {
+  const apiUrl = addEmergencyAppointmentApi();
+  try {
+    const response = await axios.post(apiUrl, payload.payload);
+    const { ok, problem, data } = response;
+    if (data) {
+      if (payload?.callback) payload.callback();
+      return data;
+    } else {
+      return thunkAPI.rejectWithValue({ data, problem });
+    }
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
 const initialState = {
   socialIcons: [],
   headerIcons: [],
   images: [],
   videos: [],
-  reviews:[],
-  testimonials:[],
+  reviews: [],
+  testimonials: [],
   pageInfo: {},
+  contactInfo: {},
   copyrights: "",
   loading: false,
   error: null,
+  customerCount: [],
 };
 const HomeReducer = createSlice({
   name: "home",
@@ -232,7 +354,88 @@ const HomeReducer = createSlice({
         state.loading = false;
         state.error = action.error.message;
       })
-      
+      .addCase(getCustomerCount.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getCustomerCount.fulfilled, (state, action) => {
+        state.loading = false;
+        state.customerCount = action.payload.data;
+      })
+      .addCase(getCustomerCount.rejected, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(bookAppointment.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(bookAppointment.fulfilled, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(bookAppointment.rejected, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(addReachUS.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(addReachUS.fulfilled, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(addReachUS.rejected, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(addCareerProfile.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(addCareerProfile.fulfilled, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(addCareerProfile.rejected, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(addFranchiseRequest.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(addFranchiseRequest.fulfilled, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(addFranchiseRequest.rejected, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(addInformationKitRequest.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(addInformationKitRequest.fulfilled, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(addInformationKitRequest.rejected, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(getBranchContact.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getBranchContact.fulfilled, (state, action) => {
+        state.loading = false;
+        state.contactInfo = action.payload.data
+      })
+      .addCase(getBranchContact.rejected, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(addEmergencyAppointment.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(addEmergencyAppointment.fulfilled, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(addEmergencyAppointment.rejected, (state, action) => {
+        state.loading = false;
+      });
   },
 });
 export const {} = HomeReducer.actions;
