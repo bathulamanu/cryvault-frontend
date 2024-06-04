@@ -96,7 +96,13 @@ const ReachUs = () => {
                 </Box>
                 <Box style={{ display: "grid", gridTemplateColumns: isMobile ? "auto" : "auto auto", columnGap: "20px", rowGap: "20px", width: "100%" }}>
                   {userDetails.map((data, index) => (
-                    <input key={data[0]} placeholder={data[1].placeholder} className={`appointmentInput ${isOdd && index === userDetails.length - 1 ? "fullWidth" : ""}`} label={data[1].placeholder} type={data[1].type} value={data[1].value} name={data[1].name} size="small" />
+                    <input key={data[0]} placeholder={data[1].placeholder} 
+                    className={`appointmentInput ${isOdd && index === userDetails.length - 1 ? "fullWidth" : ""}`} 
+                    label={data[1].placeholder} 
+                    type={data[1].type}
+                     value={data[1].value} 
+                     name={data[1].name} 
+                     size="small" />
                   ))}
                 </Box>
                 <Box sx={{ marginTop: "1rem" }} className="form-group col-12">
