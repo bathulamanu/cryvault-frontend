@@ -13,7 +13,7 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { MobileSideContact, WebSideContact } from "./RequestKit";
-import { addEmergencyAppointment, getBranchContact } from "../redux/reducers/HomePageReducer";
+import { getBranchContact, bookAppointment } from "../redux/reducers/HomePageReducer";
 import { useDispatch, useSelector } from "react-redux";
 const initialState = {
   firstName: {
@@ -264,21 +264,22 @@ const Appointment = () => {
       firstName: userData.firstName.value,
       lastName: userData.lastName.value,
       email: userData.email.value,
-      phone: userData.phone.value,
-      deliveryDate: userData.deliveryDate.value,
+      phoneNumber: userData.phone.value,
+      expectedDeliveryDate: userData.deliveryDate.value,
       appointmentDate: userData.appointmentDate.value,
       doctorName: userData.doctorName.value,
       hospitalName: userData.hospitalName.value,
       address: userData.address.value,
     };
 
+    console.log("hhhhhhhhhhhhhhhhh ", dataToSend);
     if (!userData.firstName.value) {
       setUserData((prevData) => ({
         ...prevData,
         firstName: {
           ...prevData.firstName,
           errorStatus: true,
-          errorMessage: "Enter valid First Name",
+          errorMessage: "First Name is required.",
         },
       }));
       return;
@@ -289,7 +290,7 @@ const Appointment = () => {
         lastName: {
           ...prevData.lastName,
           errorStatus: true,
-          errorMessage: "Enter valid last Name",
+          errorMessage: "Last Name is required.",
         },
       }));
       return;
@@ -300,7 +301,7 @@ const Appointment = () => {
         email: {
           ...prevData.email,
           errorStatus: true,
-          errorMessage: "Enter valid email Name",
+          errorMessage: "Email ID is required.",
         },
       }));
       return;
@@ -311,15 +312,26 @@ const Appointment = () => {
         appointmentDate: {
           ...prevData.appointmentDate,
           errorStatus: true,
-          errorMessage: "Enter valid appointment date ",
+          errorMessage: "Appointment Date is required.",
         },
       }));
       return;
     }
 
-    dispatch(addEmergencyAppointment({ payload: dataToSend }));
+    // dispatch(addEmergencyAppointment({ payload: dataToSend }));
+    dispatch(bookAppointment({ payload: dataToSend }));
     setUserData(initialState);
   };
+
+  const handlePhoneInput = (value, country) => {
+    const country_code = "+91";
+    const phoneNumber = value.slice(country_code.length);
+    setUserData((prevData) => ({
+      ...prevData,
+      phone: { ...prevData.phone, value: phoneNumber, errorStatus: false, errorMessage: "" },
+    }));
+  };
+
   useEffect(() => {
     dispatch(getBranchContact());
   }, []);
@@ -366,32 +378,39 @@ const Appointment = () => {
               </Box>
               <Box className="requ_inform">
                 {/* <Box style={{ display: "grid", gridTemplateColumns: isMobile ? "auto" : "auto auto", columnGap: "20px", rowGap: "20px", width: "100%" }}>{userDetails.map((data, index) => (data[1].component ? data[1].component : <input style={{ border: "2px solid #e5e5e5 !important" }} key={data[0]} placeholder={data[1].placeholder} className={`appointmentInput ${isOdd && index === userDetails.length - 1 ? "fullWidth" : ""}`} label={data[1].placeholder} type={data[1].type} value={data[1].value} name={data[1].name} size="small" />))}</Box> */}
-                
+
 
                 <Box style={{ display: "grid", gridTemplateColumns: isMobile ? "auto auto" : "auto auto", columnGap: "20px", rowGap: "20px", width: "100%" }}>
-                    {" "}
-                    {userDetails.map((data, index) =>
-                      data[1].name == "appointmentDate" ? (
-                        <Box sx={{ display: "flex", flexDirection: "column" }}>
-                          <input style={{ border: data[1].errorStatus ? "1px solid red" : "none" }} onChange={handleDateChange} key={data[0]} placeholder={data[1].placeholder} className={`appointmentInput ${isOdd && index === userDetails.length - 1 ? "fullWidth" : ""}`} label={data[1].placeholder} type={inputType} onFocus={() => setInputType("date")} onBlur={() => setInputType("text")} value={data[1].value} name={data[1].name} size="small" />
+                  {" "}
+                  {userDetails.map((data, index) =>
+                    data[1].name == "appointmentDate" ? (
+                      <Box sx={{ display: "flex", flexDirection: "column" }}>
+                        <input style={{ border: data[1].errorStatus ? "1px solid red" : "none" }} onChange={handleDateChange} key={data[0]} placeholder={data[1].placeholder} className={`appointmentInput ${isOdd && index === userDetails.length - 1 ? "fullWidth" : ""}`} label={data[1].placeholder} type={inputType} onFocus={() => setInputType("date")} onBlur={() => setInputType("text")} value={data[1].value} name={data[1].name} size="small" />
 
-                          {data[1].errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data[1].errorMessage}</Typography> : null}
-                        </Box>
-                      ) : data[1].name == "deliveryDate" ? (
-                        <Box sx={{ display: "flex", flexDirection: "column" }}>
-                          <input style={{ border: data[1].errorStatus ? "1px solid red" : "none" }} onChange={handleDateChange} key={data[0]} placeholder={data[1].placeholder} className={`appointmentInput ${isOdd && index === userDetails.length - 1 ? "fullWidth" : ""}`} label={data[1].placeholder} type={deliveryinputType} onFocus={() => setDeliveryInputType("date")} onBlur={() => setDeliveryInputType("text")} value={data[1].value} name={data[1].name} size="small" />
+                        {data[1].errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data[1].errorMessage}</Typography> : null}
+                      </Box>
+                    ) : data[1].name == "deliveryDate" ? (
+                      <Box sx={{ display: "flex", flexDirection: "column" }}>
+                        <input style={{ border: data[1].errorStatus ? "1px solid red" : "none" }} onChange={handleDateChange} key={data[0]} placeholder={data[1].placeholder} className={`appointmentInput ${isOdd && index === userDetails.length - 1 ? "fullWidth" : ""}`} label={data[1].placeholder} type={deliveryinputType} onFocus={() => setDeliveryInputType("date")} onBlur={() => setDeliveryInputType("text")} value={data[1].value} name={data[1].name} size="small" />
 
-                          {data[1].errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data[1].errorMessage}</Typography> : null}
-                        </Box>
-                      ) : (
-                        <Box sx={{ display: "flex", flexDirection: "column" }}>
-                          <input style={{ border: data[1].errorStatus ? "1px solid red" : "none" }} onChange={handleChange} key={data[0]} placeholder={data[1].placeholder} className={`appointmentInput ${isOdd && index === userDetails.length - 1 ? "fullWidth" : ""}`} label={data[1].placeholder} type={data[1].type} value={data[1].value} name={data[1].name} size="small" />
-                          {data[1].errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data[1].errorMessage}</Typography> : null}
-                        </Box>
-                      )
-                    )}
-                  </Box>
-                
+                        {data[1].errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data[1].errorMessage}</Typography> : null}
+                      </Box>
+                    ) : data[1].name == "phone" ? (
+                      <PhoneInput value={"91" + userData.phone.value}
+                        onChange={handlePhoneInput} autoFormat inputProps={{ required: true }}
+                        inputClass={"borderPhoneInput"} specialLabel=""
+                        containerClass={"layoutItem"} country={"in"}
+                        defaultErrorMessage="Incorrect WhatsApp Number" />
+                    ) : (
+                      <Box sx={{ display: "flex", flexDirection: "column" }}>
+                        <input style={{ border: data[1].errorStatus ? "1px solid red" : "none" }} onChange={handleChange} key={data[0]} placeholder={data[1].placeholder} className={`appointmentInput ${isOdd && index === userDetails.length - 1 ? "fullWidth" : ""}`} label={data[1].placeholder} type={data[1].type} value={data[1].value} name={data[1].name} size="small" />
+                        {data[1].errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data[1].errorMessage}</Typography> : null}
+                      </Box>
+                    )
+                  )}
+
+                </Box>
+
                 <Box className="form-group col-12">
                   <iframe title="reCAPTCHA" width="304" height="78" role="presentation" name="a-rax7gaw23nj6" frameBorder="0" scrolling="no" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox allow-storage-access-by-user-activation" src="https://www.google.com/recaptcha/api2/anchor?ar=2&amp;k=6LfPixwaAAAAABFFuOob52Mh463Oy3rZEtYUr4oJ&amp;co=aHR0cHM6Ly93d3cuY3J5b3ZhdWx0LmluOjQ0Mw..&amp;hl=en&amp;v=Hq4JZivTyQ7GP8Kt571Tzodj&amp;size=normal&amp;cb=oh1vpc5nfiib" data-gtm-yt-inspected-6="true"></iframe>
                 </Box>

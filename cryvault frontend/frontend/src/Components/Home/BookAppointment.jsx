@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import useDeviceSize from "../../Utilities/useDeviceSize";
 import { useDispatch } from "react-redux";
 import { bookAppointment } from "../../redux/reducers/HomePageReducer";
+import PhoneInput from "react-phone-input-2";
 
 const initialState = {
   firstName: {
@@ -44,6 +45,8 @@ const initialState = {
     type: "tel",
     name: "phoneNumber",
     id: "phoneNumber",
+    component: <PhoneInput autoFormat inputProps={{ required: true }} inputClass={"borderPhoneInput"} specialLabel="" containerClass={"layoutItem"} country={"in"} defaultErrorMessage="Incorrect WhatsApp Number" />,
+
   },
   appointmentDate: {
     value: "",
@@ -105,6 +108,16 @@ const BookAppointment = () => {
   const isOdd = userDetails.length % 2 !== 0;
   const dispatch = useDispatch();
 
+
+  const handlePhoneInput = (value, country) => {
+    const country_code = "+91";
+    const phoneNumber = value.slice(country_code.length);
+    setUserData((prevData) => ({
+      ...prevData,
+      phoneNumber: { ...prevData.phoneNumber, value: phoneNumber, errorStatus: false, errorMessage: "" },
+    }));
+  };
+
   const handleChange = (e) => {
     const name = e?.target?.name;
     const value = e?.target?.value;
@@ -164,7 +177,7 @@ const BookAppointment = () => {
       }));
       return;
     }
-    
+
     const dataToSend = {
       firstName: userData.firstName.value,
       lastName: userData.lastName.value,
@@ -177,6 +190,7 @@ const BookAppointment = () => {
       address: userData.address.value,
     };
 
+    console.log("dataToSend ", dataToSend);
     dispatch(bookAppointment({ payload: dataToSend }));
     setUserData(initialState);
   };
@@ -206,6 +220,12 @@ const BookAppointment = () => {
 
                           {data[1].errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data[1].errorMessage}</Typography> : null}
                         </Box>
+                      ) : data[1].name == "phoneNumber" ? (
+                        <PhoneInput value={"91" + userData.phoneNumber.value}
+                          onChange={handlePhoneInput} autoFormat inputProps={{ required: true }}
+                          inputClass={"borderPhoneInput"} specialLabel=""
+                          containerClass={"layoutItem"} country={"in"}
+                          defaultErrorMessage="Incorrect WhatsApp Number" />
                       ) : (
                         <Box sx={{ display: "flex", flexDirection: "column" }}>
                           <input style={{ border: data[1].errorStatus ? "1px solid red" : "none" }} onChange={handleChange} key={data[0]} placeholder={data[1].placeholder} className={`appointmentInput ${isOdd && index === userDetails.length - 1 ? "fullWidth" : ""}`} label={data[1].placeholder} type={data[1].type} value={data[1].value} name={data[1].name} size="small" />

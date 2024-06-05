@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { GetFooter, GetHeaderSocialMediaIcon, addCareerProfileApi, addEmergencyAppointmentApi, addFranchiseRequestApi, addInformationKitRequestApi, addReachUSApi, bookAppointmentApi, getBranchContactApi, getCustomerCountApi, getGoogleReviewsApi, getImagesApi, getPageMetaInfoApi, getTestimonialApi, getVideosApi } from "./api";
+import { GetFooter, GetHeaderSocialMediaIcon, addCareerProfileApi, addEmergencyAppointmentApi, 
+  getAccreditationsCertificationApi,uploadSingleFileApi, addFranchiseRequestApi, addInformationKitRequestApi, addReachUSApi, bookAppointmentApi, getBranchContactApi, getCustomerCountApi, getGoogleReviewsApi, getImagesApi, getPageMetaInfoApi, getTestimonialApi, getVideosApi } from "./api";
 import axios from "axios";
 
 export const fetchSocialIcons = createAsyncThunk("socialIcons/fetchSocialIcons", async (payload = {}, thunkAPI) => {
@@ -250,6 +251,40 @@ export const addEmergencyAppointment = createAsyncThunk("addEmergencyAppointment
     return thunkAPI.rejectWithValue(error);
   }
 });
+export const uploadSingleFile = createAsyncThunk("uploadSingleFile", async (payload = {}, thunkAPI) => {
+  const apiUrl = uploadSingleFileApi();
+  try {
+    const response = await axios.post(apiUrl, payload.payload);
+    const { ok, problem, data } = response;
+    if (data) {
+      if (payload?.callback) payload.callback();
+      return data;
+    } else {
+      return thunkAPI.rejectWithValue({ data, problem });
+    }
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+export const getAccreditationsCertification = createAsyncThunk("getAccreditationsCertification", async (payload = {}, thunkAPI) => {
+  const apiUrl = getAccreditationsCertificationApi();
+  const token = sessionStorage.getItem("token");
+  const headers = {
+    authorization: `${token}`,
+  };
+  try {
+    const response = await axios.get(apiUrl, { headers });
+    const { ok, problem, data } = response;
+    if (data) {
+      if (payload?.callback) payload.callback();
+      return data;
+    } else {
+      return thunkAPI.rejectWithValue({ data, problem });
+    }
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
 const initialState = {
   socialIcons: [],
   headerIcons: [],
@@ -263,6 +298,7 @@ const initialState = {
   loading: false,
   error: null,
   customerCount: [],
+  Certificates:[]
 };
 const HomeReducer = createSlice({
   name: "home",
@@ -435,9 +471,21 @@ const HomeReducer = createSlice({
       })
       .addCase(addEmergencyAppointment.rejected, (state, action) => {
         state.loading = false;
+      })
+      .addCase(getAccreditationsCertification.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getAccreditationsCertification.fulfilled, (state, action) => {
+        state.loading = false;
+        state.AccreditationCertificates = action.payload.data;
+      })
+      .addCase(getAccreditationsCertification.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
       });
   },
 });
-export const {} = HomeReducer.actions;
+export const { } = HomeReducer.actions;
 const homeReducer = HomeReducer.reducer;
 export default homeReducer;

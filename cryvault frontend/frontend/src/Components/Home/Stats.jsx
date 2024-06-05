@@ -45,7 +45,7 @@ const Stats = () => {
           <Grid key={data.title} spacing={3} xs={6} md={3} sm={4} sx={{ width: 50 }}>
             <Card className="statsCard" key={data.title}>
               <CardActionArea className="statsCardAction" sx={{ display: "flex", flexDirection: "column", textAlign: "center" }}>
-                <CardMedia component="img" height="140" sx={{ width: "5rem" }} image={`https://flyingbyts.s3.ap-south-2.amazonaws.com/s3/${data.CounterImage}`} alt="green iguana" />
+                <CardMedia component="img" height="140" sx={{ width: "5rem" }} image={`https://flyingbyts.s3.ap-south-2.amazonaws.com/${data.CounterImage}`} alt="green iguana" />
                 <CardContent>
                   <Typography sx={{ fontSize: "52px", fontWeight: "500" }} className="statsNumber" gutterBottom variant="h5" component="Box">
                     {data.CounterCount}

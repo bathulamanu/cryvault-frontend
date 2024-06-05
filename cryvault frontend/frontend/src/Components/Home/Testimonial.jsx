@@ -91,7 +91,7 @@ export const SingleSlide = React.memo(({ testimonial }) => {
           {testimonial.Content}
         </Typography>
         <Box className="d-flex align-items-center avatr_blk">
-          <img style={{ borderRadius: "50%", width: "5rem", height: "5rem" }} src={`https://flyingbyts.s3.ap-south-2.amazonaws.com/s3/${testimonial.customerImage}`} alt="quote svg" /> <h5 className="title">{testimonial.customerName}</h5>
+          <img style={{ borderRadius: "50%", width: "5rem", height: "5rem" }} src={`https://flyingbyts.s3.ap-south-2.amazonaws.com/${testimonial.customerImage}`} alt="quote svg" /> <h5 className="title">{testimonial.customerName}</h5>
         </Box>
       </Box>
     </>

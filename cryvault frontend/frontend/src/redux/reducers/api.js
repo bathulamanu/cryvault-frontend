@@ -108,7 +108,16 @@ export const getCustomerInfoApi = () => {
   return `${BASE_URL}/flyingbyts/api/customer/getCustomerInfo`;
 };
 
-export const GetAdditonalServicesDetails = () => {
+export const GetAdditonalServicesDetailsApi = () => {
   return `${BASE_URL}/flyingbyts/api/user/getMasterConfiguration/ADDITIONAL SERVICES/null`;
 };
+
+export const uploadSingleFileApi = () => {
+  return `${BASE_URL}/flyingbyts/api/user/upload`;
+};
+
+export const getAccreditationsCertificationApi = () => {
+  return `${BASE_URL}/flyingbyts/api/user/getAccreditationsCertification`;
+};
+
 

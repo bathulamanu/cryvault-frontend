@@ -135,15 +135,15 @@ const Franchise = () => {
       name: "state",
       id: "state",
     },
-    experience: {
+    professionalExperience: {
       value: "",
       placeholder: "Professional Experience *",
       errorStatus: false,
       errorMessage: "",
       icon: "",
       type: "text",
-      name: "experience",
-      id: "experience",
+      name: "professionalExperience",
+      id: "professionalExperience",
     },
     comment: {
       value: "",
@@ -184,10 +184,12 @@ const Franchise = () => {
       city: userData.city.value,
       state: userData.state.value,
       comment: userData.comment.value,
-      professionalExperience: userData.experience.value,
+      professionalExperience: userData.professionalExperience.value,
       OfficeSpace: officeSpace,
       ExperienceInStemCellBanking: experienceInStemCellBanking,
     };
+
+    console.log("cehck here once dataToSend ", dataToSend);
 
     if (!userData.firstName.value) {
       setUserData((prevData) => ({
@@ -223,8 +225,8 @@ const Franchise = () => {
       return;
     }
 
-    dispatch(addFranchiseRequest({ payload: dataToSend }));
-    setUserData(initialState);
+    // dispatch(addFranchiseRequest({ payload: dataToSend }));
+    // setUserData(initialState);
   };
 
   const handlePhoneInput = (value, country) => {
@@ -285,7 +287,12 @@ const Franchise = () => {
                         <Box key={data[1].name} sx={{ display: "flex", flexDirection: "column" }}>
                           <Typography sx={{ marginBottom: "10px !important", fontWeight: "700", fontSize: "1.5rem", marginLeft: "2rem" }}>{data[1].placeholder}</Typography>
 
-                          {data[1].name == "phoneNumber" ? <PhoneInput value={"91" + userData.phoneNumber.value} onChange={handlePhoneInput} autoFormat inputProps={{ required: true }} inputClass={"borderPhoneInput"} specialLabel="" containerClass={"layoutItem"} country={"in"} defaultErrorMessage="Incorrect WhatsApp Number" /> : data[1].name != "comment" || data[1].name != "experience" ? <input style={{ border: data[1].errorStatus ? "1px solid red" : "1px solid #e5e5e5" }} onChange={handleChange} key={data[0]} placeholder={data[1].placeholder} className={`carrerInput `} label={data[1].placeholder} type={data[1].type} value={data[1].value} name={data[1].name} size="small" /> : null}
+                          {data[1].name == "phoneNumber" ?
+                           <PhoneInput value={"91" + userData.phoneNumber.value} onChange={handlePhoneInput} autoFormat inputProps={{ required: true }} 
+                           inputClass={"borderPhoneInput"} specialLabel="" containerClass={"layoutItem"} country={"in"} defaultErrorMessage="Incorrect WhatsApp Number" /> : 
+                           data[1].name != "comment" || data[1].name != "professionalExperience" ? <input style={{ border: data[1].errorStatus ? "1px solid red" : "1px solid #e5e5e5" }} 
+                           onChange={handleChange} key={data[0]} placeholder={data[1].placeholder} className={`carrerInput `} label={data[1].placeholder} type={data[1].type}
+                            value={data[1].value} name={data[1].name} size="small" /> : null}
                           {data[1].errorStatus ? <Typography style={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data[1].errorMessage}</Typography> : null}
                         </Box>
                       ))}

@@ -83,7 +83,7 @@ const GalleryImagesList = ({ category }) => {
     if (category == "All") setImagesSetToShow(images?.["All CryoVault Images"]);
     if (category == "Mother’s Day") setImagesSetToShow(images?.["Mother’s Day"]);
     if (category == "Yoga Program") setImagesSetToShow(images?.["Yoga Program"]);
-    if (category == "5k Run") setImagesSetToShow(images?.["5k Run"]);
+    if (category.trim() == "5k run") setImagesSetToShow(images?.["5k Run"]);
   }, [category, images]);
 
   return (
@@ -94,7 +94,7 @@ const GalleryImagesList = ({ category }) => {
             <Box className={"edu-blog gallerImg blog-style-list sal-animate"} sx={{ height: "100%", margin: "0 !important" }}>
               <Box className="thumbnail" sx={{ height: "100%", margin: "0 !important" }}>
                 <Link style={{ height: "100%" }} to="#">
-                  <img {...srcset(`https://flyingbyts.s3.ap-south-2.amazonaws.com/s3/${item.imageKey}`, 121, item.rows, item.cols)} style={{ border: "1px solid #FF003F", borderRadius: "4px", width: "100%", height: "100%" }} alt={item.title} loading="lazy" />
+                  <img {...srcset(`https://flyingbyts.s3.ap-south-2.amazonaws.com/${item.imageKey}`, 121, item.rows, item.cols)} style={{ border: "1px solid #FF003F", borderRadius: "4px", width: "100%", height: "100%" }} alt={item.title} loading="lazy" />
                 </Link>
               </Box>
             </Box>

@@ -4,7 +4,7 @@ import { FaCloudUploadAlt } from "react-icons/fa";
 import useDeviceSize from "../Utilities/useDeviceSize";
 import { useDispatch, useSelector } from "react-redux";
 import "./Carrer.css";
-import { addCareerProfile } from "../redux/reducers/HomePageReducer";
+import { addCareerProfile ,uploadSingleFile} from "../redux/reducers/HomePageReducer";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 const initialState = {
@@ -93,7 +93,20 @@ const initialState = {
 
 const Carrers = () => {
   const isMobile = useDeviceSize() === "xs";
+  const [PrefixValue, setPrefixValue] = useState({
+    prefix: {
+      value: "",
+      placeholder: "",
+      errorStatus: false,
+      errorMessage: "",
+      icon: "",
+      type: "text",
+      name: "prefix",
+      id: "prefix",
+    }
+  })
   const [userData, setUserData] = useState({
+
     firstName: {
       value: "",
       placeholder: "First Name",
@@ -177,14 +190,30 @@ const Carrers = () => {
     },
   });
   const radioOptions = [
-    { id: "mr", label: "Mr" },
-    { id: "mrs", label: "Mrs" },
-    { id: "ms", label: "Ms" },
-    { id: "dr", label: "Dr" },
+    {
+      id: "mr", label: "Mr", value: 'Mr', name: 'prefix', errorStatus: false,
+      errorMessage: ""
+    },
+    {
+      id: "mrs", label: "Mrs", value: 'Mrs', name: 'prefix', errorStatus: false,
+      errorMessage: ""
+    },
+    {
+      id: "ms", label: "Ms", value: 'Ms', name: 'prefix', errorStatus: false,
+      errorMessage: ""
+    },
+    {
+      id: "dr", label: "Dr", value: 'Dr', name: 'prefix', errorStatus: false,
+      errorMessage: ""
+    }
   ];
   const userDetails = Object.entries(userData);
   const dispatch = useDispatch();
   const handleFileUpload = (event) => {
+    // console.log("cehck event.target.files[0] ",event.target.files[0]); 
+
+        // payload has to be in body,form-data:{ file:event.target.files[0].file and folder:'CareerResume }'
+    // dispatch(uploadSingleFile({  }));
     // setFormData(event.target.files[0]); // Assuming single file upload
   };
 
@@ -195,6 +224,14 @@ const Carrers = () => {
       [name]: { ...prevData[name], value: value, errorStatus: false, errorMessage: "" },
     }));
   };
+  const handleRadioChange = (e) => {
+    const { name, value } = e.target;
+    setPrefixValue((xx) => ({
+      [name]: { value: value }
+    }));
+  };
+
+
   const handleSubmit = () => {
     const dataToSend = {
       firstName: userData.firstName.value,
@@ -205,48 +242,120 @@ const Carrers = () => {
       state: userData.state.value,
       area: userData.area.value,
       resume: userData.resume.value,
-      countryCode: "91",
+      countryCode: "+91",
+      prefix: PrefixValue.prefix.value
     };
 
+    console.log("check kkk ", dataToSend);
+
+    // if (!PrefixValue.prefix.value) {
+    //   setPrefixValue((prevData) => ({
+    //     ...prevData,
+    //     prefix: {
+    //       ...prevData.prefix,
+    //       errorStatus: true,
+    //       errorMessage: "Prefix is required.",
+    //     },
+    //   }));
+    //   return;
+    // }
     if (!userData.firstName.value) {
       setUserData((prevData) => ({
         ...prevData,
         firstName: {
           ...prevData.firstName,
           errorStatus: true,
-          errorMessage: "Enter valid First Name",
+          errorMessage: "First Name is required.",
         },
       }));
       return;
     }
-    // if (!userData.lastName.value) {
-    //   setUserData((prevData) => ({
-    //     ...prevData,
-    //     lastName: {
-    //       ...prevData.lastName,
-    //       errorStatus: true,
-    //       errorMessage: "Enter valid last Name",
-    //     },
-    //   }));
-    //   return;
-    // }
+    if (!userData.lastName.value) {
+      setUserData((prevData) => ({
+        ...prevData,
+        lastName: {
+          ...prevData.lastName,
+          errorStatus: true,
+          errorMessage: "Last Name is required.",
+        },
+      }));
+      return;
+    }
     if (!userData.phoneNumber.value) {
       setUserData((prevData) => ({
         ...prevData,
         phoneNumber: {
-          ...prevData.phone,
+          ...prevData.phoneNumber,
           errorStatus: true,
-          errorMessage: "Enter valid phone number",
+          errorMessage: "Phone Number is required.",
+        },
+      }));
+      return;
+    }
+    if (!userData.email.value) {
+      setUserData((prevData) => ({
+        ...prevData,
+        email: {
+          ...prevData.email,
+          errorStatus: true,
+          errorMessage: "Email ID is required.",
+        },
+      }));
+      return;
+    }
+    if (!userData.city.value) {
+      setUserData((prevData) => ({
+        ...prevData,
+        city: {
+          ...prevData.city,
+          errorStatus: true,
+          errorMessage: "City is required.",
+        },
+      }));
+      return;
+    }
+    if (!userData.state.value) {
+      setUserData((prevData) => ({
+        ...prevData,
+        state: {
+          ...prevData.state,
+          errorStatus: true,
+          errorMessage: "State is required.",
+        },
+      }));
+      return;
+    }
+    if (!userData.area.value) {
+      setUserData((prevData) => ({
+        ...prevData,
+        area: {
+          ...prevData.area,
+          errorStatus: true,
+          errorMessage: "Area is required.",
+        },
+      }));
+      return;
+    }
+    if (!userData.resume.value) {
+      setUserData((prevData) => ({
+        ...prevData,
+        resume: {
+          ...prevData.resume,
+          errorStatus: true,
+          errorMessage: "Resume is required.",
         },
       }));
       return;
     }
 
+
+
+
     dispatch(addCareerProfile({ payload: dataToSend }));
     setUserData(initialState);
   };
   const pageInfo = useSelector((state) => state.home.pageInfo);
-  const url = `https://flyingbyts.s3.ap-south-2.amazonaws.com/s3/${pageInfo?.[7]?.[7]?.pageHeaderImage}`;
+  const url = `https://flyingbyts.s3.ap-south-2.amazonaws.com/${pageInfo?.[7]?.[7]?.pageHeaderImage}`;
   const handlePhoneInput = (value, country) => {
     const country_code = "91";
     const phoneNumber = value.slice(country_code.length);
@@ -308,7 +417,7 @@ const Carrers = () => {
                     {radioOptions.map((option) => (
                       <Box className="form-group mr-4" key={option.id}>
                         <Box className="edu-form-check">
-                          <input type="radio" id={option.id} name="payment" />
+                          <input type="radio" id={option.id} value={option.value} name={option.name} onChange={handleRadioChange} />
                           <label style={{ fontSize: "18px !important" }} htmlFor={option.id}>
                             {option.label}
                           </label>
@@ -321,10 +430,17 @@ const Carrers = () => {
                     <Box style={{ display: "grid", gridTemplateColumns: isMobile ? "auto auto" : "auto auto", columnGap: "20px", rowGap: "20px", width: "100%" }}>
                       {userDetails.map((data, index) => (
                         <Box key={data[1].name} sx={{ display: "flex", flexDirection: "column" }}>
+
+
                           {data[1].name == "area" ? <Typography sx={{ marginBottom: "10px !important", fontWeight: "700", fontSize: "1.5rem", marginLeft: "2rem" }}>Applying for ( Area of interest ) *</Typography> : null}
                           {data[1].name == "resume" ? <Typography sx={{ marginBottom: "10px !important", fontWeight: "700", fontSize: "1.5rem", marginLeft: "2rem" }}>Attach your Resume Here*</Typography> : null}
 
-                          {data[1].name == "phoneNumber" ? <PhoneInput value={"91" + userData.phoneNumber.value} onChange={handlePhoneInput} autoFormat inputProps={{ required: true }} inputClass={"borderPhoneInput"} specialLabel="" containerClass={"layoutItem"} country={"in"} defaultErrorMessage="Incorrect WhatsApp Number" /> : <input style={{ border: data[1].errorStatus ? "1px solid red" : "1px solid #e5e5e5" }} onChange={handleChange} key={data[0]} placeholder={data[1].placeholder} className={`carrerInput `} label={data[1].placeholder} type={data[1].type} value={data[1].value} name={data[1].name} size="small" />}
+                          {data[1].name == "phoneNumber" ? <PhoneInput value={"91" + userData.phoneNumber.value} onChange={handlePhoneInput} 
+                          autoFormat inputProps={{ required: true }} inputClass={"borderPhoneInput"} specialLabel="" containerClass={"layoutItem"} 
+                          country={"in"} defaultErrorMessage="Incorrect WhatsApp Number" /> :
+                            <input style={{ border: data[1].errorStatus ? "1px solid red" : "1px solid #e5e5e5" }} onChange={handleChange}
+                              key={data[0]} placeholder={data[1].placeholder} className={`carrerInput `} label={data[1].placeholder}
+                              type={data[1].type} value={data[1].value} name={data[1].name} size="small" />}
                           {data[1].errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data[1].errorMessage}</Typography> : null}
                         </Box>
                       ))}

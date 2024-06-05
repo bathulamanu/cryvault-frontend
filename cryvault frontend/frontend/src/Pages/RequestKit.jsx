@@ -155,7 +155,7 @@ const RequestKit = () => {
       firstName: userData.firstName.value,
       lastName: userData.lastName.value,
       email: userData.email.value,
-      countryCode: "91",
+      countryCode: "+91",
       phoneNumber: userData.phone.value,
       location: userData.location.value,
       address: userData.address.value,
@@ -167,7 +167,29 @@ const RequestKit = () => {
         firstName: {
           ...prevData.firstName,
           errorStatus: true,
-          errorMessage: "Enter valid First Name",
+          errorMessage: "First Name is required",
+        },
+      }));
+      return;
+    }
+    if (!userData.lastName.value) {
+      setUserData((prevData) => ({
+        ...prevData,
+        lastName: {
+          ...prevData.lastName,
+          errorStatus: true,
+          errorMessage: "Last Name is required",
+        },
+      }));
+      return;
+    }
+    if (!userData.email.value) {
+      setUserData((prevData) => ({
+        ...prevData,
+        email: {
+          ...prevData.email,
+          errorStatus: true,
+          errorMessage: "Email ID is required",
         },
       }));
       return;
@@ -178,7 +200,18 @@ const RequestKit = () => {
         phone: {
           ...prevData.phone,
           errorStatus: true,
-          errorMessage: "Enter valid phone number",
+          errorMessage: "Phone NumberEnter is required",
+        },
+      }));
+      return;
+    }
+    if (!userData.location.value) {
+      setUserData((prevData) => ({
+        ...prevData,
+        location: {
+          ...prevData.location,
+          errorStatus: true,
+          errorMessage: "Location is required",
         },
       }));
       return;

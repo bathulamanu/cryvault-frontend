@@ -13,7 +13,7 @@ const services = ["Service Approachment", "Presentation and Query Completion", "
 const Aboutus = () => {
   const isMobile = useDeviceSize() === "xs";
   const pageInfo = useSelector((state) => state.home.pageInfo);
-  const url = `https://flyingbyts.s3.ap-south-2.amazonaws.com/s3/${pageInfo?.[0]?.[1]?.pageHeaderImage}`;
+  const url = `https://flyingbyts.s3.ap-south-2.amazonaws.com/${pageInfo?.[0]?.[1]?.pageHeaderImage}`;
 
   return (
     <>

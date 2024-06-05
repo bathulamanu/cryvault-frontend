@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { GetFooter, GetHeaderSocialMediaIcon, Plans,GetAdditonalServicesDetails } from "./api";
+import { GetFooter, GetHeaderSocialMediaIcon, Plans,GetAdditonalServicesDetailsApi } from "./api";
 import axios from "axios";
 
 export const getAllPlans = createAsyncThunk("getPlans", async (payload = {}, thunkAPI) => {
@@ -20,7 +20,7 @@ export const getAllPlans = createAsyncThunk("getPlans", async (payload = {}, thu
 });
 
 export const getAdditonalServicesDetails = createAsyncThunk("getAdditonalServicesDetails", async (payload, thunkAPI) => {
-  const apiUrl = GetAdditonalServicesDetails();
+  const apiUrl = GetAdditonalServicesDetailsApi();
   const token = sessionStorage.getItem("token");
   const headers = {
     authorization: `${token}`,
