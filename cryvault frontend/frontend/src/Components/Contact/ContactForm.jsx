@@ -199,8 +199,8 @@ const ContactForm = () => {
                 <img className="logo-light" src="assets/images/heading-icon1.webp" alt="" />
               </Box>
 
-              <Box component="form" onSubmit={handleSubmit}  className="row" sx={{ display: "flex", gap: "4rem" }}>
-                <Box style={{ display: "grid", gridTemplateColumns: isMobile ? "auto" : "auto auto", columnGap: "20px", rowGap: "20px", width: "100%" }}>
+              <Box  className="row" sx={{ display: "flex", gap: "4rem" }}>
+                <Box  component="form" onSubmit={handleSubmit} style={{ display: "grid", gridTemplateColumns: isMobile ? "auto" : "auto auto", columnGap: "20px", rowGap: "20px", width: "100%" }}>
                   {userDetails.map((data, index) =>
                     data[1].component ? (
                       data[1].component

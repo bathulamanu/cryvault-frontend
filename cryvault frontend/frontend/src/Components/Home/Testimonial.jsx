@@ -63,7 +63,7 @@ const Testimonial = () => {
           pagination={{ clickable: true }}
           loop={true}
           autoplay={{
-            delay: 1500,
+            delay: 3000,
             disableOnInteraction: false,
           }}
         >

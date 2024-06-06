@@ -159,7 +159,7 @@ const RequestKit = () => {
         firstName: {
           ...prevData.firstName,
           errorStatus: true,
-          errorMessage: "First Name is required",
+          errorMessage: "First Name is required.",
         },
       }));
       return;
@@ -170,7 +170,7 @@ const RequestKit = () => {
         lastName: {
           ...prevData.lastName,
           errorStatus: true,
-          errorMessage: "Last Name is required",
+          errorMessage: "Last Name is required.",
         },
       }));
       return;
@@ -181,7 +181,7 @@ const RequestKit = () => {
         email: {
           ...prevData.email,
           errorStatus: true,
-          errorMessage: "Email ID is required",
+          errorMessage: "Email ID is required.",
         },
       }));
       return;
@@ -192,7 +192,7 @@ const RequestKit = () => {
         phone: {
           ...prevData.phone,
           errorStatus: true,
-          errorMessage: "Phone NumberEnter is required",
+          errorMessage: "Phone Number is required.",
         },
       }));
       return;
@@ -203,7 +203,7 @@ const RequestKit = () => {
         location: {
           ...prevData.location,
           errorStatus: true,
-          errorMessage: "Location is required",
+          errorMessage: "Location is required.",
         },
       }));
       return;
@@ -218,9 +218,10 @@ const RequestKit = () => {
       location: userData.location.value,
       address: userData.address.value,
     };
+    console.log("kit kit ",dataToSend);
 
-    dispatch(addInformationKitRequest({ payload: dataToSend }));
-    setUserData(initialState);
+    // dispatch(addInformationKitRequest({ payload: dataToSend }));
+    // setUserData(initialState);
   };
 
   const handlePhoneInput = (value, country) => {
