@@ -151,15 +151,7 @@ const RequestKit = () => {
     }));
   };
   const handleSubmit = () => {
-    const dataToSend = {
-      firstName: userData.firstName.value,
-      lastName: userData.lastName.value,
-      email: userData.email.value,
-      countryCode: "+91",
-      phoneNumber: userData.phone.value,
-      location: userData.location.value,
-      address: userData.address.value,
-    };
+
 
     if (!userData.firstName.value) {
       setUserData((prevData) => ({
@@ -216,6 +208,16 @@ const RequestKit = () => {
       }));
       return;
     }
+    
+    const dataToSend = {
+      firstName: userData.firstName.value,
+      lastName: userData.lastName.value,
+      email: userData.email.value,
+      countryCode: "+91",
+      phoneNumber: userData.phone.value,
+      location: userData.location.value,
+      address: userData.address.value,
+    };
 
     dispatch(addInformationKitRequest({ payload: dataToSend }));
     setUserData(initialState);
