@@ -191,8 +191,8 @@ const BookAppointment = () => {
     };
 
     console.log("dataToSend ", dataToSend);
-    dispatch(bookAppointment({ payload: dataToSend }));
-    setUserData(initialState);
+    // dispatch(bookAppointment({ payload: dataToSend }));
+    // setUserData(initialState);
   };
   return (
     <>

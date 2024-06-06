@@ -349,10 +349,10 @@ const Carrers = () => {
     }
 
 
+console.log("career form ",dataToSend);
 
-
-    dispatch(addCareerProfile({ payload: dataToSend }));
-    setUserData(initialState);
+    // dispatch(addCareerProfile({ payload: dataToSend }));
+    // setUserData(initialState);
   };
   const pageInfo = useSelector((state) => state.home.pageInfo);
   const url = `https://flyingbyts.s3.ap-south-2.amazonaws.com/${pageInfo?.[7]?.[7]?.pageHeaderImage}`;

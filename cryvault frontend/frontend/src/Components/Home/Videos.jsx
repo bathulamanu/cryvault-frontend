@@ -5,7 +5,8 @@ import useDeviceSize from "../../Utilities/useDeviceSize";
 const Videos = () => {
   const isMobile = useDeviceSize() === 'xs'
 
-  const videos = ["https://www.youtube.com/embed/Vu9fBv86khI", "https://www.youtube.com/embed/kltxr92hgpg", "https://www.youtube.com/embed/HfZ13OjBk3c"];
+  const videos = ["https://www.youtube.com/embed/KjzJqTuM0Jc"];
+  // ,"https://www.youtube.com/embed/Vu9fBv86khI", "https://www.youtube.com/embed/kltxr92hgpg",  "https://www.youtube.com/embed/HfZ13OjBk3c"
   return (
     <Box className="videoContainer" style={{padding: isMobile ? "3rem 0rem" :"10rem "}} >
       <img style={{top: isMobile ? " -15px" : "-55px"}} className="videoContainerImage" src='https://www.cryovault.in/wp-content/uploads/2024/01/home-1_section_05.png' />
@@ -18,7 +19,7 @@ const Videos = () => {
         <br />
         <Box style={{ display: "flex", gap: "2rem", flexDirection: isMobile ? "column" :"row" }}>
         {videos.map((video) => (
-            <iframe key={video} width="353" height="199" src={video} frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen title="video" />
+            <iframe key={video} width="1000" height="600" src={video} frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen title="video" />
         ))}
         </Box>
       </Container>

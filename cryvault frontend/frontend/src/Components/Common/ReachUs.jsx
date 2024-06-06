@@ -104,16 +104,18 @@ const ReachUs = () => {
   const handleChange = (e) => {
     const name = e?.target?.name;
     const value = e?.target?.value;
-console.log(e)
+    console.log(e)
     setUserData({ ...userData, [name]: { ...userData[name], value: value, errorStatus: false, errorMessage: "" } });
   };
 
   const handleSubmit = () => {
     const dataToSend = {
       fullName: userData.fullName.value,
-      email: userData.email.value,
-      phone: userData.phone.value,
-      subject: userData.subject.value,
+      Email: userData.email.value,
+      countryCode: "+91",
+      phoneNumber: userData.phone.value,
+      Subject: userData.subject.value,
+      pageName: ""
     };
 
     if (!userData.fullName.value) {
@@ -122,7 +124,7 @@ console.log(e)
         fullName: {
           ...prevData.fullName,
           errorStatus: true,
-          errorMessage: "Enter valid Full Name",
+          errorMessage: "Full Name is required.",
         },
       }));
       return;
@@ -134,14 +136,16 @@ console.log(e)
         email: {
           ...prevData.email,
           errorStatus: true,
-          errorMessage: "Enter valid email Name",
+          errorMessage: "Email ID is required.",
         },
       }));
       return;
     }
 
-    dispatch(addReachUS({ payload: dataToSend }));
-    setUserData(initialState);
+    console.log("reach us ", dataToSend);
+
+    // dispatch(addReachUS({ payload: dataToSend }));
+    // setUserData(initialState);
   };
   return (
     <>

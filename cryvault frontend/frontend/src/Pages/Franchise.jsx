@@ -134,27 +134,27 @@ const Franchise = () => {
       type: "text",
       name: "state",
       id: "state",
-    },
-    professionalExperience: {
-      value: "",
-      placeholder: "Professional Experience *",
-      errorStatus: false,
-      errorMessage: "",
-      icon: "",
-      type: "text",
-      name: "professionalExperience",
-      id: "professionalExperience",
-    },
-    comment: {
-      value: "",
-      placeholder: "Comment",
-      errorStatus: false,
-      errorMessage: "",
-      icon: "",
-      type: "text",
-      name: "comment",
-      id: "comment",
-    },
+    }
+    // professionalExperience: {
+    //   value: "",
+    //   placeholder: "Professional Experience *",
+    //   errorStatus: false,
+    //   errorMessage: "",
+    //   icon: "",
+    //   type: "text",
+    //   name: "professionalExperience",
+    //   id: "professionalExperience",
+    // },
+    // comment: {
+    //   value: "",
+    //   placeholder: "Comment",
+    //   errorStatus: false,
+    //   errorMessage: "",
+    //   icon: "",
+    //   type: "text",
+    //   name: "comment",
+    //   id: "comment",
+    // },
   });
   const [officeSpace, setOfficeSpace] = useState(false);
   const [experienceInStemCellBanking, setExperienceInStemCellBanking] = useState(false);
@@ -176,20 +176,7 @@ const Franchise = () => {
     }));
   };
   const handleSubmit = () => {
-    const dataToSend = {
-      firstName: userData.firstName.value,
-      lastName: userData.lastName.value,
-      email: userData.email.value,
-      phoneNumber: userData.phoneNumber.value,
-      city: userData.city.value,
-      state: userData.state.value,
-      comment: userData.comment.value,
-      professionalExperience: userData.professionalExperience.value,
-      OfficeSpace: officeSpace,
-      ExperienceInStemCellBanking: experienceInStemCellBanking,
-    };
 
-    console.log("cehck here once dataToSend ", dataToSend);
 
     if (!userData.firstName.value) {
       setUserData((prevData) => ({
@@ -197,33 +184,104 @@ const Franchise = () => {
         firstName: {
           ...prevData.firstName,
           errorStatus: true,
-          errorMessage: "Enter valid First Name",
+          errorMessage: "First Name is required.",
         },
       }));
       return;
     }
-    // if (!userData.lastName.value) {
-    //   setUserData((prevData) => ({
-    //     ...prevData,
-    //     lastName: {
-    //       ...prevData.lastName,
-    //       errorStatus: true,
-    //       errorMessage: "Enter valid last Name",
-    //     },
-    //   }));
-    //   return;
-    // }
+    if (!userData.lastName.value) {
+      setUserData((prevData) => ({
+        ...prevData,
+        lastName: {
+          ...prevData.lastName,
+          errorStatus: true,
+          errorMessage: "Last Name is required.",
+        },
+      }));
+      return;
+    }
     if (!userData.phoneNumber.value) {
       setUserData((prevData) => ({
         ...prevData,
         phoneNumber: {
-          ...prevData.phone,
+          ...prevData.phoneNumber,
           errorStatus: true,
-          errorMessage: "Enter valid phone number",
+          errorMessage: "Phone Number is required.",
         },
       }));
       return;
     }
+    if (!userData.email.value) {
+      setUserData((prevData) => ({
+        ...prevData,
+        email: {
+          ...prevData.email,
+          errorStatus: true,
+          errorMessage: "Email ID is required.",
+        },
+      }));
+      return;
+    }
+    if (!userData.city.value) {
+      setUserData((prevData) => ({
+        ...prevData,
+        city: {
+          ...prevData.city,
+          errorStatus: true,
+          errorMessage: "City is required.",
+        },
+      }));
+      return;
+    }
+    if (!userData.state.value) {
+      setUserData((prevData) => ({
+        ...prevData,
+        state: {
+          ...prevData.state,
+          errorStatus: true,
+          errorMessage: "State is required.",
+        },
+      }));
+      return;
+    }
+    if (!officeSpace) {
+      setUserData((prevData) => ({
+        ...prevData,
+        officeSpace: {
+          ...prevData.state,
+          errorStatus: true,
+          errorMessage: "office Space is required.",
+        },
+      }));
+      return;
+    }
+    //professionalExperience
+    if (!experienceInStemCellBanking) {
+      setUserData((prevData) => ({
+        experienceInStemCellBanking: {
+          errorStatus: true,
+          errorMessage: "office Space is required.",
+        },
+      }));
+      return;
+    }
+    //comment
+
+    const dataToSend = {
+      firstName: userData.firstName.value,
+      lastName: userData.lastName.value,
+      email: userData.email.value,
+      countryCode: "+91",
+      phoneNumber: userData.phoneNumber.value,
+      city: userData.city.value,
+      state: userData.state.value,
+      comment: "",//userData.comment.value,
+      professionalExperience: "",//userData.professionalExperience.value,
+      OfficeSpace: officeSpace,
+      ExperienceInStemCellBanking: experienceInStemCellBanking,
+    };
+
+    console.log("cehck here once dataToSend ", dataToSend);
 
     // dispatch(addFranchiseRequest({ payload: dataToSend }));
     // setUserData(initialState);
@@ -288,11 +346,11 @@ const Franchise = () => {
                           <Typography sx={{ marginBottom: "10px !important", fontWeight: "700", fontSize: "1.5rem", marginLeft: "2rem" }}>{data[1].placeholder}</Typography>
 
                           {data[1].name == "phoneNumber" ?
-                           <PhoneInput value={"91" + userData.phoneNumber.value} onChange={handlePhoneInput} autoFormat inputProps={{ required: true }} 
-                           inputClass={"borderPhoneInput"} specialLabel="" containerClass={"layoutItem"} country={"in"} defaultErrorMessage="Incorrect WhatsApp Number" /> : 
-                           data[1].name != "comment" || data[1].name != "professionalExperience" ? <input style={{ border: data[1].errorStatus ? "1px solid red" : "1px solid #e5e5e5" }} 
-                           onChange={handleChange} key={data[0]} placeholder={data[1].placeholder} className={`carrerInput `} label={data[1].placeholder} type={data[1].type}
-                            value={data[1].value} name={data[1].name} size="small" /> : null}
+                            <PhoneInput value={"91" + userData.phoneNumber.value} onChange={handlePhoneInput} autoFormat inputProps={{ required: true }}
+                              inputClass={"borderPhoneInput"} specialLabel="" containerClass={"layoutItem"} country={"in"} defaultErrorMessage="Incorrect WhatsApp Number" /> :
+                            data[1].name != "comment" || data[1].name != "professionalExperience" ? <input style={{ border: data[1].errorStatus ? "1px solid red" : "1px solid #e5e5e5" }}
+                              onChange={handleChange} key={data[0]} placeholder={data[1].placeholder} className={`carrerInput `} label={data[1].placeholder} type={data[1].type}
+                              value={data[1].value} name={data[1].name} size="small" /> : null}
                           {data[1].errorStatus ? <Typography style={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data[1].errorMessage}</Typography> : null}
                         </Box>
                       ))}
