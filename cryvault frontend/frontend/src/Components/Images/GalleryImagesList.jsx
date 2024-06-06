@@ -1,76 +1,23 @@
 import { Box, Container, ImageList, ImageListItem, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import LightGallery from "lightgallery/react";
+import "lightgallery/css/lightgallery.css";
+import "lightgallery/css/lg-zoom.css";
+import "lightgallery/css/lg-thumbnail.css";
+import "lightgallery/css/lg-autoplay.css";
+import "lightgallery/css/lg-share.css";
+import "lightgallery/css/lg-rotate.css";
+import lgThumbnail from "lightgallery/plugins/thumbnail";
+import lgZoom from "lightgallery/plugins/zoom";
+import lgAutoplay from "lightgallery/plugins/autoplay";
+import lgVideo from "lightgallery/plugins/video";
+import lgShare from "lightgallery/plugins/share";
+import lgRotate from "lightgallery/plugins/rotate";
 import useDeviceSize from "../../Utilities/useDeviceSize";
 import { useDispatch, useSelector } from "react-redux";
 import { getImages } from "../../redux/reducers/HomePageReducer";
-const itemData = [
-  {
-    img: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
-    title: "Breakfast",
-    rows: 2,
-    cols: 2,
-  },
-  {
-    img: "https://images.unsplash.com/photo-1551782450-a2132b4ba21d",
-    title: "Burger",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1522770179533-24471fcdba45",
-    title: "Camera",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c",
-    title: "Coffee",
-    cols: 2,
-  },
-  {
-    img: "https://images.unsplash.com/photo-1533827432537-70133748f5c8",
-    title: "Hats",
-    cols: 2,
-  },
-  {
-    img: "https://images.unsplash.com/photo-1558642452-9d2a7deb7f62",
-    title: "Honey",
-    author: "@arwinneil",
-    rows: 2,
-    cols: 2,
-  },
-  {
-    img: "https://images.unsplash.com/photo-1516802273409-68526ee1bdd6",
-    title: "Basketball",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1518756131217-31eb79b20e8f",
-    title: "Fern",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1597645587822-e99fa5d45d25",
-    title: "Mushrooms",
-    rows: 2,
-    cols: 2,
-  },
-  {
-    img: "https://images.unsplash.com/photo-1567306301408-9b74779a11af",
-    title: "Tomato basil",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1471357674240-e1a485acb3e1",
-    title: "Sea star",
-  },
-  {
-    img: "https://images.unsplash.com/photo-1589118949245-7d38baf380d6",
-    title: "Bike",
-    cols: 2,
-  },
-];
 
-function srcset(image, size, rows = 1, cols = 1) {
-  return {
-    src: `${image}?w=${size * cols}&h=${size * rows}&fit=crop&auto=format`,
-    srcSet: `${image}?w=${size * cols}&h=${size * rows}&fit=crop&auto=format&dpr=2 2x`,
-  };
-}
 const GalleryImagesList = ({ category }) => {
   const isMobile = useDeviceSize() === "xs";
   const dispatch = useDispatch();
@@ -79,30 +26,43 @@ const GalleryImagesList = ({ category }) => {
   useEffect(() => {
     dispatch(getImages());
   }, []);
-  useEffect(() => {
-    if (category == "All") setImagesSetToShow(images?.["All CryoVault Images"]);
-    if (category == "Mother’s Day") setImagesSetToShow(images?.["Mother’s Day"]);
-    if (category == "Yoga Program") setImagesSetToShow(images?.["Yoga Program"]);
-    if (category.trim() == "5k run") setImagesSetToShow(images?.["5k Run"]);
-  }, [category, images]);
 
+  useEffect(() => {
+    const normalizedCategory = category.trim().toLowerCase();
+
+    if (normalizedCategory === "all") {
+      setImagesSetToShow(images?.["All CryoVault Images"]);
+    } else if (normalizedCategory === "mother’s day" || normalizedCategory === "mother's day") {
+      setImagesSetToShow(images?.["Mother’s Day"] || images?.["Mother's Day"]);
+    } else if (normalizedCategory === "yoga program") {
+      setImagesSetToShow(images?.["Yoga Program"]);
+    } else if (normalizedCategory === "5k run") {
+      setImagesSetToShow(images?.["5k Run"]);
+    }
+  }, [category, images, setImagesSetToShow]);
   return (
-    <Container sx={{ display: "flex", justifyContent: "center" }}>
-      <ImageList className="thumbnail" sx={{ width: "100%", height: "100%" }} variant="quilted" cols={4}>
-        {imagesSetToshow?.map((item) => (
-          <ImageListItem key={item.img} cols={ Math.floor(Math.random() * (1)) + 1 || 1} rows={ Math.floor(Math.random() * (3)) + 1 || 1} sx={{ margin: "0 !important" }}>
-            <Box className={"edu-blog gallerImg blog-style-list sal-animate"} sx={{ height: "100%", margin: "0 !important" }}>
-              <Box className="thumbnail" sx={{ height: "100%", margin: "0 !important" }}>
-                <Link style={{ height: "100%" }} to="#">
-                  <img {...srcset(`https://flyingbyts.s3.ap-south-2.amazonaws.com/${item.imageKey}`, 121, item.rows, item.cols)} style={{ border: "1px solid #FF003F", borderRadius: "4px", width: "100%", height: "100%" }} alt={item.title} loading="lazy" />
-                </Link>
+    <Container className="wrapper" sx={{ display: "flex", justifyContent: "center" }}>
+      <LightGallery speed={500} plugins={[lgZoom, lgAutoplay, lgRotate, lgShare, lgThumbnail, lgVideo]} selector=".gallery-item">
+        <ImageList className="thumbnail" sx={{ width: "100%", height: "100%" }} variant="quilted" cols={4}>
+          {imagesSetToshow?.map((item, idx) => (
+            <ImageListItem key={idx} cols={Math.floor(Math.random() * 1) + 1 || 1} rows={Math.floor(Math.random() * 3) + 1 || 1} sx={{ margin: "0 !important" }}>
+              <Box className="edu-blog gallerImg blog-style-list sal-animate" sx={{ height: "100%", margin: "0 !important" }}>
+                <Box className="thumbnail" sx={{ height: "100%", margin: "0 !important" }}>
+                  <a className="gallery-item" href={`https://flyingbyts.s3.ap-south-2.amazonaws.com/${item.imageKey}`} data-src={`https://flyingbyts.s3.ap-south-2.amazonaws.com/${item.imageKey}`} style={{ height: "100%" }}>
+                    <img src={`https://flyingbyts.s3.ap-south-2.amazonaws.com/${item.imageKey}`} style={{ border: "1px solid #FF003F", borderRadius: "4px", width: "100%", height: "100%" }} alt={item.title} loading="lazy" />
+                  </a>
+                  {console.log(`https://flyingbyts.s3.ap-south-2.amazonaws.com/${item.imageKey}`)}
+                </Box>
               </Box>
-            </Box>
-          </ImageListItem>
-        ))}
-      </ImageList>
+            </ImageListItem>
+          ))}
+        </ImageList>
+      </LightGallery>
     </Container>
   );
 };
 
 export default GalleryImagesList;
+{
+  /* <div>{clickedImg && <GalleryModal clickedImg={clickedImg} handelRotationRight={handelRotationRight} setClickedImg={setClickedImg} handelRotationLeft={handelRotationLeft} />}</div> */
+}
