@@ -109,7 +109,7 @@ export const getCustomerInfoApi = () => {
 };
 
 export const GetAdditonalServicesDetailsApi = () => {
-  return `${BASE_URL}/flyingbyts/api/user/getMasterConfiguration/ADDITIONAL SERVICES/null`;
+  return `${BASE_URL}/flyingbyts/api/user/getAdditionalServices/ADDITIONAL%20SERVICES/null`;
 };
 
 export const uploadSingleFileApi = () => {

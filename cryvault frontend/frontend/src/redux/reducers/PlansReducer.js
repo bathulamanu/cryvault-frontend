@@ -41,6 +41,7 @@ export const getAdditonalServicesDetails = createAsyncThunk("getAdditonalService
 
 const initialState = {
   plans: [],
+  additionalService:[],
   loading: false,
   error: null,
 };
@@ -62,7 +63,18 @@ const PlansReducer = createSlice({
         state.loading = false;
         state.error = action.error.message;
       })
-      
+      .addCase(getAdditonalServicesDetails.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getAdditonalServicesDetails.fulfilled, (state, action) => {
+        state.loading = false;
+        state.additionalService = action.payload.data;
+      })
+      .addCase(getAdditonalServicesDetails.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
   },
 });
 export const {} = PlansReducer.actions;
