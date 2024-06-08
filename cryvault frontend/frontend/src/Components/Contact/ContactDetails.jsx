@@ -1,7 +1,10 @@
 import { Box, Typography } from "@mui/material";
 import { List, ListItem, ListItemIcon, ListItemText, Link as MLink } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { getBranchContactApi } from "../../redux/reducers/api";
+import { getBranchContact } from "../../redux/reducers/HomePageReducer";
 const socialLinks = [
   { icon: <i className="icon-facebook"></i>, to: "#" },
   { icon: <i className="icon-instagram"></i>, to: "#" },
@@ -9,6 +12,11 @@ const socialLinks = [
   { icon: <i className="icon-linkedin2"></i>, to: "#" },
 ];
 const ContactDetails = () => {
+  const dispatch = useDispatch();
+  const contactInfo = useSelector((state) => state.home.contactInfo);
+  useEffect(() => {
+    dispatch(getBranchContact());
+  }, []);
   return (
     <Box className="py-5 contact_out">
       <Box className="container">
@@ -16,34 +24,34 @@ const ContactDetails = () => {
           <Box className="col-md-7">
             <Box className="contact-bg">
               <Box className="addre_infrm">
-                <Typography variant="h4">Bangalore</Typography>
+                <Typography variant="h4">{contactInfo?.[0]?.LocationName}</Typography>
 
                 <Box className="row">
                   <Box className="col-md-4">
                     <Box>
-                      <Typography variant="body1">No.:52/65, Swami Vivekananda road, Srinivasa layout, Bagalur, North Bengaluru, Karnataka- 562149.</Typography>
+                      <Typography variant="body1">{contactInfo?.[0]?.Address}</Typography>
                     </Box>
                   </Box>
                   <Box className="col-md-4">
                     <Box className="pl-2">
-                      <Typography variant="body1">+91 90085 73664</Typography>
+                      <Typography variant="body1"> {contactInfo?.[0]?.ContactInfo?.[0]?.value}</Typography>
                       <Typography variant="body1">
-                        WhatsApp
+                        {contactInfo?.[0]?.ContactInfo?.[0]?.title}
                         <br />
-                        +91 90085 73664
+                        {contactInfo?.[0]?.ContactInfo?.[1]?.value}
                       </Typography>
                     </Box>
                   </Box>
                   <Box className="col-md-4">
                     <Box>
                       <Typography variant="body1">
-                        info@cryovault.in
+                        {contactInfo?.[0]?.EmailInfo?.[0]?.value}
                         <br />
-                        contacts@cryovault.in
+                        {contactInfo?.[0]?.EmailInfo?.[1]?.value}
                         <br />
-                        Working hours:
+                        {contactInfo?.[0]?.EmailInfo?.[2].title}
                         <br />
-                        24/7 Hours
+                        {contactInfo?.[0]?.EmailInfo?.[2].value}
                       </Typography>
                     </Box>
                   </Box>
@@ -53,31 +61,40 @@ const ContactDetails = () => {
                 <img src="assets/images/heading-icon1.webp" alt="" className="logo-light m-auto" />
               </Box>
               <Box className="addre_infrm">
-                <Typography variant="h4">Hyderabad</Typography>
+                <Typography variant="h4">{contactInfo?.[1]?.LocationName}</Typography>
 
                 <Box className="row">
                   <Box className="col-md-4">
                     <Box>
-                      <Typography variant="body1">13D, Rd Number 9, Santosh Nagar, MLA Colony, Film Nagar, Hyderabad, Telangana – 500033, India</Typography>
+                      <Typography variant="body1">{contactInfo?.[1]?.Address}</Typography>
                     </Box>
                   </Box>
                   <Box className="col-md-4">
                     <Box className="pl-2">
-                      <Typography variant="body1">+91 90085 73664</Typography>
+                      <Typography variant="body1"> {contactInfo?.[1]?.ContactInfo?.[0]?.value}</Typography>
                       <Typography variant="body1">
-                        WhatsApp
+                        {contactInfo?.[1]?.ContactInfo?.[0]?.title}
                         <br />
-                        +91 90085 73664
+                        {contactInfo?.[1]?.ContactInfo?.[1]?.value}
                       </Typography>
                     </Box>
                   </Box>
                   <Box className="col-md-4">
                     <Box>
-                      <Typography variant="body1">admin@cryovault.in contacts@cryovault.in Working hours: 24/7 Hours</Typography>
+                      <Typography variant="body1">
+                        {contactInfo?.[1]?.EmailInfo?.[0]?.value}
+                        <br />
+                        {contactInfo?.[1]?.EmailInfo?.[1]?.value}
+                        <br />
+                        {contactInfo?.[1]?.EmailInfo?.[2].title}
+                        <br />
+                        {contactInfo?.[1]?.EmailInfo?.[2].value}
+                      </Typography>
                     </Box>
                   </Box>
                 </Box>
               </Box>
+              
             </Box>
           </Box>
           <Box className="col-md-5">

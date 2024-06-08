@@ -169,9 +169,8 @@ const ContactForm = () => {
       queryContent: ""//userData.queryContent.value
     };
 
-    console.log("dataToSend emergrnecy ", dataToSend);
-    // dispatch(addEmergencyAppointment({ payload: dataToSend }));
-    // setUserData(initialState);
+    dispatch(addEmergencyAppointment({ payload: dataToSend }));
+    setUserData(initialState);
   };
   return (
     <Box className="edu-section-gap contact_bg contact-form-area contact-form-reach">
@@ -200,7 +199,7 @@ const ContactForm = () => {
               </Box>
 
               <Box  className="row" sx={{ display: "flex", gap: "4rem" }}>
-                <Box  component="form" onSubmit={handleSubmit} style={{ display: "grid", gridTemplateColumns: isMobile ? "auto" : "auto auto", columnGap: "20px", rowGap: "20px", width: "100%" }}>
+                <Box  component="form"  style={{ display: "grid", gridTemplateColumns: isMobile ? "auto" : "auto auto", columnGap: "20px", rowGap: "20px", width: "100%" }}>
                   {userDetails.map((data, index) =>
                     data[1].component ? (
                       data[1].component
@@ -240,7 +239,7 @@ const ContactForm = () => {
                   <iframe title="reCAPTCHA" width="304" height="78" role="presentation" name="a-rax7gaw23nj6" frameBorder="0" scrolling="no" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox allow-storage-access-by-user-activation" src="https://www.google.com/recaptcha/api2/anchor?ar=2&amp;k=6LfPixwaAAAAABFFuOob52Mh463Oy3rZEtYUr4oJ&amp;co=aHR0cHM6Ly93d3cuY3J5b3ZhdWx0LmluOjQ0Mw..&amp;hl=en&amp;v=Hq4JZivTyQ7GP8Kt571Tzodj&amp;size=normal&amp;cb=oh1vpc5nfiib" data-gtm-yt-inspected-6="true"></iframe>
                 </Box>
                 <Box className="form-group">
-                  <Button className="edu-btn btn-medium" type="submit">Make an Appointment</Button>
+                  <Button className="edu-btn btn-medium" onClick={handleSubmit}>Make an Appointment</Button>
                 </Box>
               </Box>
             </Box>

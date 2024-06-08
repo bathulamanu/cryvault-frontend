@@ -473,3 +473,15 @@
 .shape_inMobileTestimonial-bk::after {
   background: #000;
 }
+.react-tel-input .flag-dropdown {
+  background-color: transparent !important;
+}
+.react-tel-input .flag-dropdown.open .selected-flag{
+  background-color:#fff !important;
+  background:none !important
+}
+.react-tel-input .selected-flag:hover, .react-tel-input .selected-flag:focus{
+
+
+  background-color: transparent !important;
+}

@@ -218,10 +218,9 @@ const RequestKit = () => {
       location: userData.location.value,
       address: userData.address.value,
     };
-    console.log("kit kit ",dataToSend);
 
-    // dispatch(addInformationKitRequest({ payload: dataToSend }));
-    // setUserData(initialState);
+    dispatch(addInformationKitRequest({ payload: dataToSend }));
+    setUserData(initialState);
   };
 
   const handlePhoneInput = (value, country) => {
