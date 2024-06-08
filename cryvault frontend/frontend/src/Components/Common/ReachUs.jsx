@@ -1,6 +1,6 @@
 import { Box, Button, Typography } from "@mui/material";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigation, useRoutes } from "react-router-dom";
 import useDeviceSize from "../../Utilities/useDeviceSize";
 import { HiOutlinePlayCircle } from "react-icons/hi2";
 import { addReachUS } from "../../redux/reducers/HomePageReducer";
@@ -50,6 +50,8 @@ const initialState = {
   },
 };
 const ReachUs = () => {
+  const router = useLocation();
+  console.log({ router });
   const [userData, setUserData] = useState({
     fullName: {
       value: "",
@@ -104,7 +106,6 @@ const ReachUs = () => {
   const handleChange = (e) => {
     const name = e?.target?.name;
     const value = e?.target?.value;
-    console.log(e)
     setUserData({ ...userData, [name]: { ...userData[name], value: value, errorStatus: false, errorMessage: "" } });
   };
 
@@ -115,7 +116,7 @@ const ReachUs = () => {
       countryCode: "+91",
       phoneNumber: userData.phone.value,
       Subject: userData.subject.value,
-      pageName: ""
+      pageName: router?.pathname,
     };
 
     if (!userData.fullName.value) {
@@ -142,10 +143,8 @@ const ReachUs = () => {
       return;
     }
 
-    console.log("reach us ", dataToSend);
-
-    // dispatch(addReachUS({ payload: dataToSend }));
-    // setUserData(initialState);
+    dispatch(addReachUS({ payload: dataToSend }));
+    setUserData(initialState);
   };
   return (
     <>

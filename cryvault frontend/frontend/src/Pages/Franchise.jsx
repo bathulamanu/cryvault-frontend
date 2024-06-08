@@ -134,32 +134,36 @@ const Franchise = () => {
       type: "text",
       name: "state",
       id: "state",
-    }
-    // professionalExperience: {
-    //   value: "",
-    //   placeholder: "Professional Experience *",
-    //   errorStatus: false,
-    //   errorMessage: "",
-    //   icon: "",
-    //   type: "text",
-    //   name: "professionalExperience",
-    //   id: "professionalExperience",
-    // },
-    // comment: {
-    //   value: "",
-    //   placeholder: "Comment",
-    //   errorStatus: false,
-    //   errorMessage: "",
-    //   icon: "",
-    //   type: "text",
-    //   name: "comment",
-    //   id: "comment",
-    // },
+    },
+    professionalExperience: {
+      value: "",
+      placeholder: "Professional Experience *",
+      errorStatus: false,
+      errorMessage: "",
+      icon: "",
+      type: "text",
+      name: "professionalExperience",
+      id: "professionalExperience",
+    },
+    comment: {
+      value: "",
+      placeholder: "Comment",
+      errorStatus: false,
+      errorMessage: "",
+      icon: "",
+      type: "text",
+      name: "comment",
+      id: "comment",
+    },
   });
-  const [officeSpace, setOfficeSpace] = useState(false);
+  const [officeSpace, setOfficeSpace] = useState("");
+  const [officeSpaceError, setOfficeSpaceError] = useState({ errorStatus: false, errorMessage: "" });
   const [experienceInStemCellBanking, setExperienceInStemCellBanking] = useState(false);
+  const [experienceInStemCellBankingError, setExperienceInStemCellBankingError] = useState({ errorStatus: false, errorMessage: "" });
 
   const handleOfficeSpaceChange = (event) => {
+    setOfficeSpaceError({ errorStatus: false, errorMessage: "" });
+
     setOfficeSpace(event.target.value);
   };
   const handleexperienceInStemCellBankingChange = (event) => {
@@ -176,8 +180,6 @@ const Franchise = () => {
     }));
   };
   const handleSubmit = () => {
-
-
     if (!userData.firstName.value) {
       setUserData((prevData) => ({
         ...prevData,
@@ -245,27 +247,25 @@ const Franchise = () => {
       return;
     }
     if (!officeSpace) {
-      setUserData((prevData) => ({
-        ...prevData,
-        officeSpace: {
-          ...prevData.state,
-          errorStatus: true,
-          errorMessage: "office Space is required.",
-        },
-      }));
+      setOfficeSpaceError({ errorStatus: true, errorMessage: "Office Space is required." });
       return;
     }
     //professionalExperience
-    if (!experienceInStemCellBanking) {
+    if (!setExperienceInStemCellBankingError) {
+      setExperienceInStemCellBankingError({ errorStatus: true, errorMessage: "Experience In Stem Cell Banking is required." });
+      return;
+    }
+    if (!userData.professionalExperience.value) {
       setUserData((prevData) => ({
-        experienceInStemCellBanking: {
+        ...prevData,
+        professionalExperience: {
+          ...prevData.state,
           errorStatus: true,
-          errorMessage: "office Space is required.",
+          errorMessage: "Professional Experience is required.",
         },
       }));
       return;
     }
-    //comment
 
     const dataToSend = {
       firstName: userData.firstName.value,
@@ -275,16 +275,14 @@ const Franchise = () => {
       phoneNumber: userData.phoneNumber.value,
       city: userData.city.value,
       state: userData.state.value,
-      comment: "",//userData.comment.value,
-      professionalExperience: "",//userData.professionalExperience.value,
+      comment: userData.comment.value,
+      professionalExperience: userData.professionalExperience.value,
       OfficeSpace: officeSpace,
       ExperienceInStemCellBanking: experienceInStemCellBanking,
     };
 
-    console.log("cehck here once dataToSend ", dataToSend);
-
-    // dispatch(addFranchiseRequest({ payload: dataToSend }));
-    // setUserData(initialState);
+    dispatch(addFranchiseRequest({ payload: dataToSend }));
+    setUserData(initialState);
   };
 
   const handlePhoneInput = (value, country) => {
@@ -343,14 +341,9 @@ const Franchise = () => {
                     <Box style={{ display: "grid", gridTemplateColumns: isMobile ? "auto auto" : "auto auto", columnGap: "20px", rowGap: "20px", width: "100%" }}>
                       {userDetails.map((data, index) => (
                         <Box key={data[1].name} sx={{ display: "flex", flexDirection: "column" }}>
-                          <Typography sx={{ marginBottom: "10px !important", fontWeight: "700", fontSize: "1.5rem", marginLeft: "2rem" }}>{data[1].placeholder}</Typography>
-
-                          {data[1].name == "phoneNumber" ?
-                            <PhoneInput value={"91" + userData.phoneNumber.value} onChange={handlePhoneInput} autoFormat inputProps={{ required: true }}
-                              inputClass={"borderPhoneInput"} specialLabel="" containerClass={"layoutItem"} country={"in"} defaultErrorMessage="Incorrect WhatsApp Number" /> :
-                            data[1].name != "comment" || data[1].name != "professionalExperience" ? <input style={{ border: data[1].errorStatus ? "1px solid red" : "1px solid #e5e5e5" }}
-                              onChange={handleChange} key={data[0]} placeholder={data[1].placeholder} className={`carrerInput `} label={data[1].placeholder} type={data[1].type}
-                              value={data[1].value} name={data[1].name} size="small" /> : null}
+                          {data[1].name !== "comment" && data[1].name !== "professionalExperience" ? <Typography sx={{ marginBottom: "10px !important", fontWeight: "700", fontSize: "1.5rem", marginLeft: "2rem" }}>{data[1].placeholder}</Typography> : null}
+                          {console.log(data[1].name, data[1].name !== "comment" && data[1].name !== "professionalExperience")}
+                          {data[1].name === "phoneNumber" ? <PhoneInput value={"91" + userData.phoneNumber.value} onChange={handlePhoneInput} autoFormat inputProps={{ required: true }} inputClass={"borderPhoneInput"} specialLabel="" containerClass={"layoutItem"} country={"in"} defaultErrorMessage="Incorrect WhatsApp Number" /> : data[1].name !== "comment" && data[1].name !== "professionalExperience" ? <input style={{ border: data[1].errorStatus ? "1px solid red" : "1px solid #e5e5e5" }} onChange={handleChange} key={data[0]} placeholder={data[1].placeholder} className={`carrerInput`} label={data[1].placeholder} type={data[1].type} value={data[1].value} name={data[1].name} size="small" /> : null}
                           {data[1].errorStatus ? <Typography style={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data[1].errorMessage}</Typography> : null}
                         </Box>
                       ))}
@@ -360,19 +353,23 @@ const Franchise = () => {
                   <Box style={{ marginTop: "1rem" }} className="form-group col-md-12">
                     <Typography sx={{ marginBottom: "10px !important", fontWeight: "700", fontSize: "1.5rem", marginLeft: "2rem" }}>Office Space *</Typography>
 
-                    <Box className="d-flex">
-                      <Box className="form-group mb-0 mr-4">
-                        <Box className="edu-form-check">
-                          <input type="radio" id="yes" name="officeSpace" value="true" checked={officeSpace} onChange={handleOfficeSpaceChange} />
-                          <label htmlFor="yes">Yes</label>
+                    <Box>
+                      <Box className="d-flex">
+                        <Box className="form-group mb-0 mr-4">
+                          <Box className="edu-form-check">
+                            <input type="radio" id="yes" name="officeSpace" value="true" checked={officeSpace} onChange={handleOfficeSpaceChange} />
+                            <label htmlFor="yes">Yes</label>
+                          </Box>
+                        </Box>
+                        <Box className="form-group mb-0">
+                          <Box className="edu-form-check">
+                            <input type="radio" id="no" name="officeSpace" value="false" checked={officeSpace} onChange={handleOfficeSpaceChange} />
+                            <label htmlFor="no">No</label>
+                          </Box>
                         </Box>
                       </Box>
-                      <Box className="form-group mb-0">
-                        <Box className="edu-form-check">
-                          <input type="radio" id="no" name="officeSpace" value="false" checked={officeSpace} onChange={handleOfficeSpaceChange} />
-                          <label htmlFor="no">No</label>
-                        </Box>
-                      </Box>
+
+                      {officeSpaceError ? <Typography style={{ color: "red", fontSize: "1.5rem" }}>{officeSpaceError.errorMessage}</Typography> : null}
                     </Box>
                   </Box>
                   <Box className="form-group col-md-12">
@@ -401,7 +398,7 @@ const Franchise = () => {
 
                   <Box className="form-group col-md-12">
                     <Typography sx={{ marginBottom: "10px !important", fontWeight: "700", fontSize: "1.5rem", marginLeft: "2rem" }}>Comment</Typography>
-                    <textarea name="contact-message" style={{ fontSize: "15px", height: "150px" }} id="contact-message" cols="30" rows="6" placeholder="Type your message"></textarea>
+                    <textarea name="comment" style={{ fontSize: "15px", height: "150px" }} id="comment" cols="30" rows="6" placeholder="Type your message"></textarea>
                   </Box>
                   <Button onClick={handleSubmit} variant="contained" sx={{ fontSize: "2rem !important", textTransform: "none", backgroundColor: "#D5008D", color: "white", fontWeight: "700", width: isMobile ? "40%" : "100%", whiteSpace: "nowrap", padding: "15px 30px", borderRadius: "40px", marginTop: "3rem" }} size="lg">
                     Submit

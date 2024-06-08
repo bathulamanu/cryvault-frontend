@@ -4,7 +4,7 @@ import useDeviceSize from "../../Utilities/useDeviceSize";
 import { useDispatch } from "react-redux";
 import { bookAppointment } from "../../redux/reducers/HomePageReducer";
 import PhoneInput from "react-phone-input-2";
-
+import './Home.css'
 const initialState = {
   firstName: {
     value: "",
@@ -14,7 +14,7 @@ const initialState = {
     icon: "",
     type: "text",
     name: "firstName",
-    id: "firstName"
+    id: "firstName",
   },
   lastName: {
     value: "",
@@ -45,8 +45,11 @@ const initialState = {
     type: "tel",
     name: "phoneNumber",
     id: "phoneNumber",
-    component: <PhoneInput autoFormat inputProps={{ required: true }} inputClass={"borderPhoneInput"} specialLabel="" containerClass={"layoutItem"} country={"in"} defaultErrorMessage="Incorrect WhatsApp Number" />,
-
+  },
+  countryCode: {
+    value: "",
+    name: "countryCode",
+    id: "countryCode",
   },
   appointmentDate: {
     value: "",
@@ -108,13 +111,13 @@ const BookAppointment = () => {
   const isOdd = userDetails.length % 2 !== 0;
   const dispatch = useDispatch();
 
-
   const handlePhoneInput = (value, country) => {
-    const country_code = "+91";
+    const country_code = country;
     const phoneNumber = value.slice(country_code.length);
     setUserData((prevData) => ({
       ...prevData,
       phoneNumber: { ...prevData.phoneNumber, value: phoneNumber, errorStatus: false, errorMessage: "" },
+      countryCode: { ...prevData.countryCode, value: country_code, errorStatus: false, errorMessage: "" },
     }));
   };
 
@@ -131,8 +134,6 @@ const BookAppointment = () => {
   };
 
   const handleSubmit = () => {
-
-
     if (!userData.firstName.value) {
       setUserData((prevData) => ({
         ...prevData,
@@ -191,8 +192,8 @@ const BookAppointment = () => {
     };
 
     console.log("dataToSend ", dataToSend);
-    // dispatch(bookAppointment({ payload: dataToSend }));
-    // setUserData(initialState);
+    dispatch(bookAppointment({ payload: dataToSend }));
+    setUserData(initialState);
   };
   return (
     <>
@@ -221,17 +222,26 @@ const BookAppointment = () => {
                           {data[1].errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data[1].errorMessage}</Typography> : null}
                         </Box>
                       ) : data[1].name == "phoneNumber" ? (
-                        <PhoneInput value={"91" + userData.phoneNumber.value}
-                          onChange={handlePhoneInput} autoFormat inputProps={{ required: true }}
-                          inputClass={"borderPhoneInput"} specialLabel=""
-                          containerClass={"layoutItem"} country={"in"}
-                          defaultErrorMessage="Incorrect WhatsApp Number" />
-                      ) : (
+                        <PhoneInput
+                          value={userData.countryCode.value+ userData.phoneNumber.value}
+                          onChange={handlePhoneInput}
+                          autoFormat
+                          inputProps={{
+                            required: true,
+                            placeholder: "Enter your phone number",
+                          }}
+                          inputClass={"borderPhoneInput"}
+                          specialLabel=""
+                          containerClass={"layoutItem"}
+                          // country={"in"}
+                          defaultErrorMessage="Incorrect WhatsApp Number"
+                        />
+                      ) : data[1].name !== "countryCode" ? (
                         <Box sx={{ display: "flex", flexDirection: "column" }}>
                           <input style={{ border: data[1].errorStatus ? "1px solid red" : "none" }} onChange={handleChange} key={data[0]} placeholder={data[1].placeholder} className={`appointmentInput ${isOdd && index === userDetails.length - 1 ? "fullWidth" : ""}`} label={data[1].placeholder} type={data[1].type} value={data[1].value} name={data[1].name} size="small" />
                           {data[1].errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data[1].errorMessage}</Typography> : null}
                         </Box>
-                      )
+                      ) : null
                     )}
                   </Box>
                   <Box className="form-group col-12">
