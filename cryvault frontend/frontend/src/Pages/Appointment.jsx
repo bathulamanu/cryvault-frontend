@@ -272,7 +272,6 @@ const Appointment = () => {
       address: userData.address.value,
     };
 
-    console.log("hhhhhhhhhhhhhhhhh ", dataToSend);
     if (!userData.firstName.value) {
       setUserData((prevData) => ({
         ...prevData,

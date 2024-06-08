@@ -174,6 +174,7 @@ const Franchise = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+    console.log( name, value )
     setUserData((prevData) => ({
       ...prevData,
       [name]: { ...prevData[name], value: value, errorStatus: false, errorMessage: "" },
@@ -250,7 +251,7 @@ const Franchise = () => {
       setOfficeSpaceError({ errorStatus: true, errorMessage: "Office Space is required." });
       return;
     }
-    //professionalExperience
+   
     if (!setExperienceInStemCellBankingError) {
       setExperienceInStemCellBankingError({ errorStatus: true, errorMessage: "Experience In Stem Cell Banking is required." });
       return;
@@ -259,7 +260,7 @@ const Franchise = () => {
       setUserData((prevData) => ({
         ...prevData,
         professionalExperience: {
-          ...prevData.state,
+          ...prevData.professionalExperience,
           errorStatus: true,
           errorMessage: "Professional Experience is required.",
         },
@@ -342,7 +343,6 @@ const Franchise = () => {
                       {userDetails.map((data, index) => (
                         <Box key={data[1].name} sx={{ display: "flex", flexDirection: "column" }}>
                           {data[1].name !== "comment" && data[1].name !== "professionalExperience" ? <Typography sx={{ marginBottom: "10px !important", fontWeight: "700", fontSize: "1.5rem", marginLeft: "2rem" }}>{data[1].placeholder}</Typography> : null}
-                          {console.log(data[1].name, data[1].name !== "comment" && data[1].name !== "professionalExperience")}
                           {data[1].name === "phoneNumber" ? <PhoneInput value={"91" + userData.phoneNumber.value} onChange={handlePhoneInput} autoFormat inputProps={{ required: true }} inputClass={"borderPhoneInput"} specialLabel="" containerClass={"layoutItem"} country={"in"} defaultErrorMessage="Incorrect WhatsApp Number" /> : data[1].name !== "comment" && data[1].name !== "professionalExperience" ? <input style={{ border: data[1].errorStatus ? "1px solid red" : "1px solid #e5e5e5" }} onChange={handleChange} key={data[0]} placeholder={data[1].placeholder} className={`carrerInput`} label={data[1].placeholder} type={data[1].type} value={data[1].value} name={data[1].name} size="small" /> : null}
                           {data[1].errorStatus ? <Typography style={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data[1].errorMessage}</Typography> : null}
                         </Box>
@@ -374,7 +374,7 @@ const Franchise = () => {
                   </Box>
                   <Box className="form-group col-md-12">
                     <Typography sx={{ marginBottom: "10px !important", fontWeight: "700", fontSize: "1.5rem", marginLeft: "2rem" }}>Professional Experience *</Typography>
-                    <input type="text" id="current-log-password" />
+                    <input onChange={handleChange} value={userData.professionalExperience.value} name="professionalExperience" type="text" id="professionalExperience" />
                   </Box>
 
                   <Box className="form-group col-md-12">
@@ -398,7 +398,7 @@ const Franchise = () => {
 
                   <Box className="form-group col-md-12">
                     <Typography sx={{ marginBottom: "10px !important", fontWeight: "700", fontSize: "1.5rem", marginLeft: "2rem" }}>Comment</Typography>
-                    <textarea name="comment" style={{ fontSize: "15px", height: "150px" }} id="comment" cols="30" rows="6" placeholder="Type your message"></textarea>
+                    <textarea onChange={handleChange} value={userData.comment.value} name="comment" style={{ fontSize: "15px", height: "150px" }} id="comment" cols="30" rows="6" placeholder="Type your message"></textarea>
                   </Box>
                   <Button onClick={handleSubmit} variant="contained" sx={{ fontSize: "2rem !important", textTransform: "none", backgroundColor: "#D5008D", color: "white", fontWeight: "700", width: isMobile ? "40%" : "100%", whiteSpace: "nowrap", padding: "15px 30px", borderRadius: "40px", marginTop: "3rem" }} size="lg">
                     Submit

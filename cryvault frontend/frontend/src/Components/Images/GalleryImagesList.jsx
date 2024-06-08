@@ -51,7 +51,6 @@ const GalleryImagesList = ({ category }) => {
                   <a className="gallery-item" href={`https://flyingbyts.s3.ap-south-2.amazonaws.com/${item.imageKey}`} data-src={`https://flyingbyts.s3.ap-south-2.amazonaws.com/${item.imageKey}`} style={{ height: "100%" }}>
                     <img src={`https://flyingbyts.s3.ap-south-2.amazonaws.com/${item.imageKey}`} style={{ border: "1px solid #FF003F", borderRadius: "4px", width: "100%", height: "100%" }} alt={item.title} loading="lazy" />
                   </a>
-                  {console.log(`https://flyingbyts.s3.ap-south-2.amazonaws.com/${item.imageKey}`)}
                 </Box>
               </Box>
             </ImageListItem>

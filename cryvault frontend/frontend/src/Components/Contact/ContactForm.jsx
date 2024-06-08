@@ -169,7 +169,6 @@ const ContactForm = () => {
       queryContent: ""//userData.queryContent.value
     };
 
-    console.log("dataToSend emergrnecy ", dataToSend);
     dispatch(addEmergencyAppointment({ payload: dataToSend }));
     setUserData(initialState);
   };

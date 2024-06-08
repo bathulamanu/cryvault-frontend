@@ -14,7 +14,6 @@ const socialLinks = [
 const ContactDetails = () => {
   const dispatch = useDispatch();
   const contactInfo = useSelector((state) => state.home.contactInfo);
-  console.log({ contactInfo });
   useEffect(() => {
     dispatch(getBranchContact());
   }, []);

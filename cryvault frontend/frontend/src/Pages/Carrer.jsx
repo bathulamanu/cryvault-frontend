@@ -209,7 +209,6 @@ const Carrers = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log({ name });
     if (name == "resume") {
       setUserData((prevData) => ({
         ...prevData,
@@ -241,9 +240,6 @@ const Carrers = () => {
       countryCode: "+91",
       prefix: PrefixValue,
     };
-
-    console.log("check kkk ", dataToSend);
-
     if (!PrefixValue) {
       setPrefixError({ errorStatus: true, errorMessage: "Prefix is required." });
       return;
@@ -336,9 +332,6 @@ const Carrers = () => {
       }));
       return;
     }
-
-    // console.log("career form ",dataToSend);
-
     dispatch(addCareerProfile({ payload: dataToSend }));
     setUserData(initialState);
   };

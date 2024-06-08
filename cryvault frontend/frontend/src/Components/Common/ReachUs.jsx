@@ -51,7 +51,6 @@ const initialState = {
 };
 const ReachUs = () => {
   const router = useLocation();
-  console.log({ router });
   const [userData, setUserData] = useState({
     fullName: {
       value: "",
