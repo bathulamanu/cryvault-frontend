@@ -296,12 +296,12 @@ const Franchise = () => {
   };
   return (
     <>
-      <Box sx={{ padding: isMobile ? " 50px 7px !important" : "120px 40px !important" }} className="edu-breadcrumb-area breadcrumb-style-2 bg-image bg-image--19">
+      <Box sx={{ padding: isMobile ? " 50px 7px !important" : "60px 100px !important" }} className="edu-breadcrumb-area breadcrumb-style-2 bg-image bg-image--19">
         <Box className="container" sx={{ margin: "0 !important", padding: "0 !important" }}>
           <Box className="breadcrumb-inner">
             <Box className="page-title d-flex align-items-center">
               <Box sx={{ textAlign: isMobile ? " center" : "start ", width: isMobile ? "100% !important" : "70% !important" }}>
-                <Typography sx={{ fontSize: isMobile ? "24px !important" : "45px !important" }} variant="h1" className="title">
+                <Typography sx={{ fontSize: isMobile ? "24px !important" : "25px !important" }} variant="h1" className="title">
                   Franchise
                 </Typography>
               </Box>
@@ -374,7 +374,7 @@ const Franchise = () => {
                   </Box>
                   <Box className="form-group col-md-12">
                     <Typography sx={{ marginBottom: "10px !important", fontWeight: "700", fontSize: "1.5rem", marginLeft: "2rem" }}>Professional Experience *</Typography>
-                    <input onChange={handleChange} value={userData.professionalExperience.value} name="professionalExperience" type="text" id="professionalExperience" />
+                    <input onChange={handleChange} value={userData?.professionalExperience?.value} name="professionalExperience" type="text" id="professionalExperience" />
                   </Box>
 
                   <Box className="form-group col-md-12">
@@ -398,7 +398,7 @@ const Franchise = () => {
 
                   <Box className="form-group col-md-12">
                     <Typography sx={{ marginBottom: "10px !important", fontWeight: "700", fontSize: "1.5rem", marginLeft: "2rem" }}>Comment</Typography>
-                    <textarea onChange={handleChange} value={userData.comment.value} name="comment" style={{ fontSize: "15px", height: "150px" }} id="comment" cols="30" rows="6" placeholder="Type your message"></textarea>
+                    <textarea onChange={handleChange} value={userData?.comment?.value} name="comment" style={{ fontSize: "15px", height: "150px" }} id="comment" cols="30" rows="6" placeholder="Type your message"></textarea>
                   </Box>
                   <Button onClick={handleSubmit} variant="contained" sx={{ fontSize: "2rem !important", textTransform: "none", backgroundColor: "#D5008D", color: "white", fontWeight: "700", width: isMobile ? "40%" : "100%", whiteSpace: "nowrap", padding: "15px 30px", borderRadius: "40px", marginTop: "3rem" }} size="lg">
                     Submit

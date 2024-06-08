@@ -9,12 +9,12 @@ const SevenReasonscordblood = () => {
 
   return (
     <>
-      <Box  sx={{ padding: isMobile ? " 50px 7px !important" : "100px 40px !important" }} className="edu-breadcrumb-area breadcrumb-style-2 bg-image bg-image--19">
+      <Box  sx={{ padding: isMobile ? " 50px 7px !important" : "100px 100px !important" }} className="edu-breadcrumb-area breadcrumb-style-2 bg-image bg-image--19">
         <Box className="container" sx={{ margin: "0 !important", padding: "0 !important" }}>
           <Box className="breadcrumb-inner">
             <Box className="page-title d-flex align-items-center">
               <Box className="w-100">
-                <Typography  sx={{ textAlign: isMobile ? 'center' : 'start', fontSize: isMobile ? "24px !important" : "45px !important" }} variant="h1" className="title">
+                <Typography  sx={{ textAlign: isMobile ? 'center' : 'start', fontSize: isMobile ? "24px !important" : "25px !important" }} variant="h1" className="title">
                   7 Reasons to Save your Childs Cord Blood
                 </Typography>
                 {isMobile ? null : (

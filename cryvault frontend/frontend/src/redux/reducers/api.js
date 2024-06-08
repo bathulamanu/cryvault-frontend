@@ -119,5 +119,6 @@ export const uploadSingleFileApi = () => {
 export const getAccreditationsCertificationApi = () => {
   return `${BASE_URL}/flyingbyts/api/user/getAccreditationsCertification`;
 };
-
-
+export const getBlogsApi = () => {
+  return `${BASE_URL}/flyingbyts/api/user/getBlog`;
+};

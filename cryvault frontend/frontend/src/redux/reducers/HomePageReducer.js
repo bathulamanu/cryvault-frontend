@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { GetFooter, GetHeaderSocialMediaIcon, addCareerProfileApi, addEmergencyAppointmentApi, 
-  getAccreditationsCertificationApi,uploadSingleFileApi, addFranchiseRequestApi, addInformationKitRequestApi, addReachUSApi, bookAppointmentApi, getBranchContactApi, getCustomerCountApi, getGoogleReviewsApi, getImagesApi, getPageMetaInfoApi, getTestimonialApi, getVideosApi } from "./api";
+  getAccreditationsCertificationApi,uploadSingleFileApi, addFranchiseRequestApi, addInformationKitRequestApi, addReachUSApi, bookAppointmentApi, getBranchContactApi, getCustomerCountApi, getGoogleReviewsApi, getImagesApi, getPageMetaInfoApi, getTestimonialApi, getVideosApi, 
+  getBlogsApi} from "./api";
 import axios from "axios";
 
 export const fetchSocialIcons = createAsyncThunk("socialIcons/fetchSocialIcons", async (payload = {}, thunkAPI) => {
@@ -285,6 +286,25 @@ export const getAccreditationsCertification = createAsyncThunk("getAccreditation
     return thunkAPI.rejectWithValue(error);
   }
 });
+export const getBlogs = createAsyncThunk("getBlogs", async (payload = {}, thunkAPI) => {
+  const apiUrl = getBlogsApi();
+  const token = sessionStorage.getItem("token");
+  const headers = {
+    authorization: `${token}`,
+  };
+  try {
+    const response = await axios.get(apiUrl, { headers });
+    const { ok, problem, data } = response;
+    if (data) {
+      if (payload?.callback) payload.callback();
+      return data;
+    } else {
+      return thunkAPI.rejectWithValue({ data, problem });
+    }
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
 const initialState = {
   socialIcons: [],
   headerIcons: [],
@@ -298,7 +318,8 @@ const initialState = {
   loading: false,
   error: null,
   customerCount: [],
-  Certificates:[]
+  Certificates:[],
+  blogs:[]
 };
 const HomeReducer = createSlice({
   name: "home",
@@ -481,6 +502,18 @@ const HomeReducer = createSlice({
         state.AccreditationCertificates = action.payload.data;
       })
       .addCase(getAccreditationsCertification.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(getBlogs.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getBlogs.fulfilled, (state, action) => {
+        state.loading = false;
+        state.blogs = action.payload.data;
+      })
+      .addCase(getBlogs.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       });
