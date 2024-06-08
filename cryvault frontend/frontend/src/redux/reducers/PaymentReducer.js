@@ -155,7 +155,7 @@ export const createOrder = createAsyncThunk("createOrder", async (payload, thunk
               paymentType: paymentMethod,
               PaymentGatewayID: response.razorpay_payment_id,
               razorpay_order_id: response.razorpay_order_id,
-              razorpay_signature: response.razorpay_signature,
+              razorpaySignature: response.razorpay_signature,
             },
           };
 

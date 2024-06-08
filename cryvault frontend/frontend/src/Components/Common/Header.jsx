@@ -368,7 +368,7 @@ const Header = () => {
                         ) : (
                           <li>
                             <Link to="/login" className="pr-0">
-                              <Button className="edu-btn">GET STARTED</Button>
+                              <Button className="edu-btn">LOGIN</Button>
                             </Link>
                           </li>
                         )}

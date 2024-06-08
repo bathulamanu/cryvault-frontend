@@ -4,7 +4,6 @@ import useDeviceSize from "../../Utilities/useDeviceSize";
 import { useDispatch } from "react-redux";
 import { bookAppointment } from "../../redux/reducers/HomePageReducer";
 import PhoneInput from "react-phone-input-2";
-
 const initialState = {
   firstName: {
     value: "",
@@ -45,7 +44,11 @@ const initialState = {
     type: "tel",
     name: "phoneNumber",
     id: "phoneNumber",
-    component: <PhoneInput autoFormat inputProps={{ required: true }} inputClass={"borderPhoneInput"} specialLabel="" containerClass={"layoutItem"} country={"in"} defaultErrorMessage="Incorrect WhatsApp Number" />,
+    component: <PhoneInput autoFormat
+      inputProps={{ required: true }}
+      inputClass={"borderPhoneInput"}
+      specialLabel="" containerClass={"layoutItem"}
+      country={"in"} defaultErrorMessage="Incorrect WhatsApp Number" />,
 
   },
   appointmentDate: {
@@ -108,7 +111,6 @@ const BookAppointment = () => {
   const isOdd = userDetails.length % 2 !== 0;
   const dispatch = useDispatch();
 
-
   const handlePhoneInput = (value, country) => {
     const country_code = "+91";
     const phoneNumber = value.slice(country_code.length);
@@ -131,7 +133,6 @@ const BookAppointment = () => {
   };
 
   const handleSubmit = () => {
-
 
     if (!userData.firstName.value) {
       setUserData((prevData) => ({
@@ -237,6 +238,7 @@ const BookAppointment = () => {
                   <Box className="form-group col-12">
                     <iframe title="reCAPTCHA" width="304" height="78" role="presentation" name="a-rax7gaw23nj6" frameBorder="0" scrolling="no" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox allow-storage-access-by-user-activation" src="https://www.google.com/recaptcha/api2/anchor?ar=2&amp;k=6LfPixwaAAAAABFFuOob52Mh463Oy3rZEtYUr4oJ&amp;co=aHR0cHM6Ly93d3cuY3J5b3ZhdWx0LmluOjQ0Mw..&amp;hl=en&amp;v=Hq4JZivTyQ7GP8Kt571Tzodj&amp;size=normal&amp;cb=oh1vpc5nfiib" data-gtm-yt-inspected-6="true"></iframe>
                   </Box>
+                 
                   <Button onClick={handleSubmit} sx={{ fontWeight: "600", textTransform: "none" }} variant="contained" className="appointmentBtn">
                     Make An Appointment
                   </Button>
