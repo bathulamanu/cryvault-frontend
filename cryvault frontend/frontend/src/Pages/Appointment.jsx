@@ -264,6 +264,7 @@ const Appointment = () => {
       firstName: userData.firstName.value,
       lastName: userData.lastName.value,
       email: userData.email.value,
+      countryCode: "+91",
       phoneNumber: userData.phone.value,
       expectedDeliveryDate: userData.deliveryDate.value,
       appointmentDate: userData.appointmentDate.value,

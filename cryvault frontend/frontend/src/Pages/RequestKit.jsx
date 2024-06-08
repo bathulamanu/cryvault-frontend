@@ -219,8 +219,8 @@ const RequestKit = () => {
       address: userData.address.value,
     };
 
-    // dispatch(addInformationKitRequest({ payload: dataToSend }));
-    // setUserData(initialState);
+    dispatch(addInformationKitRequest({ payload: dataToSend }));
+    setUserData(initialState);
   };
 
   const handlePhoneInput = (value, country) => {

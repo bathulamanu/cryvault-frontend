@@ -6,15 +6,15 @@ import { HiOutlinePlayCircle } from "react-icons/hi2";
 import { addReachUS } from "../../redux/reducers/HomePageReducer";
 import { useDispatch } from "react-redux";
 const initialState = {
-  firstName: {
+  fullName: {
     value: "",
     placeholder: "First Name",
     errorStatus: false,
     errorMessage: "",
     icon: "",
     type: "text",
-    name: "firstName",
-    id: "firstName",
+    name: "fullName",
+    id: "fullName",
   },
 
   email: {
@@ -109,15 +109,17 @@ const ReachUs = () => {
   };
 
   const handleSubmit = () => {
+    console.log("userData.fullName.value ",userData);
+
     const dataToSend = {
       fullName: userData.fullName.value,
       Email: userData.email.value,
       countryCode: "+91",
       phoneNumber: userData.phone.value,
       Subject: userData.subject.value,
-      pageName: router?.pathname,
+      pageName: router?.pathname
     };
-
+    
     if (!userData.fullName.value) {
       setUserData((prevData) => ({
         ...prevData,
