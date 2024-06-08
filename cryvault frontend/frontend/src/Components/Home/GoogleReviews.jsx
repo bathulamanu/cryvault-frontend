@@ -35,8 +35,9 @@ const GoogleReviews = () => {
   return (
     <Container sx={{ display: "flex", flexDirection: isMobile ? "column" : "row", paddingTop: "5rem", alignItems: "center", gap: "2rem", marginBottom: isMobile ? "5rem" : "5rem" }}>
       <Box style={{ width: isMobile ? "100%" : "23%", display: "flex", alignItems: "start", gap: "0.5rem" }}>
-        <img loading="lazy" decoding="async" src="https://www.cryovault.in/wp-content/plugins/widget-google-reviews/assets/img/gmblogo.svg" alt="Cryovault | Best Stem Cell Banking in Hyderabad | India" width="50" height="50" title="Cryovault | Best Stem Cell Banking in Hyderabad | India" />
-
+        <img loading="lazy" decoding="async" src="https://www.cryovault.in/wp-content/plugins/widget-google-reviews/assets/img/gmblogo.svg"
+         alt="Cryovault | Best Stem Cell Banking in Hyderabad | India" width="50" height="50" title="Cryovault | Best Stem Cell Banking in Hyderabad | India" />
+    
         <Box style={{ display: "flex", alignItems: "start !important", flexDirection: "column", gap: "0.5rem" }}>
           <Link href="https://maps.google.com/?cid=1616921368839435671" target="_blank" rel="nofollow noopener">
             <Typography sx={{ fontWeight: "600", fontSize: "1.5rem" }} variant="h4">
