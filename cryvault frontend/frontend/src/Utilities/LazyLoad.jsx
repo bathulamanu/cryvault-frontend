@@ -159,7 +159,7 @@ const LazyLoad = () => {
         <Route path={images} element={<Images />} />
         <Route path={videos} element={<Videos />} />
         <Route path={contact} element={<Contact />} />
-        <Route path="/blog-single" element={<SingleBlog />} />
+        <Route path="/blog-single/:id" element={<SingleBlog />} />
         {hasPlan ? (
           <>
             <Route path="/dashboard" element={<Dashboard />} />

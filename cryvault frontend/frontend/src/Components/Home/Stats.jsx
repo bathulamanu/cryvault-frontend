@@ -1,12 +1,17 @@
 import { Box, Card, CardActionArea, CardContent, CardMedia, Grid, Typography } from "@mui/material";
-import React, { useMemo, useEffect } from "react";
+import React, { useMemo, useEffect, useState } from "react";
 import useDeviceSize from "../../Utilities/useDeviceSize";
 import { useDispatch, useSelector } from "react-redux";
 import { getCustomerCount } from "../../redux/reducers/HomePageReducer";
+import { useLocation } from "react-router-dom";
 
 const Stats = () => {
   const isMobile = useDeviceSize() === "xs";
   const dispatch = useDispatch();
+  const router = useLocation()
+  const [isHomePage, setIsHomePage] = useState(true)
+  const isAboutPage = router.pathname === '/about-cryovault/'
+  console.log(isAboutPage)
   const statsData = useMemo(() => {
     const data = [
       {
@@ -37,9 +42,14 @@ const Stats = () => {
   useEffect(() => {
     dispatch(getCustomerCount());
   }, []);
+
+  useEffect(()=>{
+
+
+  },[router])
   return (
-    <Box style={{ position: "relative", padding: isMobile ? "5rem 1rem" : "3rem 8rem", border: "1px solid #e5e5e5" }}>
-      {isMobile ? null : <img className=" butterflyImage butter_fly" src="assets/images/butterfly-4.webp" alt="Shape" />}
+    <Box style={{ position: "relative", padding: isMobile ? "5rem 1rem" : "3rem 8rem", border: isAboutPage ? 'none' :  "1px solid #e5e5e5" }}>
+      {isMobile || isAboutPage ? null : <img className=" butterflyImage butter_fly" src="assets/images/butterfly-4.webp" alt="Shape" />}
       <Grid sx={{ marginTop: "5rem" }} spacing={3} container item rowSpacing={1} columnSpacing={{ xs: 1, sm: 4, md: 4 }}>
         {customerCount?.map((data, index) => (
           <Grid key={data.title} spacing={3} xs={6} md={3} sm={4} sx={{ width: 50 }}>

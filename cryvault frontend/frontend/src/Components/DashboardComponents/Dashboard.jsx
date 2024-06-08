@@ -86,7 +86,7 @@ const Dashboard = () => {
                   display: "flex",
                   flexDirection: isMobile ? "row" : "column",
                   marginBottom: "10px",
-                  height: "45px",
+                  height: "25px",
                   justifyContent: "center",
                   borderRadius: "20px",
                   gap: "1.5rem",

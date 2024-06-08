@@ -487,7 +487,7 @@ const CheckoutDetails = () => {
               Order Details
             </Typography>
             <Box sx={{ border: "none !important" }} class="input-group mb-4 border rounded-pill p-2">
-              <input type="text" placeholder="Apply coupon" aria-describedby="button-addon3" className="form-control border-0" height={"45px"} />
+              <input type="text" placeholder="Apply coupon" aria-describedby="button-addon3" className="form-control border-0" height={"25px"} />
               <Box class="input-group-append border-0">
                 <Button className="edu-btn" borderRadius={"35px !important"}>
                   Apply Coupon
