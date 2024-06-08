@@ -176,6 +176,9 @@ export const createOrder = createAsyncThunk("createOrder", async (payload, thunk
       };
 
       const rzp1 = new window.Razorpay(options);
+      rzp1.on('payment.failed', (response) => {
+        alert("Payment failed. Please try again or contact support.");
+      });
       rzp1.open();
     } else {
       console.error("Unexpected status code:", response.status);
@@ -308,6 +311,6 @@ const PaymentReducer = createSlice({
       });
   },
 });
-export const {} = PaymentReducer.actions;
+export const { } = PaymentReducer.actions;
 const paymentReducer = PaymentReducer.reducer;
 export default paymentReducer;
