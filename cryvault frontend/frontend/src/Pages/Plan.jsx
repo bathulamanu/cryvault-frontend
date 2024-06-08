@@ -80,8 +80,8 @@ const Plan = () => {
                         className="pricing-table"
                       >
                         <Box className={`pricing-header`} sx={{ margin: "0 !important" }}>
-                          <Box className={`head_ot`}>
-                            <Typography variant="h6" className="title">
+                          <Box  className={`head_ot`}>
+                            <Typography sx={{padding:"12px !important",borderRadius:"0px 0px 24px 24px", fontSize:"18px !important"}} variant="h6" className="title">
                               {plan.durationYear}
                             </Typography>
 
