@@ -119,10 +119,10 @@ export const OTP = () => {
           OTP Verification
         </Typography>
         <Input
-          label="Enter Phone Number"
+          label="Enter OTP"
           value={otp}
           onChange={(e) => setOTP(e.target.value)}
-          placeholder="Enter Phone Number"
+          placeholder="Enter OTP"
           variant="outlined"
           style={{ fontSize: "2rem !important", ml: 1, "& .MuiOutlinedInput-root": { borderRadius: "0.25rem" } }} // Consistent border radius
           id="phoneNumberInput"

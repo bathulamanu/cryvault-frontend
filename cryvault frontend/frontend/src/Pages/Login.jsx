@@ -5,20 +5,30 @@ import useDeviceSize from "../Utilities/useDeviceSize";
 import { useNavigate } from "react-router-dom";
 import { decrementTimer, login, startTimerWithCallback } from "../redux/reducers/UserReducer";
 import { useDispatch, useSelector } from "react-redux";
+import { validatePhoneNumber } from "../Components/Contact/ContactForm";
 
 export const Login = () => {
   const theme = useTheme();
   const isMobile = useDeviceSize() === "xs";
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [userData, setUserData] = useState({ countryCode: "+91", phoneNumber: "" });
+  const [userData, setUserData] = useState({ countryCode: "+91", phoneNumber: "", errorStatus: false, errorMessage: "" });
   const timer = useSelector((state) => state.user.timer);
   const error = useSelector((state) => state.user.timerError);
-  const handleUserData = (e) => setUserData({ ...userData, phoneNumber: e.target.value });
+  const handleUserData = (e) => setUserData({ ...userData, phoneNumber: e.target.value, errorStatus: false, errorMessage: "" });
   const handleOTPScreen = () => navigate("/OTP", { state: { countryCode: "+91", phoneNumber: userData.phoneNumber } });
   const handleSendOTP = () => {
     // dispatch(setTimer(60));
     // dispatch(setError('Please wait for the countdown to finish before resending the OTP.'));
+    const isMobileInvalid = !validatePhoneNumber(userData.phoneNumber, String(userData.countryCode) || "91");
+    if (isMobileInvalid) {
+      setUserData((prevData) => ({
+        ...prevData,
+        errorStatus: true,
+        errorMessage: "Enter Valid Phone Number",
+      }));
+      return;
+    }
     dispatch(startTimerWithCallback());
     dispatch(login({ payload: userData, callback: handleOTPScreen }));
   };
@@ -69,6 +79,7 @@ export const Login = () => {
             id="phoneNumberInput"
           />
         </Box>
+        {userData.errorStatus ? <Typography style={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{userData.errorMessage}</Typography> : null}
 
         <Button variant="contained" color="primary" sx={{ mt: 4, mb: 2, width: "100%" }} onClick={handleSendOTP} className="edu-btn">
           SEND OTP

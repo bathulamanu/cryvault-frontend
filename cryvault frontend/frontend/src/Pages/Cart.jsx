@@ -85,13 +85,13 @@ const Cart = () => {
             <hr />
             <Box className="discount">
               <Typography sx={{ fontSize: "2.5rem", fontWeight: "700" }}>Discount</Typography>
-              <Typography sx={{ fontSize: "2.5rem", fontWeight: "500" }}>{parseInt(amount)} INR</Typography>
+              <Typography sx={{ fontSize: "2.5rem", fontWeight: "500" }}>{amount} INR</Typography>
             </Box>
             <hr />
 
             <Box className="discount">
               <Typography sx={{ fontSize: "2.5rem", fontWeight: "700" }}>Total</Typography>
-              <Typography sx={{ fontSize: "2.5rem", fontWeight: "500" }}>{parseInt(amount)} INR</Typography>
+              <Typography sx={{ fontSize: "2.5rem", fontWeight: "500" }}>{amount} INR</Typography>
             </Box>
           </Box>
           <Button className="edu-btn" sx={{ width: "100%" }} onClick={pay}>

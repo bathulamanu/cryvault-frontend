@@ -13,8 +13,8 @@ const StoreStemcells = () => {
         <Box className="container" sx={{ margin: "0 !important", padding: "0 !important" }}>
           <Box className="breadcrumb-inner">
             <Box className="page-title d-flex align-items-center">
-              <Box sx={{ textAlign: isMobile ? " center" : "start ", width: "100% !important" }}>
-                <Typography sx={{ fontSize: isMobile ? "24px !important" : "25px !important" }} variant="h1" className="title">
+              <Box sx={{ display: "flex", gap: "6rem", alignItems: "center", textAlign: isMobile ? " center" : "start ", width: "100% !important" }}>
+                <Typography sx={{ fontSize: isMobile ? "24px !important" : "25px !important",width:"none !important",fontWeight:"600" }} variant="h1" className="">
                   How to Store Your STEM CELLS WITH CRYOVAULT
                 </Typography>
                 {isMobile ? null : (

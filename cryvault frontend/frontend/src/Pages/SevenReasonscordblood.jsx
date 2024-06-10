@@ -13,8 +13,8 @@ const SevenReasonscordblood = () => {
         <Box className="container" sx={{ margin: "0 !important", padding: "0 !important" }}>
           <Box className="breadcrumb-inner">
             <Box className="page-title d-flex align-items-center">
-              <Box className="w-100">
-                <Typography  sx={{ textAlign: isMobile ? 'center' : 'start', fontSize: isMobile ? "24px !important" : "25px !important" }} variant="h1" className="title">
+              <Box  sx={{display: "flex", gap: "21rem", alignItems: "center", textAlign: isMobile ? " center" : "start ", width: "100% !important" }}>
+                <Typography  sx={{ textAlign: isMobile ? 'center' : 'start', fontSize: isMobile ? "24px !important" : "25px !important" ,fontWeight:"600"}} variant="h1" className="">
                   7 Reasons to Save your Childs Cord Blood
                 </Typography>
                 {isMobile ? null : (

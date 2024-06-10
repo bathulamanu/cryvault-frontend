@@ -10,6 +10,7 @@ import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { useDispatch, useSelector } from "react-redux";
 import { addInformationKitRequest, getBranchContact } from "../redux/reducers/HomePageReducer";
+import { validateEmail, validatePhoneNumber } from "../Components/Contact/ContactForm";
 const initialState = {
   firstName: {
     value: "",
@@ -51,7 +52,11 @@ const initialState = {
     name: "phone",
     id: "phone",
   },
-
+  countryCode: {
+    value: "",
+    name: "countryCode",
+    id: "countryCode",
+  },
   city: {
     value: "",
     placeholder: "city",
@@ -118,7 +123,11 @@ const RequestKit = () => {
       name: "phone",
       id: "phone",
     },
-
+    countryCode: {
+      value: "",
+      name: "countryCode",
+      id: "countryCode",
+    },
     location: {
       value: "",
       placeholder: "Location *",
@@ -151,7 +160,7 @@ const RequestKit = () => {
     }));
   };
   const handleSubmit = () => {
-
+    const isMobileInvalid = !validatePhoneNumber(userData.phone.value, String(userData.countryCode.value) || "91");
 
     if (!userData.firstName.value) {
       setUserData((prevData) => ({
@@ -175,7 +184,7 @@ const RequestKit = () => {
       }));
       return;
     }
-    if (!userData.email.value) {
+    if (!validateEmail(userData.email.value)) {
       setUserData((prevData) => ({
         ...prevData,
         email: {
@@ -197,6 +206,17 @@ const RequestKit = () => {
       }));
       return;
     }
+    if (isMobileInvalid) {
+      setUserData((prevData) => ({
+        ...prevData,
+        phone: {
+          ...prevData.phone,
+          errorStatus: true,
+          errorMessage: "Enter Valid Phone Number",
+        },
+      }));
+      return;
+    }
     if (!userData.location.value) {
       setUserData((prevData) => ({
         ...prevData,
@@ -208,7 +228,7 @@ const RequestKit = () => {
       }));
       return;
     }
-    
+
     const dataToSend = {
       firstName: userData.firstName.value,
       lastName: userData.lastName.value,
@@ -224,11 +244,12 @@ const RequestKit = () => {
   };
 
   const handlePhoneInput = (value, country) => {
-    const country_code = "91";
+    const country_code = country;
     const phoneNumber = value.slice(country_code.length);
     setUserData((prevData) => ({
       ...prevData,
       phone: { ...prevData.phone, value: phoneNumber, errorStatus: false, errorMessage: "" },
+      countryCode: { ...prevData.countryCode, value: country_code, errorStatus: false, errorMessage: "" },
     }));
   };
 
@@ -276,26 +297,39 @@ const RequestKit = () => {
               </Box>
               <Box className="requ_inform">
                 <Box style={{ display: "grid", gridTemplateColumns: isMobile ? "auto" : "auto auto", columnGap: "20px", rowGap: "20px", width: "100%" }}>
-                  {/* {userDetails.map((data, index) => (data[1].component ? data[1].component : 
-                  <input key={data[0]} placeholder={data[1].placeholder} className={`appointm
-                  entInput ${isOdd && index === userDetails.length - 1 ? "fullWidth" : ""}`} l
-                  abel={data[1].placeholder} type={data[1].type} value={data[1].value} name={data[1].name} size="small" />))} */}
+                  
+                  
                   <Box style={{ width: "100%" }}>
+                 
+
                     <Box style={{ display: "grid", gridTemplateColumns: isMobile ? "auto auto" : "auto auto", columnGap: "20px", rowGap: "20px", width: "100%" }}>
-                      {userDetails.map((data, index) => (
-                        <Box key={data[1].name} sx={{ display: "flex", flexDirection: "column" }}>
-                          {data[1].name == "phone" ? <PhoneInput value={"91" + userData.phone.value} 
-                          onChange={handlePhoneInput} autoFormat inputProps={{ required: true }}
-                           inputClass={"borderPhoneInput"} specialLabel="" 
-                           containerClass={"layoutItem"} country={"in"}
-                            defaultErrorMessage="Incorrect WhatsApp Number" /> :
-                             <input style={{ border: data[1].errorStatus ? "1px solid red" : "1px solid #e5e5e5" }}
-                              onChange={handleChange} key={data[0]} placeholder={data[1].placeholder}
-                               className={`carrerInput `} label={data[1].placeholder} 
-                               type={data[1].type} value={data[1].value} name={data[1].name} size="small" />}
-                          {data[1].errorStatus ? <Typography style={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data[1].errorMessage}</Typography> : null}
-                        </Box>
-                      ))}
+                      {" "}
+                      {userDetails.map((data, index) =>
+                        data[1].name == "phone" ? (
+                          <Box sx={{ display: "flex", flexDirection: "column" }}>
+                            <PhoneInput
+                              value={userData.countryCode.value + userData.phone.value}
+                              onChange={handlePhoneInput}
+                              autoFormat
+                              inputProps={{
+                                required: true,
+                                placeholder: "Enter your phone number",
+                              }}
+                              inputClass={"borderPhoneInput"}
+                              specialLabel=""
+                              containerClass={"layoutItem"}
+                              // country={"in"}
+                              defaultErrorMessage="Incorrect WhatsApp Number"
+                            />
+                            {data[1].errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data[1].errorMessage}</Typography> : null}
+                          </Box>
+                        ) : data[1].name !== "countryCode" ? (
+                          <Box sx={{ display: "grid", gridTemplateColumns: "auto" }}>
+                            <input style={{ border: data[1].errorStatus ? "1px solid red" : "none" }} onChange={handleChange} key={data[0]} placeholder={data[1].placeholder} className={`appointmentInput ${data[1].name == "address" ? "fullWidth" : ""}`} label={data[1].placeholder} type={data[1].type} value={data[1].value} name={data[1].name} size="small" />
+                            {data[1].errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data[1].errorMessage}</Typography> : null}
+                          </Box>
+                        ) : null
+                      )}
                     </Box>
                   </Box>
                 </Box>
@@ -333,7 +367,7 @@ export const MobileSideContact = ({ contactInfo }) => {
           </Typography>
           <Typography variant="bod1">
             {" "}
-            <Link to={`tel:${contactInfo?.[0]?.ContactInfo?.[1]?.value}`}>{contactInfo?.[0]?.ContactInfo?.[1]?.value}</Link>
+            <Link to={`tel:18001 024 026`}>18001 024 026</Link>
           </Typography>
         </Box>
         <Box className="text-center shld_ot">
@@ -346,7 +380,7 @@ export const MobileSideContact = ({ contactInfo }) => {
           </Typography>
           <Typography variant="body1">
             {" "}
-            <Link to="tel:18001 024 026"> {contactInfo?.[0]?.EmailInfo?.[0]?.value}</Link>
+            <Link to="tel:18001 024 026">info@cryovault.in</Link>
           </Typography>
         </Box>
         <Box className="text-center shld_ot">
@@ -357,7 +391,7 @@ export const MobileSideContact = ({ contactInfo }) => {
           <Typography variant="body1">
             <span>Location</span>
           </Typography>
-          <Typography variant="body1">{contactInfo?.[0]?.Address}</Typography>
+          <Typography variant="body1">No.:52/65, Swami Vivekananda road, Srinivasa layout, Bagalur, North Bengaluru, Karnataka- 562149.</Typography>
         </Box>
       </Box>
     </Box>
@@ -378,7 +412,7 @@ export const WebSideContact = ({ contactInfo }) => {
             <Typography variant="bod1">
               {" "}
               <Link sx={{ color: "black", fontSize: "2rem" }} to={`tel:${contactInfo?.[0]?.ContactInfo?.[1]?.value}`}>
-                {contactInfo?.[0]?.ContactInfo?.[1]?.value}
+                18001 024 026
               </Link>
             </Typography>
           </Box>
@@ -393,8 +427,7 @@ export const WebSideContact = ({ contactInfo }) => {
             <Typography variant="body1">
               {" "}
               <Link sx={{ color: "black", fontSize: "2rem" }} to="tel:18001 024 026">
-                {contactInfo?.[0]?.EmailInfo?.[0]?.value}
-                {console.log(contactInfo?.EmailInfo?.[0]?.value)}
+                info@cryovault.in
               </Link>
             </Typography>
           </Box>
@@ -407,8 +440,7 @@ export const WebSideContact = ({ contactInfo }) => {
               <span>Location</span>
             </Typography>
             <Typography variant="body1" sx={{ color: "black", fontSize: "2rem" }}>
-              {" "}
-              {contactInfo?.[0]?.Address}
+              No.:52/65, Swami Vivekananda road, Srinivasa layout, Bagalur, North Bengaluru, Karnataka- 562149.
             </Typography>
           </Box>
         </Box>
