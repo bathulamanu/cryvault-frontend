@@ -1,8 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { GetFooter, GetHeaderSocialMediaIcon, addCareerProfileApi, addEmergencyAppointmentApi, 
-  getAccreditationsCertificationApi,uploadSingleFileApi, addFranchiseRequestApi, addInformationKitRequestApi, addReachUSApi, bookAppointmentApi, getBranchContactApi, getCustomerCountApi, getGoogleReviewsApi, getImagesApi, getPageMetaInfoApi, getTestimonialApi, getVideosApi, 
-  getBlogsApi} from "./api";
+import { GetFooter, GetHeaderSocialMediaIcon, addCareerProfileApi, addEmergencyAppointmentApi, getAccreditationsCertificationApi, uploadSingleFileApi, addFranchiseRequestApi, addInformationKitRequestApi, addReachUSApi, bookAppointmentApi, getBranchContactApi, getCustomerCountApi, getGoogleReviewsApi, getImagesApi, getPageMetaInfoApi, getTestimonialApi, getVideosApi, getBlogsApi } from "./api";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
 export const fetchSocialIcons = createAsyncThunk("socialIcons/fetchSocialIcons", async (payload = {}, thunkAPI) => {
   const apiUrl = GetFooter();
@@ -318,8 +317,8 @@ const initialState = {
   loading: false,
   error: null,
   customerCount: [],
-  Certificates:[],
-  blogs:[]
+  Certificates: [],
+  blogs: [],
 };
 const HomeReducer = createSlice({
   name: "home",
@@ -428,9 +427,11 @@ const HomeReducer = createSlice({
       })
       .addCase(bookAppointment.fulfilled, (state, action) => {
         state.loading = false;
+        toast.success(action.payload.message);
       })
       .addCase(bookAppointment.rejected, (state, action) => {
         state.loading = false;
+        toast.error(action.payload.message);
       })
       .addCase(addReachUS.pending, (state) => {
         state.loading = true;
@@ -438,9 +439,11 @@ const HomeReducer = createSlice({
       })
       .addCase(addReachUS.fulfilled, (state, action) => {
         state.loading = false;
+        toast.success(action.payload.message);
       })
       .addCase(addReachUS.rejected, (state, action) => {
         state.loading = false;
+        toast.error(action.payload.message);
       })
       .addCase(addCareerProfile.pending, (state) => {
         state.loading = true;
@@ -448,9 +451,11 @@ const HomeReducer = createSlice({
       })
       .addCase(addCareerProfile.fulfilled, (state, action) => {
         state.loading = false;
+        toast.success(action.payload.message);
       })
       .addCase(addCareerProfile.rejected, (state, action) => {
         state.loading = false;
+        toast.error(action.payload.message);
       })
       .addCase(addFranchiseRequest.pending, (state) => {
         state.loading = true;
@@ -458,9 +463,11 @@ const HomeReducer = createSlice({
       })
       .addCase(addFranchiseRequest.fulfilled, (state, action) => {
         state.loading = false;
+        toast.success(action.payload.message);
       })
       .addCase(addFranchiseRequest.rejected, (state, action) => {
         state.loading = false;
+        toast.error(action.payload.message);
       })
       .addCase(addInformationKitRequest.pending, (state) => {
         state.loading = true;
@@ -468,9 +475,11 @@ const HomeReducer = createSlice({
       })
       .addCase(addInformationKitRequest.fulfilled, (state, action) => {
         state.loading = false;
+        toast.success(action.payload.message);
       })
       .addCase(addInformationKitRequest.rejected, (state, action) => {
         state.loading = false;
+        toast.error(action.payload.message);
       })
       .addCase(getBranchContact.pending, (state) => {
         state.loading = true;
@@ -478,7 +487,7 @@ const HomeReducer = createSlice({
       })
       .addCase(getBranchContact.fulfilled, (state, action) => {
         state.loading = false;
-        state.contactInfo = action.payload.data
+        state.contactInfo = action.payload.data;
       })
       .addCase(getBranchContact.rejected, (state, action) => {
         state.loading = false;
@@ -489,9 +498,11 @@ const HomeReducer = createSlice({
       })
       .addCase(addEmergencyAppointment.fulfilled, (state, action) => {
         state.loading = false;
+        toast.success(action.payload.message);
       })
       .addCase(addEmergencyAppointment.rejected, (state, action) => {
         state.loading = false;
+        toast.error(action.payload.message);
       })
       .addCase(getAccreditationsCertification.pending, (state) => {
         state.loading = true;
@@ -516,9 +527,21 @@ const HomeReducer = createSlice({
       .addCase(getBlogs.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
+      })
+      .addCase(uploadSingleFile.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(uploadSingleFile.fulfilled, (state, action) => {
+        state.loading = false;
+        toast.success(action.payload.message);
+      })
+      .addCase(uploadSingleFile.rejected, (state, action) => {
+        state.loading = false;
+        toast.error(action.payload.message);
       });
   },
 });
-export const { } = HomeReducer.actions;
+export const {} = HomeReducer.actions;
 const homeReducer = HomeReducer.reducer;
 export default homeReducer;

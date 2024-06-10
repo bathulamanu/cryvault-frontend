@@ -89,10 +89,12 @@ const UserReducer = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.loading = false;
         state.userData = action.payload;
+        toast.success(action.payload.message);
       })
       .addCase(login.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
+        toast.error(action.payload.message);
       })
       .addCase(verifyOTP.pending, (state) => {
         state.loading = true;
@@ -110,10 +112,12 @@ const UserReducer = createSlice({
         localStorage.setItem("token", userData?.token);
         sessionStorage.setItem("userData", JSON.stringify(userData));
         state.optid = action.payload.optid;
+        toast.success(action.payload.message);
       })
       .addCase(verifyOTP.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
+        toast.error(action.payload.message);
       })
       .addCase(getCustomerInfo.pending, (state) => {
         state.loading = true;
@@ -130,14 +134,16 @@ const UserReducer = createSlice({
         localStorage.setItem("token", userData?.token);
         sessionStorage.setItem("userData", JSON.stringify(userData));
         state.optid = action.payload.optid;
+        toast.success(action.payload.message);
       })
       .addCase(getCustomerInfo.rejected, (state, action) => {
         state.loading = false;
         state.timerError = action.error.message;
-      })
-      builder.addCase(startTimerWithCallback.fulfilled, (state) => {
-        state.timerError = '';
+        toast.error(action.payload.message);
       });
+    builder.addCase(startTimerWithCallback.fulfilled, (state) => {
+      state.timerError = "";
+    });
   },
 });
 export const { setTimer, decrementTimer, setError, clearError } = UserReducer.actions;
