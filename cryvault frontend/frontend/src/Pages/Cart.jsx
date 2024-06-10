@@ -85,7 +85,7 @@ const Cart = () => {
             <hr />
             <Box className="discount">
               <Typography sx={{ fontSize: "2.5rem", fontWeight: "700" }}>Discount</Typography>
-              <Typography sx={{ fontSize: "2.5rem", fontWeight: "500" }}>{amount} INR</Typography>
+              <Typography sx={{ fontSize: "2.5rem", fontWeight: "500" }}>0 INR</Typography>
             </Box>
             <hr />
 
