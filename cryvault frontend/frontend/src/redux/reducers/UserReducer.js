@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { LoginAPI, OTP, getCustomerInfoApi } from "./api";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
 export const login = createAsyncThunk("login", async (payload, thunkAPI) => {
   const apiUrl = LoginAPI();

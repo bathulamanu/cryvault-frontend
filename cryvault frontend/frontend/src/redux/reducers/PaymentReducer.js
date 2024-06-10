@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { CreateOrderApi, GetCustomerPaymentDetails, GetGenderDetails, LoginAPI, OTP, PaymentStatus, getCityName, getCountryName, getOrderDetailsApi, getPaymentDetailsApi, getStateName } from "./api";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 export const getGenders = createAsyncThunk("gender", async (payload, thunkAPI) => {
   const apiUrl = GetGenderDetails();
