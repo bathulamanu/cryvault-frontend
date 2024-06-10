@@ -1,13 +1,14 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Fade, IconButton, Modal, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { Link, useLocation, useNavigation, useRoutes } from "react-router-dom";
 import useDeviceSize from "../../Utilities/useDeviceSize";
 import { HiOutlinePlayCircle } from "react-icons/hi2";
 import { addReachUS } from "../../redux/reducers/HomePageReducer";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { validateEmail, validatePhoneNumber } from "../Contact/ContactForm";
 import PhoneInput from "react-phone-input-2";
-
+import Backdrop from "@mui/material/Backdrop";
+import CloseIcon from "@mui/icons-material/Close";
 
 const initialState = {
   fullName: {
@@ -59,6 +60,9 @@ const initialState = {
 };
 const ReachUs = () => {
   const router = useLocation();
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   const [userData, setUserData] = useState({
     fullName: {
       value: "",
@@ -178,11 +182,13 @@ const ReachUs = () => {
     dispatch(addReachUS({ payload: dataToSend }));
     setUserData(initialState);
   };
+  const pageInfo = useSelector((state) => state.home.pageInfo);
+  const appointment = pageInfo?.[16]?.[15]?.urlSlug;
   return (
     <>
       <Box sx={{ display: "flex", width: "100%", justifyContent: "center" }} className="edu-cta-banner-area home-gym-cta-wrapper bg-image">
         <Box sx={{ flexDirection: isMobile ? "column" : "row", justifyContent: "start", marginLeft: isMobile ? "0rem" : "15rem", gap: "1rem", width: "100%", textAlign: "center", display: "flex", alignItems: "center" }} className="section-title section-left sal-animate" data-sal-delay="150" data-sal="slide-up" data-sal-duration="800">
-          <Box className="col-lg-4">
+          <Box onClick={handleOpen} className="col-lg-4">
             <Box className="playiocn">
               <Link to="#">
                 <HiOutlinePlayCircle />
@@ -194,7 +200,7 @@ const ReachUs = () => {
               Ready to Get Started?
             </Typography>
             <Typography variant="body1">Make an informed decision.</Typography>
-            <Link to="contactus" className="edu-btn">
+            <Link to={`/${appointment}`} className="edu-btn">
               Book an E-meet today
             </Link>
           </Box>
@@ -217,7 +223,6 @@ const ReachUs = () => {
                     <img src="assets/images/med-img blk heart.svg" width="30" />
                   </Box>
                 </Box>
-             
 
                 <Box style={{ display: "grid", gridTemplateColumns: isMobile ? "auto auto" : "auto auto", columnGap: "20px", rowGap: "20px", width: "100%" }}>
                   {" "}
@@ -261,8 +266,57 @@ const ReachUs = () => {
           </Box>
         </Box>
       </Box>
+      
+      <Modal
+        aria-labelledby="spring-modal-title"
+        aria-describedby="spring-modal-description"
+        open={open}
+        onClose={handleClose}
+        closeAfterTransition
+        slots={{ backdrop: Backdrop }}
+        slotProps={{
+          backdrop: {
+            TransitionComponent: Fade,
+          },
+        }}
+      >
+        <Fade in={open}>
+          <Box sx={style}>
+            <IconButton
+              aria-label="close"
+              onClick={handleClose}
+              sx={{
+                position: "absolute",
+                top: "-130px",
+                right: "-105px",
+                color: "grey.500",
+              }}
+            >
+              <CloseIcon />
+            </IconButton>
+            <img style={{ width: "100%", height: "100%" }} src={"https://i.vimeocdn.com/video/705424222-cdd380e61b15dd946a5378eda0b9be40c6f9d9af142d57916aa6888f03ff8880-d?mw=80&q=85"} alt="Video" />
+          </Box>
+        </Fade>
+      </Modal>
+
+      {/* <Modal>
+        <ModalDialog>
+          <ModalClose />
+          <img style={{ width: "100%", height: "100%" }} src={"https://i.vimeocdn.com/video/705424222-cdd380e61b15dd946a5378eda0b9be40c6f9d9af142d57916aa6888f03ff8880-d?mw=80&q=85"} alt="Video" />
+        </ModalDialog>
+      </Modal> */}
     </>
   );
 };
-
+export const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "80%",
+  height: "70%",
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+};
 export default ReachUs;

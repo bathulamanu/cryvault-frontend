@@ -208,6 +208,8 @@ const BookAppointment = () => {
     dispatch(bookAppointment({ payload: dataToSend }));
     setUserData(initialState);
   };
+  
+
   return (
     <>
       <Box sx={{ marginBottom: "8rem !important", backgroundColor: "white !important" }} className="edu-section-gap edu-about-area about-style-4 position-relative">

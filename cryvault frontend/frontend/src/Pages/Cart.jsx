@@ -116,3 +116,33 @@ export default Cart;
 //     setAmount(storedAmount);
 //   }
 // }, [planName, amount]);
+
+// const handleKeyDown = (e, i) => {
+//     if (e.key == "Enter") {
+//       e.preventDefault();
+
+//       if (i < inputRefs.length - 1) inputRefs[i + 1].current.focus();
+//     }
+//   };
+
+//   <input onKeyDown={(e) => handleKeyDown(e, 0)} ref={inputRefs[0]} type="text" />
+//       <input onKeyDown={(e) => handleKeyDown(e, 1)} ref={inputRefs[1]} type="text" />
+//       <input onKeyDown={(e) => handleKeyDown(e, 2)} ref={inputRefs[2]} type="text" />
+
+//       useEffect(() => {
+//         console.log("vaishnavi");
+//         inputRefs[0].current.focus();
+//       }, []);
+
+//         // const inputRef = useRef(null);
+//   const inputRefs = [useRef(null), useRef(null), useRef(null)];
+
+// const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+
+// const handleResize = () => setWindowWidth(window.innerWidth);
+
+// useEffect(() => {
+//   window.addEventListener("resize", handleResize);
+
+//   // return () => window.removeEventListener('resize',handleResize)
+// }, []);
