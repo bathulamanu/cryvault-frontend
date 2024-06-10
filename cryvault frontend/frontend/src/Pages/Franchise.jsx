@@ -7,6 +7,7 @@ import { addFranchiseRequest } from "../redux/reducers/HomePageReducer";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import "./Franchise.css";
+import { validateEmail, validatePhoneNumber } from "../Components/Contact/ContactForm";
 
 const initialState = {
   firstName: {
@@ -69,6 +70,11 @@ const initialState = {
     type: "text",
     name: "hospitalName",
     id: "hospitalName",
+  },
+  countryCode: {
+    value: "",
+    name: "countryCode",
+    id: "countryCode",
   },
 };
 const Franchise = () => {
@@ -155,6 +161,11 @@ const Franchise = () => {
       name: "comment",
       id: "comment",
     },
+    countryCode: {
+      value: "",
+      name: "countryCode",
+      id: "countryCode",
+    },
   });
   const [officeSpace, setOfficeSpace] = useState("");
   const [officeSpaceError, setOfficeSpaceError] = useState({ errorStatus: false, errorMessage: "" });
@@ -174,13 +185,15 @@ const Franchise = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log( name, value )
+    console.log(name, value);
     setUserData((prevData) => ({
       ...prevData,
       [name]: { ...prevData[name], value: value, errorStatus: false, errorMessage: "" },
     }));
   };
   const handleSubmit = () => {
+    const isMobileInvalid = !validatePhoneNumber(userData.phoneNumber.value, String(userData.countryCode.value) || "91");
+
     if (!userData.firstName.value) {
       setUserData((prevData) => ({
         ...prevData,
@@ -203,18 +216,30 @@ const Franchise = () => {
       }));
       return;
     }
-    if (!userData.phoneNumber.value) {
+    // if (!userData.phoneNumber.value) {
+    //   setUserData((prevData) => ({
+    //     ...prevData,
+    //     phoneNumber: {
+    //       ...prevData.phoneNumber,
+    //       errorStatus: true,
+    //       errorMessage: "Phone Number is required.",
+    //     },
+    //   }));
+    //   return;
+    // }
+
+    if (isMobileInvalid) {
       setUserData((prevData) => ({
         ...prevData,
         phoneNumber: {
           ...prevData.phoneNumber,
           errorStatus: true,
-          errorMessage: "Phone Number is required.",
+          errorMessage: "Enter Valid Phone Number",
         },
       }));
       return;
     }
-    if (!userData.email.value) {
+    if (!validateEmail(userData.email.value)) {
       setUserData((prevData) => ({
         ...prevData,
         email: {
@@ -251,7 +276,7 @@ const Franchise = () => {
       setOfficeSpaceError({ errorStatus: true, errorMessage: "Office Space is required." });
       return;
     }
-   
+
     if (!setExperienceInStemCellBankingError) {
       setExperienceInStemCellBankingError({ errorStatus: true, errorMessage: "Experience In Stem Cell Banking is required." });
       return;
@@ -287,11 +312,12 @@ const Franchise = () => {
   };
 
   const handlePhoneInput = (value, country) => {
-    const country_code = "91";
+    const country_code = country;
     const phoneNumber = value.slice(country_code.length);
     setUserData((prevData) => ({
       ...prevData,
       phoneNumber: { ...prevData.phoneNumber, value: phoneNumber, errorStatus: false, errorMessage: "" },
+      countryCode: { ...prevData.countryCode, value: country_code, errorStatus: false, errorMessage: "" },
     }));
   };
   return (
@@ -342,8 +368,8 @@ const Franchise = () => {
                     <Box style={{ display: "grid", gridTemplateColumns: isMobile ? "auto auto" : "auto auto", columnGap: "20px", rowGap: "20px", width: "100%" }}>
                       {userDetails.map((data, index) => (
                         <Box key={data[1].name} sx={{ display: "flex", flexDirection: "column" }}>
-                          {data[1].name !== "comment" && data[1].name !== "professionalExperience" ? <Typography sx={{ marginBottom: "10px !important", fontWeight: "700", fontSize: "1.5rem", marginLeft: "2rem" }}>{data[1].placeholder}</Typography> : null}
-                          {data[1].name === "phoneNumber" ? <PhoneInput value={"91" + userData.phoneNumber.value} onChange={handlePhoneInput} autoFormat inputProps={{ required: true }} inputClass={"borderPhoneInput"} specialLabel="" containerClass={"layoutItem"} country={"in"} defaultErrorMessage="Incorrect WhatsApp Number" /> : data[1].name !== "comment" && data[1].name !== "professionalExperience" ? <input style={{ border: data[1].errorStatus ? "1px solid red" : "1px solid #e5e5e5" }} onChange={handleChange} key={data[0]} placeholder={data[1].placeholder} className={`carrerInput`} label={data[1].placeholder} type={data[1].type} value={data[1].value} name={data[1].name} size="small" /> : null}
+                          {data[1].name !== "comment" && data[1].name !== "professionalExperience" && data[1].name !== "countryCode" ? <Typography sx={{ marginBottom: "10px !important", fontWeight: "700", fontSize: "1.5rem", marginLeft: "2rem" }}>{data[1].placeholder}</Typography> : null}
+                          {data[1].name === "phoneNumber" ? <PhoneInput value={userData.countryCode.value + userData.phoneNumber.value} onChange={handlePhoneInput} autoFormat inputProps={{ required: true }} inputClass={"borderPhoneInput"} specialLabel="" containerClass={"layoutItem"} country={"in"} defaultErrorMessage="Incorrect WhatsApp Number" /> : data[1].name !== "comment" && data[1].name !== "professionalExperience" && data[1].name !== "countryCode" ? <input style={{ border: data[1].errorStatus ? "1px solid red" : "1px solid #e5e5e5" }} onChange={handleChange} key={data[0]} placeholder={data[1].placeholder} className={`carrerInput`} label={data[1].placeholder} type={data[1].type} value={data[1].value} name={data[1].name} size="small" /> : null}
                           {data[1].errorStatus ? <Typography style={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data[1].errorMessage}</Typography> : null}
                         </Box>
                       ))}
@@ -354,7 +380,7 @@ const Franchise = () => {
                     <Typography sx={{ marginBottom: "10px !important", fontWeight: "700", fontSize: "1.5rem", marginLeft: "2rem" }}>Office Space *</Typography>
 
                     <Box>
-                      <Box className="d-flex">
+                      <Box sx={{marginLeft:"2rem"}} className="d-flex">
                         <Box className="form-group mb-0 mr-4">
                           <Box className="edu-form-check">
                             <input type="radio" id="yes" name="officeSpace" value="true" checked={officeSpace} onChange={handleOfficeSpaceChange} />
@@ -374,13 +400,13 @@ const Franchise = () => {
                   </Box>
                   <Box className="form-group col-md-12">
                     <Typography sx={{ marginBottom: "10px !important", fontWeight: "700", fontSize: "1.5rem", marginLeft: "2rem" }}>Professional Experience *</Typography>
-                    <input onChange={handleChange} value={userData?.professionalExperience?.value} name="professionalExperience" type="text" id="professionalExperience" />
+                    <input style={{marginLeft:"2rem"}} onChange={handleChange} value={userData?.professionalExperience?.value} name="professionalExperience" type="text" id="professionalExperience" />
                   </Box>
 
                   <Box className="form-group col-md-12">
                     <Typography sx={{ marginBottom: "10px !important", fontWeight: "700", fontSize: "1.5rem", marginLeft: "2rem" }}>Experience in Stem Cell Banking *</Typography>
 
-                    <Box className="d-flex">
+                    <Box sx={{marginLeft:"2rem"}} className="d-flex">
                       <Box className="form-group mb-0 mr-4">
                         <Box className="edu-form-check">
                           <input type="radio" id="yes" name="officeSpace" value="true" checked={experienceInStemCellBanking} onChange={handleexperienceInStemCellBankingChange} />
@@ -398,7 +424,7 @@ const Franchise = () => {
 
                   <Box className="form-group col-md-12">
                     <Typography sx={{ marginBottom: "10px !important", fontWeight: "700", fontSize: "1.5rem", marginLeft: "2rem" }}>Comment</Typography>
-                    <textarea onChange={handleChange} value={userData?.comment?.value} name="comment" style={{ fontSize: "15px", height: "150px" }} id="comment" cols="30" rows="6" placeholder="Type your message"></textarea>
+                    <textarea  onChange={handleChange} value={userData?.comment?.value} name="comment" style={{ fontSize: "15px", height: "150px" ,marginLeft:"2rem"}} id="comment" cols="30" rows="6" placeholder="Type your message"></textarea>
                   </Box>
                   <Button onClick={handleSubmit} variant="contained" sx={{ fontSize: "2rem !important", textTransform: "none", backgroundColor: "#D5008D", color: "white", fontWeight: "700", width: isMobile ? "40%" : "100%", whiteSpace: "nowrap", padding: "15px 30px", borderRadius: "40px", marginTop: "3rem" }} size="lg">
                     Submit

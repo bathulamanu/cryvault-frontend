@@ -1,5 +1,4 @@
-import { Box, Breadcrumbs, Button, FormControl, FormControlLabel, IconButton, Link, Radio, RadioGroup, TextField, Typography }
- from "@mui/material";
+import { Box, Breadcrumbs, Button, FormControl, FormControlLabel, IconButton, Link, Radio, RadioGroup, TextField, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { FaCloudUploadAlt } from "react-icons/fa";
 import useDeviceSize from "../Utilities/useDeviceSize";
@@ -8,6 +7,7 @@ import "./Carrer.css";
 import { addCareerProfile, uploadSingleFile } from "../redux/reducers/HomePageReducer";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
+import { validateEmail, validatePhoneNumber } from "../Components/Contact/ContactForm";
 const initialState = {
   firstName: {
     value: "",
@@ -89,6 +89,11 @@ const initialState = {
     type: "file",
     name: "resume",
     id: "resume",
+  },
+  countryCode: {
+    value: "",
+    name: "countryCode",
+    id: "countryCode",
   },
 };
 
@@ -178,6 +183,11 @@ const Carrers = () => {
       name: "resume",
       id: "resume",
     },
+    countryCode: {
+      value: "",
+      name: "countryCode",
+      id: "countryCode",
+    },
   });
   const radioOptions = [
     {
@@ -226,9 +236,13 @@ const Carrers = () => {
   const handleRadioChange = (e) => {
     const { name, value } = e.target;
     setPrefixValue(value);
+    setPrefixError({ errorStatus: false, errorMessage: "" });
+
   };
 
   const handleSubmit = () => {
+    const isMobileInvalid = !validatePhoneNumber(userData.phoneNumber.value, String(userData.countryCode.value) || "91");
+
     const dataToSend = {
       firstName: userData.firstName.value,
       lastName: userData.lastName.value,
@@ -267,18 +281,18 @@ const Carrers = () => {
       }));
       return;
     }
-    if (!userData.phoneNumber.value) {
+    if (isMobileInvalid) {
       setUserData((prevData) => ({
         ...prevData,
         phoneNumber: {
           ...prevData.phoneNumber,
           errorStatus: true,
-          errorMessage: "Phone Number is required.",
+          errorMessage: "Enter Valid Phone Number",
         },
       }));
       return;
     }
-    if (!userData.email.value) {
+    if (!validateEmail(userData.email.value)) {
       setUserData((prevData) => ({
         ...prevData,
         email: {
@@ -340,11 +354,12 @@ const Carrers = () => {
   const pageInfo = useSelector((state) => state.home.pageInfo);
   const url = `https://flyingbyts.s3.ap-south-2.amazonaws.com/${pageInfo?.[7]?.[7]?.pageHeaderImage}`;
   const handlePhoneInput = (value, country) => {
-    const country_code = "91";
+    const country_code = country;
     const phoneNumber = value.slice(country_code.length);
     setUserData((prevData) => ({
       ...prevData,
       phoneNumber: { ...prevData.phoneNumber, value: phoneNumber, errorStatus: false, errorMessage: "" },
+      countryCode: { ...prevData.countryCode, value: country_code, errorStatus: false, errorMessage: "" },
     }));
   };
   return (
@@ -409,7 +424,7 @@ const Carrers = () => {
                         </Box>
                       ))}
                     </Box>
-                    {prefixError.errorStatus ? <Typography style={{ color: "red", fontSize: "1.5rem", }}>{prefixError.errorMessage}</Typography> : null}
+                    {prefixError.errorStatus ? <Typography style={{ color: "red", fontSize: "1.5rem" }}>{prefixError.errorMessage}</Typography> : null}
                   </Box>
 
                   <Box style={{ width: "100%" }}>
@@ -419,7 +434,27 @@ const Carrers = () => {
                           {data[1].name == "area" ? <Typography sx={{ marginBottom: "10px !important", fontWeight: "700", fontSize: "1.5rem", marginLeft: "2rem" }}>Applying for ( Area of interest ) *</Typography> : null}
                           {data[1].name == "resume" ? <Typography sx={{ marginBottom: "10px !important", fontWeight: "700", fontSize: "1.5rem", marginLeft: "2rem" }}>Attach your Resume Here*</Typography> : null}
 
-                          {data[1].name == "phoneNumber" ? <PhoneInput value={"91" + userData.phoneNumber.value} onChange={handlePhoneInput} autoFormat inputProps={{ required: true }} inputClass={"borderPhoneInput"} specialLabel="" containerClass={"layoutItem"} country={"in"} defaultErrorMessage="Incorrect WhatsApp Number" /> : <input style={{ border: data[1].errorStatus ? "1px solid red" : "1px solid #e5e5e5" }} onChange={handleChange} key={data[0]} placeholder={data[1].placeholder} className={`carrerInput `} label={data[1].placeholder} type={data[1].type} value={data[1].value} name={data[1].name} size="small" />}
+                          {data[1].name == "phoneNumber" ? (
+                            <Box sx={{ display: "flex", flexDirection: "column" }}>
+                              <PhoneInput
+                                value={userData.countryCode.value + userData.phoneNumber.value}
+                                onChange={handlePhoneInput}
+                                autoFormat
+                                inputProps={{
+                                  required: true,
+                                  placeholder: "Enter your phone number",
+                                }}
+                                inputClass={"borderPhoneInput"}
+                                specialLabel=""
+                                containerClass={"layoutItem"}
+                                // country={"in"}
+                                defaultErrorMessage="Incorrect WhatsApp Number"
+                              />
+                              {/* {data[1].errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data[1].errorMessage}</Typography> : null} */}
+                            </Box>
+                          ) : data[1].name !== "countryCode" ?  (
+                            <input style={{ border: data[1].errorStatus ? "1px solid red" : "1px solid #e5e5e5" }} onChange={handleChange} key={data[0]} placeholder={data[1].placeholder} className={`carrerInput `} label={data[1].placeholder} type={data[1].type} value={data[1].value} name={data[1].name} size="small" />
+                          ) : null}
                           {data[1].errorStatus ? <Typography style={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data[1].errorMessage}</Typography> : null}
                         </Box>
                       ))}

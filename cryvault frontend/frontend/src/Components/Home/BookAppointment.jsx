@@ -4,7 +4,8 @@ import useDeviceSize from "../../Utilities/useDeviceSize";
 import { useDispatch } from "react-redux";
 import { bookAppointment } from "../../redux/reducers/HomePageReducer";
 import PhoneInput from "react-phone-input-2";
-import './Home.css'
+import "./Home.css";
+import { validateEmail, validatePhoneNumber } from "../Contact/ContactForm";
 const initialState = {
   firstName: {
     value: "",
@@ -134,6 +135,8 @@ const BookAppointment = () => {
   };
 
   const handleSubmit = () => {
+    const isMobileInvalid = !validatePhoneNumber(userData.phoneNumber.value, String(userData.countryCode.value) || "91");
+
     if (!userData.firstName.value) {
       setUserData((prevData) => ({
         ...prevData,
@@ -156,7 +159,7 @@ const BookAppointment = () => {
       }));
       return;
     }
-    if (!userData.email.value) {
+    if (!validateEmail(userData.email.value)) {
       setUserData((prevData) => ({
         ...prevData,
         email: {
@@ -178,12 +181,22 @@ const BookAppointment = () => {
       }));
       return;
     }
-
+    if (isMobileInvalid) {
+      setUserData((prevData) => ({
+        ...prevData,
+        phoneNumber: {
+          ...prevData.phoneNumber,
+          errorStatus: true,
+          errorMessage: "Enter Valid Phone Number",
+        },
+      }));
+      return;
+    }
     const dataToSend = {
       firstName: userData.firstName.value,
       lastName: userData.lastName.value,
       email: userData.email.value,
-      countryCode:"+91",
+      countryCode: "+91",
       phoneNumber: userData.phoneNumber.value,
       expectedDeliveryDate: userData.expectedDeliveryDate.value,
       appointmentDate: userData.appointmentDate.value,
@@ -222,23 +235,26 @@ const BookAppointment = () => {
                           {data[1].errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data[1].errorMessage}</Typography> : null}
                         </Box>
                       ) : data[1].name == "phoneNumber" ? (
-                        <PhoneInput
-                          value={userData.countryCode.value+ userData.phoneNumber.value}
-                          onChange={handlePhoneInput}
-                          autoFormat
-                          inputProps={{
-                            required: true,
-                            placeholder: "Enter your phone number",
-                          }}
-                          inputClass={"borderPhoneInput"}
-                          specialLabel=""
-                          containerClass={"layoutItem"}
-                          // country={"in"}
-                          defaultErrorMessage="Incorrect WhatsApp Number"
-                        />
-                      ) : data[1].name !== "countryCode" ? (
                         <Box sx={{ display: "flex", flexDirection: "column" }}>
-                          <input style={{ border: data[1].errorStatus ? "1px solid red" : "none" }} onChange={handleChange} key={data[0]} placeholder={data[1].placeholder} className={`appointmentInput ${isOdd && index === userDetails.length - 1 ? "fullWidth" : ""}`} label={data[1].placeholder} type={data[1].type} value={data[1].value} name={data[1].name} size="small" />
+                          <PhoneInput
+                            value={userData.countryCode.value + userData.phoneNumber.value}
+                            onChange={handlePhoneInput}
+                            autoFormat
+                            inputProps={{
+                              required: true,
+                              placeholder: "Enter your phone number",
+                            }}
+                            inputClass={"borderPhoneInput"}
+                            specialLabel=""
+                            containerClass={"layoutItem"}
+                            // country={"in"}
+                            defaultErrorMessage="Incorrect WhatsApp Number"
+                          />
+                          {data[1].errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data[1].errorMessage}</Typography> : null}
+                        </Box>
+                      ) : data[1].name !== "countryCode" ? (
+                        <Box sx={{ display: "grid", gridTemplateColumns: "auto", width: data[1].name == "address" ? "200%" : "100%" }}>
+                          <input style={{ border: data[1].errorStatus ? "1px solid red" : "none" }} onChange={handleChange} key={data[0]} placeholder={data[1].placeholder} className={`appointmentInput ${data[1].name == "address" ? "fullWidth" : ""}`} label={data[1].placeholder} type={data[1].type} value={data[1].value} name={data[1].name} size="small" />
                           {data[1].errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data[1].errorMessage}</Typography> : null}
                         </Box>
                       ) : null
@@ -247,7 +263,7 @@ const BookAppointment = () => {
                   <Box className="form-group col-12">
                     <iframe title="reCAPTCHA" width="304" height="78" role="presentation" name="a-rax7gaw23nj6" frameBorder="0" scrolling="no" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox allow-storage-access-by-user-activation" src="https://www.google.com/recaptcha/api2/anchor?ar=2&amp;k=6LfPixwaAAAAABFFuOob52Mh463Oy3rZEtYUr4oJ&amp;co=aHR0cHM6Ly93d3cuY3J5b3ZhdWx0LmluOjQ0Mw..&amp;hl=en&amp;v=Hq4JZivTyQ7GP8Kt571Tzodj&amp;size=normal&amp;cb=oh1vpc5nfiib" data-gtm-yt-inspected-6="true"></iframe>
                   </Box>
-                 
+
                   <Button onClick={handleSubmit} sx={{ fontWeight: "600", textTransform: "none" }} variant="contained" className="appointmentBtn">
                     Make An Appointment
                   </Button>

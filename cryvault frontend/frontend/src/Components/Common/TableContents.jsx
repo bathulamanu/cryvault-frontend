@@ -29,7 +29,7 @@ const TableContents = () => {
                   <ListItem key={item.text} disablePadding>
                     <ListItemButton onClick={() => navigate(item.path)}>
                       <ListItemText >
-                        <Typography sx={{ fontSize: "2rem !important" }}>{item.text}</Typography>
+                        <Typography sx={{ fontSize: "2rem !important",color:"#7a006e" }}>{item.text}</Typography>
                       </ListItemText>
                     </ListItemButton>
                   </ListItem>
