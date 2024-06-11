@@ -6,6 +6,7 @@ import { bookAppointment } from "../../redux/reducers/HomePageReducer";
 import PhoneInput from "react-phone-input-2";
 import "./Home.css";
 import { validateEmail, validatePhoneNumber } from "../Contact/ContactForm";
+import ReCAPTCHA from 'react-google-recaptcha';
 const initialState = {
   firstName: {
     value: "",
@@ -111,7 +112,15 @@ const BookAppointment = () => {
   const userDetails = Object.entries(userData);
   const isOdd = userDetails.length % 2 !== 0;
   const dispatch = useDispatch();
+  const [recaptchaToken, setRecaptchaToken] = useState(null);
+  const RECAPTCHA_SITE_KEY = "6Lf4RPUpAAAAAOu9M51NaHQlLxl8df7ldXf9pnS_"// '6LcH9vQpAAAAALU7NNT4DMjqI122KWx53O0-rCk2';
 
+
+
+  const handleRecaptchaChange = (token) => {
+    setRecaptchaToken(token);
+  };
+  
   const handlePhoneInput = (value, country) => {
     const country_code = country;
     const phoneNumber = value.slice(country_code.length);
@@ -261,7 +270,13 @@ const BookAppointment = () => {
                     )}
                   </Box>
                   <Box className="form-group col-12">
-                    <iframe title="reCAPTCHA" width="304" height="78" role="presentation" name="a-rax7gaw23nj6" frameBorder="0" scrolling="no" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox allow-storage-access-by-user-activation" src="https://www.google.com/recaptcha/api2/anchor?ar=2&amp;k=6LfPixwaAAAAABFFuOob52Mh463Oy3rZEtYUr4oJ&amp;co=aHR0cHM6Ly93d3cuY3J5b3ZhdWx0LmluOjQ0Mw..&amp;hl=en&amp;v=Hq4JZivTyQ7GP8Kt571Tzodj&amp;size=normal&amp;cb=oh1vpc5nfiib" data-gtm-yt-inspected-6="true"></iframe>
+                    {/* <iframe title="reCAPTCHA" width="304" height="78" role="presentation" name="a-rax7gaw23nj6" frameBorder="0" scrolling="no" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox allow-storage-access-by-user-activation" src="https://www.google.com/recaptcha/api2/anchor?ar=2&amp;k=6LfPixwaAAAAABFFuOob52Mh463Oy3rZEtYUr4oJ&amp;co=aHR0cHM6Ly93d3cuY3J5b3ZhdWx0LmluOjQ0Mw..&amp;hl=en&amp;v=Hq4JZivTyQ7GP8Kt571Tzodj&amp;size=normal&amp;cb=oh1vpc5nfiib" data-gtm-yt-inspected-6="true"></iframe> */}
+                    {/* <Box sx={{ my: 2 }}> */}
+                    <ReCAPTCHA
+                      sitekey={RECAPTCHA_SITE_KEY}
+                      onChange={handleRecaptchaChange}
+                    />
+                    {/* </Box> */}
                   </Box>
 
                   <Button onClick={handleSubmit} sx={{ fontWeight: "600", textTransform: "none" }} variant="contained" className="appointmentBtn">
