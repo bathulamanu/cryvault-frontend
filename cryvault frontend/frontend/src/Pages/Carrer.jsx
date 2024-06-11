@@ -8,6 +8,8 @@ import { addCareerProfile, uploadSingleFile } from "../redux/reducers/HomePageRe
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { validateEmail, validatePhoneNumber } from "../Components/Contact/ContactForm";
+import { uploadSingleFileApi } from '../redux/reducers/api'
+import axios from "axios";
 const initialState = {
   firstName: {
     value: "",
@@ -215,17 +217,28 @@ const Carrers = () => {
       name: "PrefixValue",
     },
   ];
+  const [file, setFile] = useState("");
   const userDetails = Object.entries(userData);
   const dispatch = useDispatch();
+  const fileUpload = useSelector((state) => state.home.fileUpload);
 
-  const handleChange = (e) => {
+  const handleChange = async (e) => {
     const { name, value } = e.target;
     if (name == "resume") {
       setUserData((prevData) => ({
         ...prevData,
         [name]: { ...prevData[name], value: e?.target?.files?.[0]?.file, errorStatus: false, errorMessage: "" },
       }));
-      dispatch(uploadSingleFile({ payload: { file: e?.target?.files?.[0]?.file, folder: "CareerResume" } }));
+      const apiUrl = uploadSingleFileApi();
+      const headers = {
+        'Content-Type': 'multipart/form-data'
+      };
+      const formData = new FormData();
+      formData.append('file', e?.target?.files?.[0]);
+      formData.append('folder', "CareerResume");
+      const response = await axios.post(apiUrl, formData, headers);
+      setFile(response?.data?.data?.key);
+
     } else {
       setUserData((prevData) => ({
         ...prevData,
@@ -241,20 +254,13 @@ const Carrers = () => {
   };
 
   const handleSubmit = () => {
-    const isMobileInvalid = !validatePhoneNumber(userData.phoneNumber.value, String(userData.countryCode.value) || "91");
 
-    const dataToSend = {
-      firstName: userData.firstName.value,
-      lastName: userData.lastName.value,
-      email: userData.email.value,
-      phoneNumber: userData.phoneNumber.value,
-      city: userData.city.value,
-      state: userData.state.value,
-      area: userData.area.value,
-      resume: userData.resume.value,
-      countryCode: "+91",
-      prefix: PrefixValue,
-    };
+    let isMobileInvalid;
+    if (userData.phoneNumber.value || userData.countryCode.value) {
+      isMobileInvalid = !validatePhoneNumber(userData.phoneNumber.value, String(userData.countryCode.value) || "91");
+    }
+
+
     if (!PrefixValue) {
       setPrefixError({ errorStatus: true, errorMessage: "Prefix is required." });
       return;
@@ -277,6 +283,17 @@ const Carrers = () => {
           ...prevData.lastName,
           errorStatus: true,
           errorMessage: "Last Name is required.",
+        },
+      }));
+      return;
+    }
+    if (!userData.phoneNumber.value) {
+      setUserData((prevData) => ({
+        ...prevData,
+        phoneNumber: {
+          ...prevData.phoneNumber,
+          errorStatus: true,
+          errorMessage: "phone Number is required.",
         },
       }));
       return;
@@ -336,7 +353,7 @@ const Carrers = () => {
       }));
       return;
     }
-    if (!userData.resume.value) {
+    if (!file) {
       setUserData((prevData) => ({
         ...prevData,
         resume: {
@@ -348,9 +365,33 @@ const Carrers = () => {
       return;
     }
 
+    const dataToSend = {
+      firstName: userData.firstName.value,
+      lastName: userData.lastName.value,
+      email: userData.email.value,
+      phoneNumber: userData.phoneNumber.value,
+      city: userData.city.value,
+      state: userData.state.value,
+      area: userData.area.value,
+      resume: file,//userData.resume.value,
+      countryCode: "+91",
+      prefix: PrefixValue,
+    };
+
+
     dispatch(addCareerProfile({ payload: dataToSend }));
     setUserData(initialState);
   };
+
+  // const fileKey = () => {
+  //   console.log("fileUpload ", fileUpload);
+  //   const name = 'resume'
+  //   setUserData((prevData) => ({
+  //     ...prevData,
+  //     [name]: { ...prevData[name], value: fileUpload.key, errorStatus: false, errorMessage: "" },
+  //   }));
+  // };
+
   const pageInfo = useSelector((state) => state.home.pageInfo);
   const url = `https://flyingbyts.s3.ap-south-2.amazonaws.com/${pageInfo?.[7]?.[7]?.pageHeaderImage}`;
   const handlePhoneInput = (value, country) => {
@@ -452,7 +493,7 @@ const Carrers = () => {
                               />
                               {/* {data[1].errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data[1].errorMessage}</Typography> : null} */}
                             </Box>
-                          ) : data[1].name !== "countryCode" ?  (
+                          ) : data[1].name !== "countryCode" ? (
                             <input style={{ border: data[1].errorStatus ? "1px solid red" : "1px solid #e5e5e5" }} onChange={handleChange} key={data[0]} placeholder={data[1].placeholder} className={`carrerInput `} label={data[1].placeholder} type={data[1].type} value={data[1].value} name={data[1].name} size="small" />
                           ) : null}
                           {data[1].errorStatus ? <Typography style={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data[1].errorMessage}</Typography> : null}

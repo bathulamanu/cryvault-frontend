@@ -1,4 +1,4 @@
-const BASE_URL = "http://18.61.70.225:4000";
+const BASE_URL =  "http://18.61.70.225:4000";
 
 export const LoginAPI = () => {
   return `${BASE_URL}/flyingbyts/api/user/customerRegisterOrLogin`;
@@ -113,7 +113,7 @@ export const GetAdditonalServicesDetailsApi = () => {
 };
 
 export const uploadSingleFileApi = () => {
-  return `${BASE_URL}/flyingbyts/api/user/upload`;
+  return `${BASE_URL}/flyingbyts/api/user/resumeUpload`;
 };
 
 export const getAccreditationsCertificationApi = () => {

@@ -1,5 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { GetFooter, GetHeaderSocialMediaIcon, addCareerProfileApi, addEmergencyAppointmentApi, getAccreditationsCertificationApi, uploadSingleFileApi, addFranchiseRequestApi, addInformationKitRequestApi, addReachUSApi, bookAppointmentApi, getBranchContactApi, getCustomerCountApi, getGoogleReviewsApi, getImagesApi, getPageMetaInfoApi, getTestimonialApi, getVideosApi, getBlogsApi } from "./api";
+import { GetFooter, GetHeaderSocialMediaIcon, addCareerProfileApi, addEmergencyAppointmentApi,
+   getAccreditationsCertificationApi,  addFranchiseRequestApi, 
+   addInformationKitRequestApi, addReachUSApi, bookAppointmentApi, getBranchContactApi,
+    getCustomerCountApi, getGoogleReviewsApi, getImagesApi, getPageMetaInfoApi, getTestimonialApi,
+     getVideosApi, getBlogsApi } from "./api";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -251,21 +255,8 @@ export const addEmergencyAppointment = createAsyncThunk("addEmergencyAppointment
     return thunkAPI.rejectWithValue(error);
   }
 });
-export const uploadSingleFile = createAsyncThunk("uploadSingleFile", async (payload = {}, thunkAPI) => {
-  const apiUrl = uploadSingleFileApi();
-  try {
-    const response = await axios.post(apiUrl, payload.payload);
-    const { ok, problem, data } = response;
-    if (data) {
-      if (payload?.callback) payload.callback();
-      return data;
-    } else {
-      return thunkAPI.rejectWithValue({ data, problem });
-    }
-  } catch (error) {
-    return thunkAPI.rejectWithValue(error);
-  }
-});
+
+
 export const getAccreditationsCertification = createAsyncThunk("getAccreditationsCertification", async (payload = {}, thunkAPI) => {
   const apiUrl = getAccreditationsCertificationApi();
   const token = sessionStorage.getItem("token");
@@ -319,6 +310,7 @@ const initialState = {
   customerCount: [],
   Certificates: [],
   blogs: [],
+  fileUpload: []
 };
 const HomeReducer = createSlice({
   name: "home",
@@ -528,20 +520,9 @@ const HomeReducer = createSlice({
         state.loading = false;
         state.error = action.error.message;
       })
-      .addCase(uploadSingleFile.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(uploadSingleFile.fulfilled, (state, action) => {
-        state.loading = false;
-        toast.success(action.payload.message);
-      })
-      .addCase(uploadSingleFile.rejected, (state, action) => {
-        state.loading = false;
-        toast.error(action.payload.message);
-      });
+
   },
 });
-export const {} = HomeReducer.actions;
+export const { } = HomeReducer.actions;
 const homeReducer = HomeReducer.reducer;
 export default homeReducer;

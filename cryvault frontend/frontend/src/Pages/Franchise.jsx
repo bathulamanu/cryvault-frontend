@@ -192,7 +192,10 @@ const Franchise = () => {
     }));
   };
   const handleSubmit = () => {
-    const isMobileInvalid = !validatePhoneNumber(userData.phoneNumber.value, String(userData.countryCode.value) || "91");
+    let isMobileInvalid;
+    if (userData.phoneNumber.value || userData.countryCode.value) {
+      isMobileInvalid = !validatePhoneNumber(userData.phoneNumber.value, String(userData.countryCode.value) || "91");
+    }
 
     if (!userData.firstName.value) {
       setUserData((prevData) => ({
@@ -216,17 +219,17 @@ const Franchise = () => {
       }));
       return;
     }
-    // if (!userData.phoneNumber.value) {
-    //   setUserData((prevData) => ({
-    //     ...prevData,
-    //     phoneNumber: {
-    //       ...prevData.phoneNumber,
-    //       errorStatus: true,
-    //       errorMessage: "Phone Number is required.",
-    //     },
-    //   }));
-    //   return;
-    // }
+    if (!userData.phoneNumber.value) {
+      setUserData((prevData) => ({
+        ...prevData,
+        phoneNumber: {
+          ...prevData.phoneNumber,
+          errorStatus: true,
+          errorMessage: "Phone Number is required.",
+        },
+      }));
+      return;
+    }
 
     if (isMobileInvalid) {
       setUserData((prevData) => ({

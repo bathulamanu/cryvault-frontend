@@ -104,6 +104,19 @@ const initialState = {
     id: "address",
   },
 };
+const initialrecaptcha = {
+  recaptcha: {
+    value: "",
+    placeholder: "recaptcha",
+    errorStatus: false,
+    errorMessage: "",
+    icon: "",
+    type: "text",
+    name: "recaptcha",
+    id: "recaptcha",
+  }
+}
+
 const BookAppointment = () => {
   const [userData, setUserData] = useState(initialState);
   const isMobile = useDeviceSize() === "xs";
@@ -112,15 +125,14 @@ const BookAppointment = () => {
   const userDetails = Object.entries(userData);
   const isOdd = userDetails.length % 2 !== 0;
   const dispatch = useDispatch();
-  const [recaptchaToken, setRecaptchaToken] = useState(null);
-  const RECAPTCHA_SITE_KEY = "6Lf4RPUpAAAAAOu9M51NaHQlLxl8df7ldXf9pnS_"// '6LcH9vQpAAAAALU7NNT4DMjqI122KWx53O0-rCk2';
-
+  const [recaptchaToken, setRecaptchaToken] = useState(initialrecaptcha);
+  const RECAPTCHA_SITE_KEY = "6Lf4RPUpAAAAAOu9M51NaHQlLxl8df7ldXf9pnS_"
 
 
   const handleRecaptchaChange = (token) => {
-    setRecaptchaToken(token);
+    setRecaptchaToken({ ...recaptchaToken, ["recaptcha"]: { ...recaptchaToken["recaptcha"], value: token, errorStatus: false, errorMessage: "" } });
   };
-  
+
   const handlePhoneInput = (value, country) => {
     const country_code = country;
     const phoneNumber = value.slice(country_code.length);
@@ -144,7 +156,11 @@ const BookAppointment = () => {
   };
 
   const handleSubmit = () => {
-    const isMobileInvalid = !validatePhoneNumber(userData.phoneNumber.value, String(userData.countryCode.value) || "91");
+    let isMobileInvalid;
+    if (userData.phoneNumber.value || userData.countryCode.value) {
+      isMobileInvalid = !validatePhoneNumber(userData.phoneNumber.value, String(userData.countryCode.value) || "91");
+    }
+
 
     if (!userData.firstName.value) {
       setUserData((prevData) => ({
@@ -201,6 +217,17 @@ const BookAppointment = () => {
       }));
       return;
     }
+    if (!recaptchaToken.recaptcha.value) {
+      setRecaptchaToken((prevData) => ({
+        ...prevData,
+        "recaptcha": {
+          ...prevData.recaptcha,
+          errorStatus: true,
+          errorMessage: "ReCaptcha is required",
+        },
+      }));
+      return;
+    }
     const dataToSend = {
       firstName: userData.firstName.value,
       lastName: userData.lastName.value,
@@ -216,8 +243,10 @@ const BookAppointment = () => {
 
     dispatch(bookAppointment({ payload: dataToSend }));
     setUserData(initialState);
+    setRecaptchaToken(initialrecaptcha);
+
   };
-  
+
 
   return (
     <>
@@ -248,12 +277,12 @@ const BookAppointment = () => {
                       ) : data[1].name == "phoneNumber" ? (
                         <Box sx={{ display: "flex", flexDirection: "column" }}>
                           <PhoneInput
-                            value={userData.countryCode.value + userData.phoneNumber.value}
+                            value={userData.phoneNumber.value} //userData.countryCode.value +
                             onChange={handlePhoneInput}
                             autoFormat
                             inputProps={{
                               required: true,
-                              placeholder: "Enter your phone number",
+                              placeholder: "Phone Number",
                             }}
                             inputClass={"borderPhoneInput"}
                             specialLabel=""
@@ -273,12 +302,12 @@ const BookAppointment = () => {
                   </Box>
                   <Box className="form-group col-12">
                     {/* <iframe title="reCAPTCHA" width="304" height="78" role="presentation" name="a-rax7gaw23nj6" frameBorder="0" scrolling="no" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox allow-storage-access-by-user-activation" src="https://www.google.com/recaptcha/api2/anchor?ar=2&amp;k=6LfPixwaAAAAABFFuOob52Mh463Oy3rZEtYUr4oJ&amp;co=aHR0cHM6Ly93d3cuY3J5b3ZhdWx0LmluOjQ0Mw..&amp;hl=en&amp;v=Hq4JZivTyQ7GP8Kt571Tzodj&amp;size=normal&amp;cb=oh1vpc5nfiib" data-gtm-yt-inspected-6="true"></iframe> */}
-                    {/* <Box sx={{ my: 2 }}> */}
+
                     <ReCAPTCHA
                       sitekey={RECAPTCHA_SITE_KEY}
                       onChange={handleRecaptchaChange}
                     />
-                    {/* </Box> */}
+                    {recaptchaToken.recaptcha.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{recaptchaToken.recaptcha.errorMessage}</Typography> : null}
                   </Box>
 
                   <Button onClick={handleSubmit} sx={{ fontWeight: "600", textTransform: "none" }} variant="contained" className="appointmentBtn">
