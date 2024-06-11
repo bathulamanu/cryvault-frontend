@@ -7,12 +7,15 @@ import { ThemeProvider } from "@mui/material";
 import theme from "./theme";
 import store from "./redux/store";
 import "./App.css";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={store}>
     <ThemeProvider theme={theme}>
       <App />
+      <ToastContainer />
     </ThemeProvider>
   </Provider>
 );

@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { CreateOrderApi, GetCustomerPaymentDetails, GetGenderDetails, LoginAPI, OTP, PaymentStatus, getCityName, getCountryName, getOrderDetailsApi, getPaymentDetailsApi, getStateName } from "./api";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 export const getGenders = createAsyncThunk("gender", async (payload, thunkAPI) => {
   const apiUrl = GetGenderDetails();
@@ -176,7 +177,7 @@ export const createOrder = createAsyncThunk("createOrder", async (payload, thunk
       };
 
       const rzp1 = new window.Razorpay(options);
-      rzp1.on('payment.failed', (response) => {
+      rzp1.on("payment.failed", (response) => {
         alert("Payment failed. Please try again or contact support.");
       });
       rzp1.open();
@@ -245,10 +246,12 @@ const PaymentReducer = createSlice({
       .addCase(getCustomerPaymentDetails.fulfilled, (state, action) => {
         state.loading = false;
         state.userPaymentDetails = action.payload;
+        toast.success(action.payload.message);
       })
       .addCase(getCustomerPaymentDetails.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
+        toast.error(action.payload.message);
       })
       .addCase(getCountry.pending, (state) => {
         state.loading = true;
@@ -311,6 +314,6 @@ const PaymentReducer = createSlice({
       });
   },
 });
-export const { } = PaymentReducer.actions;
+export const {} = PaymentReducer.actions;
 const paymentReducer = PaymentReducer.reducer;
 export default paymentReducer;

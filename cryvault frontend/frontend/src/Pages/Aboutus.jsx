@@ -14,7 +14,7 @@ const Aboutus = () => {
   const isMobile = useDeviceSize() === "xs";
   const pageInfo = useSelector((state) => state.home.pageInfo);
   const url = `https://flyingbyts.s3.ap-south-2.amazonaws.com/${pageInfo?.[0]?.[1]?.pageHeaderImage}`;
-
+  const appointment = pageInfo?.[16]?.[15]?.urlSlug;
   return (
     <>
       <Box sx={{ backgroundImage: ` url(${url})`, padding: isMobile ? " 50px 7px !important" : "60px 100px !important" }} className="edu-breadcrumb-area breadcrumb-style-2 bg-image bg-image--19">
@@ -89,7 +89,7 @@ const Aboutus = () => {
                   </Box>
                   <Typography>For over 6 years parents have been preserving their baby’s umbilical cord blood stem cells for various medical treatments. Preserving your newborn’s umbilical cord provides your family a chance to save and change lives. Umbilical cord stem cells if not only perfectly match the baby but also the siblings, parents and other close family members in most cases.</Typography>
                   <Box className="about-btn sal-animate" data-sal-delay="400" data-sal="slide-up" data-sal-duration="1000">
-                    <Link href="#" className="edu-btn">
+                    <Link href={`/${appointment}`} className="edu-btn">
                       Book Appointment
                     </Link>
                   </Box>
