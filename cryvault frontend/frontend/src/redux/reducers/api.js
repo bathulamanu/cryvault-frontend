@@ -19,6 +19,7 @@ export const OTP = () => {
 export const ResendOTPAPI = () => {
   return `${BASE_URL}/cryovault/api/user/customerResendOtp`;
 };
+
 export const CreateOrderApi = () => {
   return `${BASE_URL}/flyingbyts/api/user/createOrder`;
 };
