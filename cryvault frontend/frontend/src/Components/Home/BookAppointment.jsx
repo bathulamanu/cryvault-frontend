@@ -1,4 +1,4 @@
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Typography, TextField } from "@mui/material";
 import React, { useState } from "react";
 import useDeviceSize from "../../Utilities/useDeviceSize";
 import { useDispatch } from "react-redux";
@@ -7,6 +7,7 @@ import PhoneInput from "react-phone-input-2";
 import "./Home.css";
 import { validateEmail, validatePhoneNumber } from "../Contact/ContactForm";
 import ReCAPTCHA from 'react-google-recaptcha';
+import { logDOM } from "@testing-library/react";
 const initialState = {
   firstName: {
     value: "",
@@ -132,6 +133,16 @@ const BookAppointment = () => {
   const handleRecaptchaChange = (token) => {
     setRecaptchaToken({ ...recaptchaToken, ["recaptcha"]: { ...recaptchaToken["recaptcha"], value: token, errorStatus: false, errorMessage: "" } });
   };
+  const [countryCode, setCountryCode] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('');
+
+  const handleCountryCodeChange = (event) => {
+    setCountryCode(event.target.value);
+  };
+
+  const handlePhoneNumberChange = (event) => {
+    setPhoneNumber(event.target.value);
+  };
 
   const handlePhoneInput = (value, country) => {
     const country_code = country;
@@ -139,7 +150,7 @@ const BookAppointment = () => {
     setUserData((prevData) => ({
       ...prevData,
       phoneNumber: { ...prevData.phoneNumber, value: phoneNumber, errorStatus: false, errorMessage: "" },
-      countryCode: { ...prevData.countryCode, value: country_code, errorStatus: false, errorMessage: "" },
+      countryCode: { ...prevData.countryCode, value: country_code.dialCode, errorStatus: false, errorMessage: "" },
     }));
   };
 
@@ -156,6 +167,7 @@ const BookAppointment = () => {
   };
 
   const handleSubmit = () => {
+
     let isMobileInvalid;
     if (userData.phoneNumber.value || userData.countryCode.value) {
       isMobileInvalid = !validatePhoneNumber(userData.phoneNumber.value, String(userData.countryCode.value) || "91");
@@ -168,7 +180,7 @@ const BookAppointment = () => {
         firstName: {
           ...prevData.firstName,
           errorStatus: true,
-          errorMessage: "First name is required",
+          errorMessage: "First name is required.",
         },
       }));
       return;
@@ -179,7 +191,7 @@ const BookAppointment = () => {
         lastName: {
           ...prevData.lastName,
           errorStatus: true,
-          errorMessage: "Last Name is required",
+          errorMessage: "Last Name is required.",
         },
       }));
       return;
@@ -190,7 +202,7 @@ const BookAppointment = () => {
         email: {
           ...prevData.email,
           errorStatus: true,
-          errorMessage: "Email ID is required",
+          errorMessage: "Email ID is required.",
         },
       }));
       return;
@@ -201,7 +213,7 @@ const BookAppointment = () => {
         appointmentDate: {
           ...prevData.appointmentDate,
           errorStatus: true,
-          errorMessage: "Appointment Date is required ",
+          errorMessage: "Appointment Date is required.",
         },
       }));
       return;
@@ -223,23 +235,25 @@ const BookAppointment = () => {
         "recaptcha": {
           ...prevData.recaptcha,
           errorStatus: true,
-          errorMessage: "ReCaptcha is required",
+          errorMessage: "ReCaptcha is required.",
         },
       }));
       return;
     }
+
     const dataToSend = {
       firstName: userData.firstName.value,
       lastName: userData.lastName.value,
       email: userData.email.value,
-      countryCode: "+91",
-      phoneNumber: userData.phoneNumber.value,
+      countryCode: '+91', // + userData.countryCode.value,
+      phoneNumber: userData.phoneNumber.value.replace(userData.countryCode.value, ''),
       expectedDeliveryDate: userData.expectedDeliveryDate.value,
       appointmentDate: userData.appointmentDate.value,
       doctorName: userData.doctorName.value,
       hospitalName: userData.hospitalName.value,
       address: userData.address.value,
     };
+
 
     dispatch(bookAppointment({ payload: dataToSend }));
     setUserData(initialState);
@@ -277,6 +291,8 @@ const BookAppointment = () => {
                       ) : data[1].name == "phoneNumber" ? (
                         <Box sx={{ display: "flex", flexDirection: "column" }}>
                           <PhoneInput
+                            label="Country Code"
+                            variant="outlined"
                             value={userData.phoneNumber.value} //userData.countryCode.value +
                             onChange={handlePhoneInput}
                             autoFormat

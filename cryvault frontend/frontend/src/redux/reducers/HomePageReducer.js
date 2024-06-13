@@ -520,7 +520,19 @@ const HomeReducer = createSlice({
         state.loading = false;
         state.error = action.error.message;
       })
-
+      // .addCase(uploadSingleFile.pending, (state) => {
+      //   state.loading = true;
+      //   state.error = null;
+      // })
+      // .addCase(uploadSingleFile.fulfilled, (state, action) => {
+      //   state.loading = false;
+      //   state.fileUpload = action.payload.data;
+      //   toast.success(action.payload.message);
+      // })
+      // .addCase(uploadSingleFile.rejected, (state, action) => {
+      //   state.loading = false;
+      //   toast.error(action.payload.message);
+      // });
   },
 });
 export const { } = HomeReducer.actions;

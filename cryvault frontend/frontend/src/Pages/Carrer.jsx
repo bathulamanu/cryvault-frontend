@@ -10,6 +10,8 @@ import "react-phone-input-2/lib/style.css";
 import { validateEmail, validatePhoneNumber } from "../Components/Contact/ContactForm";
 import { uploadSingleFileApi } from '../redux/reducers/api'
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+
 const initialState = {
   firstName: {
     value: "",
@@ -237,7 +239,14 @@ const Carrers = () => {
       formData.append('file', e?.target?.files?.[0]);
       formData.append('folder', "CareerResume");
       const response = await axios.post(apiUrl, formData, headers);
-      setFile(response?.data?.data?.key);
+      if (response?.data?.status == 200) {
+        toast.success(response?.data?.message)
+        setFile(response?.data?.data?.key);
+      }
+      else {
+        toast.error(response?.data?.message)
+      }
+
 
     } else {
       setUserData((prevData) => ({
@@ -369,7 +378,7 @@ const Carrers = () => {
       firstName: userData.firstName.value,
       lastName: userData.lastName.value,
       email: userData.email.value,
-      phoneNumber: userData.phoneNumber.value,
+      phoneNumber: userData.phoneNumber.value.replace(userData.countryCode.value, ''),
       city: userData.city.value,
       state: userData.state.value,
       area: userData.area.value,
@@ -381,16 +390,10 @@ const Carrers = () => {
 
     dispatch(addCareerProfile({ payload: dataToSend }));
     setUserData(initialState);
+    setFile("")
+    setPrefixValue("")
   };
 
-  // const fileKey = () => {
-  //   console.log("fileUpload ", fileUpload);
-  //   const name = 'resume'
-  //   setUserData((prevData) => ({
-  //     ...prevData,
-  //     [name]: { ...prevData[name], value: fileUpload.key, errorStatus: false, errorMessage: "" },
-  //   }));
-  // };
 
   const pageInfo = useSelector((state) => state.home.pageInfo);
   const url = `https://flyingbyts.s3.ap-south-2.amazonaws.com/${pageInfo?.[7]?.[7]?.pageHeaderImage}`;
@@ -400,7 +403,7 @@ const Carrers = () => {
     setUserData((prevData) => ({
       ...prevData,
       phoneNumber: { ...prevData.phoneNumber, value: phoneNumber, errorStatus: false, errorMessage: "" },
-      countryCode: { ...prevData.countryCode, value: country_code, errorStatus: false, errorMessage: "" },
+      countryCode: { ...prevData.countryCode, value: country_code.dialCode, errorStatus: false, errorMessage: "" },
     }));
   };
   return (
@@ -478,12 +481,12 @@ const Carrers = () => {
                           {data[1].name == "phoneNumber" ? (
                             <Box sx={{ display: "flex", flexDirection: "column" }}>
                               <PhoneInput
-                                value={userData.countryCode.value + userData.phoneNumber.value}
+                                value={userData.phoneNumber.value} // userData.countryCode.value + 
                                 onChange={handlePhoneInput}
                                 autoFormat
                                 inputProps={{
                                   required: true,
-                                  placeholder: "Enter your phone number",
+                                  placeholder: "Phone number",
                                 }}
                                 inputClass={"borderPhoneInput"}
                                 specialLabel=""
@@ -491,10 +494,13 @@ const Carrers = () => {
                                 // country={"in"}
                                 defaultErrorMessage="Incorrect WhatsApp Number"
                               />
-                              {/* {data[1].errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data[1].errorMessage}</Typography> : null} */}
+                              {data[1].errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data[1].errorMessage}</Typography> : null}
                             </Box>
                           ) : data[1].name !== "countryCode" ? (
-                            <input style={{ border: data[1].errorStatus ? "1px solid red" : "1px solid #e5e5e5" }} onChange={handleChange} key={data[0]} placeholder={data[1].placeholder} className={`carrerInput `} label={data[1].placeholder} type={data[1].type} value={data[1].value} name={data[1].name} size="small" />
+                            <input style={{ border: data[1].errorStatus ? "1px solid red" : "1px solid #e5e5e5" }}
+                              onChange={handleChange} key={data[0]} placeholder={data[1].placeholder}
+                              className={`carrerInput `} label={data[1].placeholder} type={data[1].type}
+                              value={data[1].value} name={data[1].name} size="small" />
                           ) : null}
                           {data[1].errorStatus ? <Typography style={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data[1].errorMessage}</Typography> : null}
                         </Box>

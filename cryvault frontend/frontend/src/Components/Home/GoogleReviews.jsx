@@ -12,14 +12,14 @@ import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getGoogleReviews, getTestimonial } from "../../redux/reducers/HomePageReducer";
-
+import { s3BucketFilePath } from '../../redux/reducers/api';
 const GoogleReviews = () => {
   const isMobile = useDeviceSize() === "xs";
   const dispatch = useDispatch();
   const reviews = useSelector((state) => state.home.reviews);
   const reviewByUser = reviews?.reviewByUser;
   const reviewOn = reviews?.reviewOn;
-  
+
   useEffect(() => {
     dispatch(getGoogleReviews());
   }, []);
@@ -35,26 +35,28 @@ const GoogleReviews = () => {
   return (
     <Container sx={{ display: "flex", flexDirection: isMobile ? "column" : "row", paddingTop: "5rem", alignItems: "center", gap: "2rem", marginBottom: isMobile ? "5rem" : "5rem" }}>
       <Box style={{ width: isMobile ? "100%" : "23%", display: "flex", alignItems: "start", gap: "0.5rem" }}>
-        <img loading="lazy" decoding="async" src="https://www.cryovault.in/wp-content/plugins/widget-google-reviews/assets/img/gmblogo.svg"
-         alt="Cryovault | Best Stem Cell Banking in Hyderabad | India" width="50" height="50" title="Cryovault | Best Stem Cell Banking in Hyderabad | India" />
-    
+
+        <img loading="lazy" decoding="async"
+          src={`https://flyingbyts.s3.ap-south-2.amazonaws.com/${reviewOn?.reviewWidget}`}
+          alt="Cryovault | Best Stem Cell Banking in Hyderabad | India" width="50" height="50" title="Cryovault | Best Stem Cell Banking in Hyderabad | India" />
+
         <Box style={{ display: "flex", alignItems: "start !important", flexDirection: "column", gap: "0.5rem" }}>
-          <Link href="https://maps.google.com/?cid=1616921368839435671" target="_blank" rel="nofollow noopener">
+          <Link href={`${reviewOn?.mapLink}`} target="_blank" rel="nofollow noopener">
             <Typography sx={{ fontWeight: "600", fontSize: "1.5rem" }} variant="h4">
               {reviewOn?.title}
             </Typography>
           </Link>
           <Box style={{ display: "flex", alignItems: "center" }}>
             <Typography variant="h4" sx={{ fontWeight: "700", color: "rgb(251, 142, 40)" }}>
-              5.0
+              {reviewOn?.ratingOutOf}
             </Typography>
             {stars.map((star, index) => star)}{" "}
           </Box>
 
           <Typography variant="h4">{reviewOn?.content}</Typography>
-          <img loading="lazy" decoding="async" src="https://www.cryovault.in/wp-content/plugins/widget-google-reviews/assets/img/powered_by_google_on_white.png" alt="powered by Google" style={{ maxWidth: "144px", height: "auto" }} />
-          <Link sx={{ textDecoration: "none", color: "white" }} href="https://search.google.com/local/writereview?placeid=ChIJH5WwOMiWyzsRl7VpC2t1cBY" target="_blank" rel="noopener">
-            <Button variant="contained" sx={{ display: "flex", gap: "0.5rem", marginTop: "15px", width: isMobile ? "40%" : "70%" }} className="googleBtn">
+          <img loading="lazy" decoding="async" src={`https://flyingbyts.s3.ap-south-2.amazonaws.com/${reviewOn?.poweredBy}`} alt="powered by Google" style={{ maxWidth: "144px", height: "auto" }} />
+          <Link sx={{ textDecoration: "none", color: "white" }} href={`${reviewOn?.reviewLink}`} target="_blank" rel="noopener">
+            <Button variant="contained" sx={{ display: "flex", gap: "0.5rem", marginTop: "15px", width: isMobile ? "40%" : "70%", textTransform: 'lowercase', fontSize: '14px' }} className="googleBtn">
               review us on
               <svg style={{ background: "White", borderRadius: "50%", padding: "0.2rem," }} viewBox="0 0 512 512" height="18" width="18">
                 <g fill="none" fill-rule="evenodd">
@@ -73,17 +75,17 @@ const GoogleReviews = () => {
       <Box style={{ width: isMobile ? "100%" : "70%" }}>
         <Swiper
           slidesPerView={isMobile ? 1 : 3}
-          modules={[Navigation, Pagination, Scrollbar, A11y,Autoplay]}
+          modules={[Navigation, Pagination, Scrollbar, A11y, Autoplay]}
           spaceBetween={10}
           // navigation={true}
           pagination={{ clickable: true }}
           autoplay={{
-            delay: 2500,
+            delay: 3000,
             disableOnInteraction: false,
           }}
         >
           {reviewByUser?.map((review) => (
-            <SwiperSlide style={{ height: "23rem" }}>
+            <SwiperSlide style={{ height: "22rem" }}>
               <SingleReview review={review} />
             </SwiperSlide>
           ))}
@@ -100,12 +102,14 @@ export const SingleReview = React.memo(({ review }) => {
     <Box key={review?._id} sx={{ display: "flex", flexDirection: "column", marginBottom: 2, background: "#fafafa", padding: "1rem" }}>
       <Box sx={{ display: "flex", alignItems: "start !important", justifyContent: "space-between" }}>
         <Box sx={{ display: "flex" }}>
-          {review?.userImage ? <img src={review?.userImage || "default-user-image.png"} alt="User avatar" style={{ width: 50, height: 50, borderRadius: "50%" }} /> : <Avatar sx={{ bgcolor: "orange" }}>{capitalizeFirstLetter(review?.userName)}</Avatar>}
+          {review?.userImage ? <img src={review?.userImage || "default-user-image.png"} alt="User avatar" style={{ width: 50, height: 70, borderRadius: "50%" }} /> : <Avatar sx={{ bgcolor: "orange" }}>{capitalizeFirstLetter(review?.userName)}</Avatar>}
           {/* Handle missing user image gracefully */}
           <Box sx={{ display: "flex", flexDirection: "column", marginLeft: 1 }}>
-            <Typography variant="body1" sx={{ fontSize: "2rem !important", fontWeight: "600", color: "#154fc1 !important" }}>
-              {review?.userName}
-            </Typography>
+            <Link href={`${review?.googleMapLocation}`} target="_blank" rel="nofollow noopener">
+              <Typography variant="body1" sx={{ fontSize: "2rem !important", fontWeight: "600", color: "#154fc1 !important" }}>
+                {review?.userName}
+              </Typography>
+            </Link>
             <Typography variant="caption" color="text.secondary">
               {/* Time logic goes here */}
             </Typography>
@@ -115,7 +119,7 @@ export const SingleReview = React.memo(({ review }) => {
         <FcGoogle style={{ marginLeft: "auto", fontSize: "1.5rem" }} />
       </Box>
       <Rating name="read-only" value={review?.rating} readOnly />
-      <Box sx={{ marginTop: 1, height: "10vh", overflow: "auto" }}>
+      <Box sx={{ marginTop: 1, height: "12vh", overflow: "auto" }}>
         <Typography variant="h5">{review?.content}</Typography>
       </Box>
     </Box>

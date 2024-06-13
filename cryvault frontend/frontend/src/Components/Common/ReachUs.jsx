@@ -149,7 +149,7 @@ const ReachUs = () => {
     setUserData((prevData) => ({
       ...prevData,
       phone: { ...prevData.phone, value: phoneNumber, errorStatus: false, errorMessage: "" },
-      countryCode: { ...prevData.countryCode, value: country_code, errorStatus: false, errorMessage: "" },
+      countryCode: { ...prevData.countryCode, value: country_code.dialCode, errorStatus: false, errorMessage: "" },
     }));
   };
   const handleSubmit = () => {
@@ -157,14 +157,6 @@ const ReachUs = () => {
     if (userData.phone.value || userData.countryCode.value) {
       isMobileInvalid = !validatePhoneNumber(userData.phone.value, String(userData.countryCode.value) || "91");
     }
-    const dataToSend = {
-      fullName: userData.fullName.value,
-      Email: userData.email.value,
-      countryCode: userData.countryCode.value,
-      phoneNumber: userData.phone.value,
-      Subject: userData.subject.value,
-      pageName: router?.pathname,
-    };
 
     if (!userData.fullName.value) {
       setUserData((prevData) => ({
@@ -211,6 +203,16 @@ const ReachUs = () => {
       }));
       return;
     }
+
+    const dataToSend = {
+      fullName: userData.fullName.value,
+      Email: userData.email.value,
+      countryCode: "+91",// userData.countryCode.value,
+      phoneNumber: userData.phone.value.replace(userData.countryCode.value, ''),
+      Subject: userData.subject.value,
+      pageName: router?.pathname,
+    };
+
     dispatch(addReachUS({ payload: dataToSend }));
     setUserData(initialState);
   };
@@ -262,12 +264,12 @@ const ReachUs = () => {
                     data[1].name == "phone" ? (
                       <Box sx={{ display: "flex", flexDirection: "column" }}>
                         <PhoneInput
-                          value={userData.countryCode.value + userData.phone.value}
+                          value={userData.phone.value} //userData.countryCode.value + 
                           onChange={handlePhoneInput}
                           autoFormat
                           inputProps={{
                             required: true,
-                            placeholder: "Enter your phone number",
+                            placeholder: "Phone Number",
                           }}
                           inputClass={"borderPhoneInput"}
                           specialLabel=""
@@ -288,11 +290,11 @@ const ReachUs = () => {
                 <Box sx={{ marginTop: "1rem" }} className="form-group col-12">
                   {/* <iframe title="reCAPTCHA" width="304" height="78" role="presentation" name="a-rax7gaw23nj6" frameBorder="0" scrolling="no" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox allow-storage-access-by-user-activation" src="https://www.google.com/recaptcha/api2/anchor?ar=2&amp;k=6LfPixwaAAAAABFFuOob52Mh463Oy3rZEtYUr4oJ&amp;co=aHR0cHM6Ly93d3cuY3J5b3ZhdWx0LmluOjQ0Mw..&amp;hl=en&amp;v=Hq4JZivTyQ7GP8Kt571Tzodj&amp;size=normal&amp;cb=oh1vpc5nfiib" data-gtm-yt-inspected-6="true"></iframe> */}
                   <ReCAPTCHA
-                      sitekey={RECAPTCHA_SITE_KEY}
-                      onChange={handleRecaptchaChange}
-                    />
-                    {recaptchaToken.recaptcha.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{recaptchaToken.recaptcha.errorMessage}</Typography> : null}
-                 
+                    sitekey={RECAPTCHA_SITE_KEY}
+                    onChange={handleRecaptchaChange}
+                  />
+                  {recaptchaToken.recaptcha.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{recaptchaToken.recaptcha.errorMessage}</Typography> : null}
+
                 </Box>
                 <Box className="form-group col-12">
                   <Button onClick={handleSubmit} className="rn-btn edu-btn btn-medium submit-btn" name="submit" type="submit">
@@ -304,7 +306,7 @@ const ReachUs = () => {
           </Box>
         </Box>
       </Box>
-      
+
       <Modal
         aria-labelledby="spring-modal-title"
         aria-describedby="spring-modal-description"

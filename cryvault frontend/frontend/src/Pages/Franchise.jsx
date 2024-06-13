@@ -1,7 +1,15 @@
 import React, { useState } from "react";
 import ReachUs from "../Components/Common/ReachUs";
 import useDeviceSize from "../Utilities/useDeviceSize";
-import { Box, Breadcrumbs, Button, Link, Typography } from "@mui/material";
+import {
+  Box, Breadcrumbs, Button, Link, Typography, Container,
+
+  FormControl,
+  FormLabel,
+  RadioGroup,
+  FormControlLabel,
+  Radio
+} from "@mui/material";
 import { useDispatch } from "react-redux";
 import { addFranchiseRequest } from "../redux/reducers/HomePageReducer";
 import PhoneInput from "react-phone-input-2";
@@ -77,6 +85,18 @@ const initialState = {
     id: "countryCode",
   },
 };
+const initialStateProfessionalExperience = {
+  professionalExperience: {
+    value: "",
+    placeholder: "Professional Experience *",
+    errorStatus: false,
+    errorMessage: "",
+    icon: "",
+    type: "text",
+    name: "professionalExperience",
+    id: "professionalExperience"
+  }
+}
 const Franchise = () => {
   const isMobile = useDeviceSize() === "xs";
   const [userData, setUserData] = useState({
@@ -141,16 +161,6 @@ const Franchise = () => {
       name: "state",
       id: "state",
     },
-    professionalExperience: {
-      value: "",
-      placeholder: "Professional Experience *",
-      errorStatus: false,
-      errorMessage: "",
-      icon: "",
-      type: "text",
-      name: "professionalExperience",
-      id: "professionalExperience",
-    },
     comment: {
       value: "",
       placeholder: "Comment",
@@ -167,18 +177,29 @@ const Franchise = () => {
       id: "countryCode",
     },
   });
-  const [officeSpace, setOfficeSpace] = useState("");
+  const [officeSpace, setOfficeSpace] = useState(null);
   const [officeSpaceError, setOfficeSpaceError] = useState({ errorStatus: false, errorMessage: "" });
-  const [experienceInStemCellBanking, setExperienceInStemCellBanking] = useState(false);
+  const [experienceInStemCellBanking, setExperienceInStemCellBanking] = useState(null);
   const [experienceInStemCellBankingError, setExperienceInStemCellBankingError] = useState({ errorStatus: false, errorMessage: "" });
+  const [professionalExperience, setprofessionalExperience] = useState(initialStateProfessionalExperience);
 
   const handleOfficeSpaceChange = (event) => {
+    const newValue = event.target.value === 'true';
     setOfficeSpaceError({ errorStatus: false, errorMessage: "" });
-
-    setOfficeSpace(event.target.value);
+    setOfficeSpace(newValue);
   };
   const handleexperienceInStemCellBankingChange = (event) => {
-    setExperienceInStemCellBanking(event.target.value);
+    const newVal = event.target.value === 'true';
+    setExperienceInStemCellBankingError({ errorStatus: false, errorMessage: "" });
+    setExperienceInStemCellBanking(newVal);
+  };
+  const handleExperienceChange = (e) => {
+    const { name, value } = e.target;
+    console.log(name, value);
+    setprofessionalExperience((prevData) => ({
+      ...prevData,
+      [name]: { ...prevData[name], value: value, errorStatus: false, errorMessage: "" },
+    }));
   };
   const userDetails = Object.entries(userData);
   const dispatch = useDispatch();
@@ -192,6 +213,9 @@ const Franchise = () => {
     }));
   };
   const handleSubmit = () => {
+
+
+
     let isMobileInvalid;
     if (userData.phoneNumber.value || userData.countryCode.value) {
       isMobileInvalid = !validatePhoneNumber(userData.phoneNumber.value, String(userData.countryCode.value) || "91");
@@ -275,17 +299,12 @@ const Franchise = () => {
       }));
       return;
     }
-    if (!officeSpace) {
+    if (officeSpace == null) {
       setOfficeSpaceError({ errorStatus: true, errorMessage: "Office Space is required." });
       return;
     }
-
-    if (!setExperienceInStemCellBankingError) {
-      setExperienceInStemCellBankingError({ errorStatus: true, errorMessage: "Experience In Stem Cell Banking is required." });
-      return;
-    }
-    if (!userData.professionalExperience.value) {
-      setUserData((prevData) => ({
+    if (!professionalExperience?.professionalExperience?.value) {
+      setprofessionalExperience((prevData) => ({
         ...prevData,
         professionalExperience: {
           ...prevData.professionalExperience,
@@ -296,22 +315,30 @@ const Franchise = () => {
       return;
     }
 
+    if (experienceInStemCellBanking == null) {
+      setExperienceInStemCellBankingError({ errorStatus: true, errorMessage: "Experience In Stem Cell Banking is required." });
+      return;
+    }
+
     const dataToSend = {
       firstName: userData.firstName.value,
       lastName: userData.lastName.value,
       email: userData.email.value,
       countryCode: "+91",
-      phoneNumber: userData.phoneNumber.value,
+      phoneNumber: userData.phoneNumber.value.replace(userData.countryCode.value, ''),
       city: userData.city.value,
       state: userData.state.value,
       comment: userData.comment.value,
-      professionalExperience: userData.professionalExperience.value,
+      professionalExperience: professionalExperience.professionalExperience.value,
       OfficeSpace: officeSpace,
       ExperienceInStemCellBanking: experienceInStemCellBanking,
     };
 
     dispatch(addFranchiseRequest({ payload: dataToSend }));
     setUserData(initialState);
+    setOfficeSpace(null);
+    setExperienceInStemCellBanking(null);
+    setprofessionalExperience(initialStateProfessionalExperience)
   };
 
   const handlePhoneInput = (value, country) => {
@@ -320,7 +347,7 @@ const Franchise = () => {
     setUserData((prevData) => ({
       ...prevData,
       phoneNumber: { ...prevData.phoneNumber, value: phoneNumber, errorStatus: false, errorMessage: "" },
-      countryCode: { ...prevData.countryCode, value: country_code, errorStatus: false, errorMessage: "" },
+      countryCode: { ...prevData.countryCode, value: country_code.dialCode, errorStatus: false, errorMessage: "" },
     }));
   };
   return (
@@ -372,7 +399,16 @@ const Franchise = () => {
                       {userDetails.map((data, index) => (
                         <Box key={data[1].name} sx={{ display: "flex", flexDirection: "column" }}>
                           {data[1].name !== "comment" && data[1].name !== "professionalExperience" && data[1].name !== "countryCode" ? <Typography sx={{ marginBottom: "10px !important", fontWeight: "700", fontSize: "1.5rem", marginLeft: "2rem" }}>{data[1].placeholder}</Typography> : null}
-                          {data[1].name === "phoneNumber" ? <PhoneInput value={userData.countryCode.value + userData.phoneNumber.value} onChange={handlePhoneInput} autoFormat inputProps={{ required: true }} inputClass={"borderPhoneInput"} specialLabel="" containerClass={"layoutItem"} country={"in"} defaultErrorMessage="Incorrect WhatsApp Number" /> : data[1].name !== "comment" && data[1].name !== "professionalExperience" && data[1].name !== "countryCode" ? <input style={{ border: data[1].errorStatus ? "1px solid red" : "1px solid #e5e5e5" }} onChange={handleChange} key={data[0]} placeholder={data[1].placeholder} className={`carrerInput`} label={data[1].placeholder} type={data[1].type} value={data[1].value} name={data[1].name} size="small" /> : null}
+                          {data[1].name === "phoneNumber" ?
+                            <PhoneInput value={userData.phoneNumber.value}
+                              onChange={handlePhoneInput} autoFormat
+                              inputClass={"borderPhoneInput"} specialLabel="" containerClass={"layoutItem"}
+                              //  country={"in"}
+                              inputProps={{
+                                required: true,
+                                placeholder: "Phone number",
+                              }}
+                              defaultErrorMessage="Incorrect WhatsApp Number" /> : data[1].name !== "comment" && data[1].name !== "professionalExperience" && data[1].name !== "countryCode" ? <input style={{ border: data[1].errorStatus ? "1px solid red" : "1px solid #e5e5e5" }} onChange={handleChange} key={data[0]} placeholder={data[1].placeholder} className={`carrerInput`} label={data[1].placeholder} type={data[1].type} value={data[1].value} name={data[1].name} size="small" /> : null}
                           {data[1].errorStatus ? <Typography style={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data[1].errorMessage}</Typography> : null}
                         </Box>
                       ))}
@@ -383,8 +419,8 @@ const Franchise = () => {
                     <Typography sx={{ marginBottom: "10px !important", fontWeight: "700", fontSize: "1.5rem", marginLeft: "2rem" }}>Office Space *</Typography>
 
                     <Box>
-                      <Box sx={{marginLeft:"2rem"}} className="d-flex">
-                        <Box className="form-group mb-0 mr-4">
+                      <Box sx={{ marginLeft: "2rem" }} className="d-flex">
+                        {/* <Box className="form-group mb-0 mr-4">
                           <Box className="edu-form-check">
                             <input type="radio" id="yes" name="officeSpace" value="true" checked={officeSpace} onChange={handleOfficeSpaceChange} />
                             <label htmlFor="yes">Yes</label>
@@ -395,7 +431,19 @@ const Franchise = () => {
                             <input type="radio" id="no" name="officeSpace" value="false" checked={officeSpace} onChange={handleOfficeSpaceChange} />
                             <label htmlFor="no">No</label>
                           </Box>
-                        </Box>
+                        </Box> */}
+                        <RadioGroup row value={officeSpace} onChange={handleOfficeSpaceChange}>
+                          <FormControlLabel
+                            value="true"
+                            control={<Radio />}
+                            label="Yes"
+                          />
+                          <FormControlLabel
+                            value="false"
+                            control={<Radio />}
+                            label="No"
+                          />
+                        </RadioGroup>
                       </Box>
 
                       {officeSpaceError ? <Typography style={{ color: "red", fontSize: "1.5rem" }}>{officeSpaceError.errorMessage}</Typography> : null}
@@ -403,14 +451,17 @@ const Franchise = () => {
                   </Box>
                   <Box className="form-group col-md-12">
                     <Typography sx={{ marginBottom: "10px !important", fontWeight: "700", fontSize: "1.5rem", marginLeft: "2rem" }}>Professional Experience *</Typography>
-                    <input style={{marginLeft:"2rem"}} onChange={handleChange} value={userData?.professionalExperience?.value} name="professionalExperience" type="text" id="professionalExperience" />
+                    <input style={{ marginLeft: "2rem" }} onChange={handleExperienceChange}
+                      value={professionalExperience?.professionalExperience?.value} name="professionalExperience" type="text" id="professionalExperience" />
+                    {professionalExperience?.professionalExperience?.errorStatus ? <Typography style={{ color: "red", fontSize: "1.5rem" }}>{professionalExperience?.professionalExperience?.errorMessage}</Typography> : null}
+
                   </Box>
 
                   <Box className="form-group col-md-12">
                     <Typography sx={{ marginBottom: "10px !important", fontWeight: "700", fontSize: "1.5rem", marginLeft: "2rem" }}>Experience in Stem Cell Banking *</Typography>
 
-                    <Box sx={{marginLeft:"2rem"}} className="d-flex">
-                      <Box className="form-group mb-0 mr-4">
+                    <Box sx={{ marginLeft: "2rem" }} className="d-flex">
+                      {/* <Box className="form-group mb-0 mr-4">
                         <Box className="edu-form-check">
                           <input type="radio" id="yes" name="officeSpace" value="true" checked={experienceInStemCellBanking} onChange={handleexperienceInStemCellBankingChange} />
                           <label htmlFor="yes">Yes</label>
@@ -421,13 +472,27 @@ const Franchise = () => {
                           <input type="radio" id="no" name="officeSpace" value="false" checked={experienceInStemCellBanking} onChange={handleexperienceInStemCellBankingChange} />
                           <label htmlFor="no">No</label>
                         </Box>
-                      </Box>
+                      </Box> */}
+                      <RadioGroup row value={experienceInStemCellBanking} onChange={handleexperienceInStemCellBankingChange}>
+                        <FormControlLabel
+                          value="true"
+                          control={<Radio />}
+                          label="Yes"
+                        />
+                        <FormControlLabel
+                          value="false"
+                          control={<Radio />}
+                          label="No"
+                        />
+                      </RadioGroup>
                     </Box>
+                    {experienceInStemCellBankingError ? <Typography style={{ color: "red", fontSize: "1.5rem" }}>{experienceInStemCellBankingError.errorMessage}</Typography> : null}
+
                   </Box>
 
                   <Box className="form-group col-md-12">
                     <Typography sx={{ marginBottom: "10px !important", fontWeight: "700", fontSize: "1.5rem", marginLeft: "2rem" }}>Comment</Typography>
-                    <textarea  onChange={handleChange} value={userData?.comment?.value} name="comment" style={{ fontSize: "15px", height: "150px" ,marginLeft:"2rem"}} id="comment" cols="30" rows="6" placeholder="Type your message"></textarea>
+                    <textarea onChange={handleChange} value={userData?.comment?.value} name="comment" style={{ fontSize: "15px", height: "150px", marginLeft: "2rem" }} id="comment" cols="30" rows="6" placeholder="Type your message"></textarea>
                   </Box>
                   <Button onClick={handleSubmit} variant="contained" sx={{ fontSize: "2rem !important", textTransform: "none", backgroundColor: "#D5008D", color: "white", fontWeight: "700", width: isMobile ? "40%" : "100%", whiteSpace: "nowrap", padding: "15px 30px", borderRadius: "40px", marginTop: "3rem" }} size="lg">
                     Submit

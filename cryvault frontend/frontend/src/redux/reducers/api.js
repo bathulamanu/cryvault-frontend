@@ -1,4 +1,13 @@
-const BASE_URL =  "http://18.61.70.225:4000";
+const BASE_URL = "http://18.61.70.225:4000"; // "http://localhost:4000" //
+
+
+export const s3BucketFilePath = () => {
+  return 'https://flyingbyts.s3.ap-south-2.amazonaws.com/';
+};
+
+export const reCaptchaSiteKey = () => {
+  return '6Lf4RPUpAAAAAOu9M51NaHQlLxl8df7ldXf9pnS_';
+};
 
 export const LoginAPI = () => {
   return `${BASE_URL}/flyingbyts/api/user/customerRegisterOrLogin`;

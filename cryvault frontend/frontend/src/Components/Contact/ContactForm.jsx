@@ -86,6 +86,18 @@ const initialState = {
     id: "subject",
   },
 };
+const queryInitialState = {
+  queryContent: {
+    value: "",
+    placeholder: "Query Content",
+    errorStatus: false,
+    errorMessage: "",
+    icon: "",
+    type: "text",
+    name: "queryContent",
+    id: "queryContent",
+  }
+}
 const ContactForm = () => {
   const [userData, setUserData] = useState(initialState);
 
@@ -106,6 +118,7 @@ const ContactForm = () => {
       id: "recaptcha",
     }
   });
+  const [queryContent, setqueryContent] = useState(queryInitialState);
   const RECAPTCHA_SITE_KEY = "6Lf4RPUpAAAAAOu9M51NaHQlLxl8df7ldXf9pnS_"
 
 
@@ -113,13 +126,20 @@ const ContactForm = () => {
     setRecaptchaToken({ ...recaptchaToken, ["recaptcha"]: { ...recaptchaToken["recaptcha"], value: token, errorStatus: false, errorMessage: "" } });
   };
 
+  const handleQueryCommentChange = (e) => {
+    const name = 'queryContent';
+    const value = e?.target?.value;
+    setqueryContent({ ...queryContent, [name]: { ...queryContent[name], value: value, errorStatus: false, errorMessage: "" } });
+  };
+
+
   const handlePhoneInput = (value, country) => {
     const country_code = country;
     const phoneNumber = value.slice(country_code.length);
     setUserData((prevData) => ({
       ...prevData,
       phone: { ...prevData.phone, value: phoneNumber, errorStatus: false, errorMessage: "" },
-      countryCode: { ...prevData.countryCode, value: country_code, errorStatus: false, errorMessage: "" },
+      countryCode: { ...prevData.countryCode, value: country_code.dialCode, errorStatus: false, errorMessage: "" },
     }));
   };
 
@@ -212,15 +232,16 @@ const ContactForm = () => {
       lastName: userData.lastName.value,
       email: userData.email.value,
       countryCode: "+91",
-      phoneNumber: userData.phone.value,
+      phoneNumber: userData.phone.value.replace(userData.countryCode.value, ''),
       appointmentDate: userData.appointmentDate.value,
       Age: userData.age.value,
       subject: userData.subject.value,
-      queryContent: "", //userData.queryContent.value
+      queryContent: queryContent?.queryContent?.value,
     };
 
     dispatch(addEmergencyAppointment({ payload: dataToSend }));
     setUserData(initialState);
+    setqueryContent(queryInitialState)
   };
   return (
     <Box className="edu-section-gap contact_bg contact-form-area contact-form-reach">
@@ -238,7 +259,7 @@ const ContactForm = () => {
                     letterSpacing: "1.2px !important",
                     margin: "0 !important",
                   }}
-                  // className="pre-title pre-textsecondary"
+                // className="pre-title pre-textsecondary"
                 >
                   Need emergency?
                 </Typography>
@@ -262,12 +283,12 @@ const ContactForm = () => {
                     ) : data[1].name == "phone" ? (
                       <Box sx={{ display: "flex", flexDirection: "column" }}>
                         <PhoneInput
-                          value={userData.countryCode.value + userData.phone.value}
+                          value={userData.phone.value} //userData.countryCode.value +
                           onChange={handlePhoneInput}
                           autoFormat
                           inputProps={{
                             required: true,
-                            placeholder: "Enter your phone number",
+                            placeholder: "Phone Number",
                           }}
                           inputClass={"borderPhoneInput"}
                           specialLabel=""
@@ -287,16 +308,17 @@ const ContactForm = () => {
                 </Box>
 
                 <Box className="form-group col-md-12">
-                  <textarea name="contact-message" id="contact-message" cols="30" rows="6" placeholder="Type your message"></textarea>
+                  <textarea name="contact-message" id="contact-message" cols="30" rows="6" placeholder="What is Your Query......?"
+                    onChange={handleQueryCommentChange}   ></textarea>
                 </Box>
                 <Box className="form-group col-12">
                   {/* <iframe title="reCAPTCHA" width="304" height="78" role="presentation" name="a-rax7gaw23nj6" frameBorder="0" scrolling="no" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox allow-storage-access-by-user-activation" src="https://www.google.com/recaptcha/api2/anchor?ar=2&amp;k=6LfPixwaAAAAABFFuOob52Mh463Oy3rZEtYUr4oJ&amp;co=aHR0cHM6Ly93d3cuY3J5b3ZhdWx0LmluOjQ0Mw..&amp;hl=en&amp;v=Hq4JZivTyQ7GP8Kt571Tzodj&amp;size=normal&amp;cb=oh1vpc5nfiib" data-gtm-yt-inspected-6="true"></iframe> */}
                   <ReCAPTCHA
-                      sitekey={RECAPTCHA_SITE_KEY}
-                      onChange={handleRecaptchaChange}
-                    />
-                    {recaptchaToken.recaptcha.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{recaptchaToken.recaptcha.errorMessage}</Typography> : null}
-                 
+                    sitekey={RECAPTCHA_SITE_KEY}
+                    onChange={handleRecaptchaChange}
+                  />
+                  {recaptchaToken.recaptcha.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{recaptchaToken.recaptcha.errorMessage}</Typography> : null}
+
                 </Box>
                 <Box className="form-group">
                   <Button className="edu-btn btn-medium" onClick={handleSubmit}>

@@ -80,6 +80,18 @@ const initialState = {
     id: "hospitalName",
   },
 };
+const recaptchaIntialState = {
+  recaptcha: {
+    value: "",
+    placeholder: "recaptcha",
+    errorStatus: false,
+    errorMessage: "",
+    icon: "",
+    type: "text",
+    name: "recaptcha",
+    id: "recaptcha",
+  }
+}
 const RequestKit = () => {
   const isMobile = useDeviceSize() === "xs";
   const dispatch = useDispatch();
@@ -153,18 +165,7 @@ const RequestKit = () => {
   });
 
   const userDetails = Object.entries(userData);
-  const [recaptchaToken, setRecaptchaToken] = useState({
-    recaptcha: {
-      value: "",
-      placeholder: "recaptcha",
-      errorStatus: false,
-      errorMessage: "",
-      icon: "",
-      type: "text",
-      name: "recaptcha",
-      id: "recaptcha",
-    }
-  });
+  const [recaptchaToken, setRecaptchaToken] = useState(recaptchaIntialState);
   const RECAPTCHA_SITE_KEY = "6Lf4RPUpAAAAAOu9M51NaHQlLxl8df7ldXf9pnS_"
 
 
@@ -267,13 +268,14 @@ const RequestKit = () => {
       lastName: userData.lastName.value,
       email: userData.email.value,
       countryCode: "+91",
-      phoneNumber: userData.phone.value,
+      phoneNumber: userData.phone.value.replace(userData.countryCode.value, ''),
       location: userData.location.value,
       address: userData.address.value,
     };
 
     dispatch(addInformationKitRequest({ payload: dataToSend }));
     setUserData(initialState);
+    setRecaptchaToken(recaptchaIntialState);
   };
 
   const handlePhoneInput = (value, country) => {
@@ -282,7 +284,7 @@ const RequestKit = () => {
     setUserData((prevData) => ({
       ...prevData,
       phone: { ...prevData.phone, value: phoneNumber, errorStatus: false, errorMessage: "" },
-      countryCode: { ...prevData.countryCode, value: country_code, errorStatus: false, errorMessage: "" },
+      countryCode: { ...prevData.countryCode, value: country_code.dialCode, errorStatus: false, errorMessage: "" },
     }));
   };
 
@@ -341,12 +343,12 @@ const RequestKit = () => {
                         data[1].name == "phone" ? (
                           <Box sx={{ display: "flex", flexDirection: "column" }}>
                             <PhoneInput
-                              value={userData.countryCode.value + userData.phone.value}
+                              value={userData.phone.value} //userData.countryCode.value +
                               onChange={handlePhoneInput}
                               autoFormat
                               inputProps={{
                                 required: true,
-                                placeholder: "Enter your phone number",
+                                placeholder: "Phone Number",
                               }}
                               inputClass={"borderPhoneInput"}
                               specialLabel=""
