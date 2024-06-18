@@ -161,7 +161,7 @@ const LazyLoad = () => {
         <Route path={contact} element={<Contact />} />
         <Route path="/blog-single/:id" element={<SingleBlog />} />
         {hasPlan ? (
-          <>
+           <>
             <Route path="/dashboard" element={<Dashboard />} />
             {/* <Route path="/popup" element={<PopupLayout />} /> */}
           </>

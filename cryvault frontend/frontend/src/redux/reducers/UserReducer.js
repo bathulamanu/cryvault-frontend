@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { LoginAPI, OTP, getCustomerInfoApi } from "./api";
+import { LoginAPI, OTP, getCustomerInfoApi,addOrupdateAnnexureInfoApi } from "./api";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -54,7 +54,21 @@ export const startTimerWithCallback = createAsyncThunk("startTimerWithCallback",
   dispatch(setTimer(60));
   dispatch(clearError());
 });
-
+export const addOrupdateAnnexureInfo = createAsyncThunk("addOrupdateAnnexureInfo", async (payload = {}, thunkAPI) => {
+  const apiUrl = addOrupdateAnnexureInfoApi();
+  try {
+    const response = await axios.post(apiUrl, payload.payload);
+    const { problem, data } = response;
+    if (data?.status == 200) {
+      payload.callback();
+      return data;
+    } else {
+      return thunkAPI.rejectWithValue({ data, problem });
+    }
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
 const initialState = {
   optid: "",
   userDetails: {},
@@ -140,6 +154,20 @@ const UserReducer = createSlice({
       .addCase(getCustomerInfo.rejected, (state, action) => {
         state.loading = false;
         state.timerError = action.error.message;
+        toast.error(action.payload.message);
+      })
+      .addCase(addOrupdateAnnexureInfo.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(addOrupdateAnnexureInfo.fulfilled, (state, action) => {
+        state.loading = false;
+        state.AnnexureInfo = action.payload;
+        toast.success(action.payload.message);
+      })
+      .addCase(addOrupdateAnnexureInfo.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
         toast.error(action.payload.message);
       });
     builder.addCase(startTimerWithCallback.fulfilled, (state) => {

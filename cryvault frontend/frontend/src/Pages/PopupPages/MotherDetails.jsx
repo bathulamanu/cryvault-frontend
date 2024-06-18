@@ -1,103 +1,122 @@
 import { Box, Button, FormControl, FormHelperText, InputLabel, OutlinedInput, Stack, TextField, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState ,forwardRef, useImperativeHandle} from "react";
 import motherImage from "../../assets/images/motherImage.png";
 import card from "../../assets/images/card.png";
-const MotherDetails = () => {
-  const [data, setData] = useState({
-    name: {
-      value: "",
-      placeholder: "Expectant Mother's Name *",
-      errorMessage: "",
-      errorStatus: false,
-      name: "name",
-      id: "name",
-    },
-    dob: {
-      value: "",
-      placeholder: "Date of Birth *",
-      errorMessage: "",
-      errorStatus: false,
-      name: "dob",
-      id: "dob",
-    },
-    email: {
-      value: "",
-      placeholder: "Email Address *",
-      errorMessage: "",
-      errorStatus: false,
-      name: "email",
-      id: "email",
-    },
-    phone: {
-      value: "",
-      placeholder: "Phone Number *",
-      errorMessage: "",
-      errorStatus: false,
-      name: "phone",
-      id: "phone",
-    },
-    occupation: {
-      value: "",
-      placeholder: "Occupation *",
-      errorMessage: "",
-      errorStatus: false,
-      name: "occupation",
-      id: "occupation",
-    },
-    designation: {
-      value: "",
-      placeholder: "Designation *",
-      errorMessage: "",
-      errorStatus: false,
-      name: "designation",
-      id: "designation",
-    },
-    organization: {
-      value: "",
-      placeholder: "Organization *",
-      errorMessage: "",
-      errorStatus: false,
-      name: "organization",
-      id: "organization",
-    },
-    idValue: {
-      value: "",
-      placeholder: "ID Value",
-      errorMessage: "",
-      errorStatus: false,
-      name: "idValue",
-      id: "idValue",
-    },
+const redStarStyle = {
+  color: "red",
+  marginLeft: "4px",
+};
 
-    idType: {
+const MotherDetails = forwardRef((props, ref) => {
+  const [data, setData] = useState({
+    ExpectantMotherName: {
       value: "",
-      placeholder: "ID Type",
+      placeholder: "Expectant Mother's Name",
       errorMessage: "",
       errorStatus: false,
-      name: "idType",
-      id: "idType",
+      name: "ExpectantMotherName",
+      id: "ExpectantMotherName",
     },
-    other: {
+    ExpectantMotherDOB: {
+      value: "",
+      placeholder: "Date of Birth",
+      errorMessage: "",
+      errorStatus: false,
+      name: "ExpectantMotherDOB",
+      id: "ExpectantMotherDOB",
+    },
+    ExpectantMotherEmail: {
+      value: "",
+      placeholder: "Email Address",
+      errorMessage: "",
+      errorStatus: false,
+      name: "ExpectantMotherEmail",
+      id: "ExpectantMotherEmail",
+    },
+    ExpectantMotherMobile: {
+      value: "",
+      placeholder: "Phone Number",
+      errorMessage: "",
+      errorStatus: false,
+      name: "ExpectantMotherMobile",
+      id: "ExpectantMotherMobile",
+    },
+    ExpectantMotherOccupation: {
+      value: "",
+      placeholder: "Occupation",
+      errorMessage: "",
+      errorStatus: false,
+      name: "ExpectantMotherOccupation",
+      id: "ExpectantMotherOccupation",
+    },
+    ExpectantMotherDesignation: {
+      value: "",
+      placeholder: "Designation",
+      errorMessage: "",
+      errorStatus: false,
+      name: "ExpectantMotherDesignation",
+      id: "ExpectantMotherDesignation",
+    },
+    ExpectantMotherOrganizationName: {
+      value: "",
+      placeholder: "Organization",
+      errorMessage: "",
+      errorStatus: false,
+      name: "ExpectantMotherOrganizationName",
+      id: "ExpectantMotherOrganizationName",
+    },
+    ExpectantMotherIDproof: {
+      value: "",
+      placeholder: "ID Proof",
+      errorMessage: "",
+      errorStatus: false,
+      name: "ExpectantMotherIDproof",
+      id: "ExpectantMotherIDproof",
+    },
+    ExpectantMotherIdproofNo: {
+      value: "",
+      placeholder: "ID proof Number",
+      errorMessage: "",
+      errorStatus: false,
+      name: "ExpectantMotherIdproofNo",
+      id: "ExpectantMotherIdproofNo",
+    },
+    ExpectantMotherOtherInfo: {
       value: "",
       placeholder: "If Other, please specify",
       errorMessage: "",
       errorStatus: false,
-      name: "other",
-      id: "other",
-    },
+      name: "ExpectantMotherOtherInfo",
+      id: "ExpectantMotherOtherInfo",
+    }
   });
-  const handleOnChange = () => {};
+  const handleOnChange = (e) => {
+    const { name, value } = e.target;
+    setData((prevData) => ({
+      ...prevData,
+      [name]: { ...prevData[name], value: value, errorStatus: false, errorMessage: "" },
+    }));
+  };
   const [deliveryinputType, setDeliveryInputType] = useState("text");
 
+  useImperativeHandle(ref, () => ({
+    getMotherDetails: () => {
+      return data;
+    }
+  }))
+
+  const Save = () => {
+    console.log("mother details kkkkkkkkkkkkkkkkkkkkkkkkk ", data);
+  }
   return (
     <Box sx={{ display: "flex", width: "100%" }} className="conatiner">
       <Box sx={{ width: "60%", border: "1px solid #e5e5e5", margin: "2rem", padding: "2rem", borderRadius: "1rem" }}>
         <Typography sx={{ fontSize: "2rem", fontWeight: "600", color: "black", textTransform: "uppercase" }}>Mother Details</Typography>
         <Box sx={{ marginTop: "3rem", display: "grid", gridTemplateColumns: "auto auto", gridColumnGap: "2rem", gridRowGap: "3rem" }} className="MotherDetails">
           {Object.entries(data).map(([key, fieldData]) =>
-            fieldData.name == "dob" ? (
+            fieldData.name == "ExpectantMotherDOB" ? (
               <Stack sx={{ width: "100%", gap: "0.5rem" }} key={key}>
-                <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>{fieldData.placeholder}</InputLabel>
+                <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>{fieldData.placeholder}<span style={redStarStyle}>*</span></InputLabel>
                 <FormControl variant="outlined" size="small">
                   <OutlinedInput
                     readOnly={false}
@@ -106,7 +125,7 @@ const MotherDetails = () => {
                     name={fieldData.name}
                     id={`outlined-adornment-${key}`}
                     placeholder={fieldData.placeholder}
-                    type={deliveryinputType}
+                    // type={deliveryinputType}
                     onFocus={() => setDeliveryInputType("date")}
                     onBlur={() => setDeliveryInputType("text")}
                     sx={{
@@ -123,8 +142,8 @@ const MotherDetails = () => {
               </Stack>
             ) : (
               <>
-                <Stack sx={{ width: fieldData.name == "organization" || fieldData.name == "other" ? "208%" : "100%", gap: "0.5rem" }} key={key}>
-                  <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>{fieldData.placeholder}</InputLabel>
+                <Stack sx={{ width: fieldData.name == "ExpectantMotherOrganizationName" || fieldData.name == "ExpectantMotherOtherInfo" ? "208%" : "100%", gap: "0.5rem" }} key={key}>
+                  <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>{fieldData.placeholder}<span style={redStarStyle}>*</span></InputLabel>
                   <FormControl variant="outlined" size="small">
                     <OutlinedInput
                       readOnly={false}
@@ -145,7 +164,7 @@ const MotherDetails = () => {
                     {fieldData.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{fieldData.errorMessage}</Typography> : null}
                   </FormControl>
                 </Stack>
-                {fieldData.name == "organization" || fieldData.name == "other" ? <br /> : null}
+                {fieldData.name == "ExpectantMotherOrganizationName" || fieldData.name == "ExpectantMotherOtherInfo" ? <br /> : null}
               </>
             )
           )}
@@ -164,7 +183,7 @@ const MotherDetails = () => {
               <Box sx={{ display: "flex", flexDirection: "column" }}>
                 <Typography sx={{ fontSize: "1.5rem", textAlign: "center", color: "gray" }}>Drop your new Profile Image here maximum (2MB)</Typography>
                 <Typography sx={{ fontSize: "1.5rem", textAlign: "center", color: "gray" }}>Supported Formats: JPG, PNG, SVG</Typography>
-                <Button sx={{ alignSelf: "center", fontSize: "1rem", textTransform: "none", marginTop: "1rem" }} variant="contained">
+                <Button sx={{ alignSelf: "center", fontSize: "1rem", textTransform: "none", marginTop: "1rem" }} variant="contained" disabled>
                   Choose File
                 </Button>
               </Box>
@@ -184,7 +203,7 @@ const MotherDetails = () => {
               <Box sx={{ display: "flex", flexDirection: "column" }}>
                 <Typography sx={{ fontSize: "1.5rem", textAlign: "center", color: "gray" }}>Drop your ID Proof here maximum (2MB)</Typography>
                 <Typography sx={{ fontSize: "1.5rem", textAlign: "center", color: "gray" }}>Supported Formats: JPG, PNG, SVG</Typography>
-                <Button sx={{ alignSelf: "center", fontSize: "1rem", textTransform: "none", marginTop: "1rem" }} variant="contained">
+                <Button sx={{ alignSelf: "center", fontSize: "1rem", textTransform: "none", marginTop: "1rem" }} variant="contained" disabled>
                   Choose File
                 </Button>
               </Box>
@@ -195,8 +214,10 @@ const MotherDetails = () => {
           </Box>
         </Box>
       </Box>
+
+      <button onClick={Save()}>kkkkk</button>
     </Box>
   );
-};
+});
 
 export default MotherDetails;

@@ -39,16 +39,16 @@ const CheckoutDetails = () => {
   const tax = amount * 0.18;
   // const total = parseInt(amount) + handling + tax;
   const subscription = localStorage.getItem("subscription");
-
+  const [partialOrFull, setPartialOrFull] = useState(null);
   const dispatch = useDispatch();
   const [userData, setUserData] = useState({
-    registrationId: {
-      value: id,
-      placeholder: "Registration Id (CRM Num)",
-      type: "text",
-      name: "registrationId",
-      id: "registrationId",
-    },
+    // registrationId: {
+    //   value: id,
+    //   placeholder: "Registration Id (CRM Num)",
+    //   type: "text",
+    //   name: "registrationId",
+    //   id: "registrationId",
+    // },
     firstName: {
       value: "",
       placeholder: "First Name",
@@ -88,6 +88,11 @@ const CheckoutDetails = () => {
       type: "tel",
       name: "phone",
       id: "phone",
+    },
+    gender: {
+      value: "",
+      name: "gender",
+      options: genders ? genders.map((gender) => ({ label: gender.value, value: gender.value })) : [],
     },
     addressLine1: {
       value: "",
@@ -152,11 +157,7 @@ const CheckoutDetails = () => {
       id: "city",
       cityID: "",
     },
-    gender: {
-      value: "",
-      name: "gender",
-      options: genders ? genders.map((gender) => ({ label: gender.value, value: gender.value })) : [],
-    },
+
     pincode: {
       value: "",
       placeholder: "Pincode",
@@ -225,6 +226,11 @@ const CheckoutDetails = () => {
     const { name, value } = e.target;
     setUserData({ ...userData, [e.target.name]: { ...userData[e.target.name], value: value, errorStatus: false, errorMessage: "" } });
   };
+  const handlePartialOrFullPament = (e) => {
+    // const newValue = e.target.value === 'true';
+    setPartialOrFull(e.target.value);
+  }
+
   useEffect(() => {
     const dataToSend = userData.country.countryId;
     if (userData.country.value) dispatch(getState({ payload: dataToSend }));
@@ -251,17 +257,17 @@ const CheckoutDetails = () => {
       country: userData.country.value,
       gender: userData.gender.value,
     };
-    if (!userData.phone.value) {
-      setUserData((prevData) => ({
-        ...prevData,
-        phone: {
-          ...prevData.phone,
-          errorStatus: true,
-          errorMessage: "Enter valid phone number",
-        },
-      }));
-      return;
-    }
+    // if (!userData.phone.value) {
+    //   setUserData((prevData) => ({
+    //     ...prevData,
+    //     phone: {
+    //       ...prevData.phone,
+    //       errorStatus: true,
+    //       errorMessage: "Enter valid phone number",
+    //     },
+    //   }));
+    //   return;
+    // }
     if (!userData.firstName.value) {
       setUserData((prevData) => ({
         ...prevData,
@@ -410,11 +416,12 @@ const CheckoutDetails = () => {
                 {data[1].placeholder}
               </InputLabel>
               <FormControl variant="outlined" size="small">
-                <OutlinedInput readOnly={data[1].name == "phone" || data[1].name == "registrationId" ? true : false} type={data[1].type} value={data[1].value} name={data[1].name} id="outlined-adornment-password" placeholder={data[1].placeholder} sx={{ border: data[1].errorStatus ? "1px solid red" : "", height: "57px" }} onChange={handleOnChange} />
+                <OutlinedInput readOnly={data[1].name == "phone" ? true : false} type={data[1].type} value={data[1].value} name={data[1].name} id="outlined-adornment-password" placeholder={data[1].placeholder} sx={{ border: data[1].errorStatus ? "1px solid red" : "", height: "57px" }} onChange={handleOnChange} />
                 {data[1].errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}> {data[1].errorMessage} </Typography> : null}
               </FormControl>
             </Stack>
           ))}
+
 
           <MultipleSelect type={"country"} title={"Country"} userData={userData} dataArray={countries} handleChange={handleCountryChange} />
           <MultipleSelect type={"state"} title={"State"} userData={userData} dataArray={states} handleChange={handleStateChange} />
@@ -440,9 +447,10 @@ const CheckoutDetails = () => {
             </Typography>
             <br />
 
-            <RadioGroup sx={{ width: "90%" }}>
+            <RadioGroup sx={{ width: "90%" }} value={partialOrFull} onChange={handlePartialOrFullPament}>
               <Box sx={{ display: "flex", flexDirection: isMobile ? "column" : "row", gap: "1rem" }}>
                 <FormControlLabel
+                  value="partial"
                   control={
                     <Radio
                       sx={{
@@ -460,7 +468,9 @@ const CheckoutDetails = () => {
                     </Typography>
                   } // Use Typography for label
                 />
+
                 <FormControlLabel
+                  value="full"
                   control={
                     <Radio
                       sx={{
@@ -474,7 +484,7 @@ const CheckoutDetails = () => {
                   }
                   label={
                     <Typography variant="h4" sx={{ whiteSpace: "nowrap" }}>
-                      Complete Payment
+                      Full Payment
                     </Typography>
                   } // Use Typography for label
                 />
@@ -534,10 +544,21 @@ const CheckoutDetails = () => {
 export function MultipleSelect(props) {
   const { title, dataArray, handleChange, userData, type } = props;
   const dispatch = useDispatch();
+  const ITEM_HEIGHT = 45
+  const ITEM_PADDING_TOP = 8
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+        width: 150,
+      },
+    },
+  }
 
   return (
+
     <Box>
-      <Typography> {title}</Typography>
+      <InputLabel sx={{ fontSize: "2rem" }} htmlFor={"gne"}>{title}</InputLabel>
       <select onChange={handleChange} name={title} id={title} className="custom-select custom-select-dropdown">
         <option value="" disabled="disabled" selected="selected">
           Please select a {title}
@@ -548,10 +569,79 @@ export function MultipleSelect(props) {
           </option>
         ))}
       </select>
+      {/* <FormControl fullWidth>
+        <InputLabel sx={{ fontSize: "2rem" }} id="demo-simple-select-autowidth-label">
+        {title}
+        </InputLabel>
+        <Select
+          sx={{ fontSize: "2rem", border: userData.city?.errorStatus ? "1px solid red" : "" }}
+          // labelId="demo-simple-select-autowidth-label"
+          labelId="demo-multiple-name-label"
+          id="demo-simple-select-autowidth"
+          value={userData.city?.value}
+          onChange={handleChange}
+          // autoWidth
+          label="Cities"
+        >
+          {dataArray?.map((city) => (
+            <MenuItem sx={{ fontSize: "2rem" }} name={city.name} id={city._id} key={city.name} value={city.cityID}>
+              {city.name}
+            </MenuItem>
+          ))}
+        </Select>
+        {userData.city?.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}> {userData.city?.errorMessage} </Typography> : null}
+      </FormControl> */}
+
     </Box>
   );
 }
 
+export function SingleSelect(props) {
+  const { data,
+    onChange,
+    value,
+    width,
+    Placeholder,
+    disabled, } = props;
+
+  // const dispatch = useDispatch();
+  const ITEM_HEIGHT = 48
+  const ITEM_PADDING_TOP = 8
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+        width: 150,
+      },
+    },
+  }
+
+  const handleChange = (event) => {
+    onChange(event.target.value)
+  }
+
+  return (
+    <FormControl sx={{ width: width || 200 }} size="small">
+      <Select
+        labelId="demo-select-small-label"
+        id="demo-select-small"
+        value={value}
+        disabled={disabled}
+        onChange={handleChange}
+        placeholder={Placeholder}
+        MenuProps={MenuProps}
+        inputProps={{ 'aria-label': 'Without label' }}
+      >
+        <MenuItem disabled value="">
+          <em>{Placeholder}</em>
+        </MenuItem>
+        {data?.map((item) => {
+          return <MenuItem value={item?.id}>{item?.name}</MenuItem>
+        })}
+      </Select>
+    </FormControl>
+  )
+}
 export default CheckoutDetails;
 {
   /* <FormControl fullWidth>

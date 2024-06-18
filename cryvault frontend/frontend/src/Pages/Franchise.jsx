@@ -436,12 +436,20 @@ const Franchise = () => {
                           <FormControlLabel
                             value="true"
                             control={<Radio />}
-                            label="Yes"
+                            label={
+                              <Typography variant="h4" sx={{ whiteSpace: "nowrap" }}>
+                                Yes
+                              </Typography>
+                            }
                           />
                           <FormControlLabel
                             value="false"
                             control={<Radio />}
-                            label="No"
+                            label={
+                              <Typography variant="h4" sx={{ whiteSpace: "nowrap" }}>
+                                No
+                              </Typography>
+                            }
                           />
                         </RadioGroup>
                       </Box>

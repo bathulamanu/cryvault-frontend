@@ -100,6 +100,7 @@ const queryInitialState = {
 }
 const ContactForm = () => {
   const [userData, setUserData] = useState(initialState);
+  var [captcha, setCaptch] = useState()
 
   const isMobile = useDeviceSize() === "xs";
   const [inputType, setInputType] = useState("text");
@@ -241,7 +242,8 @@ const ContactForm = () => {
 
     dispatch(addEmergencyAppointment({ payload: dataToSend }));
     setUserData(initialState);
-    setqueryContent(queryInitialState)
+    // setqueryContent(queryInitialState)
+    captcha.reset()
   };
   return (
     <Box className="edu-section-gap contact_bg contact-form-area contact-form-reach">
@@ -311,11 +313,12 @@ const ContactForm = () => {
                   <textarea name="contact-message" id="contact-message" cols="30" rows="6" placeholder="What is Your Query......?"
                     onChange={handleQueryCommentChange}   ></textarea>
                 </Box>
-                <Box className="form-group col-12">
+                <Box sx={{ marginTop: "1rem" }} className="form-group col-12">
                   {/* <iframe title="reCAPTCHA" width="304" height="78" role="presentation" name="a-rax7gaw23nj6" frameBorder="0" scrolling="no" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation allow-modals allow-popups-to-escape-sandbox allow-storage-access-by-user-activation" src="https://www.google.com/recaptcha/api2/anchor?ar=2&amp;k=6LfPixwaAAAAABFFuOob52Mh463Oy3rZEtYUr4oJ&amp;co=aHR0cHM6Ly93d3cuY3J5b3ZhdWx0LmluOjQ0Mw..&amp;hl=en&amp;v=Hq4JZivTyQ7GP8Kt571Tzodj&amp;size=normal&amp;cb=oh1vpc5nfiib" data-gtm-yt-inspected-6="true"></iframe> */}
                   <ReCAPTCHA
                     sitekey={RECAPTCHA_SITE_KEY}
                     onChange={handleRecaptchaChange}
+                    ref={el => captcha = el}
                   />
                   {recaptchaToken.recaptcha.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{recaptchaToken.recaptcha.errorMessage}</Typography> : null}
 

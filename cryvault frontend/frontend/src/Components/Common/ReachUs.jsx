@@ -1,5 +1,5 @@
 import { Box, Button, Fade, IconButton, Modal, Typography } from "@mui/material";
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigation, useRoutes } from "react-router-dom";
 import useDeviceSize from "../../Utilities/useDeviceSize";
 import { HiOutlinePlayCircle } from "react-icons/hi2";
@@ -59,6 +59,18 @@ const initialState = {
     id: "subject",
   },
 };
+const intialRecaptcha = {
+  recaptcha: {
+    value: "",
+    placeholder: "recaptcha",
+    errorStatus: false,
+    errorMessage: "",
+    icon: "",
+    type: "text",
+    name: "recaptcha",
+    id: "recaptcha",
+  }
+}
 const ReachUs = () => {
   const router = useLocation();
   const [open, setOpen] = useState(false);
@@ -112,23 +124,15 @@ const ReachUs = () => {
       id: "subject",
     },
   });
+  var [captcha, setCaptch] = useState()
 
   const isMobile = useDeviceSize() === "xs";
   const dispatch = useDispatch();
-  const [recaptchaToken, setRecaptchaToken] = useState({
-    recaptcha: {
-      value: "",
-      placeholder: "recaptcha",
-      errorStatus: false,
-      errorMessage: "",
-      icon: "",
-      type: "text",
-      name: "recaptcha",
-      id: "recaptcha",
-    }
-  });
+  const [recaptchaToken, setRecaptchaToken] = useState(intialRecaptcha);
+  const recaptchaRef = useRef(null);
   const RECAPTCHA_SITE_KEY = "6Lf4RPUpAAAAAOu9M51NaHQlLxl8df7ldXf9pnS_"
-
+  const [flagClass, setFlagClass] = useState('');
+  const phoneInputRef = useRef(null);
 
   const handleRecaptchaChange = (token) => {
     setRecaptchaToken({ ...recaptchaToken, ["recaptcha"]: { ...recaptchaToken["recaptcha"], value: token, errorStatus: false, errorMessage: "" } });
@@ -152,7 +156,11 @@ const ReachUs = () => {
       countryCode: { ...prevData.countryCode, value: country_code.dialCode, errorStatus: false, errorMessage: "" },
     }));
   };
+
+
+
   const handleSubmit = () => {
+
     let isMobileInvalid;
     if (userData.phone.value || userData.countryCode.value) {
       isMobileInvalid = !validatePhoneNumber(userData.phone.value, String(userData.countryCode.value) || "91");
@@ -204,6 +212,7 @@ const ReachUs = () => {
       return;
     }
 
+
     const dataToSend = {
       fullName: userData.fullName.value,
       Email: userData.email.value,
@@ -213,11 +222,37 @@ const ReachUs = () => {
       pageName: router?.pathname,
     };
 
+
     dispatch(addReachUS({ payload: dataToSend }));
     setUserData(initialState);
+    captcha.reset()
+
   };
   const pageInfo = useSelector((state) => state.home.pageInfo);
   const appointment = pageInfo?.[16]?.[15]?.urlSlug;
+
+  // useEffect(() => {
+  //   if (phoneInputRef.current) {
+  //     const flagNode = phoneInputRef.current.querySelector('.flag');
+  //     if (flagNode) {
+  //       flagNode.className = `flag ${flagClass}`;
+  //     }
+  //   }
+  // }, [flagClass]);
+
+  // useEffect(() => {
+  //   const timer = setTimeout(() => {
+  //     if (phoneInputRef.current) {
+  //       const flagNode = phoneInputRef.current.container.querySelector('.flag');
+  //       if (flagNode) {
+  //         flagNode.className = `flag ${flagClass}`;
+  //       }
+  //     }
+  //   }, 100); // Delay to ensure DOM is fully loaded
+  //   return () => clearTimeout(timer);
+  // }, [flagClass]);
+
+
   return (
     <>
       <Box sx={{ display: "flex", width: "100%", justifyContent: "center" }} className="edu-cta-banner-area home-gym-cta-wrapper bg-image">
@@ -276,6 +311,7 @@ const ReachUs = () => {
                           containerClass={"layoutItem"}
                           // country={"in"}
                           defaultErrorMessage="Incorrect WhatsApp Number"
+                          ref={phoneInputRef}
                         />
                         {data[1].errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data[1].errorMessage}</Typography> : null}
                       </Box>
@@ -292,6 +328,7 @@ const ReachUs = () => {
                   <ReCAPTCHA
                     sitekey={RECAPTCHA_SITE_KEY}
                     onChange={handleRecaptchaChange}
+                    ref={el => captcha = el}
                   />
                   {recaptchaToken.recaptcha.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{recaptchaToken.recaptcha.errorMessage}</Typography> : null}
 

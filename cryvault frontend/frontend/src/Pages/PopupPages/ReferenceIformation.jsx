@@ -1,0 +1,465 @@
+import React, { useState, forwardRef, useImperativeHandle } from "react";
+import {
+    Box,
+    Button,
+    Card,
+    CardContent,
+    Checkbox,
+    FormControl,
+    FormControlLabel,
+    Grid,
+    InputLabel,
+    OutlinedInput,
+    Stack,
+    Typography,
+} from "@mui/material";
+// import SingleSelect from "../../../GlobalComponents/SingleSelect";
+import { MultipleSelect } from '../CheckoutDetails';
+import { useDispatch, useSelector } from "react-redux";
+const headingStyle = {
+    fontSize: "18px",
+    fontWeight: 500,
+    marginTop: "10px",
+    marginLeft: "5px",
+};
+
+const inputLableStyle = {
+    color: "black",
+    fontSize: "14px",
+    fontWeight: 500,
+    display: "flex",
+    alignItems: "center",
+};
+
+const redStarStyle = {
+    color: "red",
+    marginLeft: "4px",
+};
+
+const ReferenceIformation = forwardRef((props, ref) => {
+
+    const [data, setData] = useState({
+        ExisitingCryovaultClientUIN: {
+            value: "",
+            placeholder: "Exisiting Cryovault Client UIN",
+            errorMessage: "",
+            errorStatus: false,
+            name: "ExisitingCryovaultClientUIN",
+            id: "ExisitingCryovaultClientUIN"
+        },
+        IfReferredByExisitingClientName: {
+            value: "",
+            placeholder: "If Referred By Exisiting Client Name",
+            errorMessage: "",
+            errorStatus: false,
+            name: "IfReferredByExisitingClientName",
+            id: "IfReferredByExisitingClientName"
+        },
+        Mobile1: {
+            value: "",
+            placeholder: "Mobile1",
+            errorMessage: "",
+            errorStatus: false,
+            name: "Mobile1",
+            id: "Mobile1"
+        },
+        Mobile2: {
+            value: "",
+            placeholder: "Mobile2",
+            errorMessage: "",
+            errorStatus: false,
+            name: "Mobile2",
+            id: "Mobile2"
+        },
+        shipmentDetails: {
+            value: "",
+            placeholder: "shipment Details",
+            errorMessage: "",
+            errorStatus: false,
+            name: "shipmentDetails",
+            id: "shipmentDetails"
+        },
+        Name: {
+            value: "",
+            placeholder: "Name",
+            errorMessage: "",
+            errorStatus: false,
+            name: "Name",
+            id: "Name"
+        },
+        RelationShip: {
+            value: "",
+            placeholder: "RelationShip",
+            errorMessage: "",
+            errorStatus: false,
+            name: "RelationShip",
+            id: "RelationShip"
+        },
+        EmergencyMobile1: {
+            value: "",
+            placeholder: "EmergencyMobile1",
+            errorMessage: "",
+            errorStatus: false,
+            name: "EmergencyMobile1",
+            id: "EmergencyMobile1"
+        },
+        EmergencyMobile2: {
+            value: "",
+            placeholder: "EmergencyMobile2",
+            errorMessage: "",
+            errorStatus: false,
+            name: "EmergencyMobile2",
+            id: "EmergencyMobile2"
+        },
+        meternalSampleAndUmbilicalBleed: {
+            value: null,
+            placeholder: "meternal Sample And Umbilical Bleed",
+            errorMessage: "",
+            errorStatus: false,
+            name: "meternalSampleAndUmbilicalBleed",
+            id: "meternalSampleAndUmbilicalBleed"
+        },
+        phledopomist: {
+            value: null,
+            placeholder: "phledopomist",
+            errorMessage: "",
+            errorStatus: false,
+            name: "phledopomist",
+            id: "phledopomist"
+        }
+
+    });
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setData((prevData) => ({
+            ...prevData,
+            [name]: { ...prevData[name], value: value, errorStatus: false, errorMessage: "" },
+        }));
+    };
+
+    useImperativeHandle(ref, () => ({
+        getReferenceIformationChildData: () => {
+            return data;
+        }
+    }))
+
+    const Save = () => {
+        console.log("referencace detail kk ", data);
+    }
+
+    const handleCityChange = (event) => {
+        setData((prevData) => ({
+            ...prevData,
+            city: {
+                ...prevData.country,
+                value: event.target.value,
+                cityID: event.target.value,
+                errorStatus: false,
+                errorMessage: "",
+            },
+        }));
+    };
+
+    const handleSave = (e) => {
+        e.preventDefault();
+        console.log(formValues);
+    };
+    const cities = useSelector((state) => state.payment.cities);
+
+    return (
+        <Stack sx={{ gap: 4 }}>
+            <Stack
+                sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                    gap: 5,
+                }}
+            >
+                <Card variant="outlined">
+                    <CardContent>
+                        <Typography variant="h5" sx={headingStyle}>
+                            DETAILS REFERENCE / DETAILS OF RETURNING CRYOVAULT CLIENT
+                        </Typography>
+                        <Typography
+                            variant="h5"
+                            sx={{ fontSize: "15px", marginTop: "12px" }}
+                        >
+                            If you are existing Cryovault client, please provide details as
+                            below<span style={redStarStyle}>*</span>
+                        </Typography>
+                        <Grid container spacing={2} pt={1} pb={2}>
+                            <Grid item style={{ width: "100%" }}>
+                                <InputLabel sx={inputLableStyle}>
+                                    UIN
+                                    <span style={redStarStyle}>*</span>
+                                </InputLabel>
+                                <FormControl variant="outlined" fullWidth size="small">
+                                    <OutlinedInput
+                                        fullWidth
+                                        id="outlined-adornment-ExisitingCryovaultClientUIN"
+                                        placeholder="Exisiting Cryovault Client UIN"
+                                        size="small"
+                                        sx={{
+                                            border: "1px solid black",
+                                            height: "40px",
+                                            width: "100%",
+                                            padding: "10px",
+                                            borderRadius: "8px",
+                                        }}
+                                        name="ExisitingCryovaultClientUIN"
+                                        value={data.ExisitingCryovaultClientUIN.value}
+                                        onChange={handleChange}
+                                    />
+                                </FormControl>
+                            </Grid>
+                        </Grid>
+                        <Typography
+                            variant="h5"
+                            sx={{ fontSize: "15px", marginTop: "10px" }}
+                        >
+                            If referred by an existing client, please provide details as below
+                            <span style={redStarStyle}>*</span>
+                            below<span style={redStarStyle}>*</span>
+                        </Typography>
+                        <Grid container spacing={2} pt={1} pb={2}>
+                            <Grid item style={{ width: "100%" }}>
+                                <InputLabel sx={inputLableStyle}>
+                                    Referring clients name
+                                    <span style={redStarStyle}>*</span>
+                                </InputLabel>
+                                <FormControl variant="outlined" fullWidth size="small">
+                                    <OutlinedInput
+                                        fullWidth
+                                        id="outlined-adornment-IfReferredByExisitingClientName"
+                                        placeholder="If Referred By Exisiting ClientName"
+                                        size="small"
+                                        sx={{
+                                            border: "1px solid black",
+                                            height: "40px",
+                                            width: "100%",
+                                            padding: "10px",
+                                            borderRadius: "8px",
+                                        }}
+                                        name="IfReferredByExisitingClientName"
+                                        value={data.IfReferredByExisitingClientName.value}
+                                        onChange={handleChange}
+                                    />
+                                </FormControl>
+                            </Grid>
+                        </Grid>
+                        <Grid container spacing={2} pt={3}>
+                            <Grid item xs={6}>
+                                <InputLabel sx={inputLableStyle}>Mobile-1</InputLabel>
+                                <OutlinedInput
+                                    fullWidth
+                                    id="outlined-adornment-Mobile1"
+                                    placeholder="Mobile1"
+                                    size="small"
+                                    sx={{
+                                        border: "1px solid black",
+                                        height: "40px",
+                                        width: "100%",
+                                        padding: "10px",
+                                        borderRadius: "8px",
+                                    }}
+                                    name="Mobile1"
+                                    value={data.Mobile1.value}
+                                    onChange={handleChange}
+                                />
+                            </Grid>
+                            <Grid item xs={6}>
+                                <InputLabel sx={inputLableStyle}>Mobile-2</InputLabel>
+                                <OutlinedInput
+                                    fullWidth
+                                    id="outlined-adornment-Mobile2"
+                                    placeholder="Mobile2"
+                                    size="small"
+                                    sx={{
+                                        border: "1px solid black",
+                                        height: "40px",
+                                        width: "100%",
+                                        padding: "10px",
+                                        borderRadius: "8px",
+                                    }}
+
+                                    name="Mobile2"
+                                    value={data.Mobile2.value}
+                                    onChange={handleChange}
+                                />
+                            </Grid>
+                        </Grid>
+                    </CardContent>
+                </Card>
+                <Stack
+                    sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: 4,
+                    }}
+                >
+                    <Card variant="outlined">
+                        <CardContent>
+                            <Typography variant="h5" sx={headingStyle}>
+                                SHIPMENT DETAILS
+                            </Typography>
+                            <Grid container spacing={2} pt={3} pb={2}>
+                                <Grid item style={{ width: "100%" }}>
+
+                                    <MultipleSelect type={"city"} title={"Send collection kit to"} userData={data} dataArray={cities} handleChange={handleCityChange} />
+
+                                </Grid>
+                            </Grid>
+                        </CardContent>
+                    </Card>
+                    <Card variant="outlined">
+                        <CardContent>
+                            <Typography variant="h5" sx={headingStyle}>
+                                EMERGENCY CONTACT DETAILS
+                            </Typography>
+                            <Grid container spacing={2} pt={2}>
+                                <Grid item xs={6}>
+                                    <InputLabel sx={inputLableStyle}>Name</InputLabel>
+                                    <FormControl variant="outlined" size="small" fullWidth>
+                                        <OutlinedInput
+                                            fullWidth
+                                            type="text"
+                                            id="Name"
+                                            placeholder="Input Text"
+                                            size="small"
+                                            sx={{
+                                                border: "1px solid black",
+                                                height: "40px",
+                                                width: "100%",
+                                                padding: "10px",
+                                                borderRadius: "8px",
+                                            }}
+                                            name={data.Name.name}
+                                            value={data.Name.value}
+                                            onChange={handleChange}
+                                        />
+                                    </FormControl>
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <InputLabel sx={inputLableStyle}>Relationship</InputLabel>
+                                    <FormControl variant="outlined" size="small" fullWidth>
+                                        <OutlinedInput
+                                            fullWidth
+                                            type="text"
+                                            id="RelationShip"
+                                            placeholder="RelationShip"
+                                            size="small"
+                                            sx={{
+                                                border: "1px solid black",
+                                                height: "40px",
+                                                width: "100%",
+                                                padding: "10px",
+                                                borderRadius: "8px",
+                                            }}
+                                            name="RelationShip"
+                                            value={data.RelationShip.value}
+                                            onChange={handleChange}
+                                        />
+                                    </FormControl>
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <InputLabel sx={inputLableStyle}>Mobile-1</InputLabel>
+                                    <FormControl variant="outlined" size="small" fullWidth>
+                                        <OutlinedInput
+                                            fullWidth
+                                            type="text"
+                                            id="EmergencyMobile1"
+                                            placeholder="Input Text"
+                                            size="small"
+                                            sx={{
+                                                border: "1px solid black",
+                                                height: "40px",
+                                                width: "100%",
+                                                padding: "10px",
+                                                borderRadius: "8px",
+                                            }}
+                                            name="EmergencyMobile1"
+                                            value={data.EmergencyMobile1.value}
+                                            onChange={handleChange}
+                                        />
+                                    </FormControl>
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <InputLabel sx={inputLableStyle}>Mobile-2</InputLabel>
+                                    <FormControl variant="outlined" size="small" fullWidth>
+                                        <OutlinedInput
+                                            fullWidth
+                                            type="text"
+                                            id="EmergencyMobile2"
+                                            placeholder="Input Text"
+                                            size="small"
+                                            sx={{
+                                                border: "1px solid black",
+                                                height: "40px",
+                                                width: "100%",
+                                                padding: "10px",
+                                                borderRadius: "8px",
+                                            }}
+
+                                            name="EmergencyMobile2"
+                                            value={data.EmergencyMobile2.value}
+                                            onChange={handleChange}
+                                        />
+                                    </FormControl>
+                                </Grid>
+                            </Grid>
+                        </CardContent>
+                    </Card>
+                </Stack>
+            </Stack>
+            <Card variant="outlined">
+                <CardContent>
+                    <Typography variant="h5" sx={headingStyle}>
+                        TICK AS APPLICABLE FOR CRYOVAULT BIOTECH INDIA PVT. LTD.
+                    </Typography>
+                    <Grid container spacing={2}>
+                        <Grid item style={{ width: "100%" }}>
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                    // checked={sameAddress}
+                                    // onChange={handleCheckboxChange}
+                                    />
+                                }
+                                label="Requesting bank to arrange for pickup of meternal sample & Umbilical cord bleed"
+                                name="meternalSampleAndUmbilicalBleed"
+                                value={data.meternalSampleAndUmbilicalBleed.value}
+                                onChange={handleChange}
+                            />
+                        </Grid>
+                    </Grid>
+                    <Grid container spacing={2}>
+                        <Grid item style={{ width: "100%" }}>
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                    // checked={sameAddress}
+                                    // onChange={handleCheckboxChange}
+                                    />
+                                }
+                                label="Requesting bank to oranise for Phledopomist"
+                                name="phledopomist"
+                                value={data.phledopomist.value}
+                                onChange={handleChange}
+                            />
+                        </Grid>
+                        <Typography sx={{ marginLeft: "50px" }}>
+                            We conform that the information provide above is correct to the
+                            best of my knowledge and we also agree to keep Cryovault
+                            information in case of change of above details for future
+                            communications.
+                        </Typography>
+                    </Grid>
+                </CardContent>
+            </Card>
+            <button onClick={Save()}>save kk </button>
+        </Stack>
+    );
+});
+
+export default ReferenceIformation;

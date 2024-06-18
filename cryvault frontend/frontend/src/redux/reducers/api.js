@@ -132,3 +132,8 @@ export const getAccreditationsCertificationApi = () => {
 export const getBlogsApi = () => {
   return `${BASE_URL}/flyingbyts/api/user/getBlog`;
 };
+export const addOrupdateAnnexureInfoApi = () => {
+  return `${BASE_URL}/flyingbyts/api/customer/addOrupdateAnnexureInfo`;
+};
+
+
