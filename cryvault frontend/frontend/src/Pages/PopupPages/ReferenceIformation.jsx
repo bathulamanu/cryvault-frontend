@@ -1,4 +1,5 @@
-import React, { useState, forwardRef, useImperativeHandle } from "react";
+
+import React, { useState, forwardRef, useImperativeHandle, useRef, useEffect } from "react";
 import {
     Box,
     Button,
@@ -13,8 +14,7 @@ import {
     Stack,
     Typography,
 } from "@mui/material";
-// import SingleSelect from "../../../GlobalComponents/SingleSelect";
-import { MultipleSelect } from '../CheckoutDetails';
+import { MultipleSelect, SingleSelect } from '../CheckoutDetails';
 import { useDispatch, useSelector } from "react-redux";
 const headingStyle = {
     fontSize: "18px",
@@ -37,7 +37,7 @@ const redStarStyle = {
 };
 
 const ReferenceIformation = forwardRef((props, ref) => {
-
+    var { handleNext, currentPage, setCurrentPage, TOTAL_PAGES } = props
     const [data, setData] = useState({
         ExisitingCryovaultClientUIN: {
             value: "",
@@ -139,32 +139,75 @@ const ReferenceIformation = forwardRef((props, ref) => {
 
     useImperativeHandle(ref, () => ({
         getReferenceIformationChildData: () => {
-            return data;
+            if (!data.ExisitingCryovaultClientUIN.value) {
+                setData((prevData) => ({
+                    ...prevData,
+                    ExisitingCryovaultClientUIN: {
+                        ...prevData.ExisitingCryovaultClientUIN,
+                        errorStatus: true,
+                        errorMessage: "Client UIN is required.",
+                    },
+                }));
+                return;
+            }
+
+            if (!data.IfReferredByExisitingClientName.value) {
+                setData((prevData) => ({
+                    ...prevData,
+                    IfReferredByExisitingClientName: {
+                        ...prevData.IfReferredByExisitingClientName,
+                        errorStatus: true,
+                        errorMessage: "Exisiting ClientName is required.",
+                    },
+                }));
+                return;
+            }
+
+            const dataToSend = {
+                ExisitingCryovaultClientUIN: data.ExisitingCryovaultClientUIN.value,
+                IfReferredByExisitingClientName: data.IfReferredByExisitingClientName.value,
+                Mobile1: data.Mobile1.value,
+                Mobile2: data.Mobile2.value,
+                shipmentDetails: data.shipmentDetails.value,
+                Name: data.Name.value,
+                RelationShip: data.RelationShip.value,
+                EmergencyMobile1: data.EmergencyMobile1.value,
+                EmergencyMobile2: data.EmergencyMobile2.value,
+                meternalSampleAndUmbilicalBleed: data.meternalSampleAndUmbilicalBleed.value,
+                phledopomist: data.phledopomist.value
+            };
+
+            if (currentPage < TOTAL_PAGES) {
+                setCurrentPage(currentPage + 1);
+            }
+            return dataToSend;
         }
     }))
 
-    const Save = () => {
-        console.log("referencace detail kk ", data);
-    }
-
-    const handleCityChange = (event) => {
+    const handleCheckChange = (event, name) => {
         setData((prevData) => ({
             ...prevData,
-            city: {
-                ...prevData.country,
-                value: event.target.value,
-                cityID: event.target.value,
-                errorStatus: false,
-                errorMessage: "",
-            },
+            [name]: { ...prevData[name], value: event.target.checked, errorStatus: false, errorMessage: "" },
         }));
-    };
+    }
 
-    const handleSave = (e) => {
-        e.preventDefault();
-        console.log(formValues);
-    };
-    const cities = useSelector((state) => state.payment.cities);
+    const Shipment = [
+        { id: 1, name: "Shipment 1" },
+        { id: 2, name: "Shipment 2" },
+        { id: 3, name: "Shipment 3" },
+        { id: 4, name: "Shipment 4" },
+        { id: 5, name: "Shipment 5" },
+        { id: 6, name: "Shipment 6" }
+    ]
+
+    const handleOnChange = (event, name) => {
+        setData((prevData) => ({
+            ...prevData,
+            [name]: { ...prevData[name], value: event, errorStatus: false, errorMessage: "" },
+        }));
+    }
+
+
 
     return (
         <Stack sx={{ gap: 4 }}>
@@ -305,9 +348,15 @@ const ReferenceIformation = forwardRef((props, ref) => {
                             </Typography>
                             <Grid container spacing={2} pt={3} pb={2}>
                                 <Grid item style={{ width: "100%" }}>
-
-                                    <MultipleSelect type={"city"} title={"Send collection kit to"} userData={data} dataArray={cities} handleChange={handleCityChange} />
-
+                                    <SingleSelect
+                                        Placeholder={"Select"}
+                                        width={"100%"}
+                                        data={Shipment}
+                                        value={data.shipmentDetails.value}
+                                        onChange={(e) => {
+                                            handleOnChange(e, "shipmentDetails");
+                                        }}
+                                    />
                                 </Grid>
                             </Grid>
                         </CardContent>
@@ -422,14 +471,12 @@ const ReferenceIformation = forwardRef((props, ref) => {
                             <FormControlLabel
                                 control={
                                     <Checkbox
-                                    // checked={sameAddress}
-                                    // onChange={handleCheckboxChange}
+                                        onChange={(e) => handleCheckChange(e, 'meternalSampleAndUmbilicalBleed')}
+                                        name={data.meternalSampleAndUmbilicalBleed.value}
                                     />
                                 }
                                 label="Requesting bank to arrange for pickup of meternal sample & Umbilical cord bleed"
-                                name="meternalSampleAndUmbilicalBleed"
-                                value={data.meternalSampleAndUmbilicalBleed.value}
-                                onChange={handleChange}
+
                             />
                         </Grid>
                     </Grid>
@@ -438,14 +485,11 @@ const ReferenceIformation = forwardRef((props, ref) => {
                             <FormControlLabel
                                 control={
                                     <Checkbox
-                                    // checked={sameAddress}
-                                    // onChange={handleCheckboxChange}
+                                        onChange={(e) => handleCheckChange(e, 'phledopomist')}
+                                        name={data.phledopomist.value}
                                     />
                                 }
                                 label="Requesting bank to oranise for Phledopomist"
-                                name="phledopomist"
-                                value={data.phledopomist.value}
-                                onChange={handleChange}
                             />
                         </Grid>
                         <Typography sx={{ marginLeft: "50px" }}>
@@ -457,7 +501,6 @@ const ReferenceIformation = forwardRef((props, ref) => {
                     </Grid>
                 </CardContent>
             </Card>
-            <button onClick={Save()}>save kk </button>
         </Stack>
     );
 });

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { IsSubscribedUserApi, addClientInfoApi, getClientInfoApi, getHelpDetailsApi } from "./api";
+import { IsSubscribedUserApi, addClientInfoApi, getClientInfoApi, getHelpDetailsApi, uploadSingleFileApi, GetTypeOfPregnancyDetails } from "./api";
 import axios from "axios";
 import { exampledata } from "../../data";
 
@@ -81,10 +81,50 @@ export const addClientInfo = createAsyncThunk("addClientInfo", async (payload = 
   }
 });
 
+// export const addClientFileInfo = createAsyncThunk("addClientFileInfo", async (payload = {}, thunkAPI) => {
+//   const apiUrl = uploadSingleFileApi();
+//   const token = sessionStorage.getItem("token");
+//   const headers = {
+//     authorization: `${token}`,
+//   };
+//   try {
+//     const response = await axios.post(apiUrl, { headers });
+//     const { ok, problem, data } = response;
+//     if (data) {
+//       if (payload.callback) payload.callback();
+//       return data;
+//     } else {
+//       return thunkAPI.rejectWithValue({ data, problem });
+//     }
+//   } catch (error) {
+//     return thunkAPI.rejectWithValue(error);
+//   }
+// });
+
+export const GetTypeOfPregnancy = createAsyncThunk("GetTypeOfPregnancy", async (payload = {}, thunkAPI) => {
+  const apiUrl = GetTypeOfPregnancyDetails();
+  const token = sessionStorage.getItem("token");
+  const headers = {
+    authorization: `${token}`,
+  };
+  try {
+    const response = await axios.get(apiUrl, { headers });
+    const { ok, problem, data } = response;
+    if (data) {
+      if (payload.callback) payload.callback();
+      return data;
+    } else {
+      return thunkAPI.rejectWithValue({ data, problem });
+    }
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+
 const initialState = {
   helpList: [],
   SubscribedUserData: [],
-  clientData:  exampledata,
+  clientData: exampledata,
   loading: false,
   error: null,
   isPopupPage: false,
@@ -147,6 +187,18 @@ const DashboardReducer = createSlice({
         // state.clientData = action.payload.data;
       })
       .addCase(addClientInfo.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(GetTypeOfPregnancy.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(GetTypeOfPregnancy.fulfilled, (state, action) => {
+        state.loading = false;
+        state.typeOfPreganacyData = action.payload.data;
+      })
+      .addCase(GetTypeOfPregnancy.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       })

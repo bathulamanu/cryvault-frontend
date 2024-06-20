@@ -1,4 +1,4 @@
-import React, { useEffect, useState ,forwardRef, useImperativeHandle} from "react";
+import React, { useEffect, useState, forwardRef, useImperativeHandle } from "react";
 // import { styled } from "@mui/material/styles";
 // import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import {
@@ -19,16 +19,17 @@ import {
   Select
 } from "@mui/material";
 
-import { getCountry } from "../../redux/reducers/PaymentReducer";
-
 import { useDispatch, useSelector } from "react-redux";
-import { MultipleSelect } from '../CheckoutDetails'
-import { Save } from "@mui/icons-material";
-// import {
-//   getCityIdList,
-//   getNamesIdList,
-//   getStateIdList,
-// } from "../../../globalFunctions";
+import { MultipleSelect, SingleSelect } from '../CheckoutDetails'
+import {
+  getCityIdList,
+  getNamesIdList,
+  getStateIdList,
+  getTypeOfPregnancyList
+} from "../../globalFunctions";
+
+import { getCountry, getState, getCity } from "../../redux/reducers/PaymentReducer";
+import { GetTypeOfPregnancy } from "../../redux/reducers/DashboardReducer"
 
 const headingStyle = {
   fontSize: "18px",
@@ -52,12 +53,9 @@ const redStarStyle = {
 
 
 const HospitalDetails = forwardRef((props, ref) => {
+  var { handleNext, currentPage, setCurrentPage, TOTAL_PAGES } = props
   const dispatch = useDispatch();
 
-  const countries = useSelector((state) => state.payment.countries);
-  const states = useSelector((state) => state.payment.states);
-  const cities = useSelector((state) => state.payment.cities);
-  const [detail, setDetail] = useState(null);
   const [data, setData] = useState({
     ExpectedDateOfDelivery: {
       value: "",
@@ -99,46 +97,49 @@ const HospitalDetails = forwardRef((props, ref) => {
       name: "ConsultingHospital",
       id: "ConsultingHospital"
     },
-    ConsultingHospitalAddress: {
-      value: "",
-      placeholder: "Consulting Hospital Address",
-      errorMessage: "",
-      errorStatus: false,
-      name: "ConsultingHospitalAddress",
-      id: "ConsultingHospitalAddress"
-    },
-    ConsultingHosptalCity: {
-      value: "",
-      placeholder: "Consulting Hosptal City",
-      errorMessage: "",
-      errorStatus: false,
-      name: "ConsultingHosptalCity",
-      id: "ConsultingHosptalCity"
-    },
-    ConsultingHospitalState: {
-      value: "",
-      placeholder: "Consulting Hospital State",
-      errorMessage: "",
-      errorStatus: false,
-      name: "ConsultingHospitalState",
-      id: "ConsultingHospitalState"
-    },
+
     ConsultingHospitalCountry: {
-      value: "",
-      placeholder: "Consulting Hospital Country",
+      value: 352,
+      placeholder: "Country",
       errorMessage: "",
       errorStatus: false,
       name: "ConsultingHospitalCountry",
       id: "ConsultingHospitalCountry"
     },
+
+    ConsultingHospitalState: {
+      value: "",
+      placeholder: "State",
+      errorMessage: "",
+      errorStatus: false,
+      name: "ConsultingHospitalState",
+      id: "ConsultingHospitalState"
+    },
+    ConsultingHosptalCity: {
+      value: "",
+      placeholder: "City",
+      errorMessage: "",
+      errorStatus: false,
+      name: "ConsultingHosptalCity",
+      id: "ConsultingHosptalCity"
+    },
     ConsultingHospitalPinCode: {
       value: "",
-      placeholder: "Consulting Hospital PinCode",
+      placeholder: "PinCode",
       errorMessage: "",
       errorStatus: false,
       name: "ConsultingHospitalPinCode",
       id: "ConsultingHospitalPinCode"
     },
+    ConsultingHospitalAddress: {
+      value: "",
+      placeholder: "Hospital Address",
+      errorMessage: "",
+      errorStatus: false,
+      name: "ConsultingHospitalAddress",
+      id: "ConsultingHospitalAddress"
+    },
+
     IsDeliveringHospitalSameAsConsultingHospotal: {
       value: null,
       placeholder: "Is Delivering Hospital Same As Consulting Hospotal",
@@ -148,49 +149,81 @@ const HospitalDetails = forwardRef((props, ref) => {
       id: "IsDeliveringHospitalSameAsConsultingHospotal"
     },
 
-    DeliveringHospitalAddress: {
-      value: "",
-      placeholder: "Delivering Hospital Address",
-      errorMessage: "",
-      errorStatus: false,
-      name: "DeliveringHospitalAddress",
-      id: "DeliveringHospitalAddress"
-    },
-    DeliveringHosptalCity: {
-      value: "",
-      placeholder: "Delivering Hosptal City",
-      errorMessage: "",
-      errorStatus: false,
-      name: "DeliveringHosptalCity",
-      id: "DeliveringHosptalCity"
-    },
-    DeliveringHospitalState: {
-      value: "",
-      placeholder: "Delivering Hospital State",
-      errorMessage: "",
-      errorStatus: false,
-      name: "DeliveringHospitalState",
-      id: "DeliveringHospitalState"
-    },
+
+
     DeliveringHospitalCountry: {
-      value: "",
-      placeholder: "Delivering Hospital Country",
+      value: 352,
+      placeholder: "Country",
       errorMessage: "",
       errorStatus: false,
       name: "DeliveringHospitalCountry",
       id: "DeliveringHospitalCountry"
     },
+
+    DeliveringHospitalState: {
+      value: "",
+      placeholder: "State",
+      errorMessage: "",
+      errorStatus: false,
+      name: "DeliveringHospitalState",
+      id: "DeliveringHospitalState"
+    },
+    DeliveringHosptalCity: {
+      value: "",
+      placeholder: "City",
+      errorMessage: "",
+      errorStatus: false,
+      name: "DeliveringHosptalCity",
+      id: "DeliveringHosptalCity"
+    },
     DeliveringHospitalPinCode: {
       value: "",
-      placeholder: "Delivering Hospital PinCode",
+      placeholder: "PinCode",
       errorMessage: "",
       errorStatus: false,
       name: "DeliveringHospitalPinCode",
       id: "DeliveringHospitalPinCode"
-    }
+    },
+    DeliveringHospitalAddress: {
+      value: "",
+      placeholder: "Delivering Address (If different from consulting gynaecologist)",
+      errorMessage: "",
+      errorStatus: false,
+      name: "DeliveringHospitalAddress",
+      id: "DeliveringHospitalAddress"
+    },
   });
 
+  const NoofChildres = [
+    { id: 1, name: "1" },
+    { id: 2, name: "2" },
+    { id: 3, name: "3" },
+    { id: 4, name: "4" },
+    { id: 5, name: "5" },
+    { id: 6, name: "6" }
+  ]
+  const countries = useSelector((state) => state.payment.countries);
+  const states = useSelector((state) => state.payment.states);
+  const cities = useSelector((state) => state.payment.cities);
+  const cities2 = useSelector((state) => state.payment.cities);
 
+  const typeOfPreganacyData = useSelector((state) => state.dashboard.typeOfPreganacyData);
+
+  const upDatedCountryList = getNamesIdList(countries);
+  const stateList = getStateIdList(states);
+  const typeOfPreganacyDataList = getTypeOfPregnancyList(typeOfPreganacyData);
+
+  let cityList;
+  let cityList2;
+  if (data.ConsultingHospitalState.value) {
+    cityList = getCityIdList(cities);
+  }
+  if (data.DeliveringHospitalState.value) {
+    cityList2 = getCityIdList(cities2);
+  }
+
+  const [deliveryinputType, setDeliveryInputType] = useState("text");
+  const [inputType, setInputType] = useState("text");
   const handleChange = (e) => {
     const { name, value } = e.target;
     setData((prevData) => ({
@@ -200,57 +233,255 @@ const HospitalDetails = forwardRef((props, ref) => {
 
   };
 
+  const handleOnChange = (event, name) => {
+    setData((prevData) => ({
+      ...prevData,
+      [name]: { ...prevData[name], value: event, errorStatus: false, errorMessage: "" },
+    }));
+  }
+
+  const handleCheckChange = (event) => {
+    setData((prevData) => ({
+      ...prevData,
+      ['IsDeliveringHospitalSameAsConsultingHospotal']: { ...prevData['IsDeliveringHospitalSameAsConsultingHospotal'], value: event.target.checked, errorStatus: false, errorMessage: "" },
+    }));
+  }
+
+
   useImperativeHandle(ref, () => ({
     getHospitalDetailsChildData: () => {
-      return data;
+      if (!data.ExpectedDateOfDelivery.value) {
+        setData((prevData) => ({
+          ...prevData,
+          ExpectedDateOfDelivery: {
+            ...prevData.ExpectedDateOfDelivery,
+            errorStatus: true,
+            errorMessage: "Expected Date Of Delivery is required.",
+          },
+        }));
+        return;
+      }
+
+      if (!data.TypeOfpregnancy.value) {
+        setData((prevData) => ({
+          ...prevData,
+          TypeOfpregnancy: {
+            ...prevData.TypeOfpregnancy,
+            errorStatus: true,
+            errorMessage: "Type Of pregnancy is required.",
+          },
+        }));
+        return;
+      }
+
+      if (!data.HowManyChildrensDoYouHaveAlready.value) {
+        setData((prevData) => ({
+          ...prevData,
+          HowManyChildrensDoYouHaveAlready: {
+            ...prevData.HowManyChildrensDoYouHaveAlready,
+            errorStatus: true,
+            errorMessage: "How Many Childrens Do You Have Already is required.",
+          },
+        }));
+        return;
+      }
+      if (!data.ConsultingGynocologist.value) {
+        setData((prevData) => ({
+          ...prevData,
+          ConsultingGynocologist: {
+            ...prevData.ConsultingGynocologist,
+            errorStatus: true,
+            errorMessage: "Consulting Gynocologist is required.",
+          },
+        }));
+        return;
+      }
+
+      if (!data.ConsultingHospital.value) {
+        setData((prevData) => ({
+          ...prevData,
+          ConsultingHospital: {
+            ...prevData.ConsultingHospital,
+            errorStatus: true,
+            errorMessage: "Consulting Hospital is required.",
+          },
+        }));
+        return;
+      }
+
+      if (!data.ConsultingHospitalCountry.value) {
+        setData((prevData) => ({
+          ...prevData,
+          ConsultingHospitalCountry: {
+            ...prevData.ConsultingHospitalCountry,
+            errorStatus: true,
+            errorMessage: "Country is required.",
+          },
+        }));
+        return;
+      }
+
+      if (!data.ConsultingHospitalState.value) {
+        setData((prevData) => ({
+          ...prevData,
+          ConsultingHospitalState: {
+            ...prevData.ConsultingHospitalState,
+            errorStatus: true,
+            errorMessage: "State is required.",
+          },
+        }));
+        return;
+      }
+
+      if (!data.ConsultingHosptalCity.value) {
+        setData((prevData) => ({
+          ...prevData,
+          ConsultingHosptalCity: {
+            ...prevData.ConsultingHosptalCity,
+            errorStatus: true,
+            errorMessage: "City is required.",
+          },
+        }));
+        return;
+      }
+
+      if (!data.ConsultingHospitalPinCode.value) {
+        setData((prevData) => ({
+          ...prevData,
+          ConsultingHospitalPinCode: {
+            ...prevData.ConsultingHospitalPinCode,
+            errorStatus: true,
+            errorMessage: "PinCode is required.",
+          },
+        }));
+        return;
+      }
+      if (!data.ConsultingHospitalAddress.value) {
+        setData((prevData) => ({
+          ...prevData,
+          ConsultingHospitalAddress: {
+            ...prevData.ConsultingHospitalAddress,
+            errorStatus: true,
+            errorMessage: "Hospital Address is required.",
+          },
+        }));
+        return;
+      }
+
+      if (!data.DeliveringHospitalCountry.value) {
+        setData((prevData) => ({
+          ...prevData,
+          DeliveringHospitalCountry: {
+            ...prevData.DeliveringHospitalCountry,
+            errorStatus: true,
+            errorMessage: "Country is required.",
+          },
+        }));
+        return;
+      }
+
+      if (!data.DeliveringHospitalState.value) {
+        setData((prevData) => ({
+          ...prevData,
+          DeliveringHospitalState: {
+            ...prevData.DeliveringHospitalState,
+            errorStatus: true,
+            errorMessage: "State is required.",
+          },
+        }));
+        return;
+      }
+      if (!data.DeliveringHosptalCity.value) {
+        setData((prevData) => ({
+          ...prevData,
+          DeliveringHosptalCity: {
+            ...prevData.DeliveringHosptalCity,
+            errorStatus: true,
+            errorMessage: "City is required.",
+          },
+        }));
+        return;
+      }
+      if (!data.DeliveringHospitalPinCode.value) {
+        setData((prevData) => ({
+          ...prevData,
+          DeliveringHospitalPinCode: {
+            ...prevData.DeliveringHospitalPinCode,
+            errorStatus: true,
+            errorMessage: "PinCode is required.",
+          },
+        }));
+        return;
+      }
+
+      if (!data.DeliveringHospitalAddress.value) {
+        setData((prevData) => ({
+          ...prevData,
+          DeliveringHospitalAddress: {
+            ...prevData.DeliveringHospitalAddress,
+            errorStatus: true,
+            errorMessage: "Delivering Hospital Address is required.",
+          },
+        }));
+        return;
+      }
+
+      const dataToSend = {
+        ExpectedDateOfDelivery: data.ExpectedDateOfDelivery.value,
+        TypeOfpregnancy: data.TypeOfpregnancy.value,
+        HowManyChildrensDoYouHaveAlready: data.HowManyChildrensDoYouHaveAlready.value,
+        ConsultingGynocologist: data.ConsultingGynocologist.value,
+        ConsultingHospital: data.ConsultingHospital.value,
+        ConsultingHospitalAddress: data.ConsultingHospitalAddress.value,
+        ConsultingHospitalCountry: data.ConsultingHospitalCountry.value,
+        ConsultingHospitalState: data.ConsultingHospitalState.value,
+        ConsultingHosptalCity: data.ConsultingHosptalCity.value,
+        ConsultingHospitalPinCode: data.ConsultingHospitalPinCode.value,
+        IsDeliveringHospitalSameAsConsultingHospotal: data.IsDeliveringHospitalSameAsConsultingHospotal.value,
+        DeliveringHospitalAddress: data.DeliveringHospitalAddress.value,
+        DeliveringHospitalCountry: data.DeliveringHospitalCountry.value,
+        DeliveringHospitalState: data.DeliveringHospitalState.value,
+        DeliveringHosptalCity: data.DeliveringHosptalCity.value,
+        DeliveringHospitalPinCode: data.DeliveringHospitalPinCode.value,
+
+      };
+
+      if (currentPage < TOTAL_PAGES) {
+        setCurrentPage(currentPage + 1);
+      }
+
+      return dataToSend;
     }
   }))
 
-  const Save = () => {
-    console.log("hospital detail kk ", data);
-  }
 
-  const handleCountryChange = (event) => {
-    setData((prevData) => ({
-      ...prevData,
-      country: {
-        ...prevData.country,
-        value: event.target.value,
-        countryId: event.target.value,
-        errorStatus: false,
-        errorMessage: "",
-      },
-    }));
-  };
+  useEffect(() => {
+    const dataToSend = data.ConsultingHospitalCountry.value;
+    if (data.ConsultingHospitalCountry.value) dispatch(getState({ payload: dataToSend }));
+  }, [data.ConsultingHospitalCountry.value]);
 
-  const handleStateChange = (event) => {
-    setData((prevData) => ({
-      ...prevData,
-      state: {
-        ...prevData.country,
-        value: event.target.value,
-        stateID: event.target.value,
+  useEffect(() => {
+    const dataToSend = data.DeliveringHospitalCountry.value;
+    if (data.DeliveringHospitalCountry.value) dispatch(getState({ payload: dataToSend }));
+  }, [data.DeliveringHospitalCountry.value]);
 
-        errorStatus: false,
-        errorMessage: "",
-      },
-    }));
-  };
-  const handleCityChange = (event) => {
-    setData((prevData) => ({
-      ...prevData,
-      city: {
-        ...prevData.country,
-        value: event.target.value,
-        cityID: event.target.value,
-        errorStatus: false,
-        errorMessage: "",
-      },
-    }));
-  };
+  useEffect(() => {
+    const dataToSend = data.ConsultingHospitalState.value
+    if (data.ConsultingHospitalState.value) dispatch(getCity({ payload: dataToSend }));
+  }, [data.ConsultingHospitalState.value]);
+
+  useEffect(() => {
+    const dataToSend = data.DeliveringHospitalState.value
+    if (data.DeliveringHospitalState.value) dispatch(getCity({ payload: dataToSend }));
+  }, [data.DeliveringHospitalState.value]);
+
+
+
   useEffect(() => {
     dispatch(getCountry());
+    dispatch(GetTypeOfPregnancy());
   }, []);
+
 
 
   return (
@@ -268,39 +499,61 @@ const HospitalDetails = forwardRef((props, ref) => {
                   Expected date of delivery <span style={redStarStyle}>*</span>
                 </InputLabel>
                 <FormControl variant="outlined" fullWidth>
-                  <OutlinedInput
-                    readOnly={false}
-                    type="text"
-                    name="ExpectedDateOfDelivery"
-                    id="outlined-adornment-ExpectedDateOfDelivery"
-                    placeholder="Expected Date Of Delivery"
-                    sx={{
-                      border: "1px solid black",
-                      height: "40px",
-                      width: "100%",
-                      padding: "10px",
-                      borderRadius: "8px",
-                    }}
-                    value={data.ExpectedDateOfDelivery.value}
+
+
+                  {/* <Box sx={{ display: "flex", flexDirection: "column" }}> */}
+                  <OutlinedInput style={{ border: data.ExpectedDateOfDelivery.errorStatus ? "1px solid red" : "none" }}
                     onChange={handleChange}
+                    key={"key"}
+                    placeholder={data.ExpectedDateOfDelivery.placeholder}
+                    className="date"//{`appointmentInput ${isOdd && index === userDetails.length - 1 ? "fullWidth" : ""}`}
+                    label={data.ExpectedDateOfDelivery.placeholder} type={inputType}
+                    onFocus={() => setInputType("date")} onBlur={() => setInputType("text")}
+                    value={data.ExpectedDateOfDelivery.value}
+                    name={data.ExpectedDateOfDelivery.name}
                   />
+
+                  {data.ExpectedDateOfDelivery.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data.ExpectedDateOfDelivery.errorMessage}</Typography> : null}
+                  {/* </Box> */}
                 </FormControl>
               </Grid>
             </Grid>
             <Grid container spacing={2}>
               <Grid item xs={6}>
-
-                <MultipleSelect type={"city"} title={"Type of pregnancy"} userData={data} dataArray={cities} handleChange={handleCityChange} />
-
-              </Grid>
-              <Grid item xs={6}>
-
-                <MultipleSelect type={"city"} title={"How many childrens do you have alredy"} userData={data} dataArray={cities} handleChange={handleCityChange} />
+                <InputLabel sx={inputLableStyle}>
+                  {data.TypeOfpregnancy.placeholder} <span style={redStarStyle}>*</span>
+                </InputLabel>
+                <SingleSelect
+                  Placeholder={"Select"}
+                  width={"100%"}
+                  data={typeOfPreganacyDataList}
+                  value={data.TypeOfpregnancy.value}
+                  onChange={(e) => {
+                    handleOnChange(e, "TypeOfpregnancy");
+                  }}
+                />
+                {data.TypeOfpregnancy.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data.TypeOfpregnancy.errorMessage}</Typography> : null}
 
               </Grid>
               <Grid item xs={6}>
                 <InputLabel sx={inputLableStyle}>
-                  Consulting Gynocologist <span style={redStarStyle}>*</span>
+                  {data.HowManyChildrensDoYouHaveAlready.placeholder}  <span style={redStarStyle}>*</span>
+                </InputLabel>
+                <SingleSelect
+                  Placeholder={"Select"}
+                  width={"100%"}
+                  data={NoofChildres}
+                  value={data.HowManyChildrensDoYouHaveAlready.value}
+                  onChange={(e) => {
+                    handleOnChange(e, "HowManyChildrensDoYouHaveAlready");
+                  }}
+                />
+                {data.HowManyChildrensDoYouHaveAlready.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data.HowManyChildrensDoYouHaveAlready.errorMessage}</Typography> : null}
+
+              </Grid>
+              <Grid item xs={6}>
+                <InputLabel sx={inputLableStyle}>
+                  {data.ConsultingGynocologist.placeholder} <span style={redStarStyle}>*</span>
                 </InputLabel>
                 <FormControl variant="outlined" fullWidth>
                   <OutlinedInput
@@ -308,7 +561,7 @@ const HospitalDetails = forwardRef((props, ref) => {
                     type="text"
                     id="ConsultingGynocologist"
                     placeholder="Consulting Gynocologist"
-                    name="ConsultingGynocologist"
+                    name={data.ConsultingGynocologist.name}
                     sx={{
                       border: "1px solid black",
                       height: "40px",
@@ -319,11 +572,13 @@ const HospitalDetails = forwardRef((props, ref) => {
                     value={data.ConsultingGynocologist.value}
                     onChange={handleChange}
                   />
+                  {data.ConsultingGynocologist.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data.ConsultingGynocologist.errorMessage}</Typography> : null}
+
                 </FormControl>
               </Grid>
               <Grid item xs={6}>
                 <InputLabel sx={inputLableStyle}>
-                  Consulting Hospitals <span style={redStarStyle}>*</span>
+                  {data.ConsultingHospital.placeholder}<span style={redStarStyle}>*</span>
                 </InputLabel>
                 <FormControl variant="outlined" fullWidth>
                   <OutlinedInput
@@ -339,10 +594,12 @@ const HospitalDetails = forwardRef((props, ref) => {
                       padding: "10px",
                       borderRadius: "8px",
                     }}
-                    name="ConsultingHospital"
+                    name={data.ConsultingHospital.name}
                     value={data.ConsultingHospital.value}
                     onChange={handleChange}
                   />
+                  {data.ConsultingHospital.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data.ConsultingHospital.errorMessage}</Typography> : null}
+
                 </FormControl>
               </Grid>
             </Grid>
@@ -360,19 +617,62 @@ const HospitalDetails = forwardRef((props, ref) => {
             <CardContent sx={{ width: "550px" }}>
               <Grid container spacing={2}>
 
+
                 <Grid item xs={6}>
-                  <MultipleSelect type={"city"} title={"City"} userData={data} dataArray={cities} handleChange={handleCityChange} />
+                  <InputLabel sx={inputLableStyle}>
+                    {data.ConsultingHospitalCountry.placeholder} <span style={redStarStyle}>*</span>
+                  </InputLabel>
+                  <SingleSelect
+                    Placeholder={"Select"}
+                    width={"100%"}
+                    disabled={true}
+                    data={upDatedCountryList}
+                    value={data.ConsultingHospitalCountry.value}
+                    onChange={(e) => {
+                      handleOnChange(e, "ConsultingHospitalCountry");
+                    }}
+                  />
+
+                  {data.ConsultingHospitalCountry.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data.ConsultingHospitalCountry.errorMessage}</Typography> : null}
                 </Grid>
 
                 <Grid item xs={6}>
-                  <MultipleSelect type={"state"} title={"State"} userData={data} dataArray={states} handleChange={handleStateChange} />
+                  <InputLabel sx={inputLableStyle}>
+                    {data.ConsultingHospitalState.placeholder} <span style={redStarStyle}>*</span>
+                  </InputLabel>
+                  <SingleSelect
+                    Placeholder={"Select"}
+                    width={"100%"}
+                    data={stateList}
+                    value={data.ConsultingHospitalState.value}
+                    onChange={(e) => {
+                      dispatch(getCity())
+                      handleOnChange(e, "ConsultingHospitalState")
+                    }}
+                  />
+                  {data.ConsultingHospitalState.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data.ConsultingHospitalState.errorMessage}</Typography> : null}
+
                 </Grid>
+
                 <Grid item xs={6}>
-                  <MultipleSelect type={"country"} title={"Country"} userData={data} dataArray={countries} handleChange={handleCountryChange} />
+                  <InputLabel sx={inputLableStyle}>
+                    {data.ConsultingHosptalCity.placeholder} <span style={redStarStyle}>*</span>
+                  </InputLabel>
+                  <SingleSelect
+                    Placeholder={"Select"}
+                    width={"100%"}
+                    data={cityList}
+                    value={data.ConsultingHosptalCity.value}
+                    onChange={(e) => {
+                      handleOnChange(e, "ConsultingHosptalCity");
+                    }}
+                  />
+                  {data.ConsultingHosptalCity.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data.ConsultingHosptalCity.errorMessage}</Typography> : null}
+
                 </Grid>
                 <Grid item xs={6}>
                   <InputLabel sx={inputLableStyle}>
-                    Pincode <span style={redStarStyle}>*</span>
+                    {data.ConsultingHospitalPinCode.placeholder} <span style={redStarStyle}>*</span>
                   </InputLabel>
                   <FormControl variant="outlined" size="small" fullWidth>
                     <OutlinedInput
@@ -388,17 +688,19 @@ const HospitalDetails = forwardRef((props, ref) => {
                         padding: "10px",
                         borderRadius: "8px",
                       }}
-                      name="ConsultingHospitalPinCode"
+                      name={data.ConsultingHospitalPinCode.name}
                       value={data.ConsultingHospitalPinCode.value}
                       onChange={handleChange}
                     />
+                    {data.ConsultingHospitalPinCode.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data.ConsultingHospitalPinCode.errorMessage}</Typography> : null}
+
                   </FormControl>
                 </Grid>
               </Grid>
               <Grid container spacing={2} pt={3} pb={2}>
                 <Grid item style={{ width: "100%" }}>
                   <InputLabel sx={inputLableStyle}>
-                    Hospital Address <span style={redStarStyle}>*</span>
+                    {data.ConsultingHospitalAddress.placeholder}<span style={redStarStyle}>*</span>
                   </InputLabel>
                   <FormControl variant="outlined" fullWidth size="small">
                     <OutlinedInput
@@ -406,7 +708,7 @@ const HospitalDetails = forwardRef((props, ref) => {
                       id="ConsultingHospitalAddress"
                       placeholder="Consulting Hospital Address"
                       size="small"
-                      name="ConsultingHospitalAddress"
+                      name={data.ConsultingHospitalAddress.name}
                       sx={{
                         border: "1px solid black",
                         height: "40px",
@@ -417,6 +719,8 @@ const HospitalDetails = forwardRef((props, ref) => {
                       value={data.ConsultingHospitalAddress.value}
                       onChange={handleChange}
                     />
+                    {data.ConsultingHospitalAddress.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data.ConsultingHospitalAddress.errorMessage}</Typography> : null}
+
                   </FormControl>
                 </Grid>
               </Grid>
@@ -425,6 +729,9 @@ const HospitalDetails = forwardRef((props, ref) => {
                   <FormControlLabel
                     control={
                       <Checkbox
+                        onChange={handleCheckChange}
+                        name={data.IsDeliveringHospitalSameAsConsultingHospotal.value}
+
                       />
                     }
                     label="If  delivering hospital address is same as Current hospital address"
@@ -439,19 +746,61 @@ const HospitalDetails = forwardRef((props, ref) => {
           <Card variant="outlined">
             <CardContent sx={{ width: "550px" }}>
               <Grid container spacing={2}>
+
                 <Grid item xs={6}>
-                  <MultipleSelect type={"city"} title={"City"} userData={data} dataArray={cities} handleChange={handleCityChange} />
+                  <InputLabel sx={inputLableStyle}>
+                    {data.DeliveringHospitalCountry.placeholder} <span style={redStarStyle}>*</span>
+                  </InputLabel>
+                  <SingleSelect
+                    Placeholder={"Select"}
+                    width={"100%"}
+                    disabled={true}
+                    data={upDatedCountryList}
+                    value={data.DeliveringHospitalCountry.value}
+                    onChange={(e) => {
+                      handleOnChange(e, "DeliveringHospitalCountry");
+                    }}
+                  />
+                  {data.DeliveringHospitalCountry.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data.DeliveringHospitalCountry.errorMessage}</Typography> : null}
+
                 </Grid>
 
                 <Grid item xs={6}>
-                  <MultipleSelect type={"state"} title={"State"} userData={data} dataArray={states} handleChange={handleStateChange} />
-                </Grid>
-                <Grid item xs={6}>
-                  <MultipleSelect type={"country"} title={"Country"} userData={data} dataArray={countries} handleChange={handleCountryChange} />
+                  <InputLabel sx={inputLableStyle}>
+                    {data.DeliveringHospitalState.placeholder} <span style={redStarStyle}>*</span>
+                  </InputLabel>
+                  <SingleSelect
+                    Placeholder={"Select"}
+                    width={"100%"}
+                    data={stateList}
+                    value={data.DeliveringHospitalState.value}
+                    onChange={(e) => {
+                      dispatch(getCity())
+                      handleOnChange(e, "DeliveringHospitalState")
+                    }}
+                  />
+                  {data.DeliveringHospitalState.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data.DeliveringHospitalState.errorMessage}</Typography> : null}
+
                 </Grid>
                 <Grid item xs={6}>
                   <InputLabel sx={inputLableStyle}>
-                    Pincode <span style={redStarStyle}>*</span>
+                    {data.DeliveringHosptalCity.placeholder} <span style={redStarStyle}>*</span>
+                  </InputLabel>
+                  <SingleSelect
+                    Placeholder={"Select"}
+                    width={"100%"}
+                    data={cityList}
+                    value={data.DeliveringHosptalCity.value}
+                    onChange={(e) => {
+                      handleOnChange(e, "DeliveringHosptalCity");
+                    }}
+                  />
+                  {data.DeliveringHosptalCity.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data.DeliveringHosptalCity.errorMessage}</Typography> : null}
+
+                </Grid>
+                <Grid item xs={6}>
+                  <InputLabel sx={inputLableStyle}>
+                    {data.DeliveringHospitalPinCode.placeholder} <span style={redStarStyle}>*</span>
                   </InputLabel>
                   <FormControl variant="outlined" size="small" fullWidth>
                     <OutlinedInput
@@ -467,17 +816,19 @@ const HospitalDetails = forwardRef((props, ref) => {
                         padding: "10px",
                         borderRadius: "8px",
                       }}
+                      name={data.DeliveringHospitalPinCode.name}
                       value={data.DeliveringHospitalPinCode.value}
                       onChange={handleChange}
                     />
+                    {data.DeliveringHospitalPinCode.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data.DeliveringHospitalPinCode.errorMessage}</Typography> : null}
+
                   </FormControl>
                 </Grid>
               </Grid>
               <Grid container spacing={2} pt={3} pb={2}>
                 <Grid item style={{ width: "100%" }}>
                   <InputLabel sx={inputLableStyle}>
-                    Delivering Address (If different from consulting
-                    gynaecologist)
+                    {data.DeliveringHospitalAddress.placeholder}
                     <span style={redStarStyle}>*</span>
                   </InputLabel>
                   <FormControl variant="outlined" fullWidth size="small">
@@ -493,17 +844,18 @@ const HospitalDetails = forwardRef((props, ref) => {
                         padding: "10px",
                         borderRadius: "8px",
                       }}
-                      name="DeliveringHospitalAddress"
+                      name={data.DeliveringHospitalAddress.name}
                       value={data.DeliveringHospitalAddress.value}
                       onChange={handleChange}
                     />
+                    {data.DeliveringHospitalAddress.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data.DeliveringHospitalAddress.errorMessage}</Typography> : null}
+
                   </FormControl>
                 </Grid>
               </Grid>
             </CardContent>
           </Card>
         </Stack>
-        <button onClick={Save()}>kkkk</button>
       </CardContent>
     </Card>
   );

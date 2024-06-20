@@ -16,6 +16,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addOrupdateAnnexureInfo } from "../../redux/reducers/UserReducer"
 
 const PopupLayout = ({ children }) => {
+
   const [currentPage, setCurrentPage] = useState(1);
   const TOTAL_PAGES = 8;
   const dispatch = useDispatch();
@@ -45,9 +46,10 @@ const PopupLayout = ({ children }) => {
 
 
   const handleNext = () => {
-    if (currentPage < TOTAL_PAGES) {
-      setCurrentPage(currentPage + 1);
-    }
+
+    // if (currentPage < TOTAL_PAGES) {
+    //    setCurrentPage(currentPage + 1);
+    // }
 
     if (childRef.current) {
       setDataFromChild(childRef.current.getChildData());
@@ -82,6 +84,8 @@ const PopupLayout = ({ children }) => {
       // pageName: router?.pathname,
     };
 
+
+
     console.log("kkk dataFromChild dataFromChild   ", dataFromChild ? dataFromChild : null);
     console.log("kkk dataFromChild dataFromMotherDetails   ", dataFromMotherDetails ? dataFromMotherDetails : null);
     console.log("kkk dataFromChild dataFromCommunicationDetails   ", dataFromCommunicationDetails ? dataFromCommunicationDetails : null);
@@ -98,16 +102,14 @@ const PopupLayout = ({ children }) => {
   return (
     <Box sx={{ margin: "13rem", display: "flex", flexDirection: "column", gap: "1rem", border: "1px solid #e5e5e5" }}>
       <Box>
-
-        {currentPage == 1 && <FatherDetails ref={childRef} />}
-        {currentPage == 2 && <MotherDetails ref={childMotherDetailsRef} />}
-        {currentPage == 3 && <CommunicationDetails ref={childCommunicationDetailsRef} />}
-        {currentPage == 4 && <HospitalDetails ref={childHospitalDetailsRef} />}
-        {currentPage == 5 && <ReferenceIformation ref={childReferenceIformationRef} />}
-        {currentPage == 6 && <Signature ref={childSignatureRef} />}
-        {currentPage == 7 && <ForbankUse ref={childForbankUseRef} />}
-        {currentPage == 8 && <HealthHistory ref={childHealthHistoryRef} />}
-
+        {currentPage == 1 && <FatherDetails ref={childRef} handleNext={handleNext} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />}
+        {currentPage == 2 && <MotherDetails ref={childMotherDetailsRef} handleNext={handleNext} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />}
+        {currentPage == 3 && <CommunicationDetails ref={childCommunicationDetailsRef} handleNext={handleNext} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />}
+        {currentPage == 4 && <HospitalDetails ref={childHospitalDetailsRef} handleNext={handleNext} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />}
+        {currentPage == 5 && <ReferenceIformation ref={childReferenceIformationRef} handleNext={handleNext} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />}
+        {currentPage == 6 && <Signature ref={childSignatureRef} handleNext={handleNext} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />}
+        {currentPage == 7 && <ForbankUse ref={childForbankUseRef} handleNext={handleNext} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />}
+        {currentPage == 8 && <HealthHistory ref={childHealthHistoryRef} handleNext={handleNext} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />}
       </Box>
 
       <Box sx={{ display: "flex", justifyContent: "space-between", padding: "4rem" }}>

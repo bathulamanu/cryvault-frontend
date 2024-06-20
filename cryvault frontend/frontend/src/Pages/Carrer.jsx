@@ -8,7 +8,7 @@ import { addCareerProfile, uploadSingleFile } from "../redux/reducers/HomePageRe
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { validateEmail, validatePhoneNumber } from "../Components/Contact/ContactForm";
-import { uploadSingleFileApi } from '../redux/reducers/api'
+import { uploadResumeSingleFileApi } from '../redux/reducers/api'
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -231,7 +231,7 @@ const Carrers = () => {
         ...prevData,
         [name]: { ...prevData[name], value: e?.target?.files?.[0]?.file, errorStatus: false, errorMessage: "" },
       }));
-      const apiUrl = uploadSingleFileApi();
+      const apiUrl = uploadResumeSingleFileApi();
       const headers = {
         'Content-Type': 'multipart/form-data'
       };

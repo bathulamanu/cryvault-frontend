@@ -1,4 +1,5 @@
-import React, { useState,forwardRef, useImperativeHandle } from "react";
+
+import React, { useState, forwardRef, useImperativeHandle, useRef, useEffect } from "react";
 import {
   Box,
   Button,
@@ -31,7 +32,7 @@ const inputLableStyle = {
 };
 
 const Signature = forwardRef((props, ref) => {
- 
+  var { handleNext, currentPage, setCurrentPage, TOTAL_PAGES } = props
   const [data, setData] = useState({
     MotherOrGuardianSignature: {
       value: "",
@@ -93,13 +94,23 @@ const Signature = forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => ({
     getSignatureChildData: () => {
-      return data;
+      const dataToSend = {
+        MotherOrGuardianSignature: data.MotherOrGuardianSignature.value,
+        FatherOrGuardianSignature: data.FatherOrGuardianSignature.value,
+        MedicalDirectorSignature: data.MedicalDirectorSignature.value,
+        MotherOrGuardianName: data.MotherOrGuardianName.value,
+        FatherOrGuardianName: data.FatherOrGuardianName.value,
+        MedicalDirectorName: data.MedicalDirectorName.value
+      };
+
+      if (currentPage < TOTAL_PAGES) {
+        setCurrentPage(currentPage + 1);
+      }
+      return dataToSend;
     }
   }))
 
-  const Save = () => {
-    console.log("signsture  detail kk ", data);
-  }
+
 
   return (
     <Card variant="outlined">
@@ -226,7 +237,6 @@ const Signature = forwardRef((props, ref) => {
           </Grid>
         </Grid>
       </CardContent>
-      <button onClick={Save()}>save signature </button>
     </Card>
   );
 });

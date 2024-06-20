@@ -221,6 +221,23 @@
   border-color: transparent !important;
 }
 
+.dashboardInput {
+  background-color: #fdfdfd !important;
+  border-radius: 10px !important;
+  font-family: "Source Sans Pro", Sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  padding: 10px 32px;
+  height: 40px !important;
+  letter-spacing: 0.3px;
+  border: 1px solid #e5e5e5 !important;
+}
+
+.dashboardInput:focus {
+  border: none !important;
+  border-color: transparent !important;
+}
+
 .appointmentBtn {
   background-color: #d5008d !important;
   border: 1px solid #ddd0 !important;

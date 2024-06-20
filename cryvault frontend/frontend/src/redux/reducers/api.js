@@ -122,8 +122,12 @@ export const GetAdditonalServicesDetailsApi = () => {
   return `${BASE_URL}/flyingbyts/api/user/getAdditionalServices/ADDITIONAL%20SERVICES/null`;
 };
 
-export const uploadSingleFileApi = () => {
+export const uploadResumeSingleFileApi = () => {
   return `${BASE_URL}/flyingbyts/api/user/resumeUpload`;
+};
+
+export const uploadSingleFileApi = () => {
+  return `${BASE_URL}/flyingbyts/api/user/upload`;
 };
 
 export const getAccreditationsCertificationApi = () => {
@@ -135,5 +139,9 @@ export const getBlogsApi = () => {
 export const addOrupdateAnnexureInfoApi = () => {
   return `${BASE_URL}/flyingbyts/api/customer/addOrupdateAnnexureInfo`;
 };
+export const GetTypeOfPregnancyDetails = () => {
+  return `${BASE_URL}/flyingbyts/api/user/getMasterConfiguration/Type of Pregnancy/null`;
+};
+
 
 

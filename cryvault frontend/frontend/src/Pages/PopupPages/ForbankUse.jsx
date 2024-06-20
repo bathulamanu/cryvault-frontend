@@ -1,4 +1,4 @@
-import React, { useState, forwardRef, useImperativeHandle } from "react";
+import React, { useState, forwardRef, useImperativeHandle, useRef, useEffect } from "react";
 import {
   Box,
   Button,
@@ -31,6 +31,7 @@ const inputLableStyle = {
 };
 
 const ForbankUse = forwardRef((props, ref) => {
+  var { handleNext, currentPage, setCurrentPage, TOTAL_PAGES } = props
 
   const [data, setData] = useState({
     NameOfExcutive: {
@@ -101,14 +102,22 @@ const ForbankUse = forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => ({
     getForbankUseChildData: () => {
-      return data;
+      const dataToSend = {
+        NameOfExcutive: data.NameOfExcutive.value,
+        EmployeeCode: data.EmployeeCode.value,
+        NameOfManager: data.NameOfManager.value,
+        AreaOrRegion: data.AreaOrRegion.value,
+        Date: data.Date.value,
+        ExcutiveSignature: data.ExcutiveSignature.value,
+        Name: data.Name.value
+      };
+
+      if (currentPage < TOTAL_PAGES) {
+        setCurrentPage(currentPage + 1);
+      }
+      return dataToSend;
     }
   }))
-
-  const Save = () => {
-    // e.preventDefault();
-    console.log("for bank detail kk ", data);
-  }
 
 
 
@@ -272,7 +281,6 @@ const ForbankUse = forwardRef((props, ref) => {
           </Grid>
         </Stack>
       </CardContent>
-      <button onClick={Save()}>save for bank </button>
     </Card>
   );
 });

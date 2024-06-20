@@ -7,11 +7,16 @@ import {
   Grid
 
 } from "@mui/material";
-import React, { useEffect, useState,forwardRef, useImperativeHandle } from "react";
+import React, { useEffect, useState, forwardRef, useImperativeHandle } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCountry, getState, getCity } from "../../redux/reducers/PaymentReducer";
-import { MultipleSelect } from '../CheckoutDetails'
-
+import { MultipleSelect, SingleSelect } from '../CheckoutDetails'
+import {
+  getByIdList,
+  getCityIdList,
+  getNamesIdList,
+  getStateIdList,
+} from "../../globalFunctions";
 const headingStyle = {
   fontSize: "18px",
   fontWeight: 500,
@@ -32,12 +37,7 @@ const redStarStyle = {
   marginLeft: "4px",
 };
 const CommunicationDetails = forwardRef((props, ref) => {
-  const countries = useSelector((state) => state.payment.countries);
-  const states = useSelector((state) => state.payment.states);
-  const cities = useSelector((state) => state.payment.cities);
-  const [detail, setDetail] = useState(null);
-  const dispatch = useDispatch();
-
+  var { handleNext, currentPage, setCurrentPage, TOTAL_PAGES } = props
   const [data, setData] = useState({
     Address: {
       value: "",
@@ -46,6 +46,25 @@ const CommunicationDetails = forwardRef((props, ref) => {
       errorStatus: false,
       name: "Address",
       id: "Address",
+    },
+  
+    Country: {
+      value: 352,
+      placeholder: "Country",
+      errorMessage: "",
+      errorStatus: false,
+      name: "Country",
+      id: "Country"
+    },
+
+    State: {
+      value: null,
+      placeholder: "State",
+      errorMessage: "",
+      errorStatus: false,
+      name: "State",
+      id: "State",
+      stateID: ""
     },
     City: {
       value: null,
@@ -56,24 +75,6 @@ const CommunicationDetails = forwardRef((props, ref) => {
       id: "City",
       cityID: ""
     },
-    State: {
-      value: null,
-      placeholder: "State",
-      errorMessage: "",
-      errorStatus: false,
-      name: "State",
-      id: "State",
-      stateID: ""
-    },
-    Country: {
-      value: null,
-      placeholder: "Country",
-      errorMessage: "",
-      errorStatus: false,
-      name: "Country",
-      id: "Country",
-      countryId: 352
-    },
     PinCode: {
       value: "",
       placeholder: "PinCode",
@@ -83,7 +84,7 @@ const CommunicationDetails = forwardRef((props, ref) => {
       id: "PinCode",
     },
     permanentAddressIsSameAsCorrespondenceAddress: {
-      value: null,
+      value: false,
       placeholder: "permanentAddressIsSameAsCorrespondenceAddress",
       errorMessage: "",
       errorStatus: false,
@@ -98,13 +99,15 @@ const CommunicationDetails = forwardRef((props, ref) => {
       name: "PermanentAddress",
       id: "PermanentAddress",
     },
-    PermanentAddressCity: {
-      value: null,
-      placeholder: "PermanentAddressCity",
+
+  
+    PermanentAddressCountry: {
+      value: 352,
+      placeholder: "PermanentAddressCountry",
       errorMessage: "",
       errorStatus: false,
-      name: "PermanentAddressCity",
-      id: "PermanentAddressCity",
+      name: "PermanentAddressCountry",
+      id: "PermanentAddressCountry",
     },
     PermanentAddressState: {
       value: null,
@@ -114,27 +117,178 @@ const CommunicationDetails = forwardRef((props, ref) => {
       name: "PermanentAddressState",
       id: "PermanentAddressState",
     },
-    PermanentAddressCountry: {
+    PermanentAddressCity: {
       value: null,
-      placeholder: "PermanentAddressCountry",
+      placeholder: "PermanentAddressCity",
       errorMessage: "",
       errorStatus: false,
-      name: "PermanentAddressCountry",
-      id: "PermanentAddressCountry",
+      name: "PermanentAddressCity",
+      id: "PermanentAddressCity",
     },
     PermanentAddressPinCode: {
       value: "",
-      placeholder: "PermanentAddressPinCode",
+      placeholder: "PinCode",
       errorMessage: "",
       errorStatus: false,
       name: "PermanentAddressPinCode",
       id: "PermanentAddressPinCode",
     }
   })
+  const countries = useSelector((state) => state.payment.countries);
+  const states = useSelector((state) => state.payment.states);
+  const cities = useSelector((state) => state.payment.cities);
+  const cities2 = useSelector((state) => state.payment.cities);
+
+  const upDatedCountryList = getNamesIdList(countries);
+  const stateList = getStateIdList(states);
+  let cityList;
+  let cityList2;
+  if (data.State.value) {
+    cityList = getCityIdList(cities);
+  }
+  if (data.PermanentAddressState.value) {
+    cityList2 = getCityIdList(cities2);
+  }
+
+  const dispatch = useDispatch();
 
   useImperativeHandle(ref, () => ({
     getCommunicationDetailsChildData: () => {
-      return data;
+        if (!data.Address.value) {
+          setData((prevData) => ({
+            ...prevData,
+            Address: {
+              ...prevData.Address,
+              errorStatus: true,
+              errorMessage: "Address is required.",
+            },
+          }));
+          return;
+        }
+      
+  
+        if (!data.Country.value) {
+          setData((prevData) => ({
+            ...prevData,
+            Country: {
+              ...prevData.Country,
+              errorStatus: true,
+              errorMessage: "Country is required.",
+            },
+          }));
+          return;
+        }
+     
+        if (!data.State.value) {
+          setData((prevData) => ({
+            ...prevData,
+            State: {
+              ...prevData.State,
+              errorStatus: true,
+              errorMessage: "State is required.",
+            },
+          }));
+          return;
+        }
+        if (!data.City.value) {
+          setData((prevData) => ({
+            ...prevData,
+            City: {
+              ...prevData.City,
+              errorStatus: true,
+              errorMessage: "City is required.",
+            },
+          }));
+          return;
+        }
+  
+        if (!data.PinCode.value) {
+          setData((prevData) => ({
+            ...prevData,
+            PinCode: {
+              ...prevData.PinCode,
+              errorStatus: true,
+              errorMessage: "PinCode is required.",
+            },
+          }));
+          return;
+        }
+        if (!data.PermanentAddress.value) {
+          setData((prevData) => ({
+            ...prevData,
+            PermanentAddress: {
+              ...prevData.PermanentAddress,
+              errorStatus: true,
+              errorMessage: "Permanent Address is required.",
+            },
+          }));
+          return;
+        }
+       
+        if (!data.PermanentAddressCountry.value) {
+          setData((prevData) => ({
+            ...prevData,
+            PermanentAddressCountry: {
+              ...prevData.PermanentAddressCountry,
+              errorStatus: true,
+              errorMessage: "Country is required.",
+            },
+          }));
+          return;
+        }
+    
+        if (!data.PermanentAddressState.value) {
+          setData((prevData) => ({
+            ...prevData,
+            PermanentAddressState: {
+              ...prevData.PermanentAddressState,
+              errorStatus: true,
+              errorMessage: "State is required.",
+            },
+          }));
+          return;
+        }
+        if (!data.PermanentAddressCity.value) {
+          setData((prevData) => ({
+            ...prevData,
+            PermanentAddressCity: {
+              ...prevData.PermanentAddressCity,
+              errorStatus: true,
+              errorMessage: "City is required.",
+            },
+          }));
+          return;
+        }
+        if (!data.PermanentAddressPinCode.value) {
+          setData((prevData) => ({
+            ...prevData,
+            PermanentAddressPinCode: {
+              ...prevData.PermanentAddressPinCode,
+              errorStatus: true,
+              errorMessage: "PinCode is required.",
+            },
+          }));
+          return;
+        }
+  
+        const dataToSend = {
+          Address: data.Address.value,
+          City: data.City.value,
+          State: data.State.value,
+          Country: data.Country.value,
+          PinCode: data.PinCode.value,
+          PermanentAddress: data.PermanentAddress.value,
+          PermanentAddressCity: data.PermanentAddressCity.value,
+          PermanentAddressState: data.PermanentAddressState.value,
+          PermanentAddressCountry: data.PermanentAddressCountry.value,
+          PermanentAddressPinCode: data.PermanentAddressPinCode.value
+        };
+  
+        if (currentPage < TOTAL_PAGES) {
+          setCurrentPage(currentPage + 1);
+        }
+
+      return dataToSend;
     }
   }))
 
@@ -145,63 +299,55 @@ const CommunicationDetails = forwardRef((props, ref) => {
       [name]: { ...prevData[name], value: value, errorStatus: false, errorMessage: "" },
     }));
   };
-  const [deliveryinputType, setDeliveryInputType] = useState("text");
 
   useEffect(() => {
-    const dataToSend = data.Country.countryId;
+    const dataToSend = data.Country.value;
     if (data.Country.value) dispatch(getState({ payload: dataToSend }));
   }, [data.Country.value]);
 
   useEffect(() => {
-    const dataToSend = data.State.stateID;
+    const dataToSend = data.PermanentAddressCountry.value;
+    if (data.PermanentAddressCountry.value) dispatch(getState({ payload: dataToSend }));
+  }, [data.PermanentAddressCountry.value]);
+
+  useEffect(() => {
+    const dataToSend = data.State.value
     if (data.State.value) dispatch(getCity({ payload: dataToSend }));
   }, [data.State.value]);
 
-  const handleCountryChange = (event) => {
-    setData((prevData) => ({
-      ...prevData,
-      country: {
-        ...prevData.Country,
-        value: event.target.value,
-        countryId: event.target.value,
-        errorStatus: false,
-        errorMessage: "",
-      },
-    }));
-  };
+  useEffect(() => {
+    const dataToSend = data.PermanentAddressState.value
+    if (data.PermanentAddressState.value) dispatch(getCity({ payload: dataToSend }));
+  }, [data.PermanentAddressState.value]);
 
-  const handleStateChange = (event) => {
-    setData((prevData) => ({
-      ...prevData,
-      state: {
-        ...prevData.Country,
-        value: event.target.value,
-        stateID: event.target.value,
 
-        errorStatus: false,
-        errorMessage: "",
-      },
-    }));
-  };
-  const handleCityChange = (event) => {
+  const handleChange = (event, name) => {
     setData((prevData) => ({
       ...prevData,
-      city: {
-        ...prevData.Country,
-        value: event.target.value,
-        cityID: event.target.value,
-        errorStatus: false,
-        errorMessage: "",
-      },
+      [name]: { ...prevData[name], value: event, errorStatus: false, errorMessage: "" },
     }));
-  };
+  }
+
+  const handleCheckChange = (event) => {
+    setData((prevData) => ({
+      ...prevData,
+      ['permanentAddressIsSameAsCorrespondenceAddress']: { ...prevData['permanentAddressIsSameAsCorrespondenceAddress'], value: event.target.checked, errorStatus: false, errorMessage: "" },
+    }));
+  }
+
   useEffect(() => {
     dispatch(getCountry());
   }, []);
+
+  useEffect(() => {
+
+    // handleNext();
+  }, [handleNext]);
+
   return (
     <Box sx={{ display: "flex", width: "100%" }} className="conatiner">
       {/* <Typography sx={{ fontSize: "2rem", fontWeight: "600", color: "black", textTransform: "uppercase", width: "100%" }}>Communication Details</Typography>
-      <br></br> */}
+      <br></br>  */}
       <Box sx={{ width: "50%", border: "1px solid #e5e5e5", margin: "2rem", padding: "2rem", borderRadius: "1rem" }}>
 
         <Box sx={{ marginTop: "3rem", display: "grid", gridTemplateColumns: "auto auto", gridColumnGap: "2rem", gridRowGap: "3rem" }} className="fatherDetails">
@@ -232,37 +378,75 @@ const CommunicationDetails = forwardRef((props, ref) => {
                 </Stack>
                 {fieldData.name == "Address" ? <br /> : null}
               </>
-            ) : fieldData.name == "City" ? (
-              <>
-                <Stack sx={{ width: "100%", gap: "0.5rem" }} key={key}>
-                  <MultipleSelect type={"city"} title={"City"} userData={data} dataArray={cities} handleChange={handleCityChange} />
-                </Stack>
-              </>
-            ) : fieldData.name == "State" ? (
-              <>
-                <Stack sx={{ width: "100%", gap: "0.5rem" }} key={key}>
-                  <MultipleSelect type={"state"} title={"State"} userData={data} dataArray={states} handleChange={handleStateChange} />
-                </Stack>
-              </>
-            ) : fieldData.name == "Country" ? (
-              <>
-                <Stack sx={{ width: "100%", gap: "0.5rem" }} key={key}>
-                  <MultipleSelect type={"country"} title={"Country"} userData={data} dataArray={countries} handleChange={handleCountryChange} />
-                </Stack>
-              </>
-            ) : fieldData.name == "permanentAddressIsSameAsCorrespondenceAddress" ? (
-              <>
-                <Stack sx={{ width: "100%", gap: "0.5rem" }} key={key}>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                      />
-                    }
-                    label="If permanent address is same as correspondence address"
-                  />
-                </Stack>
-              </>
-            ) : (null)
+            ) :
+              fieldData.name == "Country" ? (
+                <>
+                  <Stack sx={{ width: "100%", gap: "0.5rem" }} key={key}>
+
+                    <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>{data.Country.name} <span style={redStarStyle}>*</span></InputLabel>
+                    <SingleSelect
+                      Placeholder={"Select"}
+                      width={"100%"}
+                      disabled={true}
+                      data={upDatedCountryList}
+                      value={data.Country.value}
+                      onChange={(e) => {
+                        handleChange(e, "Country");
+                      }}
+                    />
+
+                    {data.Country.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{data.Country.errorMessage}</Typography> : null}
+                  </Stack>
+                </>
+              ) : fieldData.name == "State" ? (
+                <>
+                  <Stack sx={{ width: "100%", gap: "0.5rem" }} key={key}>
+                    <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>{data.State.name} <span style={redStarStyle}>*</span></InputLabel>
+                    <SingleSelect
+                      Placeholder={"Select"}
+                      width={"100%"}
+                      data={stateList}
+                      value={data.State.value}
+                      onChange={(e) => {
+                        dispatch(getCity())
+                        handleChange(e, "State")
+                      }}
+                    />
+
+                    {data.State.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{data.State.errorMessage}</Typography> : null}
+                  </Stack>
+                </>
+              ) : fieldData.name == "City" ? (
+                <>
+                  <Stack sx={{ width: "100%", gap: "0.5rem" }} key={key}>
+                    <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>{data.City.name} <span style={redStarStyle}>*</span></InputLabel>
+                    <SingleSelect
+                      Placeholder={"Select"}
+                      width={"100%"}
+                      data={cityList}
+                      value={data.City.value}
+                      onChange={(e) => {
+                        handleChange(e, "City");
+                      }}
+                    />
+                    {data.City.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{data.City.errorMessage}</Typography> : null}
+                  </Stack>
+                </>
+              ) : fieldData.name == "permanentAddressIsSameAsCorrespondenceAddress" ? (
+                <>
+                  <Stack sx={{ width: "100%", gap: "0.5rem" }} key={key}>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          onChange={handleCheckChange}
+                          name={data.permanentAddressIsSameAsCorrespondenceAddress.value}
+                        />
+                      }
+                      label="If permanent address is same as correspondence address"
+                    />
+                  </Stack>
+                </>
+              ) : (null)
           )}
         </Box>
       </Box>
@@ -296,22 +480,61 @@ const CommunicationDetails = forwardRef((props, ref) => {
                 </Stack>
                 {fieldData.name == "PermanentAddress" ? <br /> : null}
               </>
-            ) : fieldData.name == "PermanentAddressCity" ? (
+            ) : fieldData.name == "PermanentAddressCountry" ? (
               <>
                 <Stack sx={{ width: "100%", gap: "0.5rem" }} key={key}>
-                  <MultipleSelect type={"city"} title={"City"} userData={data} dataArray={cities} handleChange={handleCityChange} />
+
+                  <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Country <span style={redStarStyle}>*</span></InputLabel>
+                  <SingleSelect
+                    Placeholder={"Select"}
+                    width={"100%"}
+                    data={upDatedCountryList}
+                    disabled={true}
+                    value={data.PermanentAddressCountry.value}
+                    onChange={(e) => {
+                      dispatch(getCity())
+                      handleChange(e, "PermanentAddressCountry");
+                    }}
+                  />
+
+                  {data.PermanentAddressCountry.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{data.PermanentAddressCountry.errorMessage}</Typography> : null}
                 </Stack>
               </>
             ) : fieldData.name == "PermanentAddressState" ? (
               <>
                 <Stack sx={{ width: "100%", gap: "0.5rem" }} key={key}>
-                  <MultipleSelect type={"state"} title={"State"} userData={data} dataArray={states} handleChange={handleStateChange} />
+
+                  <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>State <span style={redStarStyle}>*</span></InputLabel>
+                  <SingleSelect
+                    Placeholder={"Select"}
+                    width={"100%"}
+                    data={stateList}
+                    value={data.PermanentAddressState.value}
+                    onChange={(e) => {
+                      dispatch(getCity())
+                      handleChange(e, "PermanentAddressState");
+                    }}
+                  />
+
+                  {data.PermanentAddressState.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{data.PermanentAddressState.errorMessage}</Typography> : null}
                 </Stack>
               </>
-            ) : fieldData.name == "PermanentAddressCountry" ? (
+            ) : fieldData.name == "PermanentAddressCity" ? (
               <>
                 <Stack sx={{ width: "100%", gap: "0.5rem" }} key={key}>
-                  <MultipleSelect type={"country"} title={"Country"} userData={data} dataArray={countries} handleChange={handleCountryChange} />
+
+                  <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>City <span style={redStarStyle}>*</span></InputLabel>
+                  <SingleSelect
+                    Placeholder={"Select"}
+                    width={"100%"}
+                    data={cityList2}
+                    value={data.PermanentAddressCity.value}
+                    onChange={(e) => {
+                      handleChange(e, "PermanentAddressCity");
+                    }}
+                  />
+
+                  {data.PermanentAddressCity.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{data.PermanentAddressCity.errorMessage}</Typography> : null}
                 </Stack>
               </>
             ) : (null)

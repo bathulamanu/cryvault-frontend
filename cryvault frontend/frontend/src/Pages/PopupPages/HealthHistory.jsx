@@ -17,6 +17,7 @@ const headingStyle = {
 };
 
 const HealthHistory = forwardRef((props, ref)  => {
+  var { handleNext, currentPage, setCurrentPage, TOTAL_PAGES } = props
 
   const [formValues, setFormValues] = useState({
     question1: "",
@@ -265,17 +266,6 @@ const HealthHistory = forwardRef((props, ref)  => {
       return data;
     }
   }))
-
-
-  const Save = () => {
-    // e.preventDefault();
-    console.log("health hisptoryt detail kk ", data);
-  }
-  const handleSave = (e) => {
-    e.preventDefault();
-    console.log(formValues);
-  };
-
 
 
   return (
@@ -1406,7 +1396,6 @@ const HealthHistory = forwardRef((props, ref)  => {
           </CardContent>
         </Card>
       </CardContent>
-      <button onClick={Save()}>save for bank </button>
     </Card>
   );
 });

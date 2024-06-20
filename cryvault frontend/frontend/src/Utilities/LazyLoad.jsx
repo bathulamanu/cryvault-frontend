@@ -42,6 +42,7 @@ import CheckoutDetails from "../Pages/CheckoutDetails";
 import { useDispatch, useSelector } from "react-redux";
 import { getPageMetaInfo } from "../redux/reducers/HomePageReducer";
 import PopupLayout from "../Pages/PopupPages/PopupLayout";
+// import FatherDetails from "../Pages/PopupPages/FatherDetails";
 import PopupLazyLoad from "./PopupLazyLoad";
 import SingleBlog from "../Pages/SingleBlog";
 
