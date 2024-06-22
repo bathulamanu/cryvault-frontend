@@ -16,6 +16,9 @@ import {
 } from "@mui/material";
 import { MultipleSelect, SingleSelect } from '../CheckoutDetails';
 import { useDispatch, useSelector } from "react-redux";
+import { addOrupdateAnnexureInfo } from "../../redux/reducers/UserReducer"
+import { GetTypeOfProof, getAnnexureInfo } from '../../redux/reducers/DashboardReducer';
+import { validateEmail, validatePhoneNumber } from "../../Components/Contact/ContactForm";
 const headingStyle = {
     fontSize: "18px",
     fontWeight: 500,
@@ -37,7 +40,7 @@ const redStarStyle = {
 };
 
 const ReferenceIformation = forwardRef((props, ref) => {
-    var { handleNext, currentPage, setCurrentPage, TOTAL_PAGES } = props
+    var { handleNext, handlePrev, currentPage, setCurrentPage, TOTAL_PAGES } = props
     const [data, setData] = useState({
         ExisitingCryovaultClientUIN: {
             value: "",
@@ -129,6 +132,7 @@ const ReferenceIformation = forwardRef((props, ref) => {
         }
 
     });
+    const dispatch = useDispatch()
     const handleChange = (e) => {
         const { name, value } = e.target;
         setData((prevData) => ({
@@ -137,27 +141,118 @@ const ReferenceIformation = forwardRef((props, ref) => {
         }));
     };
 
+    const [customerAnnexureInformationId, setCustomerAnnexureInformationId] = useState(null)
+    const SubscribedInnerPageData = useSelector((state) => state.dashboard.SubscribedUserData);
+    useEffect(() => {
+        async function getCommunicationData() {
+            setCustomerAnnexureInformationId(SubscribedInnerPageData?.customerAnnexureInformationId)
+            if (SubscribedInnerPageData && SubscribedInnerPageData.CustomerData && SubscribedInnerPageData.CustomerData.length != 0 && SubscribedInnerPageData.CustomerData[0].ReferenceDetails) {
+
+                for (let item in SubscribedInnerPageData.CustomerData[0].ReferenceDetails) {
+                    for (let item1 in data) {
+                        if (item1 == item) {
+                            data[item1].value = SubscribedInnerPageData.CustomerData[0].ReferenceDetails[item]
+                        }
+                    }
+                }
+            }
+        }
+        getCommunicationData()
+    }, [SubscribedInnerPageData]);
+
+    useEffect(() => {
+        getAnnexureInfo()
+    }, [handlePrev]);
+
+
+    useEffect(() => {
+        dispatch(getAnnexureInfo());
+    }, []);
+
+
     useImperativeHandle(ref, () => ({
         getReferenceIformationChildData: () => {
-            if (!data.ExisitingCryovaultClientUIN.value) {
+
+            let isMobile1Invalid;
+            if (data.Mobile1.value) {
+                isMobile1Invalid = !validatePhoneNumber(data.Mobile1.value, "91");
+            }
+            let isMobile2Invalid;
+            if (data.Mobile2.value) {
+                isMobile2Invalid = !validatePhoneNumber(data.Mobile2.value, "91");
+            }
+            let isEmergencyMobile1Invalid;
+            if (data.EmergencyMobile1.value) {
+                isEmergencyMobile1Invalid = !validatePhoneNumber(data.EmergencyMobile1.value, "91");
+            }
+            let isEmergencyMobile2Invalid;
+            if (data.EmergencyMobile2.value) {
+                isEmergencyMobile2Invalid = !validatePhoneNumber(data.EmergencyMobile2.value, "91");
+            }
+            // if (!data.ExisitingCryovaultClientUIN.value) {
+            //     setData((prevData) => ({
+            //         ...prevData,
+            //         ExisitingCryovaultClientUIN: {
+            //             ...prevData.ExisitingCryovaultClientUIN,
+            //             errorStatus: true,
+            //             errorMessage: "Client UIN is required.",
+            //         },
+            //     }));
+            //     return;
+            // }
+
+            // if (!data.IfReferredByExisitingClientName.value) {
+            //     setData((prevData) => ({
+            //         ...prevData,
+            //         IfReferredByExisitingClientName: {
+            //             ...prevData.IfReferredByExisitingClientName,
+            //             errorStatus: true,
+            //             errorMessage: "Exisiting ClientName is required.",
+            //         },
+            //     }));
+            //     return;
+            // }
+
+            if (isMobile1Invalid) {
                 setData((prevData) => ({
                     ...prevData,
-                    ExisitingCryovaultClientUIN: {
-                        ...prevData.ExisitingCryovaultClientUIN,
+                    Mobile1: {
+                        ...prevData.Mobile1,
                         errorStatus: true,
-                        errorMessage: "Client UIN is required.",
+                        errorMessage: "Enter Valid Phone Number",
                     },
                 }));
                 return;
             }
-
-            if (!data.IfReferredByExisitingClientName.value) {
+            if (isMobile2Invalid) {
                 setData((prevData) => ({
                     ...prevData,
-                    IfReferredByExisitingClientName: {
-                        ...prevData.IfReferredByExisitingClientName,
+                    Mobile2: {
+                        ...prevData.Mobile2,
                         errorStatus: true,
-                        errorMessage: "Exisiting ClientName is required.",
+                        errorMessage: "Enter Valid Phone Number",
+                    },
+                }));
+                return;
+            }
+            if (isEmergencyMobile1Invalid) {
+                setData((prevData) => ({
+                    ...prevData,
+                    EmergencyMobile1: {
+                        ...prevData.EmergencyMobile1,
+                        errorStatus: true,
+                        errorMessage: "Enter Valid Phone Number",
+                    },
+                }));
+                return;
+            }
+            if (isEmergencyMobile2Invalid) {
+                setData((prevData) => ({
+                    ...prevData,
+                    EmergencyMobile2: {
+                        ...prevData.EmergencyMobile2,
+                        errorStatus: true,
+                        errorMessage: "Enter Valid Phone Number",
                     },
                 }));
                 return;
@@ -180,7 +275,9 @@ const ReferenceIformation = forwardRef((props, ref) => {
             if (currentPage < TOTAL_PAGES) {
                 setCurrentPage(currentPage + 1);
             }
-            return dataToSend;
+            dispatch(addOrupdateAnnexureInfo({ ReferenceDetails: dataToSend, customerAnnexureInformationId: customerAnnexureInformationId }))
+
+
         }
     }))
 
@@ -254,6 +351,9 @@ const ReferenceIformation = forwardRef((props, ref) => {
                                         value={data.ExisitingCryovaultClientUIN.value}
                                         onChange={handleChange}
                                     />
+
+                                    {data.ExisitingCryovaultClientUIN.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{data.ExisitingCryovaultClientUIN.errorMessage}</Typography> : null}
+
                                 </FormControl>
                             </Grid>
                         </Grid>
@@ -262,8 +362,7 @@ const ReferenceIformation = forwardRef((props, ref) => {
                             sx={{ fontSize: "15px", marginTop: "10px" }}
                         >
                             If referred by an existing client, please provide details as below
-                            <span style={redStarStyle}>*</span>
-                            below<span style={redStarStyle}>*</span>
+                            below
                         </Typography>
                         <Grid container spacing={2} pt={1} pb={2}>
                             <Grid item style={{ width: "100%" }}>
@@ -275,7 +374,7 @@ const ReferenceIformation = forwardRef((props, ref) => {
                                     <OutlinedInput
                                         fullWidth
                                         id="outlined-adornment-IfReferredByExisitingClientName"
-                                        placeholder="If Referred By Exisiting ClientName"
+                                        placeholder="Client Name"
                                         size="small"
                                         sx={{
                                             border: "1px solid black",
@@ -288,6 +387,8 @@ const ReferenceIformation = forwardRef((props, ref) => {
                                         value={data.IfReferredByExisitingClientName.value}
                                         onChange={handleChange}
                                     />
+                                    {data.IfReferredByExisitingClientName.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{data.IfReferredByExisitingClientName.errorMessage}</Typography> : null}
+
                                 </FormControl>
                             </Grid>
                         </Grid>
@@ -297,7 +398,7 @@ const ReferenceIformation = forwardRef((props, ref) => {
                                 <OutlinedInput
                                     fullWidth
                                     id="outlined-adornment-Mobile1"
-                                    placeholder="Mobile1"
+                                    placeholder="Mobile Number"
                                     size="small"
                                     sx={{
                                         border: "1px solid black",
@@ -310,13 +411,15 @@ const ReferenceIformation = forwardRef((props, ref) => {
                                     value={data.Mobile1.value}
                                     onChange={handleChange}
                                 />
+                                {data.Mobile1.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{data.Mobile1.errorMessage}</Typography> : null}
+
                             </Grid>
                             <Grid item xs={6}>
                                 <InputLabel sx={inputLableStyle}>Mobile-2</InputLabel>
                                 <OutlinedInput
                                     fullWidth
                                     id="outlined-adornment-Mobile2"
-                                    placeholder="Mobile2"
+                                    placeholder="Mobile Number"
                                     size="small"
                                     sx={{
                                         border: "1px solid black",
@@ -330,6 +433,8 @@ const ReferenceIformation = forwardRef((props, ref) => {
                                     value={data.Mobile2.value}
                                     onChange={handleChange}
                                 />
+                                {data.Mobile2.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{data.Mobile2.errorMessage}</Typography> : null}
+
                             </Grid>
                         </Grid>
                     </CardContent>
@@ -374,7 +479,7 @@ const ReferenceIformation = forwardRef((props, ref) => {
                                             fullWidth
                                             type="text"
                                             id="Name"
-                                            placeholder="Input Text"
+                                            placeholder="Name"
                                             size="small"
                                             sx={{
                                                 border: "1px solid black",
@@ -418,7 +523,7 @@ const ReferenceIformation = forwardRef((props, ref) => {
                                             fullWidth
                                             type="text"
                                             id="EmergencyMobile1"
-                                            placeholder="Input Text"
+                                            placeholder="Mobile Number"
                                             size="small"
                                             sx={{
                                                 border: "1px solid black",
@@ -431,6 +536,8 @@ const ReferenceIformation = forwardRef((props, ref) => {
                                             value={data.EmergencyMobile1.value}
                                             onChange={handleChange}
                                         />
+                                        {data.EmergencyMobile1.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{data.EmergencyMobile1.errorMessage}</Typography> : null}
+
                                     </FormControl>
                                 </Grid>
                                 <Grid item xs={6}>
@@ -440,7 +547,7 @@ const ReferenceIformation = forwardRef((props, ref) => {
                                             fullWidth
                                             type="text"
                                             id="EmergencyMobile2"
-                                            placeholder="Input Text"
+                                            placeholder="Mobile Number"
                                             size="small"
                                             sx={{
                                                 border: "1px solid black",
@@ -454,6 +561,8 @@ const ReferenceIformation = forwardRef((props, ref) => {
                                             value={data.EmergencyMobile2.value}
                                             onChange={handleChange}
                                         />
+                                        {data.EmergencyMobile2.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{data.EmergencyMobile2.errorMessage}</Typography> : null}
+
                                     </FormControl>
                                 </Grid>
                             </Grid>
@@ -472,7 +581,8 @@ const ReferenceIformation = forwardRef((props, ref) => {
                                 control={
                                     <Checkbox
                                         onChange={(e) => handleCheckChange(e, 'meternalSampleAndUmbilicalBleed')}
-                                        name={data.meternalSampleAndUmbilicalBleed.value}
+                                        name={data.meternalSampleAndUmbilicalBleed.name}
+                                        checked={data.meternalSampleAndUmbilicalBleed.value}
                                     />
                                 }
                                 label="Requesting bank to arrange for pickup of meternal sample & Umbilical cord bleed"
@@ -486,7 +596,8 @@ const ReferenceIformation = forwardRef((props, ref) => {
                                 control={
                                     <Checkbox
                                         onChange={(e) => handleCheckChange(e, 'phledopomist')}
-                                        name={data.phledopomist.value}
+                                        name={data.phledopomist.name}
+                                        checked={data.phledopomist.value}
                                     />
                                 }
                                 label="Requesting bank to oranise for Phledopomist"

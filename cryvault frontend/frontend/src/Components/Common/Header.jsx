@@ -160,7 +160,7 @@ const Header = () => {
       </Box>
       <div id="edu-sticky-placeholder"></div>
       {/* <div style={{ marginTop: "80px" }}></div>marginBottom: "80px", */}
-      <Box sx={{  backgroundColor: navbar ? "white !important" : "transparent !important" }} top={isScrolled ? "0" : "40px"} position="sticky" left="0" width="100%" zIndex="999" transition="top 0.3s ease-in-out">
+      <Box sx={{ backgroundColor: navbar ? "white !important" : "transparent !important" }} top={isScrolled ? "0" : "40px"} position="sticky" left="0" width="100%" zIndex="999" transition="top 0.3s ease-in-out">
         <Box className="header-mainmenu">
           <Box className="container-fluid">
             <Box className="header-navbar">
@@ -803,7 +803,7 @@ export const MobileHeader = React.memo(() => {
                   </ListItemButton>
                 </Link>
               )}
-              ) : (
+              : (
               <Link to={`/login`} onClick={handleDrawerClose}>
                 <ListItemButton>
                   <ListItemIcon>{<ChevronRightIcon style={{ fontSize: "3.5rem", height: "4rem" }} />}</ListItemIcon>
@@ -817,8 +817,9 @@ export const MobileHeader = React.memo(() => {
                   />
                 </ListItemButton>
               </Link>
-              )}
+              )
             </List>
+
           )}
           <ListItemButton sx={{ border: "1px solid #e5e5e5", borderTop: "none" }} button onClick={handleNestedClick}>
             <ListItemText

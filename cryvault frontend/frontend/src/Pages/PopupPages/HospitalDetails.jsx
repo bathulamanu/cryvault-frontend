@@ -29,8 +29,10 @@ import {
 } from "../../globalFunctions";
 
 import { getCountry, getState, getCity } from "../../redux/reducers/PaymentReducer";
-import { GetTypeOfPregnancy } from "../../redux/reducers/DashboardReducer"
-
+import { GetTypeOfPregnancy } from "../../redux/reducers/DashboardReducer";
+import { addOrupdateAnnexureInfo } from "../../redux/reducers/UserReducer"
+import { GetTypeOfProof, getAnnexureInfo } from '../../redux/reducers/DashboardReducer'
+import { formatDate,formatDateYYYYMMDD } from "../../globalFunctions";
 const headingStyle = {
   fontSize: "18px",
   fontWeight: 500,
@@ -53,7 +55,7 @@ const redStarStyle = {
 
 
 const HospitalDetails = forwardRef((props, ref) => {
-  var { handleNext, currentPage, setCurrentPage, TOTAL_PAGES } = props
+  var { handleNext, handlePrev, currentPage, setCurrentPage, TOTAL_PAGES } = props
   const dispatch = useDispatch();
 
   const [data, setData] = useState({
@@ -221,11 +223,36 @@ const HospitalDetails = forwardRef((props, ref) => {
   if (data.DeliveringHospitalState.value) {
     cityList2 = getCityIdList(cities2);
   }
+  const [customerAnnexureInformationId, setCustomerAnnexureInformationId] = useState(null)
+  const SubscribedInnerPageData = useSelector((state) => state.dashboard.SubscribedUserData);
+  useEffect(() => {
+    async function getCommunicationData() {
+      setCustomerAnnexureInformationId(SubscribedInnerPageData?.customerAnnexureInformationId)
+      if (SubscribedInnerPageData && SubscribedInnerPageData.CustomerHospitalBirthingdetails) {
 
-  const [deliveryinputType, setDeliveryInputType] = useState("text");
+        for (let item in SubscribedInnerPageData.CustomerHospitalBirthingdetails) {
+          for (let item1 in data) {
+            if (item1 == item) {
+              data[item1].value = item == "ExpectedDateOfDelivery" ? formatDate(SubscribedInnerPageData.CustomerHospitalBirthingdetails[item]) : SubscribedInnerPageData.CustomerHospitalBirthingdetails[item]
+            }
+          }
+        }
+      }
+    }
+    getCommunicationData()
+  }, [SubscribedInnerPageData]);
+
+  useEffect(() => {
+    getAnnexureInfo()
+  }, [handlePrev]);
+
   const [inputType, setInputType] = useState("text");
   const handleChange = (e) => {
     const { name, value } = e.target;
+    const exp = /^\d*$/
+    if ((name == "ConsultingHospitalPinCode" || name == "DeliveringHospitalPinCode") && !exp.test(value)) {
+      return
+    }
     setData((prevData) => ({
       ...prevData,
       [name]: { ...prevData[name], value: value, errorStatus: false, errorMessage: "" },
@@ -250,184 +277,184 @@ const HospitalDetails = forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => ({
     getHospitalDetailsChildData: () => {
-      if (!data.ExpectedDateOfDelivery.value) {
-        setData((prevData) => ({
-          ...prevData,
-          ExpectedDateOfDelivery: {
-            ...prevData.ExpectedDateOfDelivery,
-            errorStatus: true,
-            errorMessage: "Expected Date Of Delivery is required.",
-          },
-        }));
-        return;
-      }
+      // if (!data.ExpectedDateOfDelivery.value) {
+      //   setData((prevData) => ({
+      //     ...prevData,
+      //     ExpectedDateOfDelivery: {
+      //       ...prevData.ExpectedDateOfDelivery,
+      //       errorStatus: true,
+      //       errorMessage: "Expected Date Of Delivery is required.",
+      //     },
+      //   }));
+      //   return;
+      // }
 
-      if (!data.TypeOfpregnancy.value) {
-        setData((prevData) => ({
-          ...prevData,
-          TypeOfpregnancy: {
-            ...prevData.TypeOfpregnancy,
-            errorStatus: true,
-            errorMessage: "Type Of pregnancy is required.",
-          },
-        }));
-        return;
-      }
+      // if (!data.TypeOfpregnancy.value) {
+      //   setData((prevData) => ({
+      //     ...prevData,
+      //     TypeOfpregnancy: {
+      //       ...prevData.TypeOfpregnancy,
+      //       errorStatus: true,
+      //       errorMessage: "Type Of pregnancy is required.",
+      //     },
+      //   }));
+      //   return;
+      // }
 
-      if (!data.HowManyChildrensDoYouHaveAlready.value) {
-        setData((prevData) => ({
-          ...prevData,
-          HowManyChildrensDoYouHaveAlready: {
-            ...prevData.HowManyChildrensDoYouHaveAlready,
-            errorStatus: true,
-            errorMessage: "How Many Childrens Do You Have Already is required.",
-          },
-        }));
-        return;
-      }
-      if (!data.ConsultingGynocologist.value) {
-        setData((prevData) => ({
-          ...prevData,
-          ConsultingGynocologist: {
-            ...prevData.ConsultingGynocologist,
-            errorStatus: true,
-            errorMessage: "Consulting Gynocologist is required.",
-          },
-        }));
-        return;
-      }
+      // if (!data.HowManyChildrensDoYouHaveAlready.value) {
+      //   setData((prevData) => ({
+      //     ...prevData,
+      //     HowManyChildrensDoYouHaveAlready: {
+      //       ...prevData.HowManyChildrensDoYouHaveAlready,
+      //       errorStatus: true,
+      //       errorMessage: "How Many Childrens Do You Have Already is required.",
+      //     },
+      //   }));
+      //   return;
+      // }
+      // if (!data.ConsultingGynocologist.value) {
+      //   setData((prevData) => ({
+      //     ...prevData,
+      //     ConsultingGynocologist: {
+      //       ...prevData.ConsultingGynocologist,
+      //       errorStatus: true,
+      //       errorMessage: "Consulting Gynocologist is required.",
+      //     },
+      //   }));
+      //   return;
+      // }
 
-      if (!data.ConsultingHospital.value) {
-        setData((prevData) => ({
-          ...prevData,
-          ConsultingHospital: {
-            ...prevData.ConsultingHospital,
-            errorStatus: true,
-            errorMessage: "Consulting Hospital is required.",
-          },
-        }));
-        return;
-      }
+      // if (!data.ConsultingHospital.value) {
+      //   setData((prevData) => ({
+      //     ...prevData,
+      //     ConsultingHospital: {
+      //       ...prevData.ConsultingHospital,
+      //       errorStatus: true,
+      //       errorMessage: "Consulting Hospital is required.",
+      //     },
+      //   }));
+      //   return;
+      // }
 
-      if (!data.ConsultingHospitalCountry.value) {
-        setData((prevData) => ({
-          ...prevData,
-          ConsultingHospitalCountry: {
-            ...prevData.ConsultingHospitalCountry,
-            errorStatus: true,
-            errorMessage: "Country is required.",
-          },
-        }));
-        return;
-      }
+      // if (!data.ConsultingHospitalCountry.value) {
+      //   setData((prevData) => ({
+      //     ...prevData,
+      //     ConsultingHospitalCountry: {
+      //       ...prevData.ConsultingHospitalCountry,
+      //       errorStatus: true,
+      //       errorMessage: "Country is required.",
+      //     },
+      //   }));
+      //   return;
+      // }
 
-      if (!data.ConsultingHospitalState.value) {
-        setData((prevData) => ({
-          ...prevData,
-          ConsultingHospitalState: {
-            ...prevData.ConsultingHospitalState,
-            errorStatus: true,
-            errorMessage: "State is required.",
-          },
-        }));
-        return;
-      }
+      // if (!data.ConsultingHospitalState.value) {
+      //   setData((prevData) => ({
+      //     ...prevData,
+      //     ConsultingHospitalState: {
+      //       ...prevData.ConsultingHospitalState,
+      //       errorStatus: true,
+      //       errorMessage: "State is required.",
+      //     },
+      //   }));
+      //   return;
+      // }
 
-      if (!data.ConsultingHosptalCity.value) {
-        setData((prevData) => ({
-          ...prevData,
-          ConsultingHosptalCity: {
-            ...prevData.ConsultingHosptalCity,
-            errorStatus: true,
-            errorMessage: "City is required.",
-          },
-        }));
-        return;
-      }
+      // if (!data.ConsultingHosptalCity.value) {
+      //   setData((prevData) => ({
+      //     ...prevData,
+      //     ConsultingHosptalCity: {
+      //       ...prevData.ConsultingHosptalCity,
+      //       errorStatus: true,
+      //       errorMessage: "City is required.",
+      //     },
+      //   }));
+      //   return;
+      // }
 
-      if (!data.ConsultingHospitalPinCode.value) {
-        setData((prevData) => ({
-          ...prevData,
-          ConsultingHospitalPinCode: {
-            ...prevData.ConsultingHospitalPinCode,
-            errorStatus: true,
-            errorMessage: "PinCode is required.",
-          },
-        }));
-        return;
-      }
-      if (!data.ConsultingHospitalAddress.value) {
-        setData((prevData) => ({
-          ...prevData,
-          ConsultingHospitalAddress: {
-            ...prevData.ConsultingHospitalAddress,
-            errorStatus: true,
-            errorMessage: "Hospital Address is required.",
-          },
-        }));
-        return;
-      }
+      // if (!data.ConsultingHospitalPinCode.value) {
+      //   setData((prevData) => ({
+      //     ...prevData,
+      //     ConsultingHospitalPinCode: {
+      //       ...prevData.ConsultingHospitalPinCode,
+      //       errorStatus: true,
+      //       errorMessage: "PinCode is required.",
+      //     },
+      //   }));
+      //   return;
+      // }
+      // if (!data.ConsultingHospitalAddress.value) {
+      //   setData((prevData) => ({
+      //     ...prevData,
+      //     ConsultingHospitalAddress: {
+      //       ...prevData.ConsultingHospitalAddress,
+      //       errorStatus: true,
+      //       errorMessage: "Hospital Address is required.",
+      //     },
+      //   }));
+      //   return;
+      // }
 
-      if (!data.DeliveringHospitalCountry.value) {
-        setData((prevData) => ({
-          ...prevData,
-          DeliveringHospitalCountry: {
-            ...prevData.DeliveringHospitalCountry,
-            errorStatus: true,
-            errorMessage: "Country is required.",
-          },
-        }));
-        return;
-      }
+      // if (!data.DeliveringHospitalCountry.value) {
+      //   setData((prevData) => ({
+      //     ...prevData,
+      //     DeliveringHospitalCountry: {
+      //       ...prevData.DeliveringHospitalCountry,
+      //       errorStatus: true,
+      //       errorMessage: "Country is required.",
+      //     },
+      //   }));
+      //   return;
+      // }
 
-      if (!data.DeliveringHospitalState.value) {
-        setData((prevData) => ({
-          ...prevData,
-          DeliveringHospitalState: {
-            ...prevData.DeliveringHospitalState,
-            errorStatus: true,
-            errorMessage: "State is required.",
-          },
-        }));
-        return;
-      }
-      if (!data.DeliveringHosptalCity.value) {
-        setData((prevData) => ({
-          ...prevData,
-          DeliveringHosptalCity: {
-            ...prevData.DeliveringHosptalCity,
-            errorStatus: true,
-            errorMessage: "City is required.",
-          },
-        }));
-        return;
-      }
-      if (!data.DeliveringHospitalPinCode.value) {
-        setData((prevData) => ({
-          ...prevData,
-          DeliveringHospitalPinCode: {
-            ...prevData.DeliveringHospitalPinCode,
-            errorStatus: true,
-            errorMessage: "PinCode is required.",
-          },
-        }));
-        return;
-      }
+      // if (!data.DeliveringHospitalState.value) {
+      //   setData((prevData) => ({
+      //     ...prevData,
+      //     DeliveringHospitalState: {
+      //       ...prevData.DeliveringHospitalState,
+      //       errorStatus: true,
+      //       errorMessage: "State is required.",
+      //     },
+      //   }));
+      //   return;
+      // }
+      // if (!data.DeliveringHosptalCity.value) {
+      //   setData((prevData) => ({
+      //     ...prevData,
+      //     DeliveringHosptalCity: {
+      //       ...prevData.DeliveringHosptalCity,
+      //       errorStatus: true,
+      //       errorMessage: "City is required.",
+      //     },
+      //   }));
+      //   return;
+      // }
+      // if (!data.DeliveringHospitalPinCode.value) {
+      //   setData((prevData) => ({
+      //     ...prevData,
+      //     DeliveringHospitalPinCode: {
+      //       ...prevData.DeliveringHospitalPinCode,
+      //       errorStatus: true,
+      //       errorMessage: "PinCode is required.",
+      //     },
+      //   }));
+      //   return;
+      // }
 
-      if (!data.DeliveringHospitalAddress.value) {
-        setData((prevData) => ({
-          ...prevData,
-          DeliveringHospitalAddress: {
-            ...prevData.DeliveringHospitalAddress,
-            errorStatus: true,
-            errorMessage: "Delivering Hospital Address is required.",
-          },
-        }));
-        return;
-      }
+      // if (!data.DeliveringHospitalAddress.value) {
+      //   setData((prevData) => ({
+      //     ...prevData,
+      //     DeliveringHospitalAddress: {
+      //       ...prevData.DeliveringHospitalAddress,
+      //       errorStatus: true,
+      //       errorMessage: "Delivering Hospital Address is required.",
+      //     },
+      //   }));
+      //   return;
+      // }
 
       const dataToSend = {
-        ExpectedDateOfDelivery: data.ExpectedDateOfDelivery.value,
+        ExpectedDateOfDelivery: formatDateYYYYMMDD(data.ExpectedDateOfDelivery.value),
         TypeOfpregnancy: data.TypeOfpregnancy.value,
         HowManyChildrensDoYouHaveAlready: data.HowManyChildrensDoYouHaveAlready.value,
         ConsultingGynocologist: data.ConsultingGynocologist.value,
@@ -443,14 +470,15 @@ const HospitalDetails = forwardRef((props, ref) => {
         DeliveringHospitalState: data.DeliveringHospitalState.value,
         DeliveringHosptalCity: data.DeliveringHosptalCity.value,
         DeliveringHospitalPinCode: data.DeliveringHospitalPinCode.value,
-
+        
       };
 
       if (currentPage < TOTAL_PAGES) {
         setCurrentPage(currentPage + 1);
       }
+      dispatch(addOrupdateAnnexureInfo({ CustomerHospitalBirthingdetails: dataToSend, customerAnnexureInformationId: customerAnnexureInformationId }))
 
-      return dataToSend;
+
     }
   }))
 
@@ -480,8 +508,8 @@ const HospitalDetails = forwardRef((props, ref) => {
   useEffect(() => {
     dispatch(getCountry());
     dispatch(GetTypeOfPregnancy());
+    dispatch(getAnnexureInfo());
   }, []);
-
 
 
   return (
@@ -679,7 +707,7 @@ const HospitalDetails = forwardRef((props, ref) => {
                       fullWidth
                       type="number"
                       id="ConsultingHospitalPinCode"
-                      placeholder="Consulting Hospital PinCode"
+                      placeholder="PinCode"
                       size="small"
                       sx={{
                         border: "1px solid black",
@@ -688,9 +716,11 @@ const HospitalDetails = forwardRef((props, ref) => {
                         padding: "10px",
                         borderRadius: "8px",
                       }}
+                      inputProps={{ maxLength: 6 }}
                       name={data.ConsultingHospitalPinCode.name}
                       value={data.ConsultingHospitalPinCode.value}
                       onChange={handleChange}
+                   
                     />
                     {data.ConsultingHospitalPinCode.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data.ConsultingHospitalPinCode.errorMessage}</Typography> : null}
 
@@ -729,15 +759,15 @@ const HospitalDetails = forwardRef((props, ref) => {
                   <FormControlLabel
                     control={
                       <Checkbox
+                        checked={data.IsDeliveringHospitalSameAsConsultingHospotal.value}
                         onChange={handleCheckChange}
-                        name={data.IsDeliveringHospitalSameAsConsultingHospotal.value}
+                        name={data.IsDeliveringHospitalSameAsConsultingHospotal.name}
+                        value={data.IsDeliveringHospitalSameAsConsultingHospotal.value}
 
                       />
                     }
                     label="If  delivering hospital address is same as Current hospital address"
-                    name="IsDeliveringHospitalSameAsConsultingHospotal"
-                    value={data.IsDeliveringHospitalSameAsConsultingHospotal.value}
-                    onChange={handleChange}
+                 
                   />
                 </Grid>
               </Grid>
@@ -807,7 +837,7 @@ const HospitalDetails = forwardRef((props, ref) => {
                       fullWidth
                       type="text"
                       id="DeliveringHospitalPinCode"
-                      placeholder="Delivering Hospital PinCode"
+                      placeholder="PinCode"
                       size="small"
                       sx={{
                         border: "1px solid black",
@@ -819,6 +849,7 @@ const HospitalDetails = forwardRef((props, ref) => {
                       name={data.DeliveringHospitalPinCode.name}
                       value={data.DeliveringHospitalPinCode.value}
                       onChange={handleChange}
+                      inputProps={{ maxLength: 6 }}
                     />
                     {data.DeliveringHospitalPinCode.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data.DeliveringHospitalPinCode.errorMessage}</Typography> : null}
 

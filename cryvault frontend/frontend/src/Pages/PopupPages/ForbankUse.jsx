@@ -15,6 +15,10 @@ import {
   Typography,
 } from "@mui/material";
 
+import { addOrupdateAnnexureInfo } from "../../redux/reducers/UserReducer"
+import { GetTypeOfProof, getAnnexureInfo } from '../../redux/reducers/DashboardReducer'
+import { useDispatch, useSelector } from "react-redux";
+import { formatDate, formatDateYYYYMMDD } from "../../globalFunctions"
 const headingStyle = {
   fontSize: "18px",
   fontWeight: 500,
@@ -31,7 +35,7 @@ const inputLableStyle = {
 };
 
 const ForbankUse = forwardRef((props, ref) => {
-  var { handleNext, currentPage, setCurrentPage, TOTAL_PAGES } = props
+  var { handleNext, handlePrev, currentPage, setCurrentPage, TOTAL_PAGES } = props
 
   const [data, setData] = useState({
     NameOfExcutive: {
@@ -91,7 +95,8 @@ const ForbankUse = forwardRef((props, ref) => {
       id: "Name"
     }
   })
-
+  const dispatch = useDispatch()
+  const [inputType, setInputType] = useState("text");
   const handleChange = (e) => {
     const { name, value } = e.target;
     setData((prevData) => ({
@@ -100,6 +105,34 @@ const ForbankUse = forwardRef((props, ref) => {
     }));
   };
 
+  const [customerAnnexureInformationId, setCustomerAnnexureInformationId] = useState(null)
+  const SubscribedInnerPageData = useSelector((state) => state.dashboard.SubscribedUserData);
+  useEffect(() => {
+    async function getCommunicationData() {
+      setCustomerAnnexureInformationId(SubscribedInnerPageData?.customerAnnexureInformationId)
+      if (SubscribedInnerPageData && SubscribedInnerPageData.CustomerData && SubscribedInnerPageData.CustomerData.length != 0 && SubscribedInnerPageData.CustomerData[0].ExcutiveInfoForbankUse) {
+        for (let item in SubscribedInnerPageData.CustomerData[0].ExcutiveInfoForbankUse) {
+          for (let item1 in data) {
+            if (item1 == item) {
+              data[item1].value = item == "Date" ? formatDate(SubscribedInnerPageData.CustomerData[0].ExcutiveInfoForbankUse[item]) : SubscribedInnerPageData.CustomerData[0].ExcutiveInfoForbankUse[item]
+          
+            }
+          }
+        }
+      }
+    }
+    getCommunicationData()
+  }, [SubscribedInnerPageData]);
+
+  useEffect(() => {
+    getAnnexureInfo()
+  }, [handlePrev]);
+
+  useEffect(() => {
+    dispatch(getAnnexureInfo());
+  }, []);
+
+
   useImperativeHandle(ref, () => ({
     getForbankUseChildData: () => {
       const dataToSend = {
@@ -107,7 +140,7 @@ const ForbankUse = forwardRef((props, ref) => {
         EmployeeCode: data.EmployeeCode.value,
         NameOfManager: data.NameOfManager.value,
         AreaOrRegion: data.AreaOrRegion.value,
-        Date: data.Date.value,
+        Date: formatDateYYYYMMDD(data.Date.value),
         ExcutiveSignature: data.ExcutiveSignature.value,
         Name: data.Name.value
       };
@@ -115,7 +148,9 @@ const ForbankUse = forwardRef((props, ref) => {
       if (currentPage < TOTAL_PAGES) {
         setCurrentPage(currentPage + 1);
       }
-      return dataToSend;
+
+      dispatch(addOrupdateAnnexureInfo({ ExcutiveInfoForbankUse: dataToSend, customerAnnexureInformationId: customerAnnexureInformationId }))
+
     }
   }))
 
@@ -134,7 +169,7 @@ const ForbankUse = forwardRef((props, ref) => {
               <OutlinedInput
                 fullWidth
                 id="outlined-adornment-password"
-                placeholder="Input text"
+                placeholder={data.NameOfExcutive.placeholder}
                 size="small"
                 sx={{
                   border: "1px solid black",
@@ -155,7 +190,7 @@ const ForbankUse = forwardRef((props, ref) => {
               <OutlinedInput
                 fullWidth
                 id="outlined-adornment-password"
-                placeholder="Input text"
+                placeholder={data.EmployeeCode.placeholder}
                 size="small"
                 sx={{
                   border: "1px solid black",
@@ -178,7 +213,7 @@ const ForbankUse = forwardRef((props, ref) => {
               <OutlinedInput
                 fullWidth
                 id="outlined-adornment-password"
-                placeholder="Input text"
+                placeholder={data.NameOfManager.placeholder}
                 size="small"
                 sx={{
                   border: "1px solid black",
@@ -199,7 +234,7 @@ const ForbankUse = forwardRef((props, ref) => {
               <OutlinedInput
                 fullWidth
                 id="outlined-adornment-password"
-                placeholder="Input text"
+                placeholder={data.AreaOrRegion.placeholder}
                 size="small"
                 sx={{
                   border: "1px solid black",
@@ -217,10 +252,10 @@ const ForbankUse = forwardRef((props, ref) => {
           <Grid item xs={4}>
             <InputLabel sx={inputLableStyle}>Date</InputLabel>
             <FormControl variant="outlined" fullWidth size="small">
-              <OutlinedInput
+              {/* <OutlinedInput
                 fullWidth
                 id="outlined-adornment-password"
-                placeholder="Input text"
+                placeholder={data.Date.placeholder}
                 size="small"
                 sx={{
                   border: "1px solid black",
@@ -232,7 +267,19 @@ const ForbankUse = forwardRef((props, ref) => {
                 name={data.Date.name}
                 value={data.Date.value}
                 onChange={handleChange}
-              />
+              /> */}
+              <input
+                style={{ border: data.Date.errorStatus ? "1px solid red" : "none" }}
+                onChange={handleChange}
+                key={data[0]}
+                placeholder={data.Date.placeholder}
+                className={`dashboardInput fullWidth`}
+                label={data.Date.placeholder} type={inputType}
+                onFocus={() => setInputType("date")}
+                onBlur={() => setInputType("text")}
+                value={data.Date.value}
+                name={data.Date.name}
+                size="small" />
             </FormControl>
           </Grid>
         </Grid>
@@ -263,7 +310,7 @@ const ForbankUse = forwardRef((props, ref) => {
                 <OutlinedInput
                   fullWidth
                   id="outlined-adornment-password"
-                  placeholder="Input text"
+                  placeholder={data.Name.placeholder}
                   size="small"
                   sx={{
                     border: "1px solid black",

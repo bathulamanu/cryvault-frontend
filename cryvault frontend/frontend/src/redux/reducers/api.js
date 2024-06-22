@@ -1,4 +1,4 @@
-const BASE_URL = "http://18.61.70.225:4000"; // "http://localhost:4000" //
+const BASE_URL = "http://18.61.70.225:4000"; // "http://localhost:4000" // "http://192.168.0.102:4000" //  
 
 
 export const s3BucketFilePath = () => {
@@ -68,7 +68,7 @@ export const getOrderDetailsApi = () => {
 export const getHelpDetailsApi = () => {
   return `${BASE_URL}/flyingbyts/api/customer/getHelpDetails`;
 };
-export const IsSubscribedUserApi = () => {
+export const getAnnexureInfoApi = () => {
   return `${BASE_URL}/flyingbyts/api/customer/getAnnexureInfo`;
 };
 export const getImagesApi = () => {
@@ -139,9 +139,13 @@ export const getBlogsApi = () => {
 export const addOrupdateAnnexureInfoApi = () => {
   return `${BASE_URL}/flyingbyts/api/customer/addOrupdateAnnexureInfo`;
 };
+
 export const GetTypeOfPregnancyDetails = () => {
   return `${BASE_URL}/flyingbyts/api/user/getMasterConfiguration/Type of Pregnancy/null`;
 };
 
+export const GetTypeOfProofDetails = () => {
+  return `${BASE_URL}/flyingbyts/api/user/getMasterConfiguration/IDProof/null`;
+};
 
 

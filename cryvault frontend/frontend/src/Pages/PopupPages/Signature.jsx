@@ -15,7 +15,9 @@ import {
   TextareaAutosize,
   Typography,
 } from "@mui/material";
-
+import { addOrupdateAnnexureInfo } from "../../redux/reducers/UserReducer"
+import { GetTypeOfProof, getAnnexureInfo } from '../../redux/reducers/DashboardReducer'
+import { useDispatch, useSelector } from "react-redux";
 const headingStyle = {
   fontSize: "18px",
   fontWeight: 500,
@@ -32,55 +34,56 @@ const inputLableStyle = {
 };
 
 const Signature = forwardRef((props, ref) => {
-  var { handleNext, currentPage, setCurrentPage, TOTAL_PAGES } = props
+  var { handleNext, handlePrev, currentPage, setCurrentPage, TOTAL_PAGES } = props;
+  const dispatch = useDispatch()
   const [data, setData] = useState({
     MotherOrGuardianSignature: {
       value: "",
-      placeholder: "Exisiting Cryovault Client UIN",
+      placeholder: "MotherOrGuardianSignature",
       errorMessage: "",
       errorStatus: false,
-      name: "ExisitingCryovaultClientUIN",
-      id: "ExisitingCryovaultClientUIN"
+      name: "MotherOrGuardianSignature",
+      id: "MotherOrGuardianSignature"
     },
     FatherOrGuardianSignature: {
       value: "",
-      placeholder: "Exisiting Cryovault Client UIN",
+      placeholder: "FatherOrGuardianSignature",
       errorMessage: "",
       errorStatus: false,
-      name: "ExisitingCryovaultClientUIN",
-      id: "ExisitingCryovaultClientUIN"
+      name: "FatherOrGuardianSignature",
+      id: "FatherOrGuardianSignature"
     },
     MedicalDirectorSignature: {
       value: "",
-      placeholder: "Exisiting Cryovault Client UIN",
+      placeholder: "MedicalDirectorSignature",
       errorMessage: "",
       errorStatus: false,
-      name: "ExisitingCryovaultClientUIN",
-      id: "ExisitingCryovaultClientUIN"
+      name: "MedicalDirectorSignature",
+      id: "MedicalDirectorSignature"
     },
     MotherOrGuardianName: {
       value: "",
-      placeholder: "Exisiting Cryovault Client UIN",
+      placeholder: "MotherOrGuardianName",
       errorMessage: "",
       errorStatus: false,
-      name: "ExisitingCryovaultClientUIN",
-      id: "ExisitingCryovaultClientUIN"
+      name: "MotherOrGuardianName",
+      id: "MotherOrGuardianName"
     },
     FatherOrGuardianName: {
       value: "",
-      placeholder: "Exisiting Cryovault Client UIN",
+      placeholder: "FatherOrGuardianName",
       errorMessage: "",
       errorStatus: false,
-      name: "ExisitingCryovaultClientUIN",
-      id: "ExisitingCryovaultClientUIN"
+      name: "FatherOrGuardianName",
+      id: "FatherOrGuardianName"
     },
     MedicalDirectorName: {
       value: "",
-      placeholder: "Exisiting Cryovault Client UIN",
+      placeholder: "MedicalDirectorName",
       errorMessage: "",
       errorStatus: false,
-      name: "ExisitingCryovaultClientUIN",
-      id: "ExisitingCryovaultClientUIN"
+      name: "MedicalDirectorName",
+      id: "MedicalDirectorName"
     }
   });
 
@@ -91,6 +94,34 @@ const Signature = forwardRef((props, ref) => {
       [name]: { ...prevData[name], value: value, errorStatus: false, errorMessage: "" },
     }));
   };
+
+  const [customerAnnexureInformationId, setCustomerAnnexureInformationId] = useState(null)
+  const SubscribedInnerPageData = useSelector((state) => state.dashboard.SubscribedUserData);
+  useEffect(() => {
+    async function getSignatureData() {
+      setCustomerAnnexureInformationId(SubscribedInnerPageData?.customerAnnexureInformationId)
+      if (SubscribedInnerPageData && SubscribedInnerPageData.CustomerData && SubscribedInnerPageData.CustomerData.length != 0 && SubscribedInnerPageData.CustomerData[0].AllSignature) {
+        for (let item in SubscribedInnerPageData.CustomerData[0].AllSignature) {
+          for (let item1 in data) {
+            if (item1 == item) {
+              data[item1].value = SubscribedInnerPageData.CustomerData[0].AllSignature[item]
+            }
+          }
+        }
+      }
+    }
+    getSignatureData()
+  }, [SubscribedInnerPageData]);
+
+  useEffect(() => {
+    getAnnexureInfo()
+  }, [handlePrev]);
+
+
+  useEffect(() => {
+    dispatch(getAnnexureInfo());
+  }, []);
+
 
   useImperativeHandle(ref, () => ({
     getSignatureChildData: () => {
@@ -106,7 +137,8 @@ const Signature = forwardRef((props, ref) => {
       if (currentPage < TOTAL_PAGES) {
         setCurrentPage(currentPage + 1);
       }
-      return dataToSend;
+      dispatch(addOrupdateAnnexureInfo({ AllSignature: dataToSend, customerAnnexureInformationId: customerAnnexureInformationId }))
+
     }
   }))
 
@@ -174,7 +206,7 @@ const Signature = forwardRef((props, ref) => {
               <OutlinedInput
                 fullWidth
                 id="outlined-adornment-password"
-                placeholder="Input text"
+                placeholder="Name"
                 size="small"
                 sx={{
                   border: "1px solid black",
@@ -197,7 +229,7 @@ const Signature = forwardRef((props, ref) => {
               <OutlinedInput
                 fullWidth
                 id="outlined-adornment-password"
-                placeholder="Input text"
+                placeholder="Name"
                 size="small"
                 sx={{
                   border: "1px solid black",
@@ -220,7 +252,7 @@ const Signature = forwardRef((props, ref) => {
               <OutlinedInput
                 fullWidth
                 id="outlined-adornment-password"
-                placeholder="Input text"
+                placeholder="Name"
                 size="small"
                 sx={{
                   border: "1px solid black",

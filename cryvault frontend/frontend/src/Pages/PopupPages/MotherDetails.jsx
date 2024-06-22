@@ -1,20 +1,28 @@
 import { Box, Button, FormControl, FormHelperText, InputLabel, OutlinedInput, Stack, TextField, Typography } from "@mui/material";
-import React, { useState, forwardRef, useImperativeHandle, useRef,useEffect } from "react";
+import React, { useState, forwardRef, useImperativeHandle, useRef, useEffect } from "react";
 import motherImage from "../../assets/images/motherImage.png";
 import card from "../../assets/images/card.png";
 import { ToastContainer, toast } from "react-toastify";
 import { uploadSingleFileApi } from '../../redux/reducers/api';
 import axios from "axios";
-
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import { validateEmail, validatePhoneNumber } from "../../Components/Contact/ContactForm";
-
+import { getTypeOfProofList } from "../../globalFunctions"
+import { addOrupdateAnnexureInfo } from "../../redux/reducers/UserReducer"
+import { useDispatch, useSelector } from "react-redux";
+import { GetTypeOfProof, getAnnexureInfo } from '../../redux/reducers/DashboardReducer'
+import moment from 'moment';
+import {formatDate,formatDateYYYYMMDD} from "../../globalFunctions"
 const redStarStyle = {
   color: "red",
   marginLeft: "4px",
 };
 
 const MotherDetails = forwardRef((props, ref) => {
-  var { handleNext, currentPage, setCurrentPage, TOTAL_PAGES } = props
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  var { handleNext, handlePrev, currentPage, setCurrentPage, TOTAL_PAGES } = props
   const [data, setData] = useState({
     ExpectantMotherName: {
       value: "",
@@ -97,7 +105,7 @@ const MotherDetails = forwardRef((props, ref) => {
       id: "ExpectantMotherOtherInfo",
     }
   });
-
+  const dispatch = useDispatch()
   const [dataFile, setDataFile] = useState({
     ExpectantMotherIDproofPhoto: "",
     ExpectantMotherProfilePhoto: ""
@@ -111,146 +119,181 @@ const MotherDetails = forwardRef((props, ref) => {
     }));
   };
   const [deliveryinputType, setDeliveryInputType] = useState("text");
+  const [customerAnnexureInformationId, setCustomerAnnexureInformationId] = useState(null)
+
+
+  const IDproofDetails = useSelector((state) => state.dashboard.typeOfProofData);
+  const IDList = getTypeOfProofList(IDproofDetails);
+  const SubscribedInnerPageData = useSelector((state) => state.dashboard.SubscribedUserData);
+  useEffect(() => {
+    async function getCustomerMotherData() {
+      setCustomerAnnexureInformationId(SubscribedInnerPageData?.customerAnnexureInformationId)
+      if (SubscribedInnerPageData && SubscribedInnerPageData.CustomerClientMotherDetails) {
+        
+        for (let item in SubscribedInnerPageData.CustomerClientMotherDetails) {
+          for (let item1 in data) {
+            if (item1 == item) {
+              data[item1].value = item == "ExpectantMotherDOB" ? formatDate(SubscribedInnerPageData.CustomerClientMotherDetails[item]) : SubscribedInnerPageData.CustomerClientMotherDetails[item]
+            }
+          }
+          for (let item2 in dataFile) {
+            if (item2 == item) {
+              dataFile[item2] = SubscribedInnerPageData.CustomerClientMotherDetails[item]
+            }
+          }
+        }
+      }
+    }
+    getCustomerMotherData()
+  }, [SubscribedInnerPageData]);
+
+  useEffect(() => {
+    getAnnexureInfo()
+  }, [handlePrev]);
+
+  useEffect(() => {
+    dispatch(getAnnexureInfo());
+  }, []);
+
 
   useImperativeHandle(ref, () => ({
     getMotherDetails: () => {
-        let isMobileInvalid;
-        if (data.ExpectantMotherMobile.value) {
-          isMobileInvalid = !validatePhoneNumber(data.ExpectantMotherMobile.value, "91");
-        }
-  
-        if (!data.ExpectantMotherName.value) {
-          setData((prevData) => ({
-            ...prevData,
-            ExpectantMotherName: {
-              ...prevData.ExpectantMotherName,
-              errorStatus: true,
-              errorMessage: "Mother Name is required.",
-            },
-          }));
-          return;
-        }
-        if (!data.ExpectantMotherDOB.value) {
-          setData((prevData) => ({
-            ...prevData,
-            ExpectantMotherDOB: {
-              ...prevData.ExpectantMotherDOB,
-              errorStatus: true,
-              errorMessage: "Date of Birth is required.",
-            },
-          }));
-          return;
-        }
-        if (!validateEmail(data.ExpectantMotherEmail.value)) {
-          setData((prevData) => ({
-            ...prevData,
-            ExpectantMotherEmail: {
-              ...prevData.ExpectantMotherEmail,
-              errorStatus: true,
-              errorMessage: "Email Address is required.",
-            },
-          }));
-          return;
-        }
-        if (!data.ExpectantMotherMobile.value) {
-          setData((prevData) => ({
-            ...prevData,
-            ExpectantMotherMobile: {
-              ...prevData.ExpectantMotherMobile,
-              errorStatus: true,
-              errorMessage: "Phone Number is required.",
-            },
-          }));
-          return;
-        }
-        if (isMobileInvalid) {
-          setData((prevData) => ({
-            ...prevData,
-            ExpectantMotherMobile: {
-              ...prevData.ExpectantMotherMobile,
-              errorStatus: true,
-              errorMessage: "Enter Valid Phone Number",
-            },
-          }));
-          return;
-        }
-        if (!data.ExpectantMotherOccupation.value) {
-          setData((prevData) => ({
-            ...prevData,
-            ExpectantMotherOccupation: {
-              ...prevData.ExpectantMotherOccupation,
-              errorStatus: true,
-              errorMessage: "Occupation is required.",
-            },
-          }));
-          return;
-        }
-        if (!data.ExpectantMotherDesignation.value) {
-          setData((prevData) => ({
-            ...prevData,
-            ExpectantMotherDesignation: {
-              ...prevData.ExpectantMotherDesignation,
-              errorStatus: true,
-              errorMessage: "Designation is required.",
-            },
-          }));
-          return;
-        }
-        if (!data.ExpectantMotherOrganizationName.value) {
-          setData((prevData) => ({
-            ...prevData,
-            ExpectantMotherOrganizationName: {
-              ...prevData.ExpectantMotherOrganizationName,
-              errorStatus: true,
-              errorMessage: "Organization Name is required.",
-            },
-          }));
-          return;
-        }
-        if (!data.ExpectantMotherIDproof.value) {
-          setData((prevData) => ({
-            ...prevData,
-            ExpectantMotherIDproof: {
-              ...prevData.ExpectantMotherIDproof,
-              errorStatus: true,
-              errorMessage: "ID Proof is required.",
-            },
-          }));
-          return;
-        }
-        if (!data.ExpectantMotherIdproofNo.value) {
-          setData((prevData) => ({
-            ...prevData,
-            ExpectantMotherIdproofNo: {
-              ...prevData.ExpectantMotherIdproofNo,
-              errorStatus: true,
-              errorMessage: "ID Proof Number is required.",
-            },
-          }));
-          return;
-        }
-        const dataToSend = {
-          ExpectantMotherName: data.ExpectantMotherName.value,
-          ExpectantMotherDOB: data.ExpectantMotherDOB.value,
-          ExpectantMotherEmail: data.ExpectantMotherEmail.value,
-          ExpectantMotherMobile: data.ExpectantMotherMobile.value,
-          ExpectantMotherOccupation: data.ExpectantMotherOccupation.value,
-          ExpectantMotherDesignation: data.ExpectantMotherDesignation.value,
-          ExpectantMotherOrganizationName: data.ExpectantMotherOrganizationName.value,
-          ExpectantMotherIDproof: data.ExpectantMotherIDproof.value,
-          ExpectantMotherIdproofNo: data.ExpectantMotherIdproofNo.value,
-          ExpectantMotherOtherInfo: data.ExpectantMotherOtherInfo.value,
-          ExpectantMotherIDproofPhoto: dataFile.ExpectantMotherIDproofPhoto,
-          ExpectantMotherProfilePhoto: dataFile.ExpectantMotherProfilePhoto
-        };
-  
-        if (currentPage < TOTAL_PAGES) {
-          setCurrentPage(currentPage + 1);
-        }
+      // let isMobileInvalid;
+      // if (data.ExpectantMotherMobile.value) {
+      //   isMobileInvalid = !validatePhoneNumber(data.ExpectantMotherMobile.value, "91");
+      // }
 
-        return dataToSend;
-  
+      // if (!data.ExpectantMotherName.value) {
+      //   setData((prevData) => ({
+      //     ...prevData,
+      //     ExpectantMotherName: {
+      //       ...prevData.ExpectantMotherName,
+      //       errorStatus: true,
+      //       errorMessage: "Mother Name is required.",
+      //     },
+      //   }));
+      //   return;
+      // }
+      // if (!data.ExpectantMotherDOB.value) {
+      //   setData((prevData) => ({
+      //     ...prevData,
+      //     ExpectantMotherDOB: {
+      //       ...prevData.ExpectantMotherDOB,
+      //       errorStatus: true,
+      //       errorMessage: "Date of Birth is required.",
+      //     },
+      //   }));
+      //   return;
+      // }
+      // if (!validateEmail(data.ExpectantMotherEmail.value)) {
+      //   setData((prevData) => ({
+      //     ...prevData,
+      //     ExpectantMotherEmail: {
+      //       ...prevData.ExpectantMotherEmail,
+      //       errorStatus: true,
+      //       errorMessage: "Email Address is required.",
+      //     },
+      //   }));
+      //   return;
+      // }
+      // if (!data.ExpectantMotherMobile.value) {
+      //   setData((prevData) => ({
+      //     ...prevData,
+      //     ExpectantMotherMobile: {
+      //       ...prevData.ExpectantMotherMobile,
+      //       errorStatus: true,
+      //       errorMessage: "Phone Number is required.",
+      //     },
+      //   }));
+      //   return;
+      // }
+      // if (isMobileInvalid) {
+      //   setData((prevData) => ({
+      //     ...prevData,
+      //     ExpectantMotherMobile: {
+      //       ...prevData.ExpectantMotherMobile,
+      //       errorStatus: true,
+      //       errorMessage: "Enter Valid Phone Number",
+      //     },
+      //   }));
+      //   return;
+      // }
+      // if (!data.ExpectantMotherOccupation.value) {
+      //   setData((prevData) => ({
+      //     ...prevData,
+      //     ExpectantMotherOccupation: {
+      //       ...prevData.ExpectantMotherOccupation,
+      //       errorStatus: true,
+      //       errorMessage: "Occupation is required.",
+      //     },
+      //   }));
+      //   return;
+      // }
+      // if (!data.ExpectantMotherDesignation.value) {
+      //   setData((prevData) => ({
+      //     ...prevData,
+      //     ExpectantMotherDesignation: {
+      //       ...prevData.ExpectantMotherDesignation,
+      //       errorStatus: true,
+      //       errorMessage: "Designation is required.",
+      //     },
+      //   }));
+      //   return;
+      // }
+      // if (!data.ExpectantMotherOrganizationName.value) {
+      //   setData((prevData) => ({
+      //     ...prevData,
+      //     ExpectantMotherOrganizationName: {
+      //       ...prevData.ExpectantMotherOrganizationName,
+      //       errorStatus: true,
+      //       errorMessage: "Organization Name is required.",
+      //     },
+      //   }));
+      //   return;
+      // }
+      // if (!data.ExpectantMotherIDproof.value) {
+      //   setData((prevData) => ({
+      //     ...prevData,
+      //     ExpectantMotherIDproof: {
+      //       ...prevData.ExpectantMotherIDproof,
+      //       errorStatus: true,
+      //       errorMessage: "ID Proof is required.",
+      //     },
+      //   }));
+      //   return;
+      // }
+      // if (!data.ExpectantMotherIdproofNo.value) {
+      //   setData((prevData) => ({
+      //     ...prevData,
+      //     ExpectantMotherIdproofNo: {
+      //       ...prevData.ExpectantMotherIdproofNo,
+      //       errorStatus: true,
+      //       errorMessage: "ID Proof Number is required.",
+      //     },
+      //   }));
+      //   return;
+      // }
+      const dataToSend = {
+        ExpectantMotherName: data.ExpectantMotherName.value,
+        ExpectantMotherDOB: formatDateYYYYMMDD(data.ExpectantMotherDOB.value),
+        ExpectantMotherEmail: data.ExpectantMotherEmail.value,
+        ExpectantMotherMobile: data.ExpectantMotherMobile.value,
+        ExpectantMotherOccupation: data.ExpectantMotherOccupation.value,
+        ExpectantMotherDesignation: data.ExpectantMotherDesignation.value,
+        ExpectantMotherOrganizationName: data.ExpectantMotherOrganizationName.value,
+        ExpectantMotherIDproof: data.ExpectantMotherIDproof.value,
+        ExpectantMotherIdproofNo: data.ExpectantMotherIdproofNo.value,
+        ExpectantMotherOtherInfo: data.ExpectantMotherOtherInfo.value,
+        ExpectantMotherIDproofPhoto: dataFile.ExpectantMotherIDproofPhoto,
+        ExpectantMotherProfilePhoto: dataFile.ExpectantMotherProfilePhoto
+      };
+
+      if (currentPage < TOTAL_PAGES) {
+        setCurrentPage(currentPage + 1);
       }
+
+      dispatch(addOrupdateAnnexureInfo({ CustomerClientMotherDetails: dataToSend, customerAnnexureInformationId: customerAnnexureInformationId }))
+    }
   }))
 
 
@@ -301,12 +344,11 @@ const MotherDetails = forwardRef((props, ref) => {
                 <FormControl variant="outlined" size="small">
                   <OutlinedInput
                     readOnly={false}
-                    type={fieldData.type || "text"}
                     value={fieldData.value}
                     name={fieldData.name}
                     id={`outlined-adornment-${key}`}
                     placeholder={fieldData.placeholder}
-                    // type={deliveryinputType}
+                    type={deliveryinputType}
                     onFocus={() => setDeliveryInputType("date")}
                     onBlur={() => setDeliveryInputType("text")}
                     sx={{
@@ -324,7 +366,7 @@ const MotherDetails = forwardRef((props, ref) => {
             ) : (
               <>
                 <Stack sx={{ width: fieldData.name == "ExpectantMotherOrganizationName" || fieldData.name == "ExpectantMotherOtherInfo" ? "208%" : "100%", gap: "0.5rem" }} key={key}>
-                  <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>{fieldData.placeholder}<span style={redStarStyle}>*</span></InputLabel>
+                  <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>{fieldData.placeholder} {fieldData.name != "ExpectantMotherOtherInfo" ? <span style={redStarStyle}>*</span> : null}</InputLabel>
                   <FormControl variant="outlined" size="small">
                     <OutlinedInput
                       readOnly={false}
@@ -358,12 +400,31 @@ const MotherDetails = forwardRef((props, ref) => {
 
           <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem", marginTop: "1rem" }}>
             <Box sx={{ border: "1px solid #e5e5e5", gap: "1rem", display: "flex", padding: "2rem", borderRadius: "1rem" }}>
-              <Box>
-                {dataFile.ExpectantMotherProfilePhoto ?
-                  <img src={"https://flyingbyts.s3.ap-south-2.amazonaws.com/" + dataFile.ExpectantMotherProfilePhoto} />
-                  :
-                  <img src={motherImage} />}
-              </Box>
+
+              {dataFile.ExpectantMotherProfilePhoto ?
+                <Box
+                  component="img"
+                  src={"https://flyingbyts.s3.ap-south-2.amazonaws.com/" + dataFile.ExpectantMotherProfilePhoto}
+                  alt="father Image"
+                  sx={{
+                    width: isSmallScreen ? '100%' : '50%',
+                    height: 'auto',
+                    maxWidth: '100%',
+                    objectFit: 'cover',
+                  }}
+                /> :
+                <Box
+                  component="img"
+                  src={motherImage}
+                  alt="father Image"
+                  sx={{
+                    width: isSmallScreen ? '100%' : '50%',
+                    height: 'auto',
+                    maxWidth: '100%',
+                    objectFit: 'cover',
+                  }}
+                />
+              }
               <Box sx={{ display: "flex", flexDirection: "column" }}>
                 <Typography sx={{ fontSize: "1.5rem", textAlign: "center", color: "gray" }}>Drop your new Profile Image here maximum (2MB)</Typography>
                 <Typography sx={{ fontSize: "1.5rem", textAlign: "center", color: "gray" }}>Supported Formats: JPG, PNG, SVG</Typography>
@@ -387,12 +448,31 @@ const MotherDetails = forwardRef((props, ref) => {
           <Typography sx={{ fontSize: "2rem", fontWeight: "600", color: "black", textTransform: "uppercase" }}>Upload Id Proof</Typography>
           <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem", marginTop: "1rem" }}>
             <Box sx={{ border: "1px solid #e5e5e5", gap: "1rem", display: "flex", padding: "2rem", borderRadius: "1rem" }}>
-              <Box>
-                {dataFile.ExpectantMotherIDproofPhoto ?
-                  <img src={"https://flyingbyts.s3.ap-south-2.amazonaws.com/" + dataFile.ExpectantMotherIDproofPhoto} />
-                  :
-                  <img src={card} />}
-              </Box>
+
+              {dataFile.ExpectantMotherIDproofPhoto ?
+                <Box
+                  component="img"
+                  src={"https://flyingbyts.s3.ap-south-2.amazonaws.com/" + dataFile.ExpectantMotherIDproofPhoto}
+                  alt="father Image"
+                  sx={{
+                    width: isSmallScreen ? '100%' : '50%',
+                    height: 'auto',
+                    maxWidth: '100%',
+                    objectFit: 'cover',
+                  }}
+                /> :
+                <Box
+                  component="img"
+                  src={card}
+                  alt="father Image"
+                  sx={{
+                    width: isSmallScreen ? '100%' : '50%',
+                    height: 'auto',
+                    maxWidth: '100%',
+                    objectFit: 'cover',
+                  }}
+                />
+              }
               <Box sx={{ display: "flex", flexDirection: "column" }}>
                 <Typography sx={{ fontSize: "1.5rem", textAlign: "center", color: "gray" }}>Drop your ID Proof here maximum (2MB)</Typography>
                 <Typography sx={{ fontSize: "1.5rem", textAlign: "center", color: "gray" }}>Supported Formats: JPG, PNG, SVG</Typography>

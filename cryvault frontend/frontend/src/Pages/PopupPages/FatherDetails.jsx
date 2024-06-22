@@ -6,16 +6,26 @@ import { ToastContainer, toast } from "react-toastify";
 import { uploadSingleFileApi } from '../../redux/reducers/api';
 import axios from "axios";
 import { validateEmail, validatePhoneNumber } from "../../Components/Contact/ContactForm";
-
+import { GetTypeOfProof, getAnnexureInfo } from '../../redux/reducers/DashboardReducer'
+import { useDispatch, useSelector } from "react-redux";
+import { getTypeOfProofList } from "../../globalFunctions"
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import KeyboardTabIcon from "@mui/icons-material/KeyboardTab";
+import { MultipleSelect, SingleSelect } from '../CheckoutDetails';
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import { addOrupdateAnnexureInfo } from "../../redux/reducers/UserReducer";
+import {formatDate,formatDateYYYYMMDD} from "../../globalFunctions"
+
 const redStarStyle = {
   color: "red",
   marginLeft: "4px",
 };
 
 const FatherDetails = forwardRef((props, ref) => {
-  var { handleNext, currentPage, setCurrentPage, TOTAL_PAGES } = props
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  var { handleNext, handlePrev, currentPage, setCurrentPage, TOTAL_PAGES } = props
   const [data, setData] = useState({
     ExpectantFatherName: {
       value: "",
@@ -98,13 +108,45 @@ const FatherDetails = forwardRef((props, ref) => {
       id: "ExpectantFatherOtherInfo",
     }
   });
-
+  const dispatch = useDispatch()
   const [dataFile, setDataFile] = useState({
     ExpectantFatherIDproofPhoto: "",
     ExpectantFatherProfilePhoto: ""
   })
 
+  const [customerAnnexureInformationId, setCustomerAnnexureInformationId] = useState(null)
+
   const [inputType, setInputType] = useState("text");
+  const IDproofDetails = useSelector((state) => state.dashboard.typeOfProofData);
+  const IDList = getTypeOfProofList(IDproofDetails);
+  const SubscribedInnerPageData = useSelector((state) => state.dashboard.SubscribedUserData);
+
+
+  useEffect(() => {
+    async function getCustomerFatherData() {
+      setCustomerAnnexureInformationId(SubscribedInnerPageData?.customerAnnexureInformationId)
+      if (SubscribedInnerPageData && SubscribedInnerPageData.CustomerClientFatherDetails) {
+        for (let item in SubscribedInnerPageData.CustomerClientFatherDetails) {
+          for (let item1 in data) {
+            if (item1 == item) {
+              data[item1].value = item == "ExpectantFatherDOB" ? formatDate(SubscribedInnerPageData.CustomerClientFatherDetails[item]) : SubscribedInnerPageData.CustomerClientFatherDetails[item]
+            }
+          }
+          for (let item2 in dataFile) {
+            if (item2 == item) {
+              dataFile[item2] = SubscribedInnerPageData.CustomerClientFatherDetails[item]
+            }
+          }
+        }
+      }
+    }
+    getCustomerFatherData()
+  }, [SubscribedInnerPageData]);
+
+  useEffect(() => {
+    getAnnexureInfo()
+  }, [handlePrev]);
+
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
@@ -114,129 +156,134 @@ const FatherDetails = forwardRef((props, ref) => {
     }));
   };
 
-  const [deliveryinputType, setDeliveryInputType] = useState("text");
+  const handleChange = (event, name) => {
+    setData((prevData) => ({
+      ...prevData,
+      [name]: { ...prevData[name], value: event, errorStatus: false, errorMessage: "" },
+    }));
+  }
 
   useImperativeHandle(ref, () => ({
-    getChildData: () => {
-      let isMobileInvalid;
-      if (data.ExpectantFatherMobile.value) {
-        isMobileInvalid = !validatePhoneNumber(data.ExpectantFatherMobile.value, "91");
-      }
+    getFatherData: () => {
+      // let isMobileInvalid;
+      // if (data.ExpectantFatherMobile.value) {
+      //   isMobileInvalid = !validatePhoneNumber(data.ExpectantFatherMobile.value, "91");
+      // }
 
-      if (!data.ExpectantFatherName.value) {
-        setData((prevData) => ({
-          ...prevData,
-          ExpectantFatherName: {
-            ...prevData.ExpectantFatherName,
-            errorStatus: true,
-            errorMessage: "Father Name is required.",
-          },
-        }));
-        return;
-      }
-      if (!data.ExpectantFatherDOB.value) {
-        setData((prevData) => ({
-          ...prevData,
-          ExpectantFatherDOB: {
-            ...prevData.ExpectantFatherDOB,
-            errorStatus: true,
-            errorMessage: "Date of Birth is required.",
-          },
-        }));
-        return;
-      }
-      if (!validateEmail(data.ExpectantFatherEmail.value)) {
-        setData((prevData) => ({
-          ...prevData,
-          ExpectantFatherEmail: {
-            ...prevData.ExpectantFatherEmail,
-            errorStatus: true,
-            errorMessage: "Email Address is required.",
-          },
-        }));
-        return;
-      }
-      if (!data.ExpectantFatherMobile.value) {
-        setData((prevData) => ({
-          ...prevData,
-          ExpectantFatherMobile: {
-            ...prevData.ExpectantFatherMobile,
-            errorStatus: true,
-            errorMessage: "Phone Number is required.",
-          },
-        }));
-        return;
-      }
-      if (isMobileInvalid) {
-        setData((prevData) => ({
-          ...prevData,
-          ExpectantFatherMobile: {
-            ...prevData.ExpectantFatherMobile,
-            errorStatus: true,
-            errorMessage: "Enter Valid Phone Number",
-          },
-        }));
-        return;
-      }
-      if (!data.ExpectantFatherOccupation.value) {
-        setData((prevData) => ({
-          ...prevData,
-          ExpectantFatherOccupation: {
-            ...prevData.ExpectantFatherOccupation,
-            errorStatus: true,
-            errorMessage: "Occupation is required.",
-          },
-        }));
-        return;
-      }
-      if (!data.ExpectantFatherDesignation.value) {
-        setData((prevData) => ({
-          ...prevData,
-          ExpectantFatherDesignation: {
-            ...prevData.ExpectantFatherDesignation,
-            errorStatus: true,
-            errorMessage: "Designation is required.",
-          },
-        }));
-        return;
-      }
-      if (!data.ExpectantFatherOrganizationName.value) {
-        setData((prevData) => ({
-          ...prevData,
-          ExpectantFatherOrganizationName: {
-            ...prevData.ExpectantFatherOrganizationName,
-            errorStatus: true,
-            errorMessage: "Organization Name is required.",
-          },
-        }));
-        return;
-      }
-      if (!data.ExpectantFatherIDproof.value) {
-        setData((prevData) => ({
-          ...prevData,
-          ExpectantFatherIDproof: {
-            ...prevData.ExpectantFatherIDproof,
-            errorStatus: true,
-            errorMessage: "ID Proof is required.",
-          },
-        }));
-        return;
-      }
-      if (!data.ExpectantFatherIdproofNo.value) {
-        setData((prevData) => ({
-          ...prevData,
-          ExpectantFatherIdproofNo: {
-            ...prevData.ExpectantFatherIdproofNo,
-            errorStatus: true,
-            errorMessage: "ID Proof Number is required.",
-          },
-        }));
-        return;
-      }
+      // if (!data.ExpectantFatherName.value) {
+      //   setData((prevData) => ({
+      //     ...prevData,
+      //     ExpectantFatherName: {
+      //       ...prevData.ExpectantFatherName,
+      //       errorStatus: true,
+      //       errorMessage: "Father Name is required.",
+      //     },
+      //   }));
+      //   return;
+      // }
+      // if (!data.ExpectantFatherDOB.value) {
+      //   setData((prevData) => ({
+      //     ...prevData,
+      //     ExpectantFatherDOB: {
+      //       ...prevData.ExpectantFatherDOB,
+      //       errorStatus: true,
+      //       errorMessage: "Date of Birth is required.",
+      //     },
+      //   }));
+      //   return;
+      // }
+      // if (!validateEmail(data.ExpectantFatherEmail.value)) {
+      //   setData((prevData) => ({
+      //     ...prevData,
+      //     ExpectantFatherEmail: {
+      //       ...prevData.ExpectantFatherEmail,
+      //       errorStatus: true,
+      //       errorMessage: "Email Address is required.",
+      //     },
+      //   }));
+      //   return;
+      // }
+      // if (!data.ExpectantFatherMobile.value) {
+      //   setData((prevData) => ({
+      //     ...prevData,
+      //     ExpectantFatherMobile: {
+      //       ...prevData.ExpectantFatherMobile,
+      //       errorStatus: true,
+      //       errorMessage: "Phone Number is required.",
+      //     },
+      //   }));
+      //   return;
+      // }
+      // if (isMobileInvalid) {
+      //   setData((prevData) => ({
+      //     ...prevData,
+      //     ExpectantFatherMobile: {
+      //       ...prevData.ExpectantFatherMobile,
+      //       errorStatus: true,
+      //       errorMessage: "Enter Valid Phone Number",
+      //     },
+      //   }));
+      //   return;
+      // }
+      // if (!data.ExpectantFatherOccupation.value) {
+      //   setData((prevData) => ({
+      //     ...prevData,
+      //     ExpectantFatherOccupation: {
+      //       ...prevData.ExpectantFatherOccupation,
+      //       errorStatus: true,
+      //       errorMessage: "Occupation is required.",
+      //     },
+      //   }));
+      //   return;
+      // }
+      // if (!data.ExpectantFatherDesignation.value) {
+      //   setData((prevData) => ({
+      //     ...prevData,
+      //     ExpectantFatherDesignation: {
+      //       ...prevData.ExpectantFatherDesignation,
+      //       errorStatus: true,
+      //       errorMessage: "Designation is required.",
+      //     },
+      //   }));
+      //   return;
+      // }
+      // if (!data.ExpectantFatherOrganizationName.value) {
+      //   setData((prevData) => ({
+      //     ...prevData,
+      //     ExpectantFatherOrganizationName: {
+      //       ...prevData.ExpectantFatherOrganizationName,
+      //       errorStatus: true,
+      //       errorMessage: "Organization Name is required.",
+      //     },
+      //   }));
+      //   return;
+      // }
+      // if (!data.ExpectantFatherIDproof.value) {
+      //   setData((prevData) => ({
+      //     ...prevData,
+      //     ExpectantFatherIDproof: {
+      //       ...prevData.ExpectantFatherIDproof,
+      //       errorStatus: true,
+      //       errorMessage: "ID Proof is required.",
+      //     },
+      //   }));
+      //   return;
+      // }
+      // if (!data.ExpectantFatherIdproofNo.value) {
+      //   setData((prevData) => ({
+      //     ...prevData,
+      //     ExpectantFatherIdproofNo: {
+      //       ...prevData.ExpectantFatherIdproofNo,
+      //       errorStatus: true,
+      //       errorMessage: "ID Proof Number is required.",
+      //     },
+      //   }));
+      //   return;
+      // }
 
       const dataToSend = {
         ExpectantFatherName: data.ExpectantFatherName.value,
-        ExpectantFatherDOB: data.ExpectantFatherDOB.value,
+        ExpectantFatherDOB: formatDateYYYYMMDD(data.ExpectantFatherDOB.value),
         ExpectantFatherEmail: data.ExpectantFatherEmail.value,
         ExpectantFatherMobile: data.ExpectantFatherMobile.value,
         ExpectantFatherOccupation: data.ExpectantFatherOccupation.value,
@@ -249,164 +296,21 @@ const FatherDetails = forwardRef((props, ref) => {
         ExpectantFatherProfilePhoto: dataFile.ExpectantFatherProfilePhoto
       };
 
+
       if (currentPage < TOTAL_PAGES) {
         setCurrentPage(currentPage + 1);
       }
 
-      return dataToSend
+      dispatch(addOrupdateAnnexureInfo({ CustomerClientFatherDetails: dataToSend, customerAnnexureInformationId: customerAnnexureInformationId }))
 
     }
   }))
 
-
-  const handlePrev = () => {
-    if (currentPage > 1) {
-
-    }
-  };
-
-
-
   useEffect(() => {
-    // async function handleNext() {
-    //   let isMobileInvalid;
-    //   if (data.ExpectantFatherMobile.value) {
-    //     isMobileInvalid = !validatePhoneNumber(data.ExpectantFatherMobile.value, "91");
-    //   }
+    dispatch(GetTypeOfProof());
+    dispatch(getAnnexureInfo());
+  }, []);
 
-    //   if (!data.ExpectantFatherName.value) {
-    //     setData((prevData) => ({
-    //       ...prevData,
-    //       ExpectantFatherName: {
-    //         ...prevData.ExpectantFatherName,
-    //         errorStatus: true,
-    //         errorMessage: "Father Name is required.",
-    //       },
-    //     }));
-    //     return;
-    //   }
-    //   if (!data.ExpectantFatherDOB.value) {
-    //     setData((prevData) => ({
-    //       ...prevData,
-    //       ExpectantFatherDOB: {
-    //         ...prevData.ExpectantFatherDOB,
-    //         errorStatus: true,
-    //         errorMessage: "Date of Birth is required.",
-    //       },
-    //     }));
-    //     return;
-    //   }
-    //   if (!validateEmail(data.ExpectantFatherEmail.value)) {
-    //     setData((prevData) => ({
-    //       ...prevData,
-    //       ExpectantFatherEmail: {
-    //         ...prevData.ExpectantFatherEmail,
-    //         errorStatus: true,
-    //         errorMessage: "Email Address is required.",
-    //       },
-    //     }));
-    //     return;
-    //   }
-    //   if (!data.ExpectantFatherMobile.value) {
-    //     setData((prevData) => ({
-    //       ...prevData,
-    //       ExpectantFatherMobile: {
-    //         ...prevData.ExpectantFatherMobile,
-    //         errorStatus: true,
-    //         errorMessage: "Phone Number is required.",
-    //       },
-    //     }));
-    //     return;
-    //   }
-    //   if (isMobileInvalid) {
-    //     setData((prevData) => ({
-    //       ...prevData,
-    //       ExpectantFatherMobile: {
-    //         ...prevData.ExpectantFatherMobile,
-    //         errorStatus: true,
-    //         errorMessage: "Enter Valid Phone Number",
-    //       },
-    //     }));
-    //     return;
-    //   }
-    //   if (!data.ExpectantFatherOccupation.value) {
-    //     setData((prevData) => ({
-    //       ...prevData,
-    //       ExpectantFatherOccupation: {
-    //         ...prevData.ExpectantFatherOccupation,
-    //         errorStatus: true,
-    //         errorMessage: "Occupation is required.",
-    //       },
-    //     }));
-    //     return;
-    //   }
-    //   if (!data.ExpectantFatherDesignation.value) {
-    //     setData((prevData) => ({
-    //       ...prevData,
-    //       ExpectantFatherDesignation: {
-    //         ...prevData.ExpectantFatherDesignation,
-    //         errorStatus: true,
-    //         errorMessage: "Designation is required.",
-    //       },
-    //     }));
-    //     return;
-    //   }
-    //   if (!data.ExpectantFatherOrganizationName.value) {
-    //     setData((prevData) => ({
-    //       ...prevData,
-    //       ExpectantFatherOrganizationName: {
-    //         ...prevData.ExpectantFatherOrganizationName,
-    //         errorStatus: true,
-    //         errorMessage: "Organization Name is required.",
-    //       },
-    //     }));
-    //     return;
-    //   }
-    //   if (!data.ExpectantFatherIDproof.value) {
-    //     setData((prevData) => ({
-    //       ...prevData,
-    //       ExpectantFatherIDproof: {
-    //         ...prevData.ExpectantFatherIDproof,
-    //         errorStatus: true,
-    //         errorMessage: "ID Proof is required.",
-    //       },
-    //     }));
-    //     return;
-    //   }
-    //   if (!data.ExpectantFatherIdproofNo.value) {
-    //     setData((prevData) => ({
-    //       ...prevData,
-    //       ExpectantFatherIdproofNo: {
-    //         ...prevData.ExpectantFatherIdproofNo,
-    //         errorStatus: true,
-    //         errorMessage: "ID Proof Number is required.",
-    //       },
-    //     }));
-    //     return;
-    //   }
-
-    //   const dataToSend = {
-    //     ExpectantFatherName: data.ExpectantFatherName.value,
-    //     ExpectantFatherDOB: data.ExpectantFatherDOB.value,
-    //     ExpectantFatherEmail: data.ExpectantFatherEmail.value,
-    //     ExpectantFatherMobile: data.ExpectantFatherMobile.value,
-    //     ExpectantFatherOccupation: data.ExpectantFatherOccupation.value,
-    //     ExpectantFatherDesignation: data.ExpectantFatherDesignation.value,
-    //     ExpectantFatherOrganizationName: data.ExpectantFatherOrganizationName.value,
-    //     ExpectantFatherIDproof: data.ExpectantFatherIDproof.value,
-    //     ExpectantFatherIdproofNo: data.ExpectantFatherIdproofNo.value,
-    //     ExpectantFatherOtherInfo: data.ExpectantFatherOtherInfo.value,
-    //     ExpectantFatherIDproofPhoto: dataFile.ExpectantFatherIDproofPhoto,
-    //     ExpectantFatherProfilePhoto: dataFile.ExpectantFatherProfilePhoto
-    //   };
-
-    //   if (currentPage < TOTAL_PAGES) {
-    //     setCurrentPage(currentPage + 1);
-    //   }
-
-    // }
-    // handleNext();
-  }, [handleNext]);
 
   const fileIDProofInputRef = useRef(null);
   const fileProfileInputRef = useRef(null);
@@ -419,8 +323,8 @@ const FatherDetails = forwardRef((props, ref) => {
     fileProfileInputRef.current.click();
   };
 
-  const handleChange = async (name, fileName, e) => {
-    alert(name);
+  const UploadFile = async (name, fileName, e) => {
+    // alert(name);
     const apiUrl = uploadSingleFileApi();
     const token = sessionStorage.getItem("token");
     const headers = {
@@ -469,10 +373,28 @@ const FatherDetails = forwardRef((props, ref) => {
                   {fieldData.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{fieldData.errorMessage}</Typography> : null}
                 </FormControl>
               </Stack>
+            ) : fieldData.name == "ExpectantFatherIDproof" ? (
+              <Stack sx={{ width: "100%", gap: "0.5rem" }} key={key}>
+                <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>{fieldData.placeholder} <span style={redStarStyle}>*</span></InputLabel>
+                <FormControl variant="outlined" size="small">
+                  <SingleSelect
+                    Placeholder={"Select"}
+                    width={"100%"}
+                    data={IDList}
+                    value={fieldData.value}
+                    onChange={(e) => {
+                      handleChange(e, "ExpectantFatherIDproof");
+                    }}
+                  />
+                  {fieldData.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{fieldData.errorMessage}</Typography> : null}
+                </FormControl>
+              </Stack>
+
             ) : (
               <>
                 <Stack sx={{ width: fieldData.name == "ExpectantFatherOrganizationName" || fieldData.name == "ExpectantFatherOtherInfo" ? "208%" : "100%", gap: "0.5rem" }} key={key}>
-                  <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>{fieldData.placeholder} <span style={redStarStyle}>*</span></InputLabel>
+                  <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>{fieldData.placeholder}
+                    {fieldData.name != "ExpectantFatherOtherInfo" ? <span style={redStarStyle}>*</span> : null}</InputLabel>
                   <FormControl variant="outlined" size="small">
                     <OutlinedInput
                       readOnly={false}
@@ -506,12 +428,31 @@ const FatherDetails = forwardRef((props, ref) => {
 
           <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem", marginTop: "1rem" }}>
             <Box sx={{ border: "1px solid #e5e5e5", gap: "1rem", display: "flex", padding: "2rem", borderRadius: "1rem" }}>
-              <Box>
-                {dataFile.ExpectantFatherProfilePhoto ?
-                  <img src={"https://flyingbyts.s3.ap-south-2.amazonaws.com/" + dataFile.ExpectantFatherProfilePhoto} />
-                  :
-                  <img src={fatherImage} />}
-              </Box>
+
+              {dataFile.ExpectantFatherProfilePhoto ?
+                <Box
+                  component="img"
+                  src={"https://flyingbyts.s3.ap-south-2.amazonaws.com/" + dataFile.ExpectantFatherProfilePhoto}
+                  alt="father Image"
+                  sx={{
+                    width: isSmallScreen ? '100%' : '50%',
+                    height: 'auto',
+                    maxWidth: '100%',
+                    objectFit: 'cover',
+                  }}
+                /> :
+                <Box
+                  component="img"
+                  src={fatherImage}
+                  alt="father Image"
+                  sx={{
+                    width: isSmallScreen ? '100%' : '50%',
+                    height: 'auto',
+                    maxWidth: '100%',
+                    objectFit: 'cover',
+                  }}
+                />
+              }
               <Box sx={{ display: "flex", flexDirection: "column" }}>
                 <Typography sx={{ fontSize: "1.5rem", textAlign: "center", color: "gray" }}>Drop your new Profile Image here maximum (2MB)</Typography>
                 <Typography sx={{ fontSize: "1.5rem", textAlign: "center", color: "gray" }}>Supported Formats: JPG, PNG, SVG</Typography>
@@ -527,7 +468,7 @@ const FatherDetails = forwardRef((props, ref) => {
               type="file"
               ref={fileProfileInputRef}
               style={{ display: 'none' }}
-              onChange={(e) => handleChange("Profile", 'ExpectantFatherProfilePhoto', e)}
+              onChange={(e) => UploadFile("Profile", 'ExpectantFatherProfilePhoto', e)}
             />
           </Box>
         </Box>
@@ -535,12 +476,37 @@ const FatherDetails = forwardRef((props, ref) => {
           <Typography sx={{ fontSize: "2rem", fontWeight: "600", color: "black", textTransform: "uppercase" }}>Upload Id Proof</Typography>
           <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem", marginTop: "1rem" }}>
             <Box sx={{ border: "1px solid #e5e5e5", gap: "1rem", display: "flex", padding: "2rem", borderRadius: "1rem" }}>
-              <Box>
+              {/* <Box>
                 {dataFile.ExpectantFatherIDproofPhoto ?
                   <img src={"https://flyingbyts.s3.ap-south-2.amazonaws.com/" + dataFile.ExpectantFatherIDproofPhoto} />
                   :
                   <img src={card} />}
-              </Box>
+              </Box> */}
+
+              {dataFile.ExpectantFatherIDproofPhoto ?
+                <Box
+                  component="img"
+                  src={"https://flyingbyts.s3.ap-south-2.amazonaws.com/" + dataFile.ExpectantFatherIDproofPhoto}
+                  alt="father Image"
+                  sx={{
+                    width: isSmallScreen ? '100%' : '50%',
+                    height: 'auto',
+                    maxWidth: '100%',
+                    objectFit: 'cover',
+                  }}
+                /> :
+                <Box
+                  component="img"
+                  src={card}
+                  alt="father Image"
+                  sx={{
+                    width: isSmallScreen ? '100%' : '50%',
+                    height: 'auto',
+                    maxWidth: '100%',
+                    objectFit: 'cover',
+                  }}
+                />
+              }
               <Box sx={{ display: "flex", flexDirection: "column" }}>
                 <Typography sx={{ fontSize: "1.5rem", textAlign: "center", color: "gray" }}>Drop your ID Proof here maximum (2MB)</Typography>
                 <Typography sx={{ fontSize: "1.5rem", textAlign: "center", color: "gray" }}>Supported Formats: JPG, PNG, SVG</Typography>
@@ -556,7 +522,7 @@ const FatherDetails = forwardRef((props, ref) => {
               type="file"
               ref={fileIDProofInputRef}
               style={{ display: 'none' }}
-              onChange={(e) => handleChange("IDProof", 'ExpectantFatherIDproofPhoto', e)}
+              onChange={(e) => UploadFile("IDProof", 'ExpectantFatherIDproofPhoto', e)}
             />
           </Box>
         </Box>

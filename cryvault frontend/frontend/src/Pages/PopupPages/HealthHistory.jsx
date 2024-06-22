@@ -1,4 +1,4 @@
-import React, { useState,forwardRef, useImperativeHandle  } from "react";
+import React, { useState, forwardRef, useImperativeHandle, useEffect } from "react";
 import {
   Box,
   Button,
@@ -8,7 +8,10 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-
+// import { isObject } from "../../globalFunctions"
+import { addOrupdateAnnexureInfo } from "../../redux/reducers/UserReducer"
+import { GetTypeOfProof, getAnnexureInfo } from '../../redux/reducers/DashboardReducer';
+import { useDispatch, useSelector } from "react-redux";
 const headingStyle = {
   fontSize: "24px",
   fontWeight: 500,
@@ -16,10 +19,13 @@ const headingStyle = {
   marginLeft: "5px",
 };
 
-const HealthHistory = forwardRef((props, ref)  => {
-  var { handleNext, currentPage, setCurrentPage, TOTAL_PAGES } = props
+
+
+const HealthHistory = forwardRef((props, ref) => {
+  var { handleNext, handlePrev, currentPage, setCurrentPage, TOTAL_PAGES } = props
 
   const [formValues, setFormValues] = useState({
+    chooseValue:"F",
     question1: "",
     question2: "",
     question3: "",
@@ -45,6 +51,7 @@ const HealthHistory = forwardRef((props, ref)  => {
     question22: "",
     question23: "",
   });
+
   const [data, SetData] = useState({
     cancerDiabetesHepatitisBloodDisease: {
       value: null,
@@ -253,6 +260,7 @@ const HealthHistory = forwardRef((props, ref)  => {
     }
 
   })
+  const dispatch = useDispatch()
   const handleChange = (name, value) => {
     // const { name, value } = e.target;
     SetData((prevData) => ({
@@ -261,9 +269,85 @@ const HealthHistory = forwardRef((props, ref)  => {
     }));
   };
 
+  function isObject(value) {
+    return value !== null && typeof value === 'object' && !Array.isArray(value);
+  };
+
+  const [customerAnnexureInformationId, setCustomerAnnexureInformationId] = useState(null)
+  const SubscribedInnerPageData = useSelector((state) => state.dashboard.SubscribedUserData);
+  useEffect(() => {
+    async function getHelathHistoryData() {
+      setCustomerAnnexureInformationId(SubscribedInnerPageData?.customerAnnexureInformationId)
+      if (SubscribedInnerPageData && SubscribedInnerPageData.CustomerData && SubscribedInnerPageData.CustomerData.length != 0 && SubscribedInnerPageData.CustomerData[0].HealthHistoryQuestionnaire) {
+        for (let item in SubscribedInnerPageData.CustomerData[0].HealthHistoryQuestionnaire) {
+          for (let item1 in data) {
+            if (isObject(SubscribedInnerPageData.CustomerData[0].HealthHistoryQuestionnaire[item])) {
+              for (let item2 in SubscribedInnerPageData.CustomerData[0].HealthHistoryQuestionnaire[item]) {
+                if (item1 == item2) {
+                  data[item1].value = SubscribedInnerPageData.CustomerData[0].HealthHistoryQuestionnaire[item][item2]
+                }
+              }
+            } else {
+              if (item1 == item) {
+                data[item1].value = SubscribedInnerPageData.CustomerData[0].HealthHistoryQuestionnaire[item]
+              }
+            }
+
+          }
+        }
+      }
+    }
+    getHelathHistoryData()
+  }, [SubscribedInnerPageData]);
+
+  useEffect(() => {
+    getAnnexureInfo()
+  }, [handlePrev]);
+
+  useEffect(() => {
+    dispatch(getAnnexureInfo());
+  }, []);
+
+
   useImperativeHandle(ref, () => ({
     getHealthHistoryChildData: () => {
-      return data;
+      const dataToSend = {
+        medicalCondition: {
+          cancerDiabetesHepatitisBloodDisease: data.cancerDiabetesHepatitisBloodDisease.value,
+          HIVAIDS: data.HIVAIDS.value,
+          strokeLungSclerosis: data.strokeLungSclerosis.value
+        },
+        anyTypeInfection: data.anyTypeInfection.value,
+        DementiaDegenerativeDisease: data.DementiaDegenerativeDisease.value,
+        biteFromAnimal: data.biteFromAnimal.value,
+        sexuallyTransmittedDisease: data.sexuallyTransmittedDisease.value,
+        immunisationsTattoosBodypiercing: data.immunisationsTattoosBodypiercing.value,
+        juvenileDetentionLockupJail: data.juvenileDetentionLockupJail.value,
+        livedWithApersonWhoHasHepatitis: data.livedWithApersonWhoHasHepatitis.value,
+        compensationForSex: data.compensationForSex.value,
+        receivedWholeBloodBloodFactorProductsBoneMarrowTransplantation: data.receivedWholeBloodBloodFactorProductsBoneMarrowTransplantation.value,
+        IntimateContactWithWhoHasHIVAIDS: data.IntimateContactWithWhoHasHIVAIDS.value,
+        SARSavianFluH1N1: data.SARSavianFluH1N1.value,
+        from1980Through1986: {
+          spent3MonthsOrMoreCumulativelyInTheUnitedKingdom: data.spent3MonthsOrMoreCumulativelyInTheUnitedKingdom.value,
+          ResidedAtaUSmilitaryBaseinEurope: data.ResidedAtaUSmilitaryBaseinEurope.value
+        },
+        sufferedFromMalariaChikungunyaDengueandWestNileFever: data.sufferedFromMalariaChikungunyaDengueandWestNileFever.value,
+        visitedOrlivedOutsideofIndia: data.visitedOrlivedOutsideofIndia.value,
+        PersonalHistory: {
+          AreyouAndTheWouldbeBabysGeneticFatherBloodRelatives: data.AreyouAndTheWouldbeBabysGeneticFatherBloodRelatives.value,
+          pregnancyResultFromDonorEggSpermSurrogate: data.pregnancyResultFromDonorEggSpermSurrogate.value,
+          everHadAbnormalPregnancy: data.everHadAbnormalPregnancy.value
+        },
+        FamilyHistory: {
+          relativesWithCancerleukemiaBefore20: data.relativesWithCancerleukemiaBefore20.value,
+          RedCellRelatedDiseaseorAnyMetabolicStorageDiseaseor: data.RedCellRelatedDiseaseorAnyMetabolicStorageDiseaseor.value,
+          relativesWithCancerleukemiaBefore20WHO: data.relativesWithCancerleukemiaBefore20WHO.value,
+          RedCellRelatedDiseaseorAnyMetabolicStorageDiseaseorWHO: data.RedCellRelatedDiseaseorAnyMetabolicStorageDiseaseorWHO.value
+        }
+      };
+      dispatch(addOrupdateAnnexureInfo({ HealthHistoryQuestionnaire: dataToSend, customerAnnexureInformationId: customerAnnexureInformationId }))
+
     }
   }))
 

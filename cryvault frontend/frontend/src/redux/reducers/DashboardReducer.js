@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { IsSubscribedUserApi, addClientInfoApi, getClientInfoApi, getHelpDetailsApi, uploadSingleFileApi, GetTypeOfPregnancyDetails } from "./api";
+import { getAnnexureInfoApi, addClientInfoApi, getClientInfoApi, getHelpDetailsApi, uploadSingleFileApi, GetTypeOfPregnancyDetails, GetTypeOfProofDetails } from "./api";
 import axios from "axios";
 import { exampledata } from "../../data";
 
@@ -22,8 +22,8 @@ export const getHelpDetails = createAsyncThunk("getHelpDetails", async (payload 
     return thunkAPI.rejectWithValue(error);
   }
 });
-export const isSubscribedUser = createAsyncThunk("isSubscribedUser", async (payload = {}, thunkAPI) => {
-  const apiUrl = IsSubscribedUserApi();
+export const getAnnexureInfo = createAsyncThunk("getAnnexureInfo", async (payload = {}, thunkAPI) => {
+  const apiUrl = getAnnexureInfoApi();
   const token = sessionStorage.getItem("token");
   const headers = {
     authorization: `${token}`,
@@ -121,9 +121,32 @@ export const GetTypeOfPregnancy = createAsyncThunk("GetTypeOfPregnancy", async (
   }
 });
 
+
+export const GetTypeOfProof = createAsyncThunk("GetTypeOfProof", async (payload = {}, thunkAPI) => {
+  const apiUrl = GetTypeOfProofDetails();
+  const token = sessionStorage.getItem("token");
+  const headers = {
+    authorization: `${token}`,
+  };
+  try {
+    const response = await axios.get(apiUrl, { headers });
+    const { ok, problem, data } = response;
+    if (data) {
+      if (payload.callback) payload.callback();
+      return data;
+    } else {
+      return thunkAPI.rejectWithValue({ data, problem });
+    }
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+
 const initialState = {
   helpList: [],
   SubscribedUserData: [],
+  typeOfProofData: [],
+  typeOfPreganacyData: [],
   clientData: exampledata,
   loading: false,
   error: null,
@@ -154,15 +177,15 @@ const DashboardReducer = createSlice({
         state.loading = false;
         state.error = action.error.message;
       })
-      .addCase(isSubscribedUser.pending, (state) => {
+      .addCase(getAnnexureInfo.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(isSubscribedUser.fulfilled, (state, action) => {
+      .addCase(getAnnexureInfo.fulfilled, (state, action) => {
         state.loading = false;
         state.SubscribedUserData = action.payload.data;
       })
-      .addCase(isSubscribedUser.rejected, (state, action) => {
+      .addCase(getAnnexureInfo.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
       })
@@ -202,6 +225,19 @@ const DashboardReducer = createSlice({
         state.loading = false;
         state.error = action.error.message;
       })
+      .addCase(GetTypeOfProof.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(GetTypeOfProof.fulfilled, (state, action) => {
+        state.loading = false;
+        state.typeOfProofData = action.payload.data;
+      })
+      .addCase(GetTypeOfProof.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+
   },
 });
 export const { resetPopupPage, setPopupPage } = DashboardReducer.actions;

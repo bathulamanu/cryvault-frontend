@@ -610,7 +610,7 @@ export function SingleSelect(props) {
   const MenuProps = {
     PaperProps: {
       style: {
-        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+        maxHeight: ITEM_HEIGHT * 5.0 + ITEM_PADDING_TOP,
         width: 150,
       },
     },

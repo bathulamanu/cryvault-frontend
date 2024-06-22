@@ -1,4 +1,5 @@
 import dayjs from 'dayjs'
+import moment from 'moment';
 function stringToColor(string) {
     let hash = 0
     for (let i = 0; i < string.length; i += 1) {
@@ -98,3 +99,26 @@ export function getTypeOfPregnancyList(arr) {
         return result
     }
 }
+
+
+export function getTypeOfProofList(arr) {
+    if (arr && arr?.length > 0) {
+        let result = arr?.map((item) => ({
+            id: item?.masterConfigurationID,
+            name: item?.value,
+        }))
+        return result
+    }
+}
+
+export function formatDate(dateString) {
+    return moment(dateString).format('DD-MM-YYYY');
+};
+
+export function formatDateYYYYMMDD(date) {
+    return moment(date, 'DD-MM-YYYY').format('YYYY-MM-DD');
+};
+
+export function isObject (value)  {
+    return value !== null && typeof value === 'object' && !Array.isArray(value);
+};

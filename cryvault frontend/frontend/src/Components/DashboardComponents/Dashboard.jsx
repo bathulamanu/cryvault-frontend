@@ -30,7 +30,7 @@ const Dashboard = () => {
   const isMobile = useDeviceSize() === "xs";
 
   const [isListVisible, setListVisible] = useState(false); // State variable to track list visibility
-  const isSubscribedUser = useSelector((state) => state.dashboard.isSubscribedUser);
+  const isSubscribedUser = useSelector((state) => state.dashboard.getAnnexureInfo);
   // Function to handle menu icon click
   const handleMenuIconClick = () => {
     setListVisible(!isListVisible); // Toggle list visibility

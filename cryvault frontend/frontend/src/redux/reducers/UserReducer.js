@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { LoginAPI, OTP, getCustomerInfoApi,addOrupdateAnnexureInfoApi } from "./api";
+import { LoginAPI, OTP, getCustomerInfoApi, addOrupdateAnnexureInfoApi } from "./api";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 
@@ -56,11 +56,15 @@ export const startTimerWithCallback = createAsyncThunk("startTimerWithCallback",
 });
 export const addOrupdateAnnexureInfo = createAsyncThunk("addOrupdateAnnexureInfo", async (payload = {}, thunkAPI) => {
   const apiUrl = addOrupdateAnnexureInfoApi();
+  const token = sessionStorage.getItem("token");
+  const headers = {
+    authorization: `${token}`,
+  };
   try {
-    const response = await axios.post(apiUrl, payload.payload);
+    const response = await axios.post(apiUrl, payload, { headers });
     const { problem, data } = response;
     if (data?.status == 200) {
-      payload.callback();
+      // payload.callback();
       return data;
     } else {
       return thunkAPI.rejectWithValue({ data, problem });

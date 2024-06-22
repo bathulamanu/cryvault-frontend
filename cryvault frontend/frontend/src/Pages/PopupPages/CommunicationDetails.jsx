@@ -17,6 +17,9 @@ import {
   getNamesIdList,
   getStateIdList,
 } from "../../globalFunctions";
+
+import { addOrupdateAnnexureInfo } from "../../redux/reducers/UserReducer"
+import { GetTypeOfProof, getAnnexureInfo } from '../../redux/reducers/DashboardReducer'
 const headingStyle = {
   fontSize: "18px",
   fontWeight: 500,
@@ -37,7 +40,7 @@ const redStarStyle = {
   marginLeft: "4px",
 };
 const CommunicationDetails = forwardRef((props, ref) => {
-  var { handleNext, currentPage, setCurrentPage, TOTAL_PAGES } = props
+  var { handleNext, handlePrev, currentPage, setCurrentPage, TOTAL_PAGES } = props
   const [data, setData] = useState({
     Address: {
       value: "",
@@ -47,7 +50,6 @@ const CommunicationDetails = forwardRef((props, ref) => {
       name: "Address",
       id: "Address",
     },
-  
     Country: {
       value: 352,
       placeholder: "Country",
@@ -56,7 +58,6 @@ const CommunicationDetails = forwardRef((props, ref) => {
       name: "Country",
       id: "Country"
     },
-
     State: {
       value: null,
       placeholder: "State",
@@ -99,8 +100,6 @@ const CommunicationDetails = forwardRef((props, ref) => {
       name: "PermanentAddress",
       id: "PermanentAddress",
     },
-
-  
     PermanentAddressCountry: {
       value: 352,
       placeholder: "PermanentAddressCountry",
@@ -134,6 +133,7 @@ const CommunicationDetails = forwardRef((props, ref) => {
       id: "PermanentAddressPinCode",
     }
   })
+  const dispatch = useDispatch()
   const countries = useSelector((state) => state.payment.countries);
   const states = useSelector((state) => state.payment.states);
   const cities = useSelector((state) => state.payment.cities);
@@ -150,150 +150,177 @@ const CommunicationDetails = forwardRef((props, ref) => {
     cityList2 = getCityIdList(cities2);
   }
 
-  const dispatch = useDispatch();
+
+  const [customerAnnexureInformationId, setCustomerAnnexureInformationId] = useState(null)
+  const SubscribedInnerPageData = useSelector((state) => state.dashboard.SubscribedUserData);
+  useEffect(() => {
+    async function getCommunicationData() {
+      setCustomerAnnexureInformationId(SubscribedInnerPageData?.customerAnnexureInformationId)
+      if (SubscribedInnerPageData && SubscribedInnerPageData.CustomerCommunicationDetails) {
+
+        for (let item in SubscribedInnerPageData.CustomerCommunicationDetails) {
+          for (let item1 in data) {
+            if (item1 == item) {
+              data[item1].value = SubscribedInnerPageData.CustomerCommunicationDetails[item]
+            }
+          }
+        }
+      }
+    }
+    getCommunicationData()
+  }, [SubscribedInnerPageData]);
+
+  useEffect(() => {
+    getAnnexureInfo()
+  }, [handlePrev]);
 
   useImperativeHandle(ref, () => ({
     getCommunicationDetailsChildData: () => {
-        if (!data.Address.value) {
-          setData((prevData) => ({
-            ...prevData,
-            Address: {
-              ...prevData.Address,
-              errorStatus: true,
-              errorMessage: "Address is required.",
-            },
-          }));
-          return;
-        }
-      
-  
-        if (!data.Country.value) {
-          setData((prevData) => ({
-            ...prevData,
-            Country: {
-              ...prevData.Country,
-              errorStatus: true,
-              errorMessage: "Country is required.",
-            },
-          }));
-          return;
-        }
-     
-        if (!data.State.value) {
-          setData((prevData) => ({
-            ...prevData,
-            State: {
-              ...prevData.State,
-              errorStatus: true,
-              errorMessage: "State is required.",
-            },
-          }));
-          return;
-        }
-        if (!data.City.value) {
-          setData((prevData) => ({
-            ...prevData,
-            City: {
-              ...prevData.City,
-              errorStatus: true,
-              errorMessage: "City is required.",
-            },
-          }));
-          return;
-        }
-  
-        if (!data.PinCode.value) {
-          setData((prevData) => ({
-            ...prevData,
-            PinCode: {
-              ...prevData.PinCode,
-              errorStatus: true,
-              errorMessage: "PinCode is required.",
-            },
-          }));
-          return;
-        }
-        if (!data.PermanentAddress.value) {
-          setData((prevData) => ({
-            ...prevData,
-            PermanentAddress: {
-              ...prevData.PermanentAddress,
-              errorStatus: true,
-              errorMessage: "Permanent Address is required.",
-            },
-          }));
-          return;
-        }
-       
-        if (!data.PermanentAddressCountry.value) {
-          setData((prevData) => ({
-            ...prevData,
-            PermanentAddressCountry: {
-              ...prevData.PermanentAddressCountry,
-              errorStatus: true,
-              errorMessage: "Country is required.",
-            },
-          }));
-          return;
-        }
-    
-        if (!data.PermanentAddressState.value) {
-          setData((prevData) => ({
-            ...prevData,
-            PermanentAddressState: {
-              ...prevData.PermanentAddressState,
-              errorStatus: true,
-              errorMessage: "State is required.",
-            },
-          }));
-          return;
-        }
-        if (!data.PermanentAddressCity.value) {
-          setData((prevData) => ({
-            ...prevData,
-            PermanentAddressCity: {
-              ...prevData.PermanentAddressCity,
-              errorStatus: true,
-              errorMessage: "City is required.",
-            },
-          }));
-          return;
-        }
-        if (!data.PermanentAddressPinCode.value) {
-          setData((prevData) => ({
-            ...prevData,
-            PermanentAddressPinCode: {
-              ...prevData.PermanentAddressPinCode,
-              errorStatus: true,
-              errorMessage: "PinCode is required.",
-            },
-          }));
-          return;
-        }
-  
-        const dataToSend = {
-          Address: data.Address.value,
-          City: data.City.value,
-          State: data.State.value,
-          Country: data.Country.value,
-          PinCode: data.PinCode.value,
-          PermanentAddress: data.PermanentAddress.value,
-          PermanentAddressCity: data.PermanentAddressCity.value,
-          PermanentAddressState: data.PermanentAddressState.value,
-          PermanentAddressCountry: data.PermanentAddressCountry.value,
-          PermanentAddressPinCode: data.PermanentAddressPinCode.value
-        };
-  
-        if (currentPage < TOTAL_PAGES) {
-          setCurrentPage(currentPage + 1);
-        }
+      // if (!data.Address.value) {
+      //   setData((prevData) => ({
+      //     ...prevData,
+      //     Address: {
+      //       ...prevData.Address,
+      //       errorStatus: true,
+      //       errorMessage: "Address is required.",
+      //     },
+      //   }));
+      //   return;
+      // }
 
-      return dataToSend;
+      // if (!data.Country.value) {
+      //   setData((prevData) => ({
+      //     ...prevData,
+      //     Country: {
+      //       ...prevData.Country,
+      //       errorStatus: true,
+      //       errorMessage: "Country is required.",
+      //     },
+      //   }));
+      //   return;
+      // }
+
+      // if (!data.State.value) {
+      //   setData((prevData) => ({
+      //     ...prevData,
+      //     State: {
+      //       ...prevData.State,
+      //       errorStatus: true,
+      //       errorMessage: "State is required.",
+      //     },
+      //   }));
+      //   return;
+      // }
+      // if (!data.City.value) {
+      //   setData((prevData) => ({
+      //     ...prevData,
+      //     City: {
+      //       ...prevData.City,
+      //       errorStatus: true,
+      //       errorMessage: "City is required.",
+      //     },
+      //   }));
+      //   return;
+      // }
+
+      // if (!data.PinCode.value) {
+      //   setData((prevData) => ({
+      //     ...prevData,
+      //     PinCode: {
+      //       ...prevData.PinCode,
+      //       errorStatus: true,
+      //       errorMessage: "PinCode is required.",
+      //     },
+      //   }));
+      //   return;
+      // }
+      // if (!data.PermanentAddress.value) {
+      //   setData((prevData) => ({
+      //     ...prevData,
+      //     PermanentAddress: {
+      //       ...prevData.PermanentAddress,
+      //       errorStatus: true,
+      //       errorMessage: "Permanent Address is required.",
+      //     },
+      //   }));
+      //   return;
+      // }
+
+      // if (!data.PermanentAddressCountry.value) {
+      //   setData((prevData) => ({
+      //     ...prevData,
+      //     PermanentAddressCountry: {
+      //       ...prevData.PermanentAddressCountry,
+      //       errorStatus: true,
+      //       errorMessage: "Country is required.",
+      //     },
+      //   }));
+      //   return;
+      // }
+
+      // if (!data.PermanentAddressState.value) {
+      //   setData((prevData) => ({
+      //     ...prevData,
+      //     PermanentAddressState: {
+      //       ...prevData.PermanentAddressState,
+      //       errorStatus: true,
+      //       errorMessage: "State is required.",
+      //     },
+      //   }));
+      //   return;
+      // }
+      // if (!data.PermanentAddressCity.value) {
+      //   setData((prevData) => ({
+      //     ...prevData,
+      //     PermanentAddressCity: {
+      //       ...prevData.PermanentAddressCity,
+      //       errorStatus: true,
+      //       errorMessage: "City is required.",
+      //     },
+      //   }));
+      //   return;
+      // }
+      // if (!data.PermanentAddressPinCode.value) {
+      //   setData((prevData) => ({
+      //     ...prevData,
+      //     PermanentAddressPinCode: {
+      //       ...prevData.PermanentAddressPinCode,
+      //       errorStatus: true,
+      //       errorMessage: "PinCode is required.",
+      //     },
+      //   }));
+      //   return;
+      // }
+
+      const dataToSend = {
+        Address: data.Address.value,
+        City: data.City.value,
+        State: data.State.value,
+        Country: data.Country.value,
+        PinCode: data.PinCode.value,
+        permanentAddressIsSameAsCorrespondenceAddress: data.permanentAddressIsSameAsCorrespondenceAddress.value,
+        PermanentAddress: data.PermanentAddress.value,
+        PermanentAddressCity: data.PermanentAddressCity.value,
+        PermanentAddressState: data.PermanentAddressState.value,
+        PermanentAddressCountry: data.PermanentAddressCountry.value,
+        PermanentAddressPinCode: data.PermanentAddressPinCode.value
+      };
+
+      if (currentPage < TOTAL_PAGES) {
+        setCurrentPage(currentPage + 1);
+      }
+      dispatch(addOrupdateAnnexureInfo({ CustomerCommunicationDetails: dataToSend, customerAnnexureInformationId: customerAnnexureInformationId }))
+
+
     }
   }))
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
+    const exp = /^\d*$/
+    if ((name == "PinCode" || name == "PermanentAddressPinCode") && !exp.test(value)) {
+      return
+    }
     setData((prevData) => ({
       ...prevData,
       [name]: { ...prevData[name], value: value, errorStatus: false, errorMessage: "" },
@@ -337,6 +364,7 @@ const CommunicationDetails = forwardRef((props, ref) => {
 
   useEffect(() => {
     dispatch(getCountry());
+    dispatch(getAnnexureInfo());
   }, []);
 
   useEffect(() => {
@@ -354,7 +382,7 @@ const CommunicationDetails = forwardRef((props, ref) => {
           {Object.entries(data).map(([key, fieldData]) =>
             fieldData.name == "Address" || fieldData.name == "PinCode" ? (
               <>
-                <Stack sx={{ width: fieldData.name == "Address" ? "208%" : "100%", gap: "0.5rem" }} key={key}>
+                <Stack sx={{ width: fieldData.name == "Address" ? "189%" : "100%", gap: "0.5rem" }} key={key}>
                   <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>{fieldData.placeholder} <span style={redStarStyle}>*</span></InputLabel>
                   <FormControl variant="outlined" size="small">
                     <OutlinedInput
@@ -372,6 +400,7 @@ const CommunicationDetails = forwardRef((props, ref) => {
                         borderRadius: "8px",
                       }}
                       onChange={handleOnChange}
+                      inputProps={fieldData.name == "PinCode" ? { maxLength: 6 } : { maxLength: 200 }}
                     />
                     {fieldData.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{fieldData.errorMessage}</Typography> : null}
                   </FormControl>
@@ -435,11 +464,14 @@ const CommunicationDetails = forwardRef((props, ref) => {
               ) : fieldData.name == "permanentAddressIsSameAsCorrespondenceAddress" ? (
                 <>
                   <Stack sx={{ width: "100%", gap: "0.5rem" }} key={key}>
+                    {data.permanentAddressIsSameAsCorrespondenceAddress.value}{"kkkk "}
                     <FormControlLabel
                       control={
                         <Checkbox
+                          checked={data.permanentAddressIsSameAsCorrespondenceAddress.value}
                           onChange={handleCheckChange}
-                          name={data.permanentAddressIsSameAsCorrespondenceAddress.value}
+                          name={data.permanentAddressIsSameAsCorrespondenceAddress.name}
+                          value={data.permanentAddressIsSameAsCorrespondenceAddress.value}
                         />
                       }
                       label="If permanent address is same as correspondence address"
@@ -451,12 +483,12 @@ const CommunicationDetails = forwardRef((props, ref) => {
         </Box>
       </Box>
 
-      <Box sx={{ flexDirection: "column", display: "flex", width: "50%", border: "1px solid #e5e5e5", margin: "2rem", padding: "2rem", borderRadius: "1rem" }} >
+      <Box sx={{ width: "50%", flexDirection: "column", display: "flex", border: "1px solid #e5e5e5", margin: "2rem", padding: "2rem", borderRadius: "1rem" }} >
         <Box sx={{ marginTop: "3rem", display: "grid", gridTemplateColumns: "auto auto", gridColumnGap: "2rem", gridRowGap: "3rem" }} className="fatherDetails">
           {Object.entries(data).map(([key, fieldData]) =>
             fieldData.name == "PermanentAddress" || fieldData.name == "PermanentAddressPinCode" ? (
               <>
-                <Stack sx={{ width: fieldData.name == "PermanentAddress" ? "208%" : "100%", gap: "0.5rem" }} key={key}>
+                <Stack sx={{ width: fieldData.name == "PermanentAddress" ? "190%" : "140%", gap: "0.5rem" }} key={key}>
                   <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>{fieldData.placeholder} <span style={redStarStyle}>*</span></InputLabel>
                   <FormControl variant="outlined" size="small">
                     <OutlinedInput
@@ -474,6 +506,7 @@ const CommunicationDetails = forwardRef((props, ref) => {
                         borderRadius: "8px",
                       }}
                       onChange={handleOnChange}
+                      inputProps={fieldData.name == "PermanentAddressPinCode" ? { maxLength: 6 } : { maxLength: 200 }}
                     />
                     {fieldData.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{fieldData.errorMessage}</Typography> : null}
                   </FormControl>

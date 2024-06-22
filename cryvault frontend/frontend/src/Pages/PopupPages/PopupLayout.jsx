@@ -35,14 +35,14 @@ const PopupLayout = ({ children }) => {
     }
   };
 
-  const [dataFromChild, setDataFromChild] = useState('');
-  const [dataFromMotherDetails, setdataFromMotherDetails] = useState('');
-  const [dataFromCommunicationDetails, setdataFromCommunicationDetails] = useState('');
-  const [dataFromHospitalDetails, setdataFromHospitalDetails] = useState('');
-  const [dataFromReferenceIformation, setdataFromReferenceIformation] = useState('');
-  const [dataFromSignature, setdataFromSignature] = useState('');
-  const [dataFromForbankUse, setdataFromForbankUse] = useState('');
-  const [dataFromHealthHistory, setdataFromHealthHistory] = useState('');
+  // const [dataFromChild, setDataFromChild] = useState('');
+  // const [dataFromMotherDetails, setdataFromMotherDetails] = useState('');
+  // const [dataFromCommunicationDetails, setdataFromCommunicationDetails] = useState('');
+  // const [dataFromHospitalDetails, setdataFromHospitalDetails] = useState('');
+  // const [dataFromReferenceIformation, setdataFromReferenceIformation] = useState('');
+  // const [dataFromSignature, setdataFromSignature] = useState('');
+  // const [dataFromForbankUse, setdataFromForbankUse] = useState('');
+  // const [dataFromHealthHistory, setdataFromHealthHistory] = useState('');
 
 
   const handleNext = () => {
@@ -52,64 +52,53 @@ const PopupLayout = ({ children }) => {
     // }
 
     if (childRef.current) {
-      setDataFromChild(childRef.current.getChildData());
+      childRef.current.getFatherData();
     }
     if (childMotherDetailsRef.current) {
-      setdataFromMotherDetails(childMotherDetailsRef.current.getMotherDetails());
+      childMotherDetailsRef.current.getMotherDetails();
     }
     if (childCommunicationDetailsRef.current) {
-      setdataFromCommunicationDetails(childCommunicationDetailsRef.current.getCommunicationDetailsChildData());
+      childCommunicationDetailsRef.current.getCommunicationDetailsChildData();
     }
     if (childHospitalDetailsRef.current) {
-      setdataFromHospitalDetails(childHospitalDetailsRef.current.getHospitalDetailsChildData());
+      childHospitalDetailsRef.current.getHospitalDetailsChildData();
     }
     if (childReferenceIformationRef.current) {
-      setdataFromReferenceIformation(childReferenceIformationRef.current.getReferenceIformationChildData());
+      childReferenceIformationRef.current.getReferenceIformationChildData();
     }
     if (childSignatureRef.current) {
-      setdataFromSignature(childSignatureRef.current.getSignatureChildData());
+      childSignatureRef.current.getSignatureChildData()
     }
     if (childForbankUseRef.current) {
-      setdataFromForbankUse(childForbankUseRef.current.getForbankUseChildData());
+      childForbankUseRef.current.getForbankUseChildData();
     }
     if (childHealthHistoryRef.current) {
-      setdataFromHealthHistory(childHealthHistoryRef.current.getHealthHistoryChildData());
+      childHealthHistoryRef.current.getHealthHistoryChildData();
     }
-    const dataToSend = {
-      // fullName: userData.fullName.value,
-      // Email: userData.email.value,
-      // countryCode: "+91",// userData.countryCode.value,
-      // phoneNumber: userData.phone.value.replace(userData.countryCode.value, ''),
-      // Subject: userData.subject.value,
-      // pageName: router?.pathname,
-    };
 
 
+    // console.log("kkk dataFromChild dataFromChild   ", dataFromChild ? dataFromChild : null);
+    // console.log("kkk dataFromChild dataFromMotherDetails   ", dataFromMotherDetails ? dataFromMotherDetails : null);
+    // console.log("kkk dataFromChild dataFromCommunicationDetails   ", dataFromCommunicationDetails ? dataFromCommunicationDetails : null);
+    // console.log("kkk dataFromChild dataFromHospitalDetails   ", dataFromHospitalDetails ? dataFromHospitalDetails : null);
+    // console.log("kkk dataFromChild dataFromReferenceIformation   ", dataFromReferenceIformation ? dataFromReferenceIformation : null);
+    // console.log("kkk dataFromChild dataFromSignature   ", dataFromSignature ? dataFromSignature : null);
+    // console.log("kkk dataFromChild dataFromForbankUse   ", dataFromForbankUse ? dataFromForbankUse : null);
+    // console.log("kkk dataFromChild dataFromHealthHistory   ", dataFromHealthHistory ? dataFromHealthHistory : null);
 
-    console.log("kkk dataFromChild dataFromChild   ", dataFromChild ? dataFromChild : null);
-    console.log("kkk dataFromChild dataFromMotherDetails   ", dataFromMotherDetails ? dataFromMotherDetails : null);
-    console.log("kkk dataFromChild dataFromCommunicationDetails   ", dataFromCommunicationDetails ? dataFromCommunicationDetails : null);
-    console.log("kkk dataFromChild dataFromHospitalDetails   ", dataFromHospitalDetails ? dataFromHospitalDetails : null);
-    console.log("kkk dataFromChild dataFromReferenceIformation   ", dataFromReferenceIformation ? dataFromReferenceIformation : null);
-    console.log("kkk dataFromChild dataFromSignature   ", dataFromSignature ? dataFromSignature : null);
-    console.log("kkk dataFromChild dataFromForbankUse   ", dataFromForbankUse ? dataFromForbankUse : null);
-    console.log("kkk dataFromChild dataFromHealthHistory   ", dataFromHealthHistory ? dataFromHealthHistory : null);
-
-
-    // dispatch(addOrupdateAnnexureInfo(dataToSend))
   };
 
   return (
     <Box sx={{ margin: "13rem", display: "flex", flexDirection: "column", gap: "1rem", border: "1px solid #e5e5e5" }}>
       <Box>
-        {currentPage == 1 && <FatherDetails ref={childRef} handleNext={handleNext} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />}
-        {currentPage == 2 && <MotherDetails ref={childMotherDetailsRef} handleNext={handleNext} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />}
-        {currentPage == 3 && <CommunicationDetails ref={childCommunicationDetailsRef} handleNext={handleNext} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />}
-        {currentPage == 4 && <HospitalDetails ref={childHospitalDetailsRef} handleNext={handleNext} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />}
-        {currentPage == 5 && <ReferenceIformation ref={childReferenceIformationRef} handleNext={handleNext} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />}
-        {currentPage == 6 && <Signature ref={childSignatureRef} handleNext={handleNext} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />}
-        {currentPage == 7 && <ForbankUse ref={childForbankUseRef} handleNext={handleNext} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />}
-        {currentPage == 8 && <HealthHistory ref={childHealthHistoryRef} handleNext={handleNext} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />}
+         {currentPage == 1 && <FatherDetails ref={childRef} handleNext={handleNext} handlePrev={handlePrev} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />}
+        {currentPage == 2 && <MotherDetails ref={childMotherDetailsRef} handleNext={handleNext} handlePrev={handlePrev} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />} 
+        {currentPage == 3 && <CommunicationDetails ref={childCommunicationDetailsRef} handleNext={handleNext} handlePrev={handlePrev} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />} 
+        {currentPage == 4 && <HospitalDetails ref={childHospitalDetailsRef} handleNext={handleNext} handlePrev={handlePrev} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />} 
+        {currentPage == 5 && <ReferenceIformation ref={childReferenceIformationRef} handleNext={handleNext} handlePrev={handlePrev} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />} 
+        {currentPage == 6 && <Signature ref={childSignatureRef} handleNext={handleNext} handlePrev={handlePrev} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />} 
+        {currentPage == 7 && <ForbankUse ref={childForbankUseRef} handleNext={handleNext} handlePrev={handlePrev} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />}
+        {currentPage == 8 && <HealthHistory ref={childHealthHistoryRef} handleNext={handleNext} handlePrev={handlePrev} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />}
       </Box>
 
       <Box sx={{ display: "flex", justifyContent: "space-between", padding: "4rem" }}>
@@ -131,15 +120,29 @@ const PopupLayout = ({ children }) => {
           </Typography>
         </Box>
 
-        <Button
-          sx={{ padding: "0rem 4rem", borderRadius: "0.5rem", fontSize: "2rem" }}
-          variant="contained"
-          endIcon={<KeyboardTabIcon />}
-          disabled={currentPage === TOTAL_PAGES} // Disable next button on last page
-          onClick={handleNext}
-        >
-          Next
-        </Button>
+
+        {currentPage === TOTAL_PAGES ?
+          <Button
+            sx={{ padding: "0rem 4rem", borderRadius: "0.5rem", fontSize: "2rem" }}
+            variant="contained"
+            endIcon={<KeyboardTabIcon />}
+            onClick={handleNext}
+          >
+            Save
+          </Button>
+
+          :
+          <Button
+            sx={{ padding: "0rem 4rem", borderRadius: "0.5rem", fontSize: "2rem" }}
+            variant="contained"
+            endIcon={<KeyboardTabIcon />}
+            onClick={handleNext}
+          >
+            Next
+          </Button>
+
+        }
+
       </Box>
     </Box>
   );
