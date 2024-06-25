@@ -108,7 +108,7 @@ export const createOrder = createAsyncThunk("createOrder", async (payload, thunk
     authorization: `${token}`,
   };
   const subscription = localStorage.getItem("subscription");
-  const amount = Number(localStorage.getItem("planAmount"));
+  const amount = localStorage.getItem("planAmount");
   const paymentMethod = "card";
 
   // const navigate = useNavigate();
@@ -168,7 +168,8 @@ export const createOrder = createAsyncThunk("createOrder", async (payload, thunk
               window.location.href = "/thankyou";
             } else {
               console.error("Payment failed:");
-              alert("Payment failed. Please try again or contact support.");
+              // alert("ok oka");
+              toast.error("Payment failed. Please try again or contact support.");
             }
           } catch (error) {
             console.error("Error sending data to API:", error);
@@ -177,8 +178,36 @@ export const createOrder = createAsyncThunk("createOrder", async (payload, thunk
       };
 
       const rzp1 = new window.Razorpay(options);
-      rzp1.on("payment.failed", (response) => {
-        alert("Payment failed. Please try again or contact support.");
+      rzp1.on("payment.failed", async (response) => {
+        // console.log("cehck it out ", response);
+        // alert("ok");
+        const postData = {
+          payment: {
+            subscriptionPlanId: subscription,
+            OrderCode: orderid,
+            paidAmount: amount,
+            totalAmount: amount,
+            Event: "payment.failed",
+            paymentType: paymentMethod,
+            PaymentGatewayID: "",
+            razorpay_order_id: "",
+            razorpaySignature: ""
+          }
+        };
+
+        try {
+          const apiResponse = await axios.post(PaymentStatus(), postData, { headers });
+          const { status, data } = apiResponse;
+          if (status === 200) {
+
+          } else {
+
+          }
+        } catch (error) {
+          // console.error("Error sending data to API:", error);
+        }
+        
+        toast.error(response?.error?.description);
       });
       rzp1.open();
     } else {
@@ -314,6 +343,6 @@ const PaymentReducer = createSlice({
       });
   },
 });
-export const {} = PaymentReducer.actions;
+export const { } = PaymentReducer.actions;
 const paymentReducer = PaymentReducer.reducer;
 export default paymentReducer;

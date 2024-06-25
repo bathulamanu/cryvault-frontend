@@ -269,13 +269,13 @@ const ReferenceIformation = forwardRef((props, ref) => {
                 EmergencyMobile1: data.EmergencyMobile1.value,
                 EmergencyMobile2: data.EmergencyMobile2.value,
                 meternalSampleAndUmbilicalBleed: data.meternalSampleAndUmbilicalBleed.value,
-                phledopomist: data.phledopomist.value
+                phledopomist: data.phledopomist.value               
             };
-
+            
             if (currentPage < TOTAL_PAGES) {
                 setCurrentPage(currentPage + 1);
             }
-            dispatch(addOrupdateAnnexureInfo({ ReferenceDetails: dataToSend, customerAnnexureInformationId: customerAnnexureInformationId }))
+            dispatch(addOrupdateAnnexureInfo({ ReferenceDetails: dataToSend, isUserEnteredAllMandatoryFileds: true, customerAnnexureInformationId: customerAnnexureInformationId }))
 
 
         }

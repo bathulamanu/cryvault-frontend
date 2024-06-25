@@ -146,8 +146,8 @@ const Header = () => {
                     <Typography fontSize={20}>No Icons Available</Typography>
                   ) : (
                     socialIcons &&
-                    socialIcons?.SocialMedia?.map((socialicon) => (
-                      <Link to={socialicon.iconUrl}>
+                    socialIcons?.SocialMedia?.map((socialicon, index) => (
+                      <Link to={socialicon.iconUrl} key={index}>
                         <i className={socialicon.className}></i>
                       </Link>
                     ))

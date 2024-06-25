@@ -268,125 +268,129 @@ const CheckoutDetails = () => {
     //   }));
     //   return;
     // }
-    if (!userData.firstName.value) {
-      setUserData((prevData) => ({
-        ...prevData,
-        firstName: {
-          ...prevData.firstName,
-          errorStatus: true,
-          errorMessage: "Enter valid first name",
-        },
-      }));
-      return;
-    }
-    if (!userData.lastName.value) {
-      setUserData((prevData) => ({
-        ...prevData,
-        lastName: {
-          ...prevData.lastName,
-          errorStatus: true,
-          errorMessage: "Enter valid last name",
-        },
-      }));
-      return;
-    }
-    if (!userData.email.value) {
-      setUserData((prevData) => ({
-        ...prevData,
-        email: {
-          ...prevData.email,
-          errorStatus: true,
-          errorMessage: "Enter valid email",
-        },
-      }));
-      return;
-    }
-    if (!userData.addressLine1.value) {
-      setUserData((prevData) => ({
-        ...prevData,
-        addressLine1: {
-          ...prevData.addressLine1,
-          errorStatus: true,
-          errorMessage: "Enter valid address line 1",
-        },
-      }));
-      return;
-    }
-    if (!userData.addressLine2.value) {
-      setUserData((prevData) => ({
-        ...prevData,
-        addressLine2: {
-          ...prevData.addressLine2,
-          errorStatus: true,
-          errorMessage: "Enter valid address line 2",
-        },
-      }));
-      return;
-    }
-    if (!userData.nearLandMark.value) {
-      setUserData((prevData) => ({
-        ...prevData,
-        nearLandMark: {
-          ...prevData.nearLandMark,
-          errorStatus: true,
-          errorMessage: "Enter valid near landMark",
-        },
-      }));
-      return;
-    }
+    // if (!userData.firstName.value) {
+    //   setUserData((prevData) => ({
+    //     ...prevData,
+    //     firstName: {
+    //       ...prevData.firstName,
+    //       errorStatus: true,
+    //       errorMessage: "Enter valid first name",
+    //     },
+    //   }));
+    //   return;
+    // }
+    // if (!userData.lastName.value) {
+    //   setUserData((prevData) => ({
+    //     ...prevData,
+    //     lastName: {
+    //       ...prevData.lastName,
+    //       errorStatus: true,
+    //       errorMessage: "Enter valid last name",
+    //     },
+    //   }));
+    //   return;
+    // }
+    // if (!userData.email.value) {
+    //   setUserData((prevData) => ({
+    //     ...prevData,
+    //     email: {
+    //       ...prevData.email,
+    //       errorStatus: true,
+    //       errorMessage: "Enter valid email",
+    //     },
+    //   }));
+    //   return;
+    // }
+    // if (!userData.addressLine1.value) {
+    //   setUserData((prevData) => ({
+    //     ...prevData,
+    //     addressLine1: {
+    //       ...prevData.addressLine1,
+    //       errorStatus: true,
+    //       errorMessage: "Enter valid address line 1",
+    //     },
+    //   }));
+    //   return;
+    // }
+    // if (!userData.addressLine2.value) {
+    //   setUserData((prevData) => ({
+    //     ...prevData,
+    //     addressLine2: {
+    //       ...prevData.addressLine2,
+    //       errorStatus: true,
+    //       errorMessage: "Enter valid address line 2",
+    //     },
+    //   }));
+    //   return;
+    // }
+    // if (!userData.nearLandMark.value) {
+    //   setUserData((prevData) => ({
+    //     ...prevData,
+    //     nearLandMark: {
+    //       ...prevData.nearLandMark,
+    //       errorStatus: true,
+    //       errorMessage: "Enter valid near landMark",
+    //     },
+    //   }));
+    //   return;
+    // }
 
-    if (!userData.country.value) {
-      setUserData((prevData) => ({
-        ...prevData,
-        country: {
-          ...prevData.city,
-          errorStatus: true,
-          errorMessage: "Enter valid country",
-        },
-      }));
-      return;
-    }
-    if (!userData.state.value) {
-      setUserData((prevData) => ({
-        ...prevData,
-        state: {
-          ...prevData.state,
-          errorStatus: true,
-          errorMessage: "Enter valid state",
-        },
-      }));
-      return;
-    }
-    if (!userData.city.value) {
-      setUserData((prevData) => ({
-        ...prevData,
-        city: {
-          ...prevData.city,
-          errorStatus: true,
-          errorMessage: "Enter valid city",
-        },
-      }));
-      return;
-    }
-    if (!userData.pincode.value) {
-      setUserData((prevData) => ({
-        ...prevData,
-        pincode: {
-          ...prevData.pincode,
-          errorStatus: true,
-          errorMessage: "Enter valid pincode",
-        },
-      }));
-      return;
-    }
-    dispatch(getCustomerPaymentDetails({ payload: dataToSend, callback: order }));
+    // if (!userData.country.value) {
+    //   setUserData((prevData) => ({
+    //     ...prevData,
+    //     country: {
+    //       ...prevData.city,
+    //       errorStatus: true,
+    //       errorMessage: "Enter valid country",
+    //     },
+    //   }));
+    //   return;
+    // }
+    // if (!userData.state.value) {
+    //   setUserData((prevData) => ({
+    //     ...prevData,
+    //     state: {
+    //       ...prevData.state,
+    //       errorStatus: true,
+    //       errorMessage: "Enter valid state",
+    //     },
+    //   }));
+    //   return;
+    // }
+    // if (!userData.city.value) {
+    //   setUserData((prevData) => ({
+    //     ...prevData,
+    //     city: {
+    //       ...prevData.city,
+    //       errorStatus: true,
+    //       errorMessage: "Enter valid city",
+    //     },
+    //   }));
+    //   return;
+    // }
+    // if (!userData.pincode.value) {
+    //   setUserData((prevData) => ({
+    //     ...prevData,
+    //     pincode: {
+    //       ...prevData.pincode,
+    //       errorStatus: true,
+    //       errorMessage: "Enter valid pincode",
+    //     },
+    //   }));
+    //   return;
+    // }
+    // dispatch(getCustomerPaymentDetails({ payload: dataToSend, callback: order }));
+    order();
   };
 
   const order = () => {
+    const cleanedString = localStorage.getItem("planAmount").replace(/,/g, '');
     const dataToSend = {
-      amount: Number(localStorage.getItem("planAmount")),
+      amount: localStorage.getItem("planAmount"),//parseInt(cleanedString, 10),
       currency: "INR",
     };
+    console.log("check kk pay ", dataToSend);
+
     dispatch(createOrder({ payload: dataToSend }));
   };
 
@@ -619,9 +623,9 @@ export function SingleSelect(props) {
   const handleChange = (event) => {
     onChange(event.target.value)
   }
- 
+
   return (
-    <FormControl sx={{ width: width || 200 ,marginTop: 0.2}} size="small">
+    <FormControl sx={{ width: width || 200, marginTop: 0.2 }} size="small">
       <Select
         labelId="demo-select-small-label"
         id="demo-select-small"
@@ -633,7 +637,7 @@ export function SingleSelect(props) {
         inputProps={{ 'aria-label': 'Without label' }}
         sx={{
           height: '39px',
-           borderRadius: '8px'
+          borderRadius: '8px'
         }}
       >
         <MenuItem disabled value="">

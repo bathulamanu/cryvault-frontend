@@ -35,13 +35,17 @@ export const verifyOTP = createAsyncThunk("verify", async (payload = {}, thunkAP
     return thunkAPI.rejectWithValue(error);
   }
 });
-export const getCustomerInfo = createAsyncThunk("getCustomerInfo", async (payload = {}, thunkAPI) => {
+export const getCustomerInfo = createAsyncThunk("getCustomerInfo", async (payload, thunkAPI) => {
   const apiUrl = getCustomerInfoApi();
+  const token = sessionStorage.getItem("token");
+  const headers = {
+    authorization: `${token}`,
+  };
   try {
-    const response = await axios.post(apiUrl, payload.payload);
+    const response = await axios.get(apiUrl, { headers });
     const { problem, data } = response;
     if (data?.status == 200) {
-      payload.callback();
+      if (payload?.callback) payload.callback();
       return data;
     } else {
       return thunkAPI.rejectWithValue({ data, problem });
@@ -149,8 +153,6 @@ const UserReducer = createSlice({
         state.subscriptionPlanId = action.payload.data.subscriptionPlanId;
         localStorage.setItem("userData", JSON.stringify(userData));
         localStorage.setItem("subscriptionPlanId", JSON.stringify(action.payload.data.subscriptionPlanId));
-        sessionStorage.setItem("token", userData?.token);
-        localStorage.setItem("token", userData?.token);
         sessionStorage.setItem("userData", JSON.stringify(userData));
         state.optid = action.payload.optid;
         toast.success(action.payload.message);

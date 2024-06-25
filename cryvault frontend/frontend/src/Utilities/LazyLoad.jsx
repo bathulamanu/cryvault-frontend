@@ -45,6 +45,7 @@ import PopupLayout from "../Pages/PopupPages/PopupLayout";
 // import FatherDetails from "../Pages/PopupPages/FatherDetails";
 import PopupLazyLoad from "./PopupLazyLoad";
 import SingleBlog from "../Pages/SingleBlog";
+import { getCustomerInfo } from "../redux/reducers/UserReducer"
 
 const LazyLoad = () => {
   const [hasToken, setHasToken] = useState(false);
@@ -60,11 +61,14 @@ const LazyLoad = () => {
     const subscription = sessionStorage.getItem("usertype");
     setHasToken(!!token); // Set hasToken to true if token exists, false otherwise
     setUserType(subscription !== null && subscription !== "null");
-  }, []);
-
-  useEffect(() => {
+    dispatch(getCustomerInfo())
     dispatch(getPageMetaInfo());
   }, []);
+
+  // useEffect(() => {
+  //   dispatch(getCustomerInfo())
+  //   dispatch(getPageMetaInfo());
+  // }, []);
 
   const isLazyLoadRoute =
     location.pathname.startsWith("/login") ||
@@ -125,6 +129,7 @@ const LazyLoad = () => {
   }, [orderDetails, userDetails]);
 
 
+
   return (
     <Suspense fallback={<Loader />}>
       <Routes>
@@ -162,12 +167,12 @@ const LazyLoad = () => {
         <Route path={contact} element={<Contact />} />
         <Route path="/blog-single/:id" element={<SingleBlog />} />
         {hasPlan ? (
-           <>
+          <>
             <Route path="/dashboard" element={<Dashboard />} />
             {/* <Route path="/popup" element={<PopupLayout />} /> */}
           </>
         ) : null}
-            <Route path="/popup" element={<PopupLayout />} />
+        <Route path="/popup" element={<PopupLayout />} />
 
         {/*<Route path="/faq" element={<Faq />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />

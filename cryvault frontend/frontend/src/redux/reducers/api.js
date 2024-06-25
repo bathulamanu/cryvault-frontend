@@ -1,4 +1,4 @@
-const BASE_URL = "http://18.61.70.225:4000"; // "http://localhost:4000" // "http://192.168.0.102:4000" //  
+const BASE_URL =    "http://18.61.70.225:4000"; // "http://localhost:4000" // "http://192.168.0.102:4000" //
 
 
 export const s3BucketFilePath = () => {

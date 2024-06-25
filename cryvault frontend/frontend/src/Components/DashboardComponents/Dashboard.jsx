@@ -26,10 +26,11 @@ import { AddDetailsPopup } from "../../Utilities/PopupLazyLoad";
 import useDeviceSize from "../../Utilities/useDeviceSize";
 
 const Dashboard = () => {
+  // alert("ok")
   const [selectedItem, setSelectedItem] = useState("DashBoard");
   const isMobile = useDeviceSize() === "xs";
 
-  const [isListVisible, setListVisible] = useState(false); // State variable to track list visibility
+  const [isListVisible, setListVisible] = useState(true); // State variable to track list visibility
   const isSubscribedUser = useSelector((state) => state.dashboard.getAnnexureInfo);
   // Function to handle menu icon click
   const handleMenuIconClick = () => {
@@ -40,6 +41,8 @@ const Dashboard = () => {
     setSelectedItem(item === selectedItem ? item : item);
     setListVisible(false);
   };
+
+
 
   return (
     <>

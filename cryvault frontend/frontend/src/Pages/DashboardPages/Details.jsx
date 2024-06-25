@@ -1,13 +1,32 @@
 
 
-import React, { useEffect, useMemo } from "react";
-import { Box, Card, CardContent, Typography, TextField, Grid, useMediaQuery } from "@mui/material";
+import React, { useEffect, useMemo, useState } from "react";
+import { Box, TextField, Grid, useMediaQuery } from "@mui/material";
 import "../../Components/DashboardComponents/Dashboard.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getClientInfo } from "../../redux/reducers/DashboardReducer";
+import { getAnnexureInfo, getClientInfo } from "../../redux/reducers/DashboardReducer";
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import CardActions from '@mui/material/CardActions';
+import Typography from '@mui/material/Typography';
+import Button from '@mui/material/Button';
+import { useNavigate } from "react-router-dom";
 
 const Details = () => {
+  const navigate = useNavigate();
   const isMobile = useMediaQuery("(max-width:600px)");
+  const dispatch = useDispatch();
+  const UserData = useSelector((state) => state.dashboard.SubscribedUserData);
+  const [isUserFillTheForm, setisUserFillTheForm] = useState(false)
+
+  useEffect(() => {
+    setisUserFillTheForm(UserData?.isUserEnteredAllMandatoryFileds);
+    localStorage.setItem("isFillForm", UserData?.isUserEnteredAllMandatoryFileds)
+  }, [UserData])
+
+  useEffect(() => {
+    dispatch(getAnnexureInfo())
+  }, [])
 
   return (
     <Box sx={{ height: "100%" }}>
@@ -28,7 +47,8 @@ const Details = () => {
           </Typography>
         </Box>
         <CardContent>
-          <Box mt={2} sx={{ padding: "20px" }}>
+
+          {isUserFillTheForm ? <Box mt={2} sx={{ padding: "20px" }}>
             <Grid container spacing={2}>
               <Grid xs={isMobile ? 12 : 6}>
                 <Grid container spacing={2}>
@@ -157,7 +177,25 @@ const Details = () => {
                 </Box>
               </Grid>
             </Grid>
-          </Box>
+          </Box> :
+            <Box mt={2} sx={{ padding: "20px" }}>
+              <Card sx={{ maxWidth: 345, margin: '20px auto', padding: '10px', textAlign: 'center' }}>
+                <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <CardContent>
+                    <Typography variant="h5" component="div" gutterBottom>
+                      Please Fill the Form
+                    </Typography>
+
+                  </CardContent>
+                  <CardActions>
+                    <Button className="edu-btn" borderRadius={"35px !important"} onClick={() => navigate("/popup")}>
+                      Go To Form
+                    </Button>
+                  </CardActions>
+                </Box>
+              </Card>
+            </Box>
+          }
         </CardContent>
       </Card>
     </Box>
