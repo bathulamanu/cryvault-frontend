@@ -413,18 +413,20 @@ const CommunicationDetails = forwardRef((props, ref) => {
                   <Stack sx={{ width: "100%", gap: "0.5rem" }} key={key}>
 
                     <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>{data.Country.name} <span style={redStarStyle}>*</span></InputLabel>
-                    <SingleSelect
-                      Placeholder={"Select"}
-                      width={"100%"}
-                      disabled={true}
-                      data={upDatedCountryList}
-                      value={data.Country.value}
-                      onChange={(e) => {
-                        handleChange(e, "Country");
-                      }}
-                    />
+                    <FormControl variant="outlined" size="small">
+                      <SingleSelect
+                        Placeholder={"Select"}
+                        width={"100%"}
+                        disabled={true}
+                        data={upDatedCountryList}
+                        value={data.Country.value}
+                        onChange={(e) => {
+                          handleChange(e, "Country");
+                        }}
+                      />
 
-                    {data.Country.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{data.Country.errorMessage}</Typography> : null}
+                      {data.Country.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{data.Country.errorMessage}</Typography> : null}
+                    </FormControl>
                   </Stack>
                 </>
               ) : fieldData.name == "State" ? (
@@ -464,7 +466,7 @@ const CommunicationDetails = forwardRef((props, ref) => {
               ) : fieldData.name == "permanentAddressIsSameAsCorrespondenceAddress" ? (
                 <>
                   <Stack sx={{ width: "100%", gap: "0.5rem" }} key={key}>
-                    {data.permanentAddressIsSameAsCorrespondenceAddress.value}{"kkkk "}
+                    {data.permanentAddressIsSameAsCorrespondenceAddress.value}
                     <FormControlLabel
                       control={
                         <Checkbox

@@ -13,7 +13,8 @@ import { addOrupdateAnnexureInfo } from "../../redux/reducers/UserReducer"
 import { useDispatch, useSelector } from "react-redux";
 import { GetTypeOfProof, getAnnexureInfo } from '../../redux/reducers/DashboardReducer'
 import moment from 'moment';
-import {formatDate,formatDateYYYYMMDD} from "../../globalFunctions"
+import { formatDate, formatDateYYYYMMDD } from "../../globalFunctions"
+import { MultipleSelect, SingleSelect } from '../CheckoutDetails';
 const redStarStyle = {
   color: "red",
   marginLeft: "4px",
@@ -129,7 +130,7 @@ const MotherDetails = forwardRef((props, ref) => {
     async function getCustomerMotherData() {
       setCustomerAnnexureInformationId(SubscribedInnerPageData?.customerAnnexureInformationId)
       if (SubscribedInnerPageData && SubscribedInnerPageData.CustomerClientMotherDetails) {
-        
+
         for (let item in SubscribedInnerPageData.CustomerClientMotherDetails) {
           for (let item1 in data) {
             if (item1 == item) {
@@ -147,11 +148,18 @@ const MotherDetails = forwardRef((props, ref) => {
     getCustomerMotherData()
   }, [SubscribedInnerPageData]);
 
+  const handleOnDropDown = (event, name) => {
+    setData((prevData) => ({
+      ...prevData,
+      [name]: { ...prevData[name], value: event, errorStatus: false, errorMessage: "" },
+    }));
+  }
   useEffect(() => {
     getAnnexureInfo()
   }, [handlePrev]);
 
   useEffect(() => {
+    dispatch(GetTypeOfProof());
     dispatch(getAnnexureInfo());
   }, []);
 
@@ -309,7 +317,7 @@ const MotherDetails = forwardRef((props, ref) => {
   };
 
   const handleChange = async (name, fileName, e) => {
-    alert(name);
+    // alert(name);
     const apiUrl = uploadSingleFileApi();
     const token = sessionStorage.getItem("token");
     const headers = {
@@ -363,33 +371,51 @@ const MotherDetails = forwardRef((props, ref) => {
                   {fieldData.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{fieldData.errorMessage}</Typography> : null}
                 </FormControl>
               </Stack>
-            ) : (
-              <>
-                <Stack sx={{ width: fieldData.name == "ExpectantMotherOrganizationName" || fieldData.name == "ExpectantMotherOtherInfo" ? "208%" : "100%", gap: "0.5rem" }} key={key}>
-                  <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>{fieldData.placeholder} {fieldData.name != "ExpectantMotherOtherInfo" ? <span style={redStarStyle}>*</span> : null}</InputLabel>
+            ) :
+              fieldData.name == "ExpectantMotherIDproof" ? (
+                <Stack sx={{ width: "100%", gap: "0.5rem" }} key={key}>
+                  <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>{fieldData.placeholder} <span style={redStarStyle}>*</span></InputLabel>
                   <FormControl variant="outlined" size="small">
-                    <OutlinedInput
-                      readOnly={false}
-                      type={fieldData.type || "text"}
+                    <SingleSelect
+                      Placeholder={"Select"}
+                      width={"100%"}
+                      data={IDList}
                       value={fieldData.value}
-                      name={fieldData.name}
-                      id={`outlined-adornment-${key}`}
-                      placeholder={fieldData.placeholder}
-                      sx={{
-                        border: fieldData.errorStatus ? "1px solid red" : "",
-                        height: "40px",
-                        width: "100%",
-                        padding: "10px",
-                        borderRadius: "8px",
+                      onChange={(e) => {
+                        handleOnDropDown(e, "ExpectantMotherIDproof");
                       }}
-                      onChange={handleOnChange}
                     />
                     {fieldData.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{fieldData.errorMessage}</Typography> : null}
                   </FormControl>
                 </Stack>
-                {fieldData.name == "ExpectantMotherOrganizationName" || fieldData.name == "ExpectantMotherOtherInfo" ? <br /> : null}
-              </>
-            )
+
+              ) : (
+                <>
+                  <Stack sx={{ width: fieldData.name == "ExpectantMotherOrganizationName" || fieldData.name == "ExpectantMotherOtherInfo" ? "208%" : "100%", gap: "0.5rem" }} key={key}>
+                    <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>{fieldData.placeholder} {fieldData.name != "ExpectantMotherOtherInfo" ? <span style={redStarStyle}>*</span> : null}</InputLabel>
+                    <FormControl variant="outlined" size="small">
+                      <OutlinedInput
+                        readOnly={false}
+                        type={fieldData.type || "text"}
+                        value={fieldData.value}
+                        name={fieldData.name}
+                        id={`outlined-adornment-${key}`}
+                        placeholder={fieldData.placeholder}
+                        sx={{
+                          border: fieldData.errorStatus ? "1px solid red" : "",
+                          height: "40px",
+                          width: "100%",
+                          padding: "10px",
+                          borderRadius: "8px",
+                        }}
+                        onChange={handleOnChange}
+                      />
+                      {fieldData.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{fieldData.errorMessage}</Typography> : null}
+                    </FormControl>
+                  </Stack>
+                  {fieldData.name == "ExpectantMotherOrganizationName" || fieldData.name == "ExpectantMotherOtherInfo" ? <br /> : null}
+                </>
+              )
           )}
         </Box>
       </Box>

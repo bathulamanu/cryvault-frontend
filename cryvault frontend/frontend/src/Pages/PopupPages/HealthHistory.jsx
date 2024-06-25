@@ -25,7 +25,7 @@ const HealthHistory = forwardRef((props, ref) => {
   var { handleNext, handlePrev, currentPage, setCurrentPage, TOTAL_PAGES } = props
 
   const [formValues, setFormValues] = useState({
-    chooseValue:"F",
+    chooseValue: "F",
     question1: "",
     question2: "",
     question3: "",
@@ -346,6 +346,11 @@ const HealthHistory = forwardRef((props, ref) => {
           RedCellRelatedDiseaseorAnyMetabolicStorageDiseaseorWHO: data.RedCellRelatedDiseaseorAnyMetabolicStorageDiseaseorWHO.value
         }
       };
+
+     
+        setCurrentPage(9);
+      
+
       dispatch(addOrupdateAnnexureInfo({ HealthHistoryQuestionnaire: dataToSend, customerAnnexureInformationId: customerAnnexureInformationId }))
 
     }

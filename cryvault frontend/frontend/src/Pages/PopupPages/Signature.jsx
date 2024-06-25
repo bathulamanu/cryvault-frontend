@@ -209,7 +209,7 @@ const Signature = forwardRef((props, ref) => {
                 placeholder="Name"
                 size="small"
                 sx={{
-                  border: "1px solid black",
+                  border: data.FatherOrGuardianName.errorStatus ? "1px solid red":"", 
                   height: "40px",
                   width: "100%",
                   padding: "10px",
@@ -232,7 +232,7 @@ const Signature = forwardRef((props, ref) => {
                 placeholder="Name"
                 size="small"
                 sx={{
-                  border: "1px solid black",
+                  border: data.MotherOrGuardianName.errorStatus ? "1px solid red":"",
                   height: "40px",
                   width: "100%",
                   padding: "10px",
@@ -255,7 +255,7 @@ const Signature = forwardRef((props, ref) => {
                 placeholder="Name"
                 size="small"
                 sx={{
-                  border: "1px solid black",
+                  border: data.MedicalDirectorName.errorStatus ? "1px solid red":"",
                   height: "40px",
                   width: "100%",
                   padding: "10px",

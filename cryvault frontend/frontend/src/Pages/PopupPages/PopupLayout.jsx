@@ -10,6 +10,7 @@ import ReferenceIformation from "./ReferenceIformation";
 import Signature from "./Signature";
 import ForbankUse from "./ForbankUse";
 import HealthHistory from "./HealthHistory"
+import InnerPagePreview from "./InnerPagePreview";
 
 import { useDispatch, useSelector } from "react-redux";
 
@@ -91,59 +92,62 @@ const PopupLayout = ({ children }) => {
   return (
     <Box sx={{ margin: "13rem", display: "flex", flexDirection: "column", gap: "1rem", border: "1px solid #e5e5e5" }}>
       <Box>
-         {currentPage == 1 && <FatherDetails ref={childRef} handleNext={handleNext} handlePrev={handlePrev} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />}
-        {currentPage == 2 && <MotherDetails ref={childMotherDetailsRef} handleNext={handleNext} handlePrev={handlePrev} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />} 
-        {currentPage == 3 && <CommunicationDetails ref={childCommunicationDetailsRef} handleNext={handleNext} handlePrev={handlePrev} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />} 
-        {currentPage == 4 && <HospitalDetails ref={childHospitalDetailsRef} handleNext={handleNext} handlePrev={handlePrev} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />} 
-        {currentPage == 5 && <ReferenceIformation ref={childReferenceIformationRef} handleNext={handleNext} handlePrev={handlePrev} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />} 
-        {currentPage == 6 && <Signature ref={childSignatureRef} handleNext={handleNext} handlePrev={handlePrev} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />} 
+        {currentPage == 1 && <FatherDetails ref={childRef} handleNext={handleNext} handlePrev={handlePrev} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />}
+        {currentPage == 2 && <MotherDetails ref={childMotherDetailsRef} handleNext={handleNext} handlePrev={handlePrev} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />}
+        {currentPage == 3 && <CommunicationDetails ref={childCommunicationDetailsRef} handleNext={handleNext} handlePrev={handlePrev} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />}
+        {currentPage == 4 && <HospitalDetails ref={childHospitalDetailsRef} handleNext={handleNext} handlePrev={handlePrev} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />}
+        {currentPage == 5 && <ReferenceIformation ref={childReferenceIformationRef} handleNext={handleNext} handlePrev={handlePrev} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />}
+        {currentPage == 6 && <Signature ref={childSignatureRef} handleNext={handleNext} handlePrev={handlePrev} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />}
         {currentPage == 7 && <ForbankUse ref={childForbankUseRef} handleNext={handleNext} handlePrev={handlePrev} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />}
         {currentPage == 8 && <HealthHistory ref={childHealthHistoryRef} handleNext={handleNext} handlePrev={handlePrev} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />}
-      </Box>
-
-      <Box sx={{ display: "flex", justifyContent: "space-between", padding: "4rem" }}>
-        <Button sx={{ padding: "0rem 4rem", borderRadius: "0.5rem", fontSize: "2rem", backgroundColor: "white", color: "blue" }} variant="outlined" startIcon={<ArrowBackIcon />} disabled={currentPage === 1} onClick={handlePrev}>
-          Prev
-        </Button>
-
-        <Box sx={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
-          <Typography sx={{ fontSize: "3rem !important" }} variant="h4">
-            {"<"}
-          </Typography>
-          <Typography sx={{ fontSize: "3rem !important", display: "flex" }} variant="h4" >
-            <span style={{ color: "blue" }}>{`${currentPage} `}</span>
-            <span>/</span>
-            <span>{`${TOTAL_PAGES} `}</span>
-          </Typography>
-          <Typography sx={{ fontSize: "3rem !important" }} variant="h4">
-            {">"}
-          </Typography>
-        </Box>
-
-
-        {currentPage === TOTAL_PAGES ?
-          <Button
-            sx={{ padding: "0rem 4rem", borderRadius: "0.5rem", fontSize: "2rem" }}
-            variant="contained"
-            endIcon={<KeyboardTabIcon />}
-            onClick={handleNext}
-          >
-            Save
-          </Button>
-
-          :
-          <Button
-            sx={{ padding: "0rem 4rem", borderRadius: "0.5rem", fontSize: "2rem" }}
-            variant="contained"
-            endIcon={<KeyboardTabIcon />}
-            onClick={handleNext}
-          >
-            Next
-          </Button>
-
-        }
+        {currentPage == 9 && <InnerPagePreview  setCurrentPage={setCurrentPage}/>}
 
       </Box>
+
+      {currentPage != 9 ?
+        <Box sx={{ display: "flex", justifyContent: "space-between", padding: "4rem" }}>
+          <Button sx={{ padding: "0rem 4rem", borderRadius: "0.5rem", fontSize: "2rem", backgroundColor: "white", color: "blue" }} variant="outlined" startIcon={<ArrowBackIcon />} disabled={currentPage === 1} onClick={handlePrev}>
+            Prev
+          </Button>
+
+          <Box sx={{ display: "flex", gap: "0.5rem", alignItems: "center" }}>
+            <Typography sx={{ fontSize: "3rem !important" }} variant="h4">
+              {"<"}
+            </Typography>
+            <Typography sx={{ fontSize: "3rem !important", display: "flex" }} variant="h4" >
+              <span style={{ color: "blue" }}>{`${currentPage} `}</span>
+              <span>/</span>
+              <span>{`${TOTAL_PAGES} `}</span>
+            </Typography>
+            <Typography sx={{ fontSize: "3rem !important" }} variant="h4">
+              {">"}
+            </Typography>
+          </Box>
+
+
+          {currentPage === 8 ?
+            <Button
+              sx={{ padding: "0rem 4rem", borderRadius: "0.5rem", fontSize: "2rem" }}
+              variant="contained"
+              endIcon={<KeyboardTabIcon />}
+              onClick={handleNext}
+            >
+              Preview
+            </Button>
+
+            :
+            <Button
+              sx={{ padding: "0rem 4rem", borderRadius: "0.5rem", fontSize: "2rem" }}
+              variant="contained"
+              endIcon={<KeyboardTabIcon />}
+              onClick={handleNext}
+            >
+              Next
+            </Button>
+
+          }
+
+        </Box> : null}
     </Box>
   );
 };

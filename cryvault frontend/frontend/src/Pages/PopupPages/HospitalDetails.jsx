@@ -32,7 +32,7 @@ import { getCountry, getState, getCity } from "../../redux/reducers/PaymentReduc
 import { GetTypeOfPregnancy } from "../../redux/reducers/DashboardReducer";
 import { addOrupdateAnnexureInfo } from "../../redux/reducers/UserReducer"
 import { GetTypeOfProof, getAnnexureInfo } from '../../redux/reducers/DashboardReducer'
-import { formatDate,formatDateYYYYMMDD } from "../../globalFunctions";
+import { formatDate, formatDateYYYYMMDD } from "../../globalFunctions";
 const headingStyle = {
   fontSize: "18px",
   fontWeight: 500,
@@ -470,7 +470,7 @@ const HospitalDetails = forwardRef((props, ref) => {
         DeliveringHospitalState: data.DeliveringHospitalState.value,
         DeliveringHosptalCity: data.DeliveringHosptalCity.value,
         DeliveringHospitalPinCode: data.DeliveringHospitalPinCode.value,
-        
+
       };
 
       if (currentPage < TOTAL_PAGES) {
@@ -530,7 +530,7 @@ const HospitalDetails = forwardRef((props, ref) => {
 
 
                   {/* <Box sx={{ display: "flex", flexDirection: "column" }}> */}
-                  <OutlinedInput style={{ border: data.ExpectedDateOfDelivery.errorStatus ? "1px solid red" : "none" }}
+                  {/* <OutlinedInput style={{ border: data.ExpectedDateOfDelivery.errorStatus ? "1px solid red" : "none" }}
                     onChange={handleChange}
                     key={"key"}
                     placeholder={data.ExpectedDateOfDelivery.placeholder}
@@ -539,7 +539,19 @@ const HospitalDetails = forwardRef((props, ref) => {
                     onFocus={() => setInputType("date")} onBlur={() => setInputType("text")}
                     value={data.ExpectedDateOfDelivery.value}
                     name={data.ExpectedDateOfDelivery.name}
-                  />
+                  /> */}
+                  <input
+                    style={{ border: data.ExpectedDateOfDelivery.errorStatus ? "1px solid red" : "none" }}
+                    onChange={handleChange}
+                    key={"key"}
+                    placeholder={data.ExpectedDateOfDelivery.placeholder}
+                    className={`dashboardInput fullWidth`}
+                    label={data.ExpectedDateOfDelivery.placeholder} type={inputType}
+                    onFocus={() => setInputType("date")}
+                    onBlur={() => setInputType("text")}
+                    value={data.ExpectedDateOfDelivery.value}
+                    name={data.ExpectedDateOfDelivery.name}
+                    size="small" />
 
                   {data.ExpectedDateOfDelivery.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data.ExpectedDateOfDelivery.errorMessage}</Typography> : null}
                   {/* </Box> */}
@@ -591,7 +603,7 @@ const HospitalDetails = forwardRef((props, ref) => {
                     placeholder="Consulting Gynocologist"
                     name={data.ConsultingGynocologist.name}
                     sx={{
-                      border: "1px solid black",
+                      border: data.ConsultingGynocologist.errorStatus ? "1px solid red" : "",
                       height: "40px",
                       width: "100%",
                       padding: "10px",
@@ -600,6 +612,7 @@ const HospitalDetails = forwardRef((props, ref) => {
                     value={data.ConsultingGynocologist.value}
                     onChange={handleChange}
                   />
+
                   {data.ConsultingGynocologist.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data.ConsultingGynocologist.errorMessage}</Typography> : null}
 
                 </FormControl>
@@ -616,7 +629,7 @@ const HospitalDetails = forwardRef((props, ref) => {
                     placeholder="Consulting Hospital"
 
                     sx={{
-                      border: "1px solid black",
+                      border: data.ConsultingHospital.errorStatus ? "1px solid red" : "",
                       height: "40px",
                       width: "100%",
                       padding: "10px",
@@ -710,7 +723,7 @@ const HospitalDetails = forwardRef((props, ref) => {
                       placeholder="PinCode"
                       size="small"
                       sx={{
-                        border: "1px solid black",
+                        border: data.ConsultingHospitalPinCode.errorStatus ? "1px solid red" : "",
                         height: "40px",
                         width: "100%",
                         padding: "10px",
@@ -720,7 +733,7 @@ const HospitalDetails = forwardRef((props, ref) => {
                       name={data.ConsultingHospitalPinCode.name}
                       value={data.ConsultingHospitalPinCode.value}
                       onChange={handleChange}
-                   
+
                     />
                     {data.ConsultingHospitalPinCode.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data.ConsultingHospitalPinCode.errorMessage}</Typography> : null}
 
@@ -740,7 +753,7 @@ const HospitalDetails = forwardRef((props, ref) => {
                       size="small"
                       name={data.ConsultingHospitalAddress.name}
                       sx={{
-                        border: "1px solid black",
+                        border: data.ConsultingHospitalAddress.errorStatus ? "1px solid red" : "",
                         height: "40px",
                         width: "100%",
                         padding: "10px",
@@ -763,11 +776,10 @@ const HospitalDetails = forwardRef((props, ref) => {
                         onChange={handleCheckChange}
                         name={data.IsDeliveringHospitalSameAsConsultingHospotal.name}
                         value={data.IsDeliveringHospitalSameAsConsultingHospotal.value}
-
                       />
                     }
-                    label="If  delivering hospital address is same as Current hospital address"
-                 
+                    label="If delivering hospital address is same as Current hospital address"
+
                   />
                 </Grid>
               </Grid>
@@ -840,7 +852,7 @@ const HospitalDetails = forwardRef((props, ref) => {
                       placeholder="PinCode"
                       size="small"
                       sx={{
-                        border: "1px solid black",
+                        border: data.DeliveringHospitalPinCode.errorStatus ? "1px solid red" : "",
                         height: "40px",
                         width: "100%",
                         padding: "10px",
@@ -869,7 +881,7 @@ const HospitalDetails = forwardRef((props, ref) => {
                       placeholder="Delivering Hospital Address"
                       size="small"
                       sx={{
-                        border: "1px solid black",
+                        border: data.DeliveringHospitalAddress.errorStatus ? "1px solid red" : "",
                         height: "40px",
                         width: "100%",
                         padding: "10px",

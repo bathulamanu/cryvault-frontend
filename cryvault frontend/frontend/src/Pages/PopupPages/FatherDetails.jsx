@@ -144,6 +144,7 @@ const FatherDetails = forwardRef((props, ref) => {
   }, [SubscribedInnerPageData]);
 
   useEffect(() => {
+    // e.preventDefault();
     getAnnexureInfo()
   }, [handlePrev]);
 

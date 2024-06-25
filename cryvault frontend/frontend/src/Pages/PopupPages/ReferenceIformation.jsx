@@ -341,7 +341,7 @@ const ReferenceIformation = forwardRef((props, ref) => {
                                         placeholder="Exisiting Cryovault Client UIN"
                                         size="small"
                                         sx={{
-                                            border: "1px solid black",
+                                            border: data.ExisitingCryovaultClientUIN.errorStatus ? "1px solid red" : "",
                                             height: "40px",
                                             width: "100%",
                                             padding: "10px",
@@ -377,7 +377,7 @@ const ReferenceIformation = forwardRef((props, ref) => {
                                         placeholder="Client Name"
                                         size="small"
                                         sx={{
-                                            border: "1px solid black",
+                                            border: data.IfReferredByExisitingClientName.errorStatus ? "1px solid red" : "",
                                             height: "40px",
                                             width: "100%",
                                             padding: "10px",
@@ -401,7 +401,7 @@ const ReferenceIformation = forwardRef((props, ref) => {
                                     placeholder="Mobile Number"
                                     size="small"
                                     sx={{
-                                        border: "1px solid black",
+                                        border: data.Mobile1.errorStatus ? "1px solid red" : "",
                                         height: "40px",
                                         width: "100%",
                                         padding: "10px",
@@ -422,7 +422,7 @@ const ReferenceIformation = forwardRef((props, ref) => {
                                     placeholder="Mobile Number"
                                     size="small"
                                     sx={{
-                                        border: "1px solid black",
+                                        border: data.Mobile2.errorStatus ? "1px solid red" : "",
                                         height: "40px",
                                         width: "100%",
                                         padding: "10px",
@@ -482,7 +482,7 @@ const ReferenceIformation = forwardRef((props, ref) => {
                                             placeholder="Name"
                                             size="small"
                                             sx={{
-                                                border: "1px solid black",
+                                                border: data.Name.errorStatus ? "1px solid red" : "",
                                                 height: "40px",
                                                 width: "100%",
                                                 padding: "10px",
@@ -504,7 +504,7 @@ const ReferenceIformation = forwardRef((props, ref) => {
                                             placeholder="RelationShip"
                                             size="small"
                                             sx={{
-                                                border: "1px solid black",
+                                                border: data.RelationShip.errorStatus ? "1px solid red" : "",
                                                 height: "40px",
                                                 width: "100%",
                                                 padding: "10px",
@@ -526,7 +526,7 @@ const ReferenceIformation = forwardRef((props, ref) => {
                                             placeholder="Mobile Number"
                                             size="small"
                                             sx={{
-                                                border: "1px solid black",
+                                                border: data.EmergencyMobile1.errorStatus ? "1px solid red" : "",
                                                 height: "40px",
                                                 width: "100%",
                                                 padding: "10px",
@@ -550,7 +550,7 @@ const ReferenceIformation = forwardRef((props, ref) => {
                                             placeholder="Mobile Number"
                                             size="small"
                                             sx={{
-                                                border: "1px solid black",
+                                                border: data.EmergencyMobile2.errorStatus ? "1px solid red" : "",
                                                 height: "40px",
                                                 width: "100%",
                                                 padding: "10px",

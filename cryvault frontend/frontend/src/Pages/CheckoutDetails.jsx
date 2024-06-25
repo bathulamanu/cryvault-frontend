@@ -605,12 +605,12 @@ export function SingleSelect(props) {
     disabled, } = props;
 
   // const dispatch = useDispatch();
-  const ITEM_HEIGHT = 48
-  const ITEM_PADDING_TOP = 8
+  const ITEM_HEIGHT = 100
+  const ITEM_PADDING_TOP = 20
   const MenuProps = {
     PaperProps: {
       style: {
-        maxHeight: ITEM_HEIGHT * 5.0 + ITEM_PADDING_TOP,
+        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
         width: 150,
       },
     },
@@ -619,9 +619,9 @@ export function SingleSelect(props) {
   const handleChange = (event) => {
     onChange(event.target.value)
   }
-
+ 
   return (
-    <FormControl sx={{ width: width || 200 }} size="small">
+    <FormControl sx={{ width: width || 200 ,marginTop: 0.2}} size="small">
       <Select
         labelId="demo-select-small-label"
         id="demo-select-small"
@@ -629,8 +629,12 @@ export function SingleSelect(props) {
         disabled={disabled}
         onChange={handleChange}
         placeholder={Placeholder}
-        MenuProps={MenuProps}
+        // MenuProps={MenuProps}
         inputProps={{ 'aria-label': 'Without label' }}
+        sx={{
+          height: '39px',
+           borderRadius: '8px'
+        }}
       >
         <MenuItem disabled value="">
           <em>{Placeholder}</em>

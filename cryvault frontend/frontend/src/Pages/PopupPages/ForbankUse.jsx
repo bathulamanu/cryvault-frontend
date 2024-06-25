@@ -172,7 +172,7 @@ const ForbankUse = forwardRef((props, ref) => {
                 placeholder={data.NameOfExcutive.placeholder}
                 size="small"
                 sx={{
-                  border: "1px solid black",
+                  border: data.NameOfExcutive.errorStatus ? "1px solid red":"",
                   height: "40px",
                   width: "100%",
                   padding: "10px",
@@ -193,7 +193,7 @@ const ForbankUse = forwardRef((props, ref) => {
                 placeholder={data.EmployeeCode.placeholder}
                 size="small"
                 sx={{
-                  border: "1px solid black",
+                  border: data.EmployeeCode.errorStatus ? "1px solid red":"",
                   height: "40px",
                   width: "100%",
                   padding: "10px",
@@ -216,7 +216,7 @@ const ForbankUse = forwardRef((props, ref) => {
                 placeholder={data.NameOfManager.placeholder}
                 size="small"
                 sx={{
-                  border: "1px solid black",
+                  border: data.NameOfManager.errorStatus ? "1px solid red":"",
                   height: "40px",
                   width: "100%",
                   padding: "10px",
@@ -237,7 +237,7 @@ const ForbankUse = forwardRef((props, ref) => {
                 placeholder={data.AreaOrRegion.placeholder}
                 size="small"
                 sx={{
-                  border: "1px solid black",
+                  border: data.AreaOrRegion.errorStatus ? "1px solid red":"",
                   height: "40px",
                   width: "100%",
                   padding: "10px",
@@ -252,22 +252,7 @@ const ForbankUse = forwardRef((props, ref) => {
           <Grid item xs={4}>
             <InputLabel sx={inputLableStyle}>Date</InputLabel>
             <FormControl variant="outlined" fullWidth size="small">
-              {/* <OutlinedInput
-                fullWidth
-                id="outlined-adornment-password"
-                placeholder={data.Date.placeholder}
-                size="small"
-                sx={{
-                  border: "1px solid black",
-                  height: "40px",
-                  width: "100%",
-                  padding: "10px",
-                  borderRadius: "8px",
-                }}
-                name={data.Date.name}
-                value={data.Date.value}
-                onChange={handleChange}
-              /> */}
+           
               <input
                 style={{ border: data.Date.errorStatus ? "1px solid red" : "none" }}
                 onChange={handleChange}
@@ -313,7 +298,7 @@ const ForbankUse = forwardRef((props, ref) => {
                   placeholder={data.Name.placeholder}
                   size="small"
                   sx={{
-                    border: "1px solid black",
+                    border: data.Name.errorStatus ? "1px solid red":"",
                     height: "40px",
                     width: "100%",
                     padding: "10px",
