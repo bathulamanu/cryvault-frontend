@@ -661,13 +661,14 @@ const HospitalDetails = forwardRef((props, ref) => {
 
                 <Grid item xs={6}>
                   <InputLabel sx={inputLableStyle}>
-                    {data.ConsultingHospitalCountry.placeholder} <span style={redStarStyle}>*</span>
+                    {data.ConsultingHospitalCountry.placeholder}<span style={redStarStyle}>*</span>
                   </InputLabel>
                   <SingleSelect
                     Placeholder={"Select"}
                     width={"100%"}
                     disabled={true}
                     data={upDatedCountryList}
+                    // value = {352}
                     value={data.ConsultingHospitalCountry.value}
                     onChange={(e) => {
                       handleOnChange(e, "ConsultingHospitalCountry");
@@ -858,10 +859,11 @@ const HospitalDetails = forwardRef((props, ref) => {
                         padding: "10px",
                         borderRadius: "8px",
                       }}
+                      inputProps={{ maxLength: 6 }}
                       name={data.DeliveringHospitalPinCode.name}
                       value={data.DeliveringHospitalPinCode.value}
                       onChange={handleChange}
-                      inputProps={{ maxLength: 6 }}
+
                     />
                     {data.DeliveringHospitalPinCode.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data.DeliveringHospitalPinCode.errorMessage}</Typography> : null}
 

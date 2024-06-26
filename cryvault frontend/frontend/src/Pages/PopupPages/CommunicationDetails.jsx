@@ -382,7 +382,7 @@ const CommunicationDetails = forwardRef((props, ref) => {
           {Object.entries(data).map(([key, fieldData]) =>
             fieldData.name == "Address" || fieldData.name == "PinCode" ? (
               <>
-                <Stack sx={{ width: fieldData.name == "Address" ? "189%" : "100%", gap: "0.5rem" }} key={key}>
+                <Stack sx={{ width: fieldData.name == "Address" ? "198%" : "100%", gap: "0.5rem" }} key={key}>
                   <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>{fieldData.placeholder} <span style={redStarStyle}>*</span></InputLabel>
                   <FormControl variant="outlined" size="small">
                     <OutlinedInput
@@ -490,7 +490,7 @@ const CommunicationDetails = forwardRef((props, ref) => {
           {Object.entries(data).map(([key, fieldData]) =>
             fieldData.name == "PermanentAddress" || fieldData.name == "PermanentAddressPinCode" ? (
               <>
-                <Stack sx={{ width: fieldData.name == "PermanentAddress" ? "190%" : "140%", gap: "0.5rem" }} key={key}>
+                <Stack sx={{ width: fieldData.name == "PermanentAddress" ? "149%" : "100%", gap: "0.5rem" }} key={key}>
                   <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>{fieldData.placeholder} <span style={redStarStyle}>*</span></InputLabel>
                   <FormControl variant="outlined" size="small">
                     <OutlinedInput
@@ -517,7 +517,7 @@ const CommunicationDetails = forwardRef((props, ref) => {
               </>
             ) : fieldData.name == "PermanentAddressCountry" ? (
               <>
-                <Stack sx={{ width: "100%", gap: "0.5rem" }} key={key}>
+                <Stack sx={{ width: "90%", gap: "0.5rem" }} key={key}>
 
                   <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Country <span style={redStarStyle}>*</span></InputLabel>
                   <SingleSelect

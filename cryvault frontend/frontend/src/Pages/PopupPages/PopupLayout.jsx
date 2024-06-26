@@ -92,15 +92,15 @@ const PopupLayout = ({ children }) => {
   return (
     <Box sx={{ margin: "13rem", display: "flex", flexDirection: "column", gap: "1rem", border: "1px solid #e5e5e5" }}>
       <Box>
-        {currentPage == 1 && <FatherDetails ref={childRef} handleNext={handleNext} handlePrev={handlePrev} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />}
-        {currentPage == 2 && <MotherDetails ref={childMotherDetailsRef} handleNext={handleNext} handlePrev={handlePrev} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />}
-        {currentPage == 3 && <CommunicationDetails ref={childCommunicationDetailsRef} handleNext={handleNext} handlePrev={handlePrev} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />}
-        {currentPage == 4 && <HospitalDetails ref={childHospitalDetailsRef} handleNext={handleNext} handlePrev={handlePrev} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />}
-        {currentPage == 5 && <ReferenceIformation ref={childReferenceIformationRef} handleNext={handleNext} handlePrev={handlePrev} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />}
-        {currentPage == 6 && <Signature ref={childSignatureRef} handleNext={handleNext} handlePrev={handlePrev} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />}
+        {/* {currentPage == 1 && <FatherDetails ref={childRef} handleNext={handleNext} handlePrev={handlePrev} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />}
+        {currentPage == 2 && <MotherDetails ref={childMotherDetailsRef} handleNext={handleNext} handlePrev={handlePrev} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />}*/}
+        {currentPage == 1 && <CommunicationDetails ref={childCommunicationDetailsRef} handleNext={handleNext} handlePrev={handlePrev} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />} 
+        {currentPage == 2 && <HospitalDetails ref={childHospitalDetailsRef} handleNext={handleNext} handlePrev={handlePrev} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />}
+        {currentPage == 3 && <ReferenceIformation ref={childReferenceIformationRef} handleNext={handleNext} handlePrev={handlePrev} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />}
+        {/* {currentPage == 6 && <Signature ref={childSignatureRef} handleNext={handleNext} handlePrev={handlePrev} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />}
         {currentPage == 7 && <ForbankUse ref={childForbankUseRef} handleNext={handleNext} handlePrev={handlePrev} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />}
         {currentPage == 8 && <HealthHistory ref={childHealthHistoryRef} handleNext={handleNext} handlePrev={handlePrev} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />}
-        {currentPage == 9 && <InnerPagePreview setCurrentPage={setCurrentPage} />}
+        {currentPage == 9 && <InnerPagePreview setCurrentPage={setCurrentPage} />} */}
 
       </Box>
 
