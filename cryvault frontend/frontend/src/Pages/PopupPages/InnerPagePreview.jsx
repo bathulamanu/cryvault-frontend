@@ -8,8 +8,10 @@ import {
     CardContent,
     Grid,
     Stack,
-    Typography,
+    Typography
 } from "@mui/material";
+
+import Checkbox from "@mui/material/Checkbox";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import { GetTypeOfProof, getAnnexureInfo } from '../../redux/reducers/DashboardReducer';
@@ -64,7 +66,8 @@ const InnerPagePreview = (props) => {
             "ExpectantMotherIdproofNo": "",
             "ExpectantMotherOtherInfo": "",
             "ExpectantMotherIDproofPhoto": "",
-            "ExpectantMotherProfilePhoto": ""
+            "ExpectantMotherProfilePhoto": "",
+            "ExpectantMotherIDproofValue":""
         },
         "CustomerClientFatherDetails": {
             "ExpectantFatherName": "",
@@ -78,7 +81,8 @@ const InnerPagePreview = (props) => {
             "ExpectantFatherIdproofNo": "",
             "ExpectantFatherOtherInfo": "",
             "ExpectantFatherIDproofPhoto": "",
-            "ExpectantFatherProfilePhoto": ""
+            "ExpectantFatherProfilePhoto": "",
+            "ExpectantFatherIDproofValue":""
         },
         "CustomerCommunicationDetails": {
             "Address": "",
@@ -91,7 +95,11 @@ const InnerPagePreview = (props) => {
             "PermanentAddressCity": null,
             "PermanentAddressState": null,
             "PermanentAddressCountry": null,
-            "PermanentAddressPinCode": ""
+            "PermanentAddressPinCode": "",
+            "StateValue": "",
+            "CityValue": "",
+            "PermanentStateValue": "",
+            "PermanentCityValue": ""
         },
         "BabyDetails": {
             "babyName": "",
@@ -112,7 +120,7 @@ const InnerPagePreview = (props) => {
         },
         "CustomerHospitalBirthingdetails": {
             "ExpectedDateOfDelivery": "",
-            "TypeOfpregnancy": "",
+            "TypeOfpregnancy": null,
             "HowManyChildrensDoYouHaveAlready": "",
             "ConsultingGynocologist": "",
             "ConsultingHospital": "",
@@ -126,7 +134,12 @@ const InnerPagePreview = (props) => {
             "DeliveringHospitalCountry": null,
             "DeliveringHospitalState": null,
             "DeliveringHosptalCity": null,
-            "DeliveringHospitalPinCode": ""
+            "DeliveringHospitalPinCode": "",
+            "ConsultingHospitalStateValue": "",
+            "ConsultingHospitalCityValue": "",
+            "DeliveringHospitalStateValue": "",
+            "DeliveringHosptalCityValue": "",
+            "TypeOfpregnancyValue": ""
         },
         "CustomerData": [
             {
@@ -165,7 +178,7 @@ const InnerPagePreview = (props) => {
                 "customerAnnexureSubInformationId": null,
 
                 "HealthHistoryQuestionnaire": {
-                    "medicalCondition": {
+                    "medicalCondition?": {
                         "cancerDiabetesHepatitisBloodDisease": null,
                         "HIVAIDS": null,
                         "strokeLungSclerosis": null
@@ -301,7 +314,7 @@ const InnerPagePreview = (props) => {
                                                     fontSize: "15px",
                                                 }}
                                             >
-                                                Email Address : {data.CustomerClientFatherDetails.ExpectantFatherEmail}
+                                                Email Address : {data.CustomerClientFatherDetails?.ExpectantFatherEmail}
                                             </Typography>{" "}
                                             <Typography variant="subtitle2"></Typography>
                                         </Stack>
@@ -313,7 +326,7 @@ const InnerPagePreview = (props) => {
                                                     fontSize: "15px",
                                                 }}
                                             >
-                                                Phone number : {data.CustomerClientFatherDetails.ExpectantFatherMobile}
+                                                Phone number : {data.CustomerClientFatherDetails?.ExpectantFatherMobile}
                                             </Typography>{" "}
                                             <Typography variant="subtitle2"></Typography>
                                         </Stack>
@@ -325,7 +338,7 @@ const InnerPagePreview = (props) => {
                                                     fontSize: "15px",
                                                 }}
                                             >
-                                                Occupation : {data.CustomerClientFatherDetails.ExpectantFatherOccupation}
+                                                Occupation : {data.CustomerClientFatherDetails?.ExpectantFatherOccupation}
                                             </Typography>{" "}
                                             <Typography variant="subtitle2"></Typography>
                                         </Stack>
@@ -337,7 +350,7 @@ const InnerPagePreview = (props) => {
                                                     fontSize: "15px",
                                                 }}
                                             >
-                                                Designation : {data.CustomerClientFatherDetails.ExpectantFatherDesignation}
+                                                Designation : {data.CustomerClientFatherDetails?.ExpectantFatherDesignation}
                                             </Typography>{" "}
                                             <Typography variant="subtitle2"></Typography>
                                         </Stack>
@@ -349,7 +362,7 @@ const InnerPagePreview = (props) => {
                                                     fontSize: "15px",
                                                 }}
                                             >
-                                                Organization Name : {data.CustomerClientFatherDetails.ExpectantFatherOrganizationName}
+                                                Organization Name : {data.CustomerClientFatherDetails?.ExpectantFatherOrganizationName}
                                             </Typography>{" "}
                                             <Typography variant="subtitle2"></Typography>
                                         </Stack>
@@ -361,7 +374,7 @@ const InnerPagePreview = (props) => {
                                                     fontSize: "15px",
                                                 }}
                                             >
-                                                ID Proof : {data.CustomerClientFatherDetails.ExpectantFatherIDproof}
+                                                ID Proof : {data.CustomerClientFatherDetails?.ExpectantFatherIDproofValue}
                                             </Typography>{" "}
                                             <Typography variant="subtitle2"></Typography>
                                         </Stack>
@@ -373,7 +386,7 @@ const InnerPagePreview = (props) => {
                                                     fontSize: "15px",
                                                 }}
                                             >
-                                                ID Proof Number :  {data.CustomerClientFatherDetails.ExpectantFatherIdproofNo}
+                                                ID Proof Number :  {data.CustomerClientFatherDetails?.ExpectantFatherIdproofNo}
                                             </Typography>{" "}
                                             <Typography variant="subtitle2"></Typography>
                                         </Stack>
@@ -385,7 +398,7 @@ const InnerPagePreview = (props) => {
                                                     fontSize: "15px",
                                                 }}
                                             >
-                                                If other, please specify : {data.CustomerClientFatherDetails.ExpectantFatherOtherInfo}
+                                                If other, please specify : {data.CustomerClientFatherDetails?.ExpectantFatherOtherInfo}
                                             </Typography>{" "}
                                             <Typography variant="subtitle2"></Typography>
                                         </Stack>
@@ -394,7 +407,21 @@ const InnerPagePreview = (props) => {
                                         direction="column"
                                         sx={{ marginRight: "30px", gap: 4 }}
                                     >
-                                        <Avatar sx={{ width: 100, height: 100, marginLeft: 4 }} />
+                                        {/* <Avatar sx={{ width: 100, height: 100, marginLeft: 4 }} /> */}
+                                        <Box
+                                            component="img"
+                                            src={"https://flyingbyts.s3.ap-south-2.amazonaws.com/" + data.CustomerClientFatherDetails?.ExpectantFatherProfilePhoto}
+                                            alt="father Image"
+                                            sx={{
+                                                width: 150,
+                                                height: 100,
+                                                backgroundColor: "lightgray",
+                                                display: "flex",
+                                                justifyContent: "center",
+                                                alignItems: "center",
+                                                marginRight: 4
+                                            }}
+                                        />
                                         <Box
                                             sx={{
                                                 width: 150,
@@ -405,9 +432,13 @@ const InnerPagePreview = (props) => {
                                                 alignItems: "center",
                                                 marginRight: 4,
                                             }}
-                                        >
-                                            {/* Content inside the Box */}
-                                        </Box>
+                                            component="img"
+                                            src={"https://flyingbyts.s3.ap-south-2.amazonaws.com/" + data.CustomerClientFatherDetails?.ExpectantFatherIDproofPhoto}
+                                            alt="father ID Proof"
+
+                                        />
+                                        {/* Content inside the Box */}
+
                                     </Stack>
                                 </Stack>
                             </CardContent>
@@ -439,7 +470,7 @@ const InnerPagePreview = (props) => {
                                                     fontSize: "15px",
                                                 }}
                                             >
-                                                Expected Mother Name :  {data.CustomerClientMotherDetails.ExpectantMotherName}
+                                                Expected Mother Name :  {data.CustomerClientMotherDetails?.ExpectantMotherName}
                                             </Typography>{" "}
                                             <Typography variant="subtitle2"></Typography>
                                         </Stack>
@@ -451,7 +482,7 @@ const InnerPagePreview = (props) => {
                                                     fontSize: "15px",
                                                 }}
                                             >
-                                                Date of Birth : {data.CustomerClientMotherDetails.ExpectantMotherDOB}
+                                                Date of Birth : {data.CustomerClientMotherDetails?.ExpectantMotherDOB}
                                             </Typography>{" "}
                                             <Typography variant="subtitle2"></Typography>
                                         </Stack>
@@ -463,7 +494,7 @@ const InnerPagePreview = (props) => {
                                                     fontSize: "15px",
                                                 }}
                                             >
-                                                Email Address : {data.CustomerClientMotherDetails.ExpectantMotherEmail}
+                                                Email Address : {data.CustomerClientMotherDetails?.ExpectantMotherEmail}
                                             </Typography>{" "}
                                             <Typography variant="subtitle2"></Typography>
                                         </Stack>
@@ -475,7 +506,7 @@ const InnerPagePreview = (props) => {
                                                     fontSize: "15px",
                                                 }}
                                             >
-                                                Phone number : {data.CustomerClientMotherDetails.ExpectantMotherMobile}
+                                                Phone number : {data.CustomerClientMotherDetails?.ExpectantMotherMobile}
                                             </Typography>{" "}
                                             <Typography variant="subtitle2"></Typography>
                                         </Stack>
@@ -487,7 +518,7 @@ const InnerPagePreview = (props) => {
                                                     fontSize: "15px",
                                                 }}
                                             >
-                                                Occupation : {data.CustomerClientMotherDetails.ExpectantMotherOccupation}
+                                                Occupation : {data.CustomerClientMotherDetails?.ExpectantMotherOccupation}
                                             </Typography>{" "}
                                             <Typography variant="subtitle2"></Typography>
                                         </Stack>
@@ -499,7 +530,7 @@ const InnerPagePreview = (props) => {
                                                     fontSize: "15px",
                                                 }}
                                             >
-                                                Designation : {data.CustomerClientMotherDetails.ExpectantMotherDesignation}
+                                                Designation : {data.CustomerClientMotherDetails?.ExpectantMotherDesignation}
                                             </Typography>{" "}
                                             <Typography variant="subtitle2"></Typography>
                                         </Stack>
@@ -511,7 +542,7 @@ const InnerPagePreview = (props) => {
                                                     fontSize: "15px",
                                                 }}
                                             >
-                                                Organization Name : {data.CustomerClientMotherDetails.ExpectantMotherOrganizationName}
+                                                Organization Name : {data.CustomerClientMotherDetails?.ExpectantMotherOrganizationName}
                                             </Typography>{" "}
                                             <Typography variant="subtitle2"></Typography>
                                         </Stack>
@@ -523,7 +554,7 @@ const InnerPagePreview = (props) => {
                                                     fontSize: "15px",
                                                 }}
                                             >
-                                                ID Proof : {data.CustomerClientMotherDetails.ExpectantMotherIDproof}
+                                                ID Proof : {data.CustomerClientMotherDetails?.ExpectantMotherIDproofValue}
                                             </Typography>{" "}
                                             <Typography variant="subtitle2"></Typography>
                                         </Stack>
@@ -535,7 +566,7 @@ const InnerPagePreview = (props) => {
                                                     fontSize: "15px",
                                                 }}
                                             >
-                                                ID Proof Number : {data.CustomerClientMotherDetails.ExpectantMotherIdproofNo}
+                                                ID Proof Number : {data.CustomerClientMotherDetails?.ExpectantMotherIdproofNo}
                                             </Typography>{" "}
                                             <Typography variant="subtitle2"></Typography>
                                         </Stack>
@@ -547,7 +578,7 @@ const InnerPagePreview = (props) => {
                                                     fontSize: "15px",
                                                 }}
                                             >
-                                                If other, please specify : {data.CustomerClientMotherDetails.ExpectantMotherOtherInfo}
+                                                If other, please specify : {data.CustomerClientMotherDetails?.ExpectantMotherOtherInfo}
                                             </Typography>{" "}
                                             <Typography variant="subtitle2"></Typography>
                                         </Stack>
@@ -556,7 +587,20 @@ const InnerPagePreview = (props) => {
                                         direction="column"
                                         sx={{ marginRight: "30px", gap: 4 }}
                                     >
-                                        <Avatar sx={{ width: 100, height: 100, marginLeft: 4 }} />
+                                        <Box
+                                            component="img"
+                                            src={"https://flyingbyts.s3.ap-south-2.amazonaws.com/" + data.CustomerClientMotherDetails?.ExpectantMotherProfilePhoto}
+                                            alt="father Image"
+                                            sx={{
+                                                width: 150,
+                                                height: 100,
+                                                backgroundColor: "lightgray",
+                                                display: "flex",
+                                                justifyContent: "center",
+                                                alignItems: "center",
+                                                marginRight: 4
+                                            }}
+                                        />
                                         <Box
                                             sx={{
                                                 width: 150,
@@ -567,9 +611,11 @@ const InnerPagePreview = (props) => {
                                                 alignItems: "center",
                                                 marginRight: 4,
                                             }}
-                                        >
-                                            {/* Content inside the Box */}
-                                        </Box>
+                                            component="img"
+                                            src={"https://flyingbyts.s3.ap-south-2.amazonaws.com/" + data.CustomerClientMotherDetails?.ExpectantMotherIDproofPhoto}
+                                            alt="father ID Proof"
+
+                                        />
                                     </Stack>
                                 </Stack>
                             </CardContent>
@@ -607,7 +653,7 @@ const InnerPagePreview = (props) => {
                                                 fontSize: "15px",
                                             }}
                                         >
-                                            Current Address : {data.CustomerCommunicationDetails.Address}
+                                            Current Address : {data.CustomerCommunicationDetails?.Address}
                                         </Typography>{" "}
                                         <Typography variant="subtitle2"></Typography>
                                     </Stack>
@@ -619,7 +665,7 @@ const InnerPagePreview = (props) => {
                                                 fontSize: "15px",
                                             }}
                                         >
-                                            City : {data.CustomerCommunicationDetails.City}
+                                            City : {data.CustomerCommunicationDetails?.CityValue}
                                         </Typography>{" "}
                                         <Typography variant="subtitle2"></Typography>
                                     </Stack>
@@ -631,7 +677,7 @@ const InnerPagePreview = (props) => {
                                                 fontSize: "15px",
                                             }}
                                         >
-                                            State : {data.CustomerCommunicationDetails.State}
+                                            State : {data.CustomerCommunicationDetails?.StateValue}
                                         </Typography>{" "}
                                         <Typography variant="subtitle2"></Typography>
                                     </Stack>
@@ -643,7 +689,8 @@ const InnerPagePreview = (props) => {
                                                 fontSize: "15px",
                                             }}
                                         >
-                                            country : {data.CustomerCommunicationDetails.Country}
+                                            country : India{/* {data.CustomerCommunicationDetails?.Country} */}
+
                                         </Typography>{" "}
                                         <Typography variant="subtitle2"></Typography>
                                     </Stack>
@@ -655,7 +702,7 @@ const InnerPagePreview = (props) => {
                                                 fontSize: "15px",
                                             }}
                                         >
-                                            Pin code : {data.CustomerCommunicationDetails.PinCode}
+                                            Pin code : {data.CustomerCommunicationDetails?.PinCode}
                                         </Typography>{" "}
                                         <Typography variant="subtitle2"></Typography>
                                     </Stack>
@@ -685,7 +732,7 @@ const InnerPagePreview = (props) => {
                                                 fontSize: "15px",
                                             }}
                                         >
-                                            Current Address : {data.CustomerCommunicationDetails.PermanentAddress}
+                                            Current Address : {data.CustomerCommunicationDetails?.PermanentAddress}
                                         </Typography>{" "}
                                         <Typography variant="subtitle2"></Typography>
                                     </Stack>
@@ -697,7 +744,7 @@ const InnerPagePreview = (props) => {
                                                 fontSize: "15px",
                                             }}
                                         >
-                                            City : {data.CustomerCommunicationDetails.PermanentAddressCity}
+                                            City : {data.CustomerCommunicationDetails?.PermanentCityValue}
                                         </Typography>{" "}
                                         <Typography variant="subtitle2"></Typography>
                                     </Stack>
@@ -709,7 +756,7 @@ const InnerPagePreview = (props) => {
                                                 fontSize: "15px",
                                             }}
                                         >
-                                            State : {data.CustomerCommunicationDetails.PermanentAddressState}
+                                            State : {data.CustomerCommunicationDetails?.PermanentStateValue}
                                         </Typography>{" "}
                                         <Typography variant="subtitle2"></Typography>
                                     </Stack>
@@ -721,7 +768,9 @@ const InnerPagePreview = (props) => {
                                                 fontSize: "15px",
                                             }}
                                         >
-                                            country : {data.CustomerCommunicationDetails.PermanentAddressCountry}
+                                            country : Inida
+
+                                            {/* {data.CustomerCommunicationDetails?.PermanentAddressCountry} */}
                                         </Typography>{" "}
                                         <Typography variant="subtitle2"></Typography>
                                     </Stack>
@@ -733,7 +782,7 @@ const InnerPagePreview = (props) => {
                                                 fontSize: "15px",
                                             }}
                                         >
-                                            Pin code : {data.CustomerCommunicationDetails.PermanentAddressPinCode}
+                                            Pin code : {data.CustomerCommunicationDetails?.PermanentAddressPinCode}
                                         </Typography>{" "}
                                         <Typography variant="subtitle2"></Typography>
                                     </Stack>
@@ -757,7 +806,7 @@ const InnerPagePreview = (props) => {
                                             fontSize: "15px",
                                         }}
                                     >
-                                        Expected date of deilvery :  {data.CustomerHospitalBirthingdetails.ExpectedDateOfDelivery}
+                                        Expected date of deilvery :  {data.CustomerHospitalBirthingdetails?.ExpectedDateOfDelivery}
                                     </Typography>{" "}
                                     <Typography variant="subtitle2"></Typography>
                                 </Stack>
@@ -769,7 +818,7 @@ const InnerPagePreview = (props) => {
                                             fontSize: "15px",
                                         }}
                                     >
-                                        Type of Pregnancy : {data.CustomerHospitalBirthingdetails.TypeOfpregnancy}
+                                        Type of Pregnancy : {data.CustomerHospitalBirthingdetails?.TypeOfpregnancyValue}
                                     </Typography>{" "}
                                     <Typography variant="subtitle2"></Typography>
                                 </Stack>
@@ -781,7 +830,7 @@ const InnerPagePreview = (props) => {
                                             fontSize: "15px",
                                         }}
                                     >
-                                        How many children's do you have already : {data.CustomerHospitalBirthingdetails.HowManyChildrensDoYouHaveAlready}
+                                        How many children's do you have already : {data.CustomerHospitalBirthingdetails?.HowManyChildrensDoYouHaveAlready}
                                     </Typography>{" "}
                                     <Typography variant="subtitle2"></Typography>
                                 </Stack>
@@ -793,7 +842,7 @@ const InnerPagePreview = (props) => {
                                             fontSize: "15px",
                                         }}
                                     >
-                                        Consulting Gynocologist: {data.CustomerHospitalBirthingdetails.ConsultingGynocologist}
+                                        Consulting Gynocologist: {data.CustomerHospitalBirthingdetails?.ConsultingGynocologist}
                                     </Typography>{" "}
                                     <Typography variant="subtitle2"></Typography>
                                 </Stack>
@@ -805,7 +854,7 @@ const InnerPagePreview = (props) => {
                                             fontSize: "15px",
                                         }}
                                     >
-                                        Consulting Hospital : {data.CustomerHospitalBirthingdetails.ConsultingHospital}
+                                        Consulting Hospital : {data.CustomerHospitalBirthingdetails?.ConsultingHospital}
                                     </Typography>{" "}
                                     <Typography variant="subtitle2"></Typography>
                                 </Stack>
@@ -843,7 +892,7 @@ const InnerPagePreview = (props) => {
                                                 fontSize: "15px",
                                             }}
                                         >
-                                            Current Address : {data.CustomerHospitalBirthingdetails.ConsultingHospitalAddress}
+                                            Current Address : {data.CustomerHospitalBirthingdetails?.ConsultingHospitalAddress}
                                         </Typography>{" "}
                                         <Typography variant="subtitle2"></Typography>
                                     </Stack>
@@ -855,7 +904,7 @@ const InnerPagePreview = (props) => {
                                                 fontSize: "15px",
                                             }}
                                         >
-                                            City :
+                                            City : {data.CustomerHospitalBirthingdetails?.ConsultingHospitalCityValue}
                                         </Typography>{" "}
                                         <Typography variant="subtitle2"></Typography>
                                     </Stack>
@@ -867,7 +916,7 @@ const InnerPagePreview = (props) => {
                                                 fontSize: "15px",
                                             }}
                                         >
-                                            State : {data.CustomerHospitalBirthingdetails.ConsultingHospitalState}
+                                            State : {data.CustomerHospitalBirthingdetails?.ConsultingHospitalStateValue}
                                         </Typography>{" "}
                                         <Typography variant="subtitle2"></Typography>
                                     </Stack>
@@ -879,7 +928,8 @@ const InnerPagePreview = (props) => {
                                                 fontSize: "15px",
                                             }}
                                         >
-                                            country : {data.CustomerHospitalBirthingdetails.ConsultingHospitalCountry}
+                                            country : India
+                                            {/* {data.CustomerHospitalBirthingdetails?.ConsultingHospitalCountry} */}
                                         </Typography>{" "}
                                         <Typography variant="subtitle2"></Typography>
                                     </Stack>
@@ -891,35 +941,12 @@ const InnerPagePreview = (props) => {
                                                 fontSize: "15px",
                                             }}
                                         >
-                                            Pin code : {data.CustomerHospitalBirthingdetails.ConsultingHospitalPinCode}
+                                            Pin code : {data.CustomerHospitalBirthingdetails?.ConsultingHospitalPinCode}
                                         </Typography>{" "}
                                         <Typography variant="subtitle2"></Typography>
                                     </Stack>
-                                    <Stack direction={"row"} spacing={2}>
-                                        <Typography
-                                            variant="subtitle2"
-                                            sx={{
-                                                minWidth: "70px",
-                                                fontSize: "15px",
-                                            }}
-                                        >
-                                            Telephone :
-                                            {/* {data.CustomerHospitalBirthingdetails.} */}
-                                        </Typography>{" "}
-                                        <Typography variant="subtitle2"></Typography>
-                                    </Stack>
-                                    <Stack direction={"row"} spacing={2}>
-                                        <Typography
-                                            variant="subtitle2"
-                                            sx={{
-                                                minWidth: "70px",
-                                                fontSize: "15px",
-                                            }}
-                                        >
-                                            Mobile :
-                                        </Typography>{" "}
-                                        <Typography variant="subtitle2"></Typography>
-                                    </Stack>
+
+
                                 </Stack>
                             </CardContent>
                         </Card>
@@ -946,7 +973,7 @@ const InnerPagePreview = (props) => {
                                                 fontSize: "15px",
                                             }}
                                         >
-                                            Current Address : {data.CustomerHospitalBirthingdetails.DeliveringHospitalAddress}
+                                            Current Address : {data.CustomerHospitalBirthingdetails?.DeliveringHospitalAddress}
                                         </Typography>{" "}
                                         <Typography variant="subtitle2"></Typography>
                                     </Stack>
@@ -958,7 +985,7 @@ const InnerPagePreview = (props) => {
                                                 fontSize: "15px",
                                             }}
                                         >
-                                            City : {data.CustomerHospitalBirthingdetails.DeliveringHosptalCity}
+                                            City : {data.CustomerHospitalBirthingdetails?.DeliveringHosptalCityValue}
                                         </Typography>{" "}
                                         <Typography variant="subtitle2"></Typography>
                                     </Stack>
@@ -970,7 +997,7 @@ const InnerPagePreview = (props) => {
                                                 fontSize: "15px",
                                             }}
                                         >
-                                            State : {data.CustomerHospitalBirthingdetails.DeliveringHospitalState}
+                                            State : {data.CustomerHospitalBirthingdetails?.DeliveringHospitalStateValue}
                                         </Typography>{" "}
                                         <Typography variant="subtitle2"></Typography>
                                     </Stack>
@@ -982,7 +1009,8 @@ const InnerPagePreview = (props) => {
                                                 fontSize: "15px",
                                             }}
                                         >
-                                            country : {data.CustomerHospitalBirthingdetails.DeliveringHospitalCountry}
+                                            country : India
+                                            {/* {data.CustomerHospitalBirthingdetails?.DeliveringHospitalCountry} */}
                                         </Typography>{" "}
                                         <Typography variant="subtitle2"></Typography>
                                     </Stack>
@@ -994,35 +1022,12 @@ const InnerPagePreview = (props) => {
                                                 fontSize: "15px",
                                             }}
                                         >
-                                            Pin code : {data.CustomerHospitalBirthingdetails.DeliveringHospitalPinCode}
+                                            Pin code : {data.CustomerHospitalBirthingdetails?.DeliveringHospitalPinCode}
                                         </Typography>{" "}
                                         <Typography variant="subtitle2"></Typography>
                                     </Stack>
-                                    <Stack direction={"row"} spacing={2}>
-                                        <Typography
-                                            variant="subtitle2"
-                                            sx={{
-                                                minWidth: "70px",
-                                                fontSize: "15px",
-                                            }}
-                                        >
-                                            Telephone :
-                                            {/* // {data.CustomerHospitalBirthingdetails} */}
-                                        </Typography>{" "}
-                                        <Typography variant="subtitle2"></Typography>
-                                    </Stack>
-                                    <Stack direction={"row"} spacing={2}>
-                                        <Typography
-                                            variant="subtitle2"
-                                            sx={{
-                                                minWidth: "70px",
-                                                fontSize: "15px",
-                                            }}
-                                        >
-                                            Mobile :
-                                        </Typography>{" "}
-                                        <Typography variant="subtitle2"></Typography>
-                                    </Stack>
+
+
                                 </Stack>
                             </CardContent>
                         </Card>
@@ -1058,7 +1063,7 @@ const InnerPagePreview = (props) => {
                                                 fontSize: "15px",
                                             }}
                                         >
-                                            UIN : {data.CustomerData[0].ReferenceDetails.ExisitingCryovaultClientUIN}
+                                            UIN : {data?.CustomerData[0]?.ReferenceDetails?.ExisitingCryovaultClientUIN}
                                         </Typography>{" "}
                                         <Typography variant="subtitle2"></Typography>
                                     </Stack>
@@ -1070,7 +1075,7 @@ const InnerPagePreview = (props) => {
                                                 fontSize: "15px",
                                             }}
                                         >
-                                            Referring Client Name : {data.CustomerData[0].ReferenceDetails.IfReferredByExisitingClientName}
+                                            Referring Client Name : {data?.CustomerData[0]?.ReferenceDetails?.IfReferredByExisitingClientName}
                                         </Typography>{" "}
                                         <Typography variant="subtitle2"></Typography>
                                     </Stack>
@@ -1082,7 +1087,7 @@ const InnerPagePreview = (props) => {
                                                 fontSize: "15px",
                                             }}
                                         >
-                                            Mobile-1 : {data.CustomerData[0].ReferenceDetails.Mobile1}
+                                            Mobile-1 : {data?.CustomerData[0]?.ReferenceDetails?.Mobile1}
                                         </Typography>{" "}
                                         <Typography variant="subtitle2"></Typography>
                                     </Stack>
@@ -1094,7 +1099,7 @@ const InnerPagePreview = (props) => {
                                                 fontSize: "15px",
                                             }}
                                         >
-                                            Mobile-2 : {data.CustomerData[0].ReferenceDetails.Mobile2}
+                                            Mobile-2 : {data?.CustomerData[0]?.ReferenceDetails?.Mobile2}
                                         </Typography>{" "}
                                         <Typography variant="subtitle2"></Typography>
                                     </Stack>
@@ -1124,7 +1129,7 @@ const InnerPagePreview = (props) => {
                                                 fontSize: "15px",
                                             }}
                                         >
-                                            Send collection kit to : {data.CustomerData[0].ReferenceDetails.shipmentDetails}
+                                            Send collection kit to : {data?.CustomerData[0]?.ReferenceDetails?.shipmentDetails}
                                         </Typography>{" "}
                                         <Typography variant="subtitle2"></Typography>
                                     </Stack>
@@ -1163,7 +1168,7 @@ const InnerPagePreview = (props) => {
                                                 fontSize: "15px",
                                             }}
                                         >
-                                            Name : {data.CustomerData[0].ReferenceDetails.Name}
+                                            Name : {data?.CustomerData[0]?.ReferenceDetails?.Name}
                                         </Typography>{" "}
                                         <Typography variant="subtitle2"></Typography>
                                     </Stack>
@@ -1175,7 +1180,7 @@ const InnerPagePreview = (props) => {
                                                 fontSize: "15px",
                                             }}
                                         >
-                                            Relationship : {data.CustomerData[0].ReferenceDetails.RelationShip}
+                                            Relationship : {data?.CustomerData[0]?.ReferenceDetails?.RelationShip}
                                         </Typography>{" "}
                                         <Typography variant="subtitle2"></Typography>
                                     </Stack>
@@ -1187,7 +1192,7 @@ const InnerPagePreview = (props) => {
                                                 fontSize: "15px",
                                             }}
                                         >
-                                            Mobile-1 : {data.CustomerData[0].ReferenceDetails.EmergencyMobile1}
+                                            Mobile-1 : {data?.CustomerData[0]?.ReferenceDetails?.EmergencyMobile1}
                                         </Typography>{" "}
                                         <Typography variant="subtitle2"></Typography>
                                     </Stack>
@@ -1199,7 +1204,7 @@ const InnerPagePreview = (props) => {
                                                 fontSize: "15px",
                                             }}
                                         >
-                                            Mobile-2 : {data.CustomerData[0].ReferenceDetails.EmergencyMobile2}
+                                            Mobile-2 : {data?.CustomerData[0]?.ReferenceDetails?.EmergencyMobile2}
                                         </Typography>{" "}
                                         <Typography variant="subtitle2"></Typography>
                                     </Stack>
@@ -1224,6 +1229,9 @@ const InnerPagePreview = (props) => {
                                     variant="h5"
                                     sx={{ marginTop: "15px", maxWidth: "500px" }}
                                 >
+                                    <Checkbox
+                                        checked={data?.CustomerData[0]?.ReferenceDetails?.meternalSampleAndUmbilicalBleed}
+                                    />
                                     Requesting bank to arrange for pickup of meternal sample &
                                     Umbilical cord bleed
                                 </Typography>
@@ -1231,6 +1239,9 @@ const InnerPagePreview = (props) => {
                                     variant="h5"
                                     sx={{ marginTop: "15px", maxWidth: "500px" }}
                                 >
+                                    <Checkbox
+                                        checked={data?.CustomerData[0]?.ReferenceDetails?.phledopomist}
+                                    />
                                     Requesting bank to organise for Phiedopomist
                                 </Typography>
                             </CardContent>
@@ -1254,7 +1265,7 @@ const InnerPagePreview = (props) => {
                                 Signature of Father / Legal Gurardian
                             </Typography>
                             <Typography variant="h5" sx={{ marginTop: "10px" }}>
-                                Signature of Father
+                                {data?.CustomerData[0]?.AllSignature?.FatherOrGuardianSignature}
                             </Typography>
                             <Stack spacing={2} mt={2}>
                                 <Stack direction={"row"} spacing={2}>
@@ -1265,7 +1276,7 @@ const InnerPagePreview = (props) => {
                                             fontSize: "15px",
                                         }}
                                     >
-                                        Name :
+                                        Name : {data?.CustomerData[0]?.AllSignature?.FatherOrGuardianName}
                                     </Typography>{" "}
                                     <Typography variant="subtitle2"></Typography>
                                 </Stack>
@@ -1281,7 +1292,7 @@ const InnerPagePreview = (props) => {
                                 Signature of Mother / Legal Gurardian
                             </Typography>
                             <Typography variant="h5" sx={{ marginTop: "10px" }}>
-                                Signature of Mother
+                                {data?.CustomerData[0]?.AllSignature?.MotherOrGuardianSignature}
                             </Typography>
                             <Stack spacing={2} mt={2}>
                                 <Stack direction={"row"} spacing={2}>
@@ -1292,7 +1303,7 @@ const InnerPagePreview = (props) => {
                                             fontSize: "15px",
                                         }}
                                     >
-                                        Name :
+                                        Name : {data?.CustomerData[0]?.AllSignature?.MotherOrGuardianName}
                                     </Typography>{" "}
                                     <Typography variant="subtitle2"></Typography>
                                 </Stack>
@@ -1308,7 +1319,7 @@ const InnerPagePreview = (props) => {
                                 Signature of Medical Director CBIPL
                             </Typography>
                             <Typography variant="h5" sx={{ marginTop: "10px" }}>
-                                Signature of CBIPL
+                                {data?.CustomerData[0]?.AllSignature?.MedicalDirectorSignature}
                             </Typography>
                             <Stack spacing={2} mt={2}>
                                 <Stack direction={"row"} spacing={2}>
@@ -1319,7 +1330,7 @@ const InnerPagePreview = (props) => {
                                             fontSize: "15px",
                                         }}
                                     >
-                                        Name :
+                                        Name : {data?.CustomerData[0]?.AllSignature?.MedicalDirectorName}
                                     </Typography>{" "}
                                     <Typography variant="subtitle2"></Typography>
                                 </Stack>
@@ -1349,7 +1360,7 @@ const InnerPagePreview = (props) => {
                                                 fontSize: "15px",
                                             }}
                                         >
-                                            Name of excutive : {data.CustomerData[0].ExcutiveInfoForbankUse.NameOfExcutive}
+                                            Name of excutive : {data?.CustomerData[0]?.ExcutiveInfoForbankUse?.NameOfExcutive}
                                         </Typography>{" "}
                                         <Typography variant="subtitle2"></Typography>
                                     </Stack>
@@ -1361,7 +1372,7 @@ const InnerPagePreview = (props) => {
                                                 fontSize: "15px",
                                             }}
                                         >
-                                            Employee code : {data.CustomerData[0].ExcutiveInfoForbankUse.EmployeeCode}
+                                            Employee code : {data?.CustomerData[0]?.ExcutiveInfoForbankUse?.EmployeeCode}
                                         </Typography>{" "}
                                         <Typography variant="subtitle2"></Typography>
                                     </Stack>
@@ -1373,7 +1384,7 @@ const InnerPagePreview = (props) => {
                                                 fontSize: "15px",
                                             }}
                                         >
-                                            Name of the Manager : {data.CustomerData[0].ExcutiveInfoForbankUse.NameOfManager}
+                                            Name of the Manager : {data?.CustomerData[0]?.ExcutiveInfoForbankUse?.NameOfManager}
                                         </Typography>{" "}
                                         <Typography variant="subtitle2"></Typography>
                                     </Stack>
@@ -1385,7 +1396,7 @@ const InnerPagePreview = (props) => {
                                                 fontSize: "15px",
                                             }}
                                         >
-                                            Area/Region : {data.CustomerData[0].ExcutiveInfoForbankUse.AreaOrRegion}
+                                            Area/Region : {data?.CustomerData[0]?.ExcutiveInfoForbankUse?.AreaOrRegion}
                                         </Typography>{" "}
                                         <Typography variant="subtitle2"></Typography>
                                     </Stack>
@@ -1400,7 +1411,7 @@ const InnerPagePreview = (props) => {
                                         Signature of Excutive
                                     </Typography>
                                     <Typography variant="h5" sx={{ marginTop: "10px" }}>
-                                        Signature of Excutive
+                                        {data?.CustomerData[0]?.ExcutiveInfoForbankUse?.ExcutiveSignature}
                                     </Typography>
                                     <Stack spacing={2} mt={2}>
                                         <Stack direction={"row"} spacing={2}>
@@ -1411,7 +1422,7 @@ const InnerPagePreview = (props) => {
                                                     fontSize: "15px",
                                                 }}
                                             >
-                                                Name : {data.CustomerData[0].ExcutiveInfoForbankUse.Name}
+                                                Name : {data?.CustomerData[0]?.ExcutiveInfoForbankUse?.Name}
                                             </Typography>{" "}
                                             <Typography variant="subtitle2"></Typography>
                                         </Stack>
@@ -1463,13 +1474,21 @@ const InnerPagePreview = (props) => {
                                                 Problem, Heart Disease, Drug or Alcohol abuse.
                                             </Typography>
                                             <Box>
-                                                <Button
-                                                    size="small"
-                                                    sx={{ marginRight: "10px" }}
-                                                    variant={"contained"}
-                                                >
-                                                    {data.CustomerData[0].HealthHistoryQuestionnaire.medicalCondition.cancerDiabetesHepatitisBloodDisease ? "Yes" : "No"}
-                                                </Button>
+                                                {data?.CustomerData[0]?.HealthHistoryQuestionnaire?.medicalCondition?.cancerDiabetesHepatitisBloodDisease != null ?
+                                                    <Button
+                                                        size="small"
+                                                        sx={{ marginRight: "10px" }}
+                                                        variant={"contained"}
+                                                    >
+                                                        {data?.CustomerData[0]?.HealthHistoryQuestionnaire?.medicalCondition?.cancerDiabetesHepatitisBloodDisease ? "Yes" : "No"}
+
+                                                    </Button>
+                                                    :
+                                                    <>
+                                                        <Button variant={"outlined"} sx={{ marginRight: "10px" }}>Yes</Button>
+                                                        <></>
+                                                        <Button variant={"outlined"}>No</Button>
+                                                    </>}
                                             </Box>
                                         </Stack>
                                         <Stack
@@ -1483,15 +1502,21 @@ const InnerPagePreview = (props) => {
                                                 HTLV, Malaria, Hepatitis?
                                             </Typography>
                                             <Box>
+                                                {data?.CustomerData[0]?.HealthHistoryQuestionnaire?.medicalCondition?.HIVAIDS != null ?
+                                                    <Button
+                                                        size="small"
+                                                        sx={{ marginRight: "10px" }}
+                                                        variant={"contained"}
+                                                    >
+                                                        {data?.CustomerData[0]?.HealthHistoryQuestionnaire?.medicalCondition?.HIVAIDS ? "Yes" : "No"}
 
-                                                <Button
-                                                    size="small"
-                                                    sx={{ marginRight: "10px" }}
-                                                    variant={"contained"}
-                                                >
-                                                    {data.CustomerData[0].HealthHistoryQuestionnaire.medicalCondition.HIVAIDS ? "Yes" : "No"}
-                                                </Button>
-
+                                                    </Button>
+                                                    :
+                                                    <>
+                                                        <Button variant={"outlined"} sx={{ marginRight: "10px" }}>Yes</Button>
+                                                        <></>
+                                                        <Button variant={"outlined"}>No</Button>
+                                                    </>}
                                             </Box>
                                         </Stack>
                                         <Stack
@@ -1507,14 +1532,21 @@ const InnerPagePreview = (props) => {
                                             </Typography>
                                             <Box>
 
-                                                <Button
-                                                    size="small"
-                                                    sx={{ marginRight: "10px" }}
-                                                    variant={"contained"}
-                                                >
-                                                    {data.CustomerData[0].HealthHistoryQuestionnaire.medicalCondition.strokeLungSclerosis ? "Yes" : "No"}
-                                                </Button>
+                                                {data?.CustomerData[0]?.HealthHistoryQuestionnaire?.medicalCondition?.strokeLungSclerosis != null ?
+                                                    <Button
+                                                        size="small"
+                                                        sx={{ marginRight: "10px" }}
+                                                        variant={"contained"}
+                                                    >
+                                                        {data?.CustomerData[0]?.HealthHistoryQuestionnaire?.medicalCondition?.strokeLungSclerosis ? "Yes" : "No"}
 
+                                                    </Button>
+                                                    :
+                                                    <>
+                                                        <Button variant={"outlined"} sx={{ marginRight: "10px" }}>Yes</Button>
+                                                        <></>
+                                                        <Button variant={"outlined"}>No</Button>
+                                                    </>}
 
                                             </Box>
                                         </Stack>
@@ -1536,14 +1568,22 @@ const InnerPagePreview = (props) => {
                                             </Typography>
                                             <Box>
 
-                                                <Button
-                                                    size="small"
-                                                    sx={{ marginRight: "10px" }}
-                                                    variant={"contained"}
-                                                >
-                                                    {data.CustomerData[0].HealthHistoryQuestionnaire.anyTypeInfection ? "Yes" : "No"}
-                                                </Button>
 
+                                                {data?.CustomerData[0]?.HealthHistoryQuestionnaire?.anyTypeInfection != null ?
+                                                    <Button
+                                                        size="small"
+                                                        sx={{ marginRight: "10px" }}
+                                                        variant={"contained"}
+                                                    >
+                                                        {data?.CustomerData[0]?.HealthHistoryQuestionnaire?.anyTypeInfection ? "Yes" : "No"}
+
+                                                    </Button>
+                                                    :
+                                                    <>
+                                                        <Button variant={"outlined"} sx={{ marginRight: "10px" }}>Yes</Button>
+                                                        <></>
+                                                        <Button variant={"outlined"}>No</Button>
+                                                    </>}
 
                                             </Box>
                                         </Stack>
@@ -1567,14 +1607,23 @@ const InnerPagePreview = (props) => {
                                             </Typography>
                                             <Box>
 
-                                                <Button
-                                                    size="small"
-                                                    sx={{ marginRight: "10px" }}
-                                                    variant={"contained"}
-                                                >
-                                                    {data.CustomerData[0].HealthHistoryQuestionnaire.DementiaDegenerativeDisease ? "Yes" : "No"}
-                                                </Button>
 
+
+                                                {data?.CustomerData[0]?.HealthHistoryQuestionnaire?.DementiaDegenerativeDisease != null ?
+                                                    <Button
+                                                        size="small"
+                                                        sx={{ marginRight: "10px" }}
+                                                        variant={"contained"}
+                                                    >
+                                                        {data?.CustomerData[0]?.HealthHistoryQuestionnaire?.DementiaDegenerativeDisease ? "Yes" : "No"}
+
+                                                    </Button>
+                                                    :
+                                                    <>
+                                                        <Button variant={"outlined"} sx={{ marginRight: "10px" }}>Yes</Button>
+                                                        <></>
+                                                        <Button variant={"outlined"}>No</Button>
+                                                    </>}
 
                                             </Box>
                                         </Stack>
@@ -1597,15 +1646,22 @@ const InnerPagePreview = (props) => {
                                             </Typography>
                                             <Box>
 
-                                                <Button
-                                                    size="small"
-                                                    sx={{ marginRight: "10px" }}
-                                                    variant={"contained"}
-                                                >
-                                                    {data.CustomerData[0].HealthHistoryQuestionnaire.biteFromAnimal ? "Yes" : "No"}
-                                                </Button>
 
+                                                {data?.CustomerData[0]?.HealthHistoryQuestionnaire?.biteFromAnimal != null ?
+                                                    <Button
+                                                        size="small"
+                                                        sx={{ marginRight: "10px" }}
+                                                        variant={"contained"}
+                                                    >
+                                                        {data?.CustomerData[0]?.HealthHistoryQuestionnaire?.biteFromAnimal ? "Yes" : "No"}
 
+                                                    </Button>
+                                                    :
+                                                    <>
+                                                        <Button variant={"outlined"} sx={{ marginRight: "10px" }}>Yes</Button>
+                                                        <></>
+                                                        <Button variant={"outlined"}>No</Button>
+                                                    </>}
                                             </Box>
                                         </Stack>
                                     </Stack>
@@ -1626,14 +1682,21 @@ const InnerPagePreview = (props) => {
                                             </Typography>
                                             <Box>
 
-                                                <Button
-                                                    size="small"
-                                                    sx={{ marginRight: "10px" }}
-                                                    variant={"contained"}
-                                                >
-                                                    {data.CustomerData[0].HealthHistoryQuestionnaire.sexuallyTransmittedDisease ? "Yes" : "No"}
-                                                </Button>
+                                                {data?.CustomerData[0]?.HealthHistoryQuestionnaire?.sexuallyTransmittedDisease != null ?
+                                                    <Button
+                                                        size="small"
+                                                        sx={{ marginRight: "10px" }}
+                                                        variant={"contained"}
+                                                    >
+                                                        {data?.CustomerData[0]?.HealthHistoryQuestionnaire?.sexuallyTransmittedDisease ? "Yes" : "No"}
 
+                                                    </Button>
+                                                    :
+                                                    <>
+                                                        <Button variant={"outlined"} sx={{ marginRight: "10px" }}>Yes</Button>
+                                                        <></>
+                                                        <Button variant={"outlined"}>No</Button>
+                                                    </>}
 
                                             </Box>
                                         </Stack>
@@ -1657,14 +1720,22 @@ const InnerPagePreview = (props) => {
                                             </Typography>
                                             <Box>
 
-                                                <Button
-                                                    size="small"
-                                                    sx={{ marginRight: "10px" }}
-                                                    variant={"contained"}
-                                                >
-                                                    {data.CustomerData[0].HealthHistoryQuestionnaire.immunisationsTattoosBodypiercing ? "Yes" : "No"}
-                                                </Button>
 
+                                                {data?.CustomerData[0]?.HealthHistoryQuestionnaire?.immunisationsTattoosBodypiercing != null ?
+                                                    <Button
+                                                        size="small"
+                                                        sx={{ marginRight: "10px" }}
+                                                        variant={"contained"}
+                                                    >
+                                                        {data?.CustomerData[0]?.HealthHistoryQuestionnaire?.immunisationsTattoosBodypiercing ? "Yes" : "No"}
+
+                                                    </Button>
+                                                    :
+                                                    <>
+                                                        <Button variant={"outlined"} sx={{ marginRight: "10px" }}>Yes</Button>
+                                                        <></>
+                                                        <Button variant={"outlined"}>No</Button>
+                                                    </>}
 
                                             </Box>
                                         </Stack>
@@ -1687,14 +1758,22 @@ const InnerPagePreview = (props) => {
                                             </Typography>
                                             <Box>
 
-                                                <Button
-                                                    size="small"
-                                                    sx={{ marginRight: "10px" }}
-                                                    variant={"contained"}
-                                                >
-                                                    {data.CustomerData[0].HealthHistoryQuestionnaire.juvenileDetentionLockupJail ? "Yes" : "No"}
-                                                </Button>
 
+                                                {data?.CustomerData[0]?.HealthHistoryQuestionnaire?.juvenileDetentionLockupJail != null ?
+                                                    <Button
+                                                        size="small"
+                                                        sx={{ marginRight: "10px" }}
+                                                        variant={"contained"}
+                                                    >
+                                                        {data?.CustomerData[0]?.HealthHistoryQuestionnaire?.juvenileDetentionLockupJail ? "Yes" : "No"}
+
+                                                    </Button>
+                                                    :
+                                                    <>
+                                                        <Button variant={"outlined"} sx={{ marginRight: "10px" }}>Yes</Button>
+                                                        <></>
+                                                        <Button variant={"outlined"}>No</Button>
+                                                    </>}
 
                                             </Box>
                                         </Stack>
@@ -1716,15 +1795,21 @@ const InnerPagePreview = (props) => {
                                             </Typography>
                                             <Box>
 
-                                                <Button
-                                                    size="small"
-                                                    sx={{ marginRight: "10px" }}
-                                                    variant={"contained"}
-                                                >
-                                                    {data.CustomerData[0].HealthHistoryQuestionnaire.livedWithApersonWhoHasHepatitis ? "Yes" : "No"}
-                                                </Button>
+                                                {data?.CustomerData[0]?.HealthHistoryQuestionnaire?.livedWithApersonWhoHasHepatitis != null ?
+                                                    <Button
+                                                        size="small"
+                                                        sx={{ marginRight: "10px" }}
+                                                        variant={"contained"}
+                                                    >
+                                                        {data?.CustomerData[0]?.HealthHistoryQuestionnaire?.livedWithApersonWhoHasHepatitis ? "Yes" : "No"}
 
-
+                                                    </Button>
+                                                    :
+                                                    <>
+                                                        <Button variant={"outlined"} sx={{ marginRight: "10px" }}>Yes</Button>
+                                                        <></>
+                                                        <Button variant={"outlined"}>No</Button>
+                                                    </>}
                                             </Box>
                                         </Stack>
                                     </Stack>
@@ -1745,14 +1830,22 @@ const InnerPagePreview = (props) => {
                                             </Typography>
                                             <Box>
 
-                                                <Button
-                                                    size="small"
-                                                    sx={{ marginRight: "10px" }}
-                                                    variant={"contained"}
-                                                >
-                                                    {data.CustomerData[0].HealthHistoryQuestionnaire.compensationForSex ? "Yes" : "No"}
-                                                </Button>
 
+                                                {data?.CustomerData[0]?.HealthHistoryQuestionnaire?.compensationForSex != null ?
+                                                    <Button
+                                                        size="small"
+                                                        sx={{ marginRight: "10px" }}
+                                                        variant={"contained"}
+                                                    >
+                                                        {data?.CustomerData[0]?.HealthHistoryQuestionnaire?.compensationForSex ? "Yes" : "No"}
+
+                                                    </Button>
+                                                    :
+                                                    <>
+                                                        <Button variant={"outlined"} sx={{ marginRight: "10px" }}>Yes</Button>
+                                                        <></>
+                                                        <Button variant={"outlined"}>No</Button>
+                                                    </>}
 
                                             </Box>
                                         </Stack>
@@ -1777,14 +1870,22 @@ const InnerPagePreview = (props) => {
                                             </Typography>
                                             <Box>
 
-                                                <Button
-                                                    size="small"
-                                                    sx={{ marginRight: "10px" }}
-                                                    variant={"contained"}
-                                                >
-                                                    {data.CustomerData[0].HealthHistoryQuestionnaire.receivedWholeBloodBloodFactorProductsBoneMarrowTransplantation ? "Yes" : "No"}
-                                                </Button>
 
+                                                {data?.CustomerData[0]?.HealthHistoryQuestionnaire?.receivedWholeBloodBloodFactorProductsBoneMarrowTransplantation != null ?
+                                                    <Button
+                                                        size="small"
+                                                        sx={{ marginRight: "10px" }}
+                                                        variant={"contained"}
+                                                    >
+                                                        {data?.CustomerData[0]?.HealthHistoryQuestionnaire?.receivedWholeBloodBloodFactorProductsBoneMarrowTransplantation ? "Yes" : "No"}
+
+                                                    </Button>
+                                                    :
+                                                    <>
+                                                        <Button variant={"outlined"} sx={{ marginRight: "10px" }}>Yes</Button>
+                                                        <></>
+                                                        <Button variant={"outlined"}>No</Button>
+                                                    </>}
 
                                             </Box>
                                         </Stack>
@@ -1806,13 +1907,22 @@ const InnerPagePreview = (props) => {
                                             </Typography>
                                             <Box>
 
-                                                <Button
-                                                    size="small"
-                                                    sx={{ marginRight: "10px" }}
-                                                    variant={"contained"}
-                                                >
-                                                    {data.CustomerData[0].HealthHistoryQuestionnaire.IntimateContactWithWhoHasHIVAIDS ? "Yes" : "No"}
-                                                </Button>
+
+                                                {data?.CustomerData[0]?.HealthHistoryQuestionnaire?.IntimateContactWithWhoHasHIVAIDS != null ?
+                                                    <Button
+                                                        size="small"
+                                                        sx={{ marginRight: "10px" }}
+                                                        variant={"contained"}
+                                                    >
+                                                        {data?.CustomerData[0]?.HealthHistoryQuestionnaire?.IntimateContactWithWhoHasHIVAIDS ? "Yes" : "No"}
+
+                                                    </Button>
+                                                    :
+                                                    <>
+                                                        <Button variant={"outlined"} sx={{ marginRight: "10px" }}>Yes</Button>
+                                                        <></>
+                                                        <Button variant={"outlined"}>No</Button>
+                                                    </>}
 
                                             </Box>
                                         </Stack>
@@ -1835,13 +1945,23 @@ const InnerPagePreview = (props) => {
                                             </Typography>
                                             <Box>
 
-                                                <Button
-                                                    size="small"
-                                                    sx={{ marginRight: "10px" }}
-                                                    variant={"contained"}
-                                                >
-                                                    {data.CustomerData[0].HealthHistoryQuestionnaire.SARSavianFluH1N1 ? "Yes" : "No"}
-                                                </Button>
+
+
+                                                {data?.CustomerData[0]?.HealthHistoryQuestionnaire?.SARSavianFluH1N1 != null ?
+                                                    <Button
+                                                        size="small"
+                                                        sx={{ marginRight: "10px" }}
+                                                        variant={"contained"}
+                                                    >
+                                                        {data?.CustomerData[0]?.HealthHistoryQuestionnaire?.SARSavianFluH1N1 ? "Yes" : "No"}
+
+                                                    </Button>
+                                                    :
+                                                    <>
+                                                        <Button variant={"outlined"} sx={{ marginRight: "10px" }}>Yes</Button>
+                                                        <></>
+                                                        <Button variant={"outlined"}>No</Button>
+                                                    </>}
 
                                             </Box>
                                         </Stack>
@@ -1869,13 +1989,22 @@ const InnerPagePreview = (props) => {
                                             </Typography>
                                             <Box>
 
-                                                <Button
-                                                    size="small"
-                                                    sx={{ marginRight: "10px" }}
-                                                    variant={"contained"}
-                                                >
-                                                    {data.CustomerData[0].HealthHistoryQuestionnaire.from1980Through1986.spent3MonthsOrMoreCumulativelyInTheUnitedKingdom ? "Yes" : "No"}
-                                                </Button>
+
+                                                {data?.CustomerData[0]?.HealthHistoryQuestionnaire?.from1980Through1986.spent3MonthsOrMoreCumulativelyInTheUnitedKingdom != null ?
+                                                    <Button
+                                                        size="small"
+                                                        sx={{ marginRight: "10px" }}
+                                                        variant={"contained"}
+                                                    >
+                                                        {data?.CustomerData[0]?.HealthHistoryQuestionnaire?.from1980Through1986.spent3MonthsOrMoreCumulativelyInTheUnitedKingdom ? "Yes" : "No"}
+
+                                                    </Button>
+                                                    :
+                                                    <>
+                                                        <Button variant={"outlined"} sx={{ marginRight: "10px" }}>Yes</Button>
+                                                        <></>
+                                                        <Button variant={"outlined"}>No</Button>
+                                                    </>}
 
                                             </Box>
                                         </Stack>
@@ -1891,13 +2020,22 @@ const InnerPagePreview = (props) => {
                                             </Typography>
                                             <Box>
 
-                                                <Button
-                                                    size="small"
-                                                    sx={{ marginRight: "10px" }}
-                                                    variant={"contained"}
-                                                >
-                                                    {data.CustomerData[0].HealthHistoryQuestionnaire.from1980Through1986.ResidedAtaUSmilitaryBaseinEurope ? "Yes" : "No"}
-                                                </Button>
+
+                                                {data?.CustomerData[0]?.HealthHistoryQuestionnaire?.from1980Through1986?.ResidedAtaUSmilitaryBaseinEurope != null ?
+                                                    <Button
+                                                        size="small"
+                                                        sx={{ marginRight: "10px" }}
+                                                        variant={"contained"}
+                                                    >
+                                                        {data?.CustomerData[0]?.HealthHistoryQuestionnaire?.from1980Through1986?.ResidedAtaUSmilitaryBaseinEurope ? "Yes" : "No"}
+
+                                                    </Button>
+                                                    :
+                                                    <>
+                                                        <Button variant={"outlined"} sx={{ marginRight: "10px" }}>Yes</Button>
+                                                        <></>
+                                                        <Button variant={"outlined"}>No</Button>
+                                                    </>}
 
                                             </Box>
                                         </Stack>
@@ -1920,14 +2058,22 @@ const InnerPagePreview = (props) => {
                                             </Typography>
                                             <Box>
 
-                                                <Button
-                                                    size="small"
-                                                    sx={{ marginRight: "10px" }}
-                                                    variant={"contained"}
-                                                >
-                                                    {data.CustomerData[0].HealthHistoryQuestionnaire.sufferedFromMalariaChikungunyaDengueandWestNileFever ? "Yes" : "No"}
-                                                </Button>
 
+                                                {data?.CustomerData[0]?.HealthHistoryQuestionnaire?.sufferedFromMalariaChikungunyaDengueandWestNileFever != null ?
+                                                    <Button
+                                                        size="small"
+                                                        sx={{ marginRight: "10px" }}
+                                                        variant={"contained"}
+                                                    >
+                                                        {data?.CustomerData[0]?.HealthHistoryQuestionnaire?.sufferedFromMalariaChikungunyaDengueandWestNileFever ? "Yes" : "No"}
+
+                                                    </Button>
+                                                    :
+                                                    <>
+                                                        <Button variant={"outlined"} sx={{ marginRight: "10px" }}>Yes</Button>
+                                                        <></>
+                                                        <Button variant={"outlined"}>No</Button>
+                                                    </>}
                                             </Box>
                                         </Stack>
                                     </Stack>
@@ -1948,13 +2094,22 @@ const InnerPagePreview = (props) => {
                                                 duration of your stay(s)
                                             </Typography>
                                             <Box>
-                                                <Button
-                                                    size="small"
-                                                    sx={{ marginRight: "10px" }}
-                                                    variant={"contained"}
-                                                >
-                                                    {data.CustomerData[0].HealthHistoryQuestionnaire.visitedOrlivedOutsideofIndia ? "Yes" : "No"}
-                                                </Button>
+
+                                                {data?.CustomerData[0]?.HealthHistoryQuestionnaire?.visitedOrlivedOutsideofIndia != null ?
+                                                    <Button
+                                                        size="small"
+                                                        sx={{ marginRight: "10px" }}
+                                                        variant={"contained"}
+                                                    >
+                                                        {data?.CustomerData[0]?.HealthHistoryQuestionnaire?.visitedOrlivedOutsideofIndia ? "Yes" : "No"}
+
+                                                    </Button>
+                                                    :
+                                                    <>
+                                                        <Button variant={"outlined"} sx={{ marginRight: "10px" }}>Yes</Button>
+                                                        <></>
+                                                        <Button variant={"outlined"}>No</Button>
+                                                    </>}
                                             </Box>
                                         </Stack>
                                     </Stack>
@@ -1980,13 +2135,22 @@ const InnerPagePreview = (props) => {
                                                 relatives?
                                             </Typography>
                                             <Box>
-                                                <Button
-                                                    size="small"
-                                                    sx={{ marginRight: "10px" }}
-                                                    variant={"contained"}
-                                                >
-                                                    {data.CustomerData[0].HealthHistoryQuestionnaire.PersonalHistory.AreyouAndTheWouldbeBabysGeneticFatherBloodRelatives ? "Yes" : "No"}
-                                                </Button>
+
+                                                {data?.CustomerData[0]?.HealthHistoryQuestionnaire?.PersonalHistory.AreyouAndTheWouldbeBabysGeneticFatherBloodRelatives != null ?
+                                                    <Button
+                                                        size="small"
+                                                        sx={{ marginRight: "10px" }}
+                                                        variant={"contained"}
+                                                    >
+                                                        {data?.CustomerData[0]?.HealthHistoryQuestionnaire?.PersonalHistory.AreyouAndTheWouldbeBabysGeneticFatherBloodRelatives ? "Yes" : "No"}
+
+                                                    </Button>
+                                                    :
+                                                    <>
+                                                        <Button variant={"outlined"} sx={{ marginRight: "10px" }}>Yes</Button>
+                                                        <></>
+                                                        <Button variant={"outlined"}>No</Button>
+                                                    </>}
                                             </Box>
                                         </Stack>
                                         <Stack
@@ -2000,13 +2164,22 @@ const InnerPagePreview = (props) => {
                                                 Egg/Sperm/Surrogate?
                                             </Typography>
                                             <Box>
-                                                <Button
-                                                    size="small"
-                                                    sx={{ marginRight: "10px" }}
-                                                    variant={"contained"}
-                                                >
-                                                    {data.CustomerData[0].HealthHistoryQuestionnaire.PersonalHistory.pregnancyResultFromDonorEggSpermSurrogate ? "Yes" : "No"}
-                                                </Button>
+
+                                                {data?.CustomerData[0]?.HealthHistoryQuestionnaire?.PersonalHistory.pregnancyResultFromDonorEggSpermSurrogate != null ?
+                                                    <Button
+                                                        size="small"
+                                                        sx={{ marginRight: "10px" }}
+                                                        variant={"contained"}
+                                                    >
+                                                        {data?.CustomerData[0]?.HealthHistoryQuestionnaire?.PersonalHistory.pregnancyResultFromDonorEggSpermSurrogate ? "Yes" : "No"}
+
+                                                    </Button>
+                                                    :
+                                                    <>
+                                                        <Button variant={"outlined"} sx={{ marginRight: "10px" }}>Yes</Button>
+                                                        <></>
+                                                        <Button variant={"outlined"}>No</Button>
+                                                    </>}
                                             </Box>
                                         </Stack>
                                         <Stack
@@ -2019,13 +2192,23 @@ const InnerPagePreview = (props) => {
                                                 C) Haveyou ever had abnormal pregnancy?
                                             </Typography>
                                             <Box>
-                                                <Button
-                                                    size="small"
-                                                    sx={{ marginRight: "10px" }}
-                                                    variant={"contained"}
-                                                >
-                                                    {data.CustomerData[0].HealthHistoryQuestionnaire.PersonalHistory.everHadAbnormalPregnancy ? "Yes" : "No"}
-                                                </Button>
+
+
+                                                {data?.CustomerData[0]?.HealthHistoryQuestionnaire?.PersonalHistory.everHadAbnormalPregnancy != null ?
+                                                    <Button
+                                                        size="small"
+                                                        sx={{ marginRight: "10px" }}
+                                                        variant={"contained"}
+                                                    >
+                                                        {data?.CustomerData[0]?.HealthHistoryQuestionnaire?.PersonalHistory.everHadAbnormalPregnancy ? "Yes" : "No"}
+
+                                                    </Button>
+                                                    :
+                                                    <>
+                                                        <Button variant={"outlined"} sx={{ marginRight: "10px" }}>Yes</Button>
+                                                        <></>
+                                                        <Button variant={"outlined"}>No</Button>
+                                                    </>}
                                             </Box>
                                         </Stack>
                                     </Stack>
@@ -2178,13 +2361,22 @@ const InnerPagePreview = (props) => {
                                                 years of age?
                                             </Typography>
                                             <Box>
-                                                <Button
-                                                    size="small"
-                                                    sx={{ marginRight: "10px" }}
-                                                    variant={"contained"}
-                                                >
-                                                    {data.CustomerData[0].HealthHistoryQuestionnaire.FamilyHistory.relativesWithCancerleukemiaBefore20 ? "Yes" : "No"}
-                                                </Button>
+
+                                                {data?.CustomerData[0]?.HealthHistoryQuestionnaire?.FamilyHistory.relativesWithCancerleukemiaBefore20 != null ?
+                                                    <Button
+                                                        size="small"
+                                                        sx={{ marginRight: "10px" }}
+                                                        variant={"contained"}
+                                                    >
+                                                        {data?.CustomerData[0]?.HealthHistoryQuestionnaire?.FamilyHistory.relativesWithCancerleukemiaBefore20 ? "Yes" : "No"}
+
+                                                    </Button>
+                                                    :
+                                                    <>
+                                                        <Button variant={"outlined"} sx={{ marginRight: "10px" }}>Yes</Button>
+                                                        <></>
+                                                        <Button variant={"outlined"}>No</Button>
+                                                    </>}
                                             </Box>
                                         </Stack>
                                         <Stack
@@ -2199,13 +2391,22 @@ const InnerPagePreview = (props) => {
                                                 Diseases? If yes, please list the details asbelow.
                                             </Typography>
                                             <Box>
-                                                <Button
-                                                    size="small"
-                                                    sx={{ marginRight: "10px" }}
-                                                    variant={"contained"}
-                                                >
-                                                    {data.CustomerData[0].HealthHistoryQuestionnaire.FamilyHistory.RedCellRelatedDiseaseorAnyMetabolicStorageDiseaseor ? "Yes" : "No"}
-                                                </Button>
+
+                                                {data?.CustomerData[0]?.HealthHistoryQuestionnaire?.FamilyHistory.RedCellRelatedDiseaseorAnyMetabolicStorageDiseaseor != null ?
+                                                    <Button
+                                                        size="small"
+                                                        sx={{ marginRight: "10px" }}
+                                                        variant={"contained"}
+                                                    >
+                                                        {data?.CustomerData[0]?.HealthHistoryQuestionnaire?.FamilyHistory.RedCellRelatedDiseaseorAnyMetabolicStorageDiseaseor ? "Yes" : "No"}
+
+                                                    </Button>
+                                                    :
+                                                    <>
+                                                        <Button variant={"outlined"} sx={{ marginRight: "10px" }}>Yes</Button>
+                                                        <></>
+                                                        <Button variant={"outlined"}>No</Button>
+                                                    </>}
                                             </Box>
                                         </Stack>
                                     </Stack>

@@ -100,7 +100,7 @@ const PopupLayout = ({ children }) => {
         {currentPage == 6 && <Signature ref={childSignatureRef} handleNext={handleNext} handlePrev={handlePrev} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />}
         {currentPage == 7 && <ForbankUse ref={childForbankUseRef} handleNext={handleNext} handlePrev={handlePrev} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />}
         {currentPage == 8 && <HealthHistory ref={childHealthHistoryRef} handleNext={handleNext} handlePrev={handlePrev} currentPage={currentPage} setCurrentPage={setCurrentPage} TOTAL_PAGES={TOTAL_PAGES} />}
-        {currentPage == 9 && <InnerPagePreview  setCurrentPage={setCurrentPage}/>}
+        {currentPage == 9 && <InnerPagePreview setCurrentPage={setCurrentPage} />}
 
       </Box>
 
