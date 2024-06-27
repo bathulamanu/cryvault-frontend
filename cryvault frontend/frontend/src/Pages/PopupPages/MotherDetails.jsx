@@ -114,6 +114,10 @@ const MotherDetails = forwardRef((props, ref) => {
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
+    const exp = /^\d*$/
+    if (name == "ExpectantMotherMobile" && !exp.test(value)) {
+      return
+    }
     setData((prevData) => ({
       ...prevData,
       [name]: { ...prevData[name], value: value, errorStatus: false, errorMessage: "" },
@@ -408,6 +412,7 @@ const MotherDetails = forwardRef((props, ref) => {
                           padding: "10px",
                           borderRadius: "8px",
                         }}
+                        inputProps={fieldData.name == "ExpectantMotherMobile" ? { maxLength: 10 } : { maxLength: 200 }}
                         onChange={handleOnChange}
                       />
                       {fieldData.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{fieldData.errorMessage}</Typography> : null}
@@ -431,24 +436,14 @@ const MotherDetails = forwardRef((props, ref) => {
                 <Box
                   component="img"
                   src={"https://flyingbyts.s3.ap-south-2.amazonaws.com/" + dataFile.ExpectantMotherProfilePhoto}
-                  alt="father Image"
-                  sx={{
-                    width: isSmallScreen ? '100%' : '50%',
-                    height: 'auto',
-                    maxWidth: '100%',
-                    objectFit: 'cover',
-                  }}
+                  alt="mother Image"
+                  sx={{ width: 150, height: 150, marginRight: 2 }}
                 /> :
                 <Box
                   component="img"
                   src={motherImage}
-                  alt="father Image"
-                  sx={{
-                    width: isSmallScreen ? '100%' : '50%',
-                    height: 'auto',
-                    maxWidth: '100%',
-                    objectFit: 'cover',
-                  }}
+                  alt="mother Image"
+                  sx={{ width: 150, height: 150, marginRight: 2 }}
                 />
               }
               <Box sx={{ display: "flex", flexDirection: "column" }}>
@@ -479,24 +474,14 @@ const MotherDetails = forwardRef((props, ref) => {
                 <Box
                   component="img"
                   src={"https://flyingbyts.s3.ap-south-2.amazonaws.com/" + dataFile.ExpectantMotherIDproofPhoto}
-                  alt="father Image"
-                  sx={{
-                    width: isSmallScreen ? '100%' : '50%',
-                    height: 'auto',
-                    maxWidth: '100%',
-                    objectFit: 'cover',
-                  }}
+                  alt="Mother Id"
+                  sx={{ width: 150, height: 150, marginRight: 2 }}
                 /> :
                 <Box
                   component="img"
                   src={card}
-                  alt="father Image"
-                  sx={{
-                    width: isSmallScreen ? '100%' : '50%',
-                    height: 'auto',
-                    maxWidth: '100%',
-                    objectFit: 'cover',
-                  }}
+                  alt="mother Id"
+                  sx={{ width: 150, height: 150, marginRight: 2 }}
                 />
               }
               <Box sx={{ display: "flex", flexDirection: "column" }}>

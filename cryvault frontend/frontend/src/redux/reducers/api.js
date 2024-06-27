@@ -30,10 +30,6 @@ export const Plans = () => {
   return `${BASE_URL}/flyingbyts/api/customer/getSubscriptionPlan`;
 };
 
-export const RegistrationForm = () => {
-  return `${BASE_URL}/cryovault/api/customer/updateCustomerInfo`;
-};
-
 export const GetGenderDetails = () => {
   return `${BASE_URL}/flyingbyts/api/user/getMasterConfiguration/Gender/null`;
 };

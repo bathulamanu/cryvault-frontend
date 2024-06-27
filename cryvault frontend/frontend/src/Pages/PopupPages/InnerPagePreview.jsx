@@ -67,7 +67,7 @@ const InnerPagePreview = (props) => {
             "ExpectantMotherOtherInfo": "",
             "ExpectantMotherIDproofPhoto": "",
             "ExpectantMotherProfilePhoto": "",
-            "ExpectantMotherIDproofValue":""
+            "ExpectantMotherIDproofValue": ""
         },
         "CustomerClientFatherDetails": {
             "ExpectantFatherName": "",
@@ -82,7 +82,7 @@ const InnerPagePreview = (props) => {
             "ExpectantFatherOtherInfo": "",
             "ExpectantFatherIDproofPhoto": "",
             "ExpectantFatherProfilePhoto": "",
-            "ExpectantFatherIDproofValue":""
+            "ExpectantFatherIDproofValue": ""
         },
         "CustomerCommunicationDetails": {
             "Address": "",
@@ -407,8 +407,8 @@ const InnerPagePreview = (props) => {
                                         direction="column"
                                         sx={{ marginRight: "30px", gap: 4 }}
                                     >
-                                        {/* <Avatar sx={{ width: 100, height: 100, marginLeft: 4 }} /> */}
-                                        <Box
+
+                                        {data.CustomerClientFatherDetails?.ExpectantFatherProfilePhoto ? <Box
                                             component="img"
                                             src={"https://flyingbyts.s3.ap-south-2.amazonaws.com/" + data.CustomerClientFatherDetails?.ExpectantFatherProfilePhoto}
                                             alt="father Image"
@@ -421,8 +421,8 @@ const InnerPagePreview = (props) => {
                                                 alignItems: "center",
                                                 marginRight: 4
                                             }}
-                                        />
-                                        <Box
+                                        /> : <Avatar sx={{ width: 100, height: 100, marginLeft: 4 }} />}
+                                        {data.CustomerClientFatherDetails?.ExpectantFatherIDproofPhoto ? <Box
                                             sx={{
                                                 width: 150,
                                                 height: 100,
@@ -436,7 +436,7 @@ const InnerPagePreview = (props) => {
                                             src={"https://flyingbyts.s3.ap-south-2.amazonaws.com/" + data.CustomerClientFatherDetails?.ExpectantFatherIDproofPhoto}
                                             alt="father ID Proof"
 
-                                        />
+                                        /> : <></>}
                                         {/* Content inside the Box */}
 
                                     </Stack>
@@ -587,35 +587,38 @@ const InnerPagePreview = (props) => {
                                         direction="column"
                                         sx={{ marginRight: "30px", gap: 4 }}
                                     >
-                                        <Box
-                                            component="img"
-                                            src={"https://flyingbyts.s3.ap-south-2.amazonaws.com/" + data.CustomerClientMotherDetails?.ExpectantMotherProfilePhoto}
-                                            alt="father Image"
-                                            sx={{
-                                                width: 150,
-                                                height: 100,
-                                                backgroundColor: "lightgray",
-                                                display: "flex",
-                                                justifyContent: "center",
-                                                alignItems: "center",
-                                                marginRight: 4
-                                            }}
-                                        />
-                                        <Box
-                                            sx={{
-                                                width: 150,
-                                                height: 100,
-                                                backgroundColor: "lightgray",
-                                                display: "flex",
-                                                justifyContent: "center",
-                                                alignItems: "center",
-                                                marginRight: 4,
-                                            }}
-                                            component="img"
-                                            src={"https://flyingbyts.s3.ap-south-2.amazonaws.com/" + data.CustomerClientMotherDetails?.ExpectantMotherIDproofPhoto}
-                                            alt="father ID Proof"
+                                        {data.CustomerClientMotherDetails?.ExpectantMotherProfilePhoto ?
+                                            <Box
+                                                component="img"
+                                                src={"https://flyingbyts.s3.ap-south-2.amazonaws.com/" + data.CustomerClientMotherDetails?.ExpectantMotherProfilePhoto}
+                                                alt="father Image"
+                                                sx={{
+                                                    width: 150,
+                                                    height: 100,
+                                                    backgroundColor: "lightgray",
+                                                    display: "flex",
+                                                    justifyContent: "center",
+                                                    alignItems: "center",
+                                                    marginRight: 4
+                                                }}
+                                            /> : <Avatar sx={{ width: 100, height: 100, marginLeft: 4 }} />
+                                        }
+                                        {data.CustomerClientMotherDetails?.ExpectantMotherIDproofPhoto ?
+                                            <Box
+                                                sx={{
+                                                    width: 150,
+                                                    height: 100,
+                                                    backgroundColor: "lightgray",
+                                                    display: "flex",
+                                                    justifyContent: "center",
+                                                    alignItems: "center",
+                                                    marginRight: 4,
+                                                }}
+                                                component="img"
+                                                src={"https://flyingbyts.s3.ap-south-2.amazonaws.com/" + data.CustomerClientMotherDetails?.ExpectantMotherIDproofPhoto}
+                                                alt="father ID Proof"
 
-                                        />
+                                            /> : <></>}
                                     </Stack>
                                 </Stack>
                             </CardContent>

@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState, forwardRef, useImperativeHandle } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getCountry, getState, getCity } from "../../redux/reducers/PaymentReducer";
+import { getCountry, getState, getCity,getCityForPermanentAddress } from "../../redux/reducers/PaymentReducer";
 import { MultipleSelect, SingleSelect } from '../CheckoutDetails'
 import {
   getByIdList,
@@ -137,16 +137,16 @@ const CommunicationDetails = forwardRef((props, ref) => {
   const countries = useSelector((state) => state.payment.countries);
   const states = useSelector((state) => state.payment.states);
   const cities = useSelector((state) => state.payment.cities);
-  const cities2 = useSelector((state) => state.payment.cities);
+  const cities2 = useSelector((state) => state.payment.citiesForPermanentAddress);
 
   const upDatedCountryList = getNamesIdList(countries);
   const stateList = getStateIdList(states);
   let cityList;
   let cityList2;
-  if (data.State.value) {
+  if (data.State.value && cities.length != 0) {
     cityList = getCityIdList(cities);
   }
-  if (data.PermanentAddressState.value) {
+  if (data.PermanentAddressState.value && cities2.length != 0) {
     cityList2 = getCityIdList(cities2);
   }
 
@@ -311,7 +311,6 @@ const CommunicationDetails = forwardRef((props, ref) => {
       }
       dispatch(addOrupdateAnnexureInfo({ CustomerCommunicationDetails: dataToSend, customerAnnexureInformationId: customerAnnexureInformationId }))
 
-
     }
   }))
 
@@ -332,10 +331,10 @@ const CommunicationDetails = forwardRef((props, ref) => {
     if (data.Country.value) dispatch(getState({ payload: dataToSend }));
   }, [data.Country.value]);
 
-  useEffect(() => {
-    const dataToSend = data.PermanentAddressCountry.value;
-    if (data.PermanentAddressCountry.value) dispatch(getState({ payload: dataToSend }));
-  }, [data.PermanentAddressCountry.value]);
+  // useEffect(() => {
+  //   const dataToSend = data.PermanentAddressCountry.value;
+  //   if (data.PermanentAddressCountry.value) dispatch(getState({ payload: dataToSend }));
+  // }, [data.PermanentAddressCountry.value]);
 
   useEffect(() => {
     const dataToSend = data.State.value
@@ -344,7 +343,7 @@ const CommunicationDetails = forwardRef((props, ref) => {
 
   useEffect(() => {
     const dataToSend = data.PermanentAddressState.value
-    if (data.PermanentAddressState.value) dispatch(getCity({ payload: dataToSend }));
+    if (data.PermanentAddressState.value) dispatch(getCityForPermanentAddress({ payload: dataToSend }));
   }, [data.PermanentAddressState.value]);
 
 
@@ -439,7 +438,6 @@ const CommunicationDetails = forwardRef((props, ref) => {
                       data={stateList}
                       value={data.State.value}
                       onChange={(e) => {
-                        dispatch(getCity())
                         handleChange(e, "State")
                       }}
                     />
@@ -527,7 +525,6 @@ const CommunicationDetails = forwardRef((props, ref) => {
                     disabled={true}
                     value={data.PermanentAddressCountry.value}
                     onChange={(e) => {
-                      dispatch(getCity())
                       handleChange(e, "PermanentAddressCountry");
                     }}
                   />
@@ -546,7 +543,6 @@ const CommunicationDetails = forwardRef((props, ref) => {
                     data={stateList}
                     value={data.PermanentAddressState.value}
                     onChange={(e) => {
-                      dispatch(getCity())
                       handleChange(e, "PermanentAddressState");
                     }}
                   />

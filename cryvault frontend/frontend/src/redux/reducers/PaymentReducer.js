@@ -81,6 +81,25 @@ export const getCity = createAsyncThunk("city", async (payload, thunkAPI) => {
     return thunkAPI.rejectWithValue(error);
   }
 });
+export const getCityForPermanentAddress = createAsyncThunk("getCityForPermanentAddress", async (payload, thunkAPI) => {
+  const apiUrl = getCityName();
+  const token = sessionStorage.getItem("token");
+  const headers = {
+    authorization: `${token}`,
+  };
+  try {
+    const response = await axios.get(`${apiUrl}/${payload.payload}`, { headers });
+    const { ok, problem, data } = response;
+    if (data) {
+      if (payload?.callback) payload.callback();
+      return data;
+    } else {
+      return thunkAPI.rejectWithValue({ data, problem });
+    }
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
 export const getCustomerPaymentDetails = createAsyncThunk("getCustomerPaymentDetails", async (payload, thunkAPI) => {
   const apiUrl = GetCustomerPaymentDetails();
   const token = sessionStorage.getItem("token");
@@ -88,7 +107,7 @@ export const getCustomerPaymentDetails = createAsyncThunk("getCustomerPaymentDet
     authorization: `${token}`,
   };
   try {
-    const response = await axios.post(apiUrl, payload.payload, { headers });
+    const response = await axios.post(apiUrl, payload, { headers });
     const { ok, problem, data } = response;
     if (data) {
       if (payload?.callback) payload.callback();
@@ -249,6 +268,7 @@ const initialState = {
   orderDetails: [],
   loading: false,
   error: null,
+  citiesForPermanentAddress:[]
 };
 const PaymentReducer = createSlice({
   name: "payment",
@@ -318,6 +338,20 @@ const PaymentReducer = createSlice({
         state.loading = false;
         state.error = action.error.message;
       })
+      .addCase(getCityForPermanentAddress.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getCityForPermanentAddress.fulfilled, (state, action) => {
+        state.loading = false;
+        state.citiesForPermanentAddress = action.payload.data;
+      })
+      .addCase(getCityForPermanentAddress.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+
+      
       .addCase(createOrder.pending, (state) => {
         state.loading = true;
         state.error = null;

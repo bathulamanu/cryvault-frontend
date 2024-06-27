@@ -135,6 +135,10 @@ const ReferenceIformation = forwardRef((props, ref) => {
     const dispatch = useDispatch()
     const handleChange = (e) => {
         const { name, value } = e.target;
+        const exp = /^\d*$/
+        if ((name == "Mobile1" || name == "Mobile2" ||  name == "EmergencyMobile1"  ||  name == "EmergencyMobile2" ) && !exp.test(value)) {
+          return
+        }
         setData((prevData) => ({
             ...prevData,
             [name]: { ...prevData[name], value: value, errorStatus: false, errorMessage: "" },
@@ -409,6 +413,7 @@ const ReferenceIformation = forwardRef((props, ref) => {
                                     }}
                                     name="Mobile1"
                                     value={data.Mobile1.value}
+                                    inputProps={{ maxLength: 10 }}
                                     onChange={handleChange}
                                 />
                                 {data.Mobile1.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{data.Mobile1.errorMessage}</Typography> : null}
@@ -431,6 +436,7 @@ const ReferenceIformation = forwardRef((props, ref) => {
 
                                     name="Mobile2"
                                     value={data.Mobile2.value}
+                                    inputProps={{ maxLength: 10 }}
                                     onChange={handleChange}
                                 />
                                 {data.Mobile2.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{data.Mobile2.errorMessage}</Typography> : null}
@@ -534,6 +540,7 @@ const ReferenceIformation = forwardRef((props, ref) => {
                                             }}
                                             name="EmergencyMobile1"
                                             value={data.EmergencyMobile1.value}
+                                            inputProps={{ maxLength: 10 }}
                                             onChange={handleChange}
                                         />
                                         {data.EmergencyMobile1.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{data.EmergencyMobile1.errorMessage}</Typography> : null}
@@ -559,6 +566,7 @@ const ReferenceIformation = forwardRef((props, ref) => {
 
                                             name="EmergencyMobile2"
                                             value={data.EmergencyMobile2.value}
+                                            inputProps={{ maxLength: 10 }}
                                             onChange={handleChange}
                                         />
                                         {data.EmergencyMobile2.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{data.EmergencyMobile2.errorMessage}</Typography> : null}

@@ -15,7 +15,7 @@ import { MultipleSelect, SingleSelect } from '../CheckoutDetails';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { addOrupdateAnnexureInfo } from "../../redux/reducers/UserReducer";
-import {formatDate,formatDateYYYYMMDD} from "../../globalFunctions"
+import { formatDate, formatDateYYYYMMDD } from "../../globalFunctions"
 
 const redStarStyle = {
   color: "red",
@@ -151,6 +151,10 @@ const FatherDetails = forwardRef((props, ref) => {
 
   const handleOnChange = (e) => {
     const { name, value } = e.target;
+    const exp = /^\d*$/
+    if (name == "ExpectantFatherMobile" && !exp.test(value)) {
+      return
+    }
     setData((prevData) => ({
       ...prevData,
       [name]: { ...prevData[name], value: value, errorStatus: false, errorMessage: "" },
@@ -411,6 +415,7 @@ const FatherDetails = forwardRef((props, ref) => {
                         padding: "10px",
                         borderRadius: "8px",
                       }}
+                      inputProps={fieldData.name == "ExpectantFatherMobile" ? { maxLength: 10 } : { maxLength: 200 }}
                       onChange={handleOnChange}
                     />
                     {fieldData.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{fieldData.errorMessage}</Typography> : null}
@@ -435,23 +440,13 @@ const FatherDetails = forwardRef((props, ref) => {
                   component="img"
                   src={"https://flyingbyts.s3.ap-south-2.amazonaws.com/" + dataFile.ExpectantFatherProfilePhoto}
                   alt="father Image"
-                  sx={{
-                    width: isSmallScreen ? '100%' : '50%',
-                    height: 'auto',
-                    maxWidth: '100%',
-                    objectFit: 'cover',
-                  }}
+                  sx={{ width: 150, height: 150, marginRight: 2 }}
                 /> :
                 <Box
                   component="img"
                   src={fatherImage}
                   alt="father Image"
-                  sx={{
-                    width: isSmallScreen ? '100%' : '50%',
-                    height: 'auto',
-                    maxWidth: '100%',
-                    objectFit: 'cover',
-                  }}
+                  sx={{ width: 150, height: 150, marginRight: 2 }}
                 />
               }
               <Box sx={{ display: "flex", flexDirection: "column" }}>
@@ -488,24 +483,14 @@ const FatherDetails = forwardRef((props, ref) => {
                 <Box
                   component="img"
                   src={"https://flyingbyts.s3.ap-south-2.amazonaws.com/" + dataFile.ExpectantFatherIDproofPhoto}
-                  alt="father Image"
-                  sx={{
-                    width: isSmallScreen ? '100%' : '50%',
-                    height: 'auto',
-                    maxWidth: '100%',
-                    objectFit: 'cover',
-                  }}
+                  alt="father Id"
+                  sx={{ width: 150, height: 150, marginRight: 2 }}
                 /> :
                 <Box
                   component="img"
                   src={card}
-                  alt="father Image"
-                  sx={{
-                    width: isSmallScreen ? '100%' : '50%',
-                    height: 'auto',
-                    maxWidth: '100%',
-                    objectFit: 'cover',
-                  }}
+                  alt="father Id"
+                  sx={{ width: 150, height: 150, marginRight: 2 }}
                 />
               }
               <Box sx={{ display: "flex", flexDirection: "column" }}>

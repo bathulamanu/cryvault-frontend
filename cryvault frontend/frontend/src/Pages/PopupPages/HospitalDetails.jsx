@@ -28,7 +28,7 @@ import {
   getTypeOfPregnancyList
 } from "../../globalFunctions";
 
-import { getCountry, getState, getCity } from "../../redux/reducers/PaymentReducer";
+import { getCountry, getState, getCity,getCityForPermanentAddress } from "../../redux/reducers/PaymentReducer";
 import { GetTypeOfPregnancy } from "../../redux/reducers/DashboardReducer";
 import { addOrupdateAnnexureInfo } from "../../redux/reducers/UserReducer"
 import { GetTypeOfProof, getAnnexureInfo } from '../../redux/reducers/DashboardReducer'
@@ -207,7 +207,7 @@ const HospitalDetails = forwardRef((props, ref) => {
   const countries = useSelector((state) => state.payment.countries);
   const states = useSelector((state) => state.payment.states);
   const cities = useSelector((state) => state.payment.cities);
-  const cities2 = useSelector((state) => state.payment.cities);
+  const cities2 = useSelector((state) => state.payment.citiesForPermanentAddress);
 
   const typeOfPreganacyData = useSelector((state) => state.dashboard.typeOfPreganacyData);
 
@@ -217,10 +217,10 @@ const HospitalDetails = forwardRef((props, ref) => {
 
   let cityList;
   let cityList2;
-  if (data.ConsultingHospitalState.value) {
+  if (data.ConsultingHospitalState.value && cities.length != 0) {
     cityList = getCityIdList(cities);
   }
-  if (data.DeliveringHospitalState.value) {
+  if (data.DeliveringHospitalState.value && cities2.length != 0) {
     cityList2 = getCityIdList(cities2);
   }
   const [customerAnnexureInformationId, setCustomerAnnexureInformationId] = useState(null)
@@ -488,10 +488,10 @@ const HospitalDetails = forwardRef((props, ref) => {
     if (data.ConsultingHospitalCountry.value) dispatch(getState({ payload: dataToSend }));
   }, [data.ConsultingHospitalCountry.value]);
 
-  useEffect(() => {
-    const dataToSend = data.DeliveringHospitalCountry.value;
-    if (data.DeliveringHospitalCountry.value) dispatch(getState({ payload: dataToSend }));
-  }, [data.DeliveringHospitalCountry.value]);
+  // useEffect(() => {
+  //   const dataToSend = data.DeliveringHospitalCountry.value;
+  //   if (data.DeliveringHospitalCountry.value) dispatch(getState({ payload: dataToSend }));
+  // }, [data.DeliveringHospitalCountry.value]);
 
   useEffect(() => {
     const dataToSend = data.ConsultingHospitalState.value
@@ -500,7 +500,7 @@ const HospitalDetails = forwardRef((props, ref) => {
 
   useEffect(() => {
     const dataToSend = data.DeliveringHospitalState.value
-    if (data.DeliveringHospitalState.value) dispatch(getCity({ payload: dataToSend }));
+    if (data.DeliveringHospitalState.value) dispatch(getCityForPermanentAddress({ payload: dataToSend }));
   }, [data.DeliveringHospitalState.value]);
 
 
@@ -688,7 +688,6 @@ const HospitalDetails = forwardRef((props, ref) => {
                     data={stateList}
                     value={data.ConsultingHospitalState.value}
                     onChange={(e) => {
-                      dispatch(getCity())
                       handleOnChange(e, "ConsultingHospitalState")
                     }}
                   />
@@ -818,7 +817,6 @@ const HospitalDetails = forwardRef((props, ref) => {
                     data={stateList}
                     value={data.DeliveringHospitalState.value}
                     onChange={(e) => {
-                      dispatch(getCity())
                       handleOnChange(e, "DeliveringHospitalState")
                     }}
                   />
@@ -832,7 +830,7 @@ const HospitalDetails = forwardRef((props, ref) => {
                   <SingleSelect
                     Placeholder={"Select"}
                     width={"100%"}
-                    data={cityList}
+                    data={cityList2}
                     value={data.DeliveringHosptalCity.value}
                     onChange={(e) => {
                       handleOnChange(e, "DeliveringHosptalCity");

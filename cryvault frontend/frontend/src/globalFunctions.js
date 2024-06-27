@@ -122,3 +122,13 @@ export function formatDateYYYYMMDD(date) {
 export function isObject (value)  {
     return value !== null && typeof value === 'object' && !Array.isArray(value);
 };
+
+export function getGenderIdList(arr) {
+    if (arr && arr?.length > 0) {
+        let result = arr?.map((item) => ({
+            id: item?.masterConfigurationID,
+            name: item?.value,
+        }))
+        return result
+    }
+}

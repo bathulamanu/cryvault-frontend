@@ -1,7 +1,7 @@
 
 
 import React, { useEffect, useMemo, useState } from "react";
-import { Box, TextField, Grid, useMediaQuery } from "@mui/material";
+import { Box, TextField, Grid, useMediaQuery, FormControl, OutlinedInput, InputLabel } from "@mui/material";
 import "../../Components/DashboardComponents/Dashboard.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getAnnexureInfo, getClientInfo } from "../../redux/reducers/DashboardReducer";
@@ -11,20 +11,91 @@ import CardActions from '@mui/material/CardActions';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { useNavigate } from "react-router-dom";
+import { formatDate } from "../../globalFunctions"
+import { getCustomerInfo } from "../../redux/reducers/UserReducer"
 
 const Details = () => {
   const navigate = useNavigate();
   const isMobile = useMediaQuery("(max-width:600px)");
   const dispatch = useDispatch();
   const UserData = useSelector((state) => state.dashboard.SubscribedUserData);
+  const userDetails = useSelector((state) => state.user.userDetails);
   const [isUserFillTheForm, setisUserFillTheForm] = useState(false)
+  const [afterSubmittingUserData, setafterSubmittingUserData] = useState({
+    "customerAnnexureInformationId": null,
+    "customerID": null,
+    "CustomerClientMotherDetails": {
+      "ExpectantMotherName": "",
+      "ExpectantMotherDOB": "",
+      "ExpectantMotherEmail": "",
+      "ExpectantMotherMobile": "",
+      "ExpectantMotherOccupation": "",
+      "ExpectantMotherDesignation": "",
+      "ExpectantMotherOrganizationName": "",
+      "ExpectantMotherIDproof": null,
+      "ExpectantMotherIdproofNo": "",
+      "ExpectantMotherOtherInfo": "",
+      "ExpectantMotherIDproofPhoto": "",
+      "ExpectantMotherProfilePhoto": "",
+      "ExpectantMotherIDproofValue": ""
+    },
+    "CustomerClientFatherDetails": {
+      "ExpectantFatherName": "",
+      "ExpectantFatherDOB": "",
+      "ExpectantFatherEmail": "",
+      "ExpectantFatherMobile": "",
+      "ExpectantFatherOccupation": "",
+      "ExpectantFatherDesignation": "",
+      "ExpectantFatherOrganizationName": "",
+      "ExpectantFatherIDproof": null,
+      "ExpectantFatherIdproofNo": "",
+      "ExpectantFatherOtherInfo": "",
+      "ExpectantFatherIDproofPhoto": "",
+      "ExpectantFatherProfilePhoto": "",
+      "ExpectantFatherIDproofValue": ""
+    }
+  })
+  const [customerpersonalInfo, setCustomerpersonalInfo] = useState({
+    "customerID": null,
+    "firstName": "",
+    "lastName": "",
+    "email": "",
+    "countryCode": "",
+    "phoneNumber": "",
+    "gender": null,
+    "createdTime": "",
+    "subscriptionPlanId": null,
+    "addressLine1": "",
+    "addressLine2": "",
+    "nearLandMark": "",
+    "city": null,
+    "state": null,
+    "pincode": "",
+    "country": 352,
+    "registrationCRNid": "",
+    "LocationInfo": {
+      "cityID": null,
+      "cityName": "",
+      "stateID": null,
+      "stateName": "",
+      "countryID": null,
+      "countryName": ""
+    },
+    "genderValue": ""
+  })
+  useEffect(() => {
+    setCustomerpersonalInfo(userDetails);
+  }, [userDetails])
 
   useEffect(() => {
     setisUserFillTheForm(UserData?.isUserEnteredAllMandatoryFileds);
-    localStorage.setItem("isFillForm", UserData?.isUserEnteredAllMandatoryFileds)
+    localStorage.setItem("isFillForm", UserData?.isUserEnteredAllMandatoryFileds);
+    console.log("check data ", UserData);
+    setafterSubmittingUserData(UserData)
   }, [UserData])
 
   useEffect(() => {
+    dispatch(getCustomerInfo())
     dispatch(getAnnexureInfo())
   }, [])
 
@@ -54,38 +125,122 @@ const Details = () => {
                 <Grid container spacing={2}>
                   <Grid item xs={12} md={4} style={{ marginRight: "2px", marginTop: "20px" }}>
                     <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-                      <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Mother's Name</Typography>
-                      <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>Mother's Name</Typography>
+                      <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Mother's Name</InputLabel>
+                      <FormControl variant="outlined" size="small">
+                        <OutlinedInput
+                          readOnly={true}
+                          value={afterSubmittingUserData?.CustomerClientMotherDetails?.ExpectantMotherName}
+                          sx={{
+                            border: "",
+                            height: "40px",
+                            width: "100%",
+                            padding: "10px",
+                            borderRadius: "8px",
+                          }}
+                        />
+                      </FormControl>
                     </Box>
                   </Grid>
                   <Grid item xs={12} md={4} style={{ marginRight: "2px", marginTop: "20px" }}>
                     <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-                      <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Date of Birth</Typography>
-                      <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>Date of Birth</Typography>
+                      {/* <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Date of Birth</Typography> */}
+                      {/* <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>{formatDate(afterSubmittingUserData?.CustomerClientMotherDetails?.ExpectantMotherDOB)}</Typography> */}
+                      <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Date of Birth</InputLabel>
+                      <FormControl variant="outlined" size="small">
+                        <OutlinedInput
+                          readOnly={true}
+                          value={formatDate(afterSubmittingUserData?.CustomerClientMotherDetails?.ExpectantMotherDOB)}
+                          sx={{
+                            border: "",
+                            height: "40px",
+                            width: "100%",
+                            padding: "10px",
+                            borderRadius: "8px",
+                          }}
+                        />
+                      </FormControl>
                     </Box>
                   </Grid>
                   <Grid item xs={12} md={4} style={{ marginRight: "2px", marginTop: "20px" }}>
                     <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-                      <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Mobile Number</Typography>
-                      <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>Mobile Number</Typography>
+                      {/* <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Mobile Number</Typography>
+                      <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>{afterSubmittingUserData?.CustomerClientMotherDetails?.ExpectantMotherMobile}</Typography> */}
+                      <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Mobile Number</InputLabel>
+                      <FormControl variant="outlined" size="small">
+                        <OutlinedInput
+                          readOnly={true}
+                          value={afterSubmittingUserData?.CustomerClientMotherDetails?.ExpectantMotherMobile}
+                          sx={{
+                            border: "",
+                            height: "40px",
+                            width: "100%",
+                            padding: "10px",
+                            borderRadius: "8px",
+                          }}
+                        />
+                      </FormControl>
                     </Box>
                   </Grid>
                   <Grid item xs={12} md={4} style={{ marginRight: "2px", marginTop: "20px" }}>
                     <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-                      <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Email Address</Typography>
-                      <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>Email Address</Typography>
+                      {/* <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Email Address</Typography>
+                      <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>{afterSubmittingUserData?.CustomerClientMotherDetails?.ExpectantMotherEmail}</Typography> */}
+                      <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Email Address</InputLabel>
+                      <FormControl variant="outlined" size="small">
+                        <OutlinedInput
+                          readOnly={true}
+                          value={afterSubmittingUserData?.CustomerClientMotherDetails?.ExpectantMotherEmail}
+                          sx={{
+                            border: "",
+                            height: "40px",
+                            width: "100%",
+                            padding: "10px",
+                            borderRadius: "8px",
+                          }}
+                        />
+                      </FormControl>
                     </Box>
                   </Grid>
                   <Grid item xs={12} md={4} style={{ marginRight: "2px", marginTop: "20px" }}>
                     <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-                      <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Occupation</Typography>
-                      <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>Occupation</Typography>
+                      {/* <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Occupation</Typography>
+                      <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>
+                      {afterSubmittingUserData?.CustomerClientMotherDetails?.ExpectantMotherOccupation}</Typography> */}
+                      <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Occupation</InputLabel>
+                      <FormControl variant="outlined" size="small">
+                        <OutlinedInput
+                          readOnly={true}
+                          value={afterSubmittingUserData?.CustomerClientMotherDetails?.ExpectantMotherOccupation}
+                          sx={{
+                            border: "",
+                            height: "40px",
+                            width: "100%",
+                            padding: "10px",
+                            borderRadius: "8px",
+                          }}
+                        />
+                      </FormControl>
                     </Box>
                   </Grid>
                   <Grid item xs={12} md={4} style={{ marginRight: "2px", marginTop: "20px" }}>
                     <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-                      <Typography sx={{ whiteSpace: "nowrap", fontWeight: "600", fontSize: "2rem", color: "gray" }}>Organization Name</Typography>
-                      <Typography sx={{ whiteSpace: "nowrap", fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>Organization Name</Typography>
+                      {/* <Typography sx={{ whiteSpace: "nowrap", fontWeight: "600", fontSize: "2rem", color: "gray" }}>Organization Name</Typography>
+                      <Typography sx={{ whiteSpace: "nowrap", fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>
+                      {afterSubmittingUserData?.CustomerClientMotherDetails?.ExpectantMotherOrganizationName}</Typography> */}
+                      <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Organization Name</InputLabel>
+                      <FormControl variant="outlined" size="small">
+                        <OutlinedInput
+                          readOnly={true}
+                          value={afterSubmittingUserData?.CustomerClientMotherDetails?.ExpectantMotherOrganizationName}
+                          sx={{
+                            border: "",
+                            height: "40px",
+                            width: "100%",
+                            padding: "10px",
+                            borderRadius: "8px",
+                          }}
+                        />
+                      </FormControl>
                     </Box>
                   </Grid>
                 </Grid>
@@ -96,38 +251,128 @@ const Details = () => {
                 <Grid container spacing={2}>
                   <Grid item xs={12} md={4} style={{ marginRight: "2px", marginTop: "20px" }}>
                     <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-                      <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Father's Name</Typography>
-                      <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>Father's Name</Typography>
+                      {/* <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Father's Name</Typography>
+                      <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>
+                      {afterSubmittingUserData?.CustomerClientFatherDetails?.ExpectantFatherName}</Typography> */}
+                      <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Father's Name</InputLabel>
+                      <FormControl variant="outlined" size="small">
+                        <OutlinedInput
+                          readOnly={true}
+                          value={afterSubmittingUserData?.CustomerClientFatherDetails?.ExpectantFatherName}
+                          sx={{
+                            border: "",
+                            height: "40px",
+                            width: "100%",
+                            padding: "10px",
+                            borderRadius: "8px",
+                          }}
+                        />
+                      </FormControl>
                     </Box>
                   </Grid>
                   <Grid item xs={12} md={4} style={{ marginRight: "2px", marginTop: "20px" }}>
                     <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-                      <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Date of Birth</Typography>
-                      <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>Date of Birth</Typography>
+                      {/* <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Date of Birth</Typography>
+                      <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>
+                      {formatDate(afterSubmittingUserData?.CustomerClientFatherDetails?.ExpectantFatherDOB)}</Typography> */}
+                      <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Date of Birth</InputLabel>
+                      <FormControl variant="outlined" size="small">
+                        <OutlinedInput
+                          readOnly={true}
+                          value={formatDate(afterSubmittingUserData?.CustomerClientFatherDetails?.ExpectantFatherDOB)}
+                          sx={{
+                            border: "",
+                            height: "40px",
+                            width: "100%",
+                            padding: "10px",
+                            borderRadius: "8px",
+                          }}
+                        />
+                      </FormControl>
                     </Box>
                   </Grid>
                   <Grid item xs={12} md={4} style={{ marginRight: "2px", marginTop: "20px" }}>
                     <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-                      <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Mobile Number</Typography>
-                      <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>Mobile Number</Typography>
+                      {/* <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Mobile Number</Typography>
+                      <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>{
+                      afterSubmittingUserData?.CustomerClientFatherDetails?.ExpectantFatherMobile}</Typography> */}
+                      <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Mobile Number</InputLabel>
+                      <FormControl variant="outlined" size="small">
+                        <OutlinedInput
+                          readOnly={true}
+                          value={afterSubmittingUserData?.CustomerClientFatherDetails?.ExpectantFatherMobile}
+                          sx={{
+                            border: "",
+                            height: "40px",
+                            width: "100%",
+                            padding: "10px",
+                            borderRadius: "8px",
+                          }}
+                        />
+                      </FormControl>
                     </Box>
                   </Grid>
                   <Grid item xs={12} md={4} style={{ marginRight: "2px", marginTop: "20px" }}>
                     <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-                      <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Email Address</Typography>
-                      <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>Email Address</Typography>
+                      {/* <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Email Address</Typography>
+                      <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>{af
+                      terSubmittingUserData?.CustomerClientFatherDetails?.ExpectantFatherEmail}</Typography> */}
+                      <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Email Address</InputLabel>
+                      <FormControl variant="outlined" size="small">
+                        <OutlinedInput
+                          readOnly={true}
+                          value={afterSubmittingUserData?.CustomerClientFatherDetails?.ExpectantFatherEmail}
+                          sx={{
+                            border: "",
+                            height: "40px",
+                            width: "100%",
+                            padding: "10px",
+                            borderRadius: "8px",
+                          }}
+                        />
+                      </FormControl>
                     </Box>
                   </Grid>
                   <Grid item xs={12} md={4} style={{ marginRight: "2px", marginTop: "20px" }}>
                     <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-                      <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Occupation</Typography>
-                      <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>Occupation</Typography>
+                      {/* <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Occupation</Typography>
+                      <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>
+                      {afterSubmittingUserData?.CustomerClientFatherDetails?.ExpectantFatherOccupation}</Typography> */}
+                      <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Occupation</InputLabel>
+                      <FormControl variant="outlined" size="small">
+                        <OutlinedInput
+                          readOnly={true}
+                          value={afterSubmittingUserData?.CustomerClientFatherDetails?.ExpectantFatherOccupation}
+                          sx={{
+                            border: "",
+                            height: "40px",
+                            width: "100%",
+                            padding: "10px",
+                            borderRadius: "8px",
+                          }}
+                        />
+                      </FormControl>
                     </Box>
                   </Grid>
                   <Grid item xs={12} md={4} style={{ marginRight: "2px", marginTop: "20px" }}>
                     <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-                      <Typography sx={{ whiteSpace: "nowrap", fontWeight: "600", fontSize: "2rem", color: "gray" }}>Organization Name</Typography>
-                      <Typography sx={{ whiteSpace: "nowrap", fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>Organization Name</Typography>
+                      {/* <Typography sx={{ whiteSpace: "nowrap", fontWeight: "600", fontSize: "2rem", color: "gray" }}>Organization Name</Typography>
+                      <Typography sx={{ whiteSpace: "nowrap", fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>
+                      {afterSubmittingUserData?.CustomerClientFatherDetails?.ExpectantFatherOrganizationName}</Typography> */}
+                      <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Organization Name</InputLabel>
+                      <FormControl variant="outlined" size="small">
+                        <OutlinedInput
+                          readOnly={true}
+                          value={afterSubmittingUserData?.CustomerClientFatherDetails?.ExpectantFatherOrganizationName}
+                          sx={{
+                            border: "",
+                            height: "40px",
+                            width: "100%",
+                            padding: "10px",
+                            borderRadius: "8px",
+                          }}
+                        />
+                      </FormControl>
                     </Box>
                   </Grid>
                 </Grid>
@@ -136,44 +381,144 @@ const Details = () => {
               {/* Remaining Address Details */}
               <Grid item xs={12} style={{ marginRight: "2px", marginTop: "20px", padding: "1rem 0 " }}>
                 <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-                  <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Address line 1</Typography>
-                  <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>Address line 1</Typography>
+                  {/* <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Address line 1</Typography>
+                  <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>
+                  {customerpersonalInfo?.addressLine1}</Typography> */}
+                  <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Address line 1</InputLabel>
+                  <FormControl variant="outlined" size="small">
+                    <OutlinedInput
+                      readOnly={true}
+                      value={customerpersonalInfo?.addressLine1}
+                      sx={{
+                        border: "",
+                        height: "40px",
+                        width: "100%",
+                        padding: "10px",
+                        borderRadius: "8px",
+                      }}
+                    />
+                  </FormControl>
                 </Box>
               </Grid>
               <Grid item xs={12} style={{ marginRight: "2px", marginTop: "20px", padding: "1rem 0 " }}>
                 <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-                  <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Address line 2</Typography>
-                  <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>Address line 2</Typography>
+                  {/* <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Address line 2</Typography>
+                  <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>{customerpersonalInfo?.addressLine2}</Typography> */}
+                  <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Address line 2</InputLabel>
+                  <FormControl variant="outlined" size="small">
+                    <OutlinedInput
+                      readOnly={true}
+                      value={customerpersonalInfo?.addressLine2}
+                      sx={{
+                        border: "",
+                        height: "40px",
+                        width: "100%",
+                        padding: "10px",
+                        borderRadius: "8px",
+                      }}
+                    />
+                  </FormControl>
                 </Box>
               </Grid>
               <Grid item xs={4} style={{ marginRight: "25px", marginTop: "20px", padding: "1rem 0 " }}>
                 <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-                  <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Near Land Mark</Typography>
-                  <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>Near Land Mark</Typography>
+                  {/* <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Near Land Mark</Typography>
+                  <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>{customerpersonalInfo?.nearLandMark}</Typography> */}
+                  <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Near Land Mark</InputLabel>
+                  <FormControl variant="outlined" size="small">
+                    <OutlinedInput
+                      readOnly={true}
+                      value={customerpersonalInfo?.nearLandMark}
+                      sx={{
+                        border: "",
+                        height: "40px",
+                        width: "100%",
+                        padding: "10px",
+                        borderRadius: "8px",
+                      }}
+                    />
+                  </FormControl>
                 </Box>
               </Grid>
               <Grid item xs={4} style={{ marginRight: "25px", marginTop: "20px", padding: "1rem 0 " }}>
                 <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-                  <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>City</Typography>
-                  <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>City</Typography>
+                  {/* <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>City</Typography>
+                  <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>{customerpersonalInfo?.LocationInfo?.cityName}</Typography> */}
+                  <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>City</InputLabel>
+                  <FormControl variant="outlined" size="small">
+                    <OutlinedInput
+                      readOnly={true}
+                      value={customerpersonalInfo?.LocationInfo?.cityName}
+                      sx={{
+                        border: "",
+                        height: "40px",
+                        width: "100%",
+                        padding: "10px",
+                        borderRadius: "8px",
+                      }}
+                    />
+                  </FormControl>
                 </Box>
               </Grid>
               <Grid item xs={4} style={{ marginRight: "25px", marginTop: "20px", padding: "1rem 0 " }}>
                 <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-                  <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>State</Typography>
-                  <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>State</Typography>
+                  {/* <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>State</Typography>
+                  <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>{customerpersonalInfo?.LocationInfo?.stateName}</Typography> */}
+                  <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>State</InputLabel>
+                  <FormControl variant="outlined" size="small">
+                    <OutlinedInput
+                      readOnly={true}
+                      value={customerpersonalInfo?.LocationInfo?.stateName}
+                      sx={{
+                        border: "",
+                        height: "40px",
+                        width: "100%",
+                        padding: "10px",
+                        borderRadius: "8px",
+                      }}
+                    />
+                  </FormControl>
                 </Box>
               </Grid>
               <Grid item xs={2} style={{ marginRight: "25px", marginTop: "20px", padding: "1rem 0 " }}>
                 <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-                  <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Pincode</Typography>
-                  <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>Pincode</Typography>
+                  {/* <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Pincode</Typography>
+                  <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>{customerpersonalInfo?.pincode}</Typography> */}
+                  <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Pincode</InputLabel>
+                  <FormControl variant="outlined" size="small">
+                    <OutlinedInput
+                      readOnly={true}
+                      value={customerpersonalInfo?.pincode}
+                      sx={{
+                        border: "",
+                        height: "40px",
+                        width: "100%",
+                        padding: "10px",
+                        borderRadius: "8px",
+                      }}
+                    />
+                  </FormControl>
                 </Box>
               </Grid>
               <Grid item xs={2} style={{ marginRight: "25px", marginTop: "20px", padding: "1rem 0 " }}>
                 <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-                  <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Country</Typography>
-                  <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>Country</Typography>
+                  {/* <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "gray" }}>Country</Typography>
+                  <Typography sx={{ fontWeight: "600", fontSize: "2rem", color: "black", borderBottom: "2px solid gray" }}>
+                  {customerpersonalInfo?.LocationInfo?.countryName}</Typography> */}
+                  <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Country</InputLabel>
+                  <FormControl variant="outlined" size="small">
+                    <OutlinedInput
+                      readOnly={true}
+                      value={customerpersonalInfo?.LocationInfo?.countryName}
+                      sx={{
+                        border: "",
+                        height: "40px",
+                        width: "100%",
+                        padding: "10px",
+                        borderRadius: "8px",
+                      }}
+                    />
+                  </FormControl>
                 </Box>
               </Grid>
             </Grid>
