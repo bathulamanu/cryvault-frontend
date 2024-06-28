@@ -407,7 +407,7 @@ const Dashboard = () => {
             backgroundColor: "#2b2e64",
             height: "50px",
             borderRadius: "20px",
-            margin:"1rem"
+            margin: "1rem"
           }}
         >
           <Box
@@ -719,7 +719,7 @@ const Dashboard = () => {
           </Card>
         )}
         <Box style={{ width: isMobile ? "100%" : "calc(100% - 120px)" }}>
-          {selectedItem === "DashBoard" && <MobileDetails />}
+          {selectedItem === "DashBoard" && <Details />}
           {selectedItem === "Baby Details" && <BabyDetails />}
           {selectedItem === "Invoices" && <Invoices />}
           {selectedItem === "Reports" && <Services />}

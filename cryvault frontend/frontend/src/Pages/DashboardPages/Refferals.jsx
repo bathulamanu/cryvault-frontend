@@ -1,9 +1,30 @@
-import { Card, Box, Typography, TextField, Button, Grid, useMediaQuery } from "@mui/material";
-import React from "react";
+import { Card, Box, Typography, TextField, Button, Grid, useMediaQuery, FormControl, OutlinedInput, InputLabel, Stack } from "@mui/material";
+import React, { useState, useEffect } from "react";
 import refferal from "../../assets/images/refferal.jpg";
 
 const Refferals = () => {
   const isMobile = useMediaQuery("(max-width:600px)");
+
+  const [RefferalInfo, setRefferalInfo] = useState({
+    "customerID": null,
+    "refferalCode": "",
+    "EmailToRef": "",
+    "clientName": "",
+    "EDD": "",
+    "area": "",
+    "HospitalDetails": "",
+    "phoneNumber": "",
+    "alternativeNumber": null,
+    "email": ""
+  })
+  const handleOnChange = (e) => {
+    const { name, value } = e.target;
+    setRefferalInfo((data) => ({
+      ...data,
+      [name]: value
+    }))
+  };
+
   return (
     <Box style={{ marginTop: isMobile ? "20px" : "0px", height: "100%" }}>
       <Card
@@ -109,7 +130,28 @@ const Refferals = () => {
                 <Typography sx={{ color: "#000000" }} style={{ fontSize: "2rem" }}>
                   Your Referral Code
                 </Typography>
-                <TextField label="Enter Referral Code" variant="standard" sx={{ width: "350px" }} />
+                {/* <TextField label="Enter Referral Code" variant="standard" sx={{ width: "350px" }} /> */}
+                <Stack sx={{ width: "100%", gap: "0.5rem" }} key={"key"}>
+                <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Enter Referral Code</InputLabel>
+                <FormControl variant="outlined" size="small">
+                  <OutlinedInput
+                    readOnly={false}
+                    type="text"
+                    value={RefferalInfo.refferalCode}
+                    name="refferalCode"
+                    id={`outlined-adornment`}
+                    placeholder="Enter Referral Code"
+                    sx={{
+                      border: "",
+                      height: "40px",
+                      width: "100%",
+                      padding: "10px",
+                      borderRadius: "8px",
+                    }}
+                    onChange={handleOnChange}
+                  />
+                </FormControl>
+              </Stack>
               </Box>
               <Box sx={{ margin: "10px 0px 10px 40px" }}>
                 <Button
@@ -136,7 +178,28 @@ const Refferals = () => {
                   <Typography sx={{ color: "#000000" }} style={{ fontSize: "2rem" }}>
                     Send Invitation
                   </Typography>
-                  <TextField label="Enter Your Email" variant="standard" />
+                  {/* <TextField label="Enter Your Email" variant="standard" /> */}
+                  <Stack sx={{ width: "100%", gap: "0.5rem" }} key={"key"}>
+                <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Enter Your Email</InputLabel>
+                <FormControl variant="outlined" size="small">
+                  <OutlinedInput
+                    readOnly={false}
+                    type="text"
+                    value={RefferalInfo.EmailToRef}
+                    name="EmailToRef"
+                    id={`outlined-adornment`}
+                    placeholder="Enter Your Email"
+                    sx={{
+                      border: "",
+                      height: "40px",
+                      width: "100%",
+                      padding: "10px",
+                      borderRadius: "8px",
+                    }}
+                    onChange={handleOnChange}
+                  />
+                </FormControl>
+              </Stack>
                 </Box>
                 <Box sx={{ margin: "20px 0px 0px 80px" }}>
                   <Button
@@ -191,29 +254,173 @@ const Refferals = () => {
         <Box sx={{ marginLeft: isMobile ? "10px" : "20px", padding: "10px" }}>
           <Grid container spacing={2}>
             <Grid item xs={4}>
-              <TextField variant="standard" label="Client Name" />
+              <Stack sx={{ width: "100%", gap: "0.5rem" }} key={"key"}>
+                <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Client Name</InputLabel>
+                <FormControl variant="outlined" size="small">
+                  <OutlinedInput
+                    readOnly={false}
+                    type="text"
+                    value={RefferalInfo.clientName}
+                    name="clientName"
+                    id={`outlined-adornment`}
+                    placeholder="Client Name"
+                    sx={{
+                      border: "",
+                      height: "40px",
+                      width: "100%",
+                      padding: "10px",
+                      borderRadius: "8px",
+                    }}
+                    onChange={handleOnChange}
+                  />
+                </FormControl>
+              </Stack>
             </Grid>
             <Grid item xs={4}>
-              <TextField variant="standard" label="EDD" />
+              <Stack sx={{ width: "100%", gap: "0.5rem" }} key={"key"}>
+                <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>EDD</InputLabel>
+                <FormControl variant="outlined" size="small">
+                  <OutlinedInput
+                    readOnly={false}
+                    type="text"
+                    value={RefferalInfo.EDD}
+                    name="EDD"
+                    id={`outlined-adornment`}
+                    placeholder="EDD"
+                    sx={{
+                      border: "",
+                      height: "40px",
+                      width: "100%",
+                      padding: "10px",
+                      borderRadius: "8px",
+                    }}
+                    onChange={handleOnChange}
+                  />
+                </FormControl>
+              </Stack>
             </Grid>
             <Grid item xs={4}>
-              <TextField variant="standard" label="Area" />
+              <Stack sx={{ width: "100%", gap: "0.5rem" }} key={"key"}>
+                <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Area</InputLabel>
+                <FormControl variant="outlined" size="small">
+                  <OutlinedInput
+                    readOnly={false}
+                    type="text"
+                    value={RefferalInfo.area}
+                    name="area"
+                    id={`outlined-adornment`}
+                    placeholder="Area"
+                    sx={{
+                      border: "",
+                      height: "40px",
+                      width: "100%",
+                      padding: "10px",
+                      borderRadius: "8px",
+                    }}
+                    onChange={handleOnChange}
+                  />
+                </FormControl>
+              </Stack>
             </Grid>
           </Grid>
           <Grid container spacing={2}>
             <Grid item xs={10}>
-              <TextField fullWidth variant="standard" label="Hospital Details" />
+              {/* <TextField fullWidth variant="standard" label="Hospital Details" /> */}
+              <Stack sx={{ width: "100%", gap: "0.5rem" }} key={"key"}>
+                <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Hospital Details</InputLabel>
+                <FormControl variant="outlined" size="small">
+                  <OutlinedInput
+                    readOnly={false}
+                    type="text"
+                    value={RefferalInfo.HospitalDetails}
+                    name="HospitalDetails"
+                    id={`outlined-adornment`}
+                    placeholder="Hospital Details"
+                    sx={{
+                      border: "",
+                      height: "40px",
+                      width: "100%",
+                      padding: "10px",
+                      borderRadius: "8px",
+                    }}
+                    onChange={handleOnChange}
+                  />
+                </FormControl>
+              </Stack>
             </Grid>
           </Grid>
           <Grid container spacing={2}>
             <Grid item xs={4}>
-              <TextField variant="standard" label="Mobile Number" />
+              {/* <TextField variant="standard" label="Mobile Number" /> */}
+              <Stack sx={{ width: "100%", gap: "0.5rem" }} key={"key"}>
+                <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Mobile Number</InputLabel>
+                <FormControl variant="outlined" size="small">
+                  <OutlinedInput
+                    readOnly={false}
+                    type="text"
+                    value={RefferalInfo.phoneNumber}
+                    name="phoneNumber"
+                    id={`outlined-adornment`}
+                    placeholder="Mobile Number"
+                    sx={{
+                      border: "",
+                      height: "40px",
+                      width: "100%",
+                      padding: "10px",
+                      borderRadius: "8px",
+                    }}
+                    onChange={handleOnChange}
+                  />
+                </FormControl>
+              </Stack>
             </Grid>
             <Grid item xs={4}>
-              <TextField variant="standard" label="Alternative Number" />
+              {/* <TextField variant="standard" label="Alternative Number" /> */}
+              <Stack sx={{ width: "100%", gap: "0.5rem" }} key={"key"}>
+                <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Alternative Number</InputLabel>
+                <FormControl variant="outlined" size="small">
+                  <OutlinedInput
+                    readOnly={false}
+                    type="text"
+                    value={RefferalInfo.alternativeNumber}
+                    name="alternativeNumber"
+                    id={`outlined-adornment`}
+                    placeholder="Alternative Number"
+                    sx={{
+                      border: "",
+                      height: "40px",
+                      width: "100%",
+                      padding: "10px",
+                      borderRadius: "8px",
+                    }}
+                    onChange={handleOnChange}
+                  />
+                </FormControl>
+              </Stack>
             </Grid>
             <Grid item xs={4}>
-              <TextField variant="standard" label="Email Address" />
+              {/* <TextField variant="standard" label="Email Address" /> */}
+              <Stack sx={{ width: "100%", gap: "0.5rem" }} key={"key"}>
+                <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Email Address</InputLabel>
+                <FormControl variant="outlined" size="small">
+                  <OutlinedInput
+                    readOnly={false}
+                    type="text"
+                    value={RefferalInfo.email}
+                    name="email"
+                    id={`outlined-adornment`}
+                    placeholder="Email Address"
+                    sx={{
+                      border: "",
+                      height: "40px",
+                      width: "100%",
+                      padding: "10px",
+                      borderRadius: "8px",
+                    }}
+                    onChange={handleOnChange}
+                  />
+                </FormControl>
+              </Stack>
             </Grid>
           </Grid>
         </Box>

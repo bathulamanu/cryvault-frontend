@@ -4,7 +4,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import baby from "../../assets/images/baby.png";
 import { getCustomerInfo } from "../../redux/reducers/UserReducer"
 import { useDispatch, useSelector } from "react-redux";
-import { getCustomerPaymentDetails,getGenders } from "../../redux/reducers/PaymentReducer"
+import { getCustomerPaymentDetails, getGenders } from "../../redux/reducers/PaymentReducer"
 import { MultipleSelect, SingleSelect } from '../CheckoutDetails'
 import { getCountry, getState, getCity } from "../../redux/reducers/PaymentReducer";
 import {
@@ -27,7 +27,7 @@ const SettingsPage = () => {
   const stateList = getStateIdList(states);
   const cityList = getCityIdList(cities);
   const gendersList = getGenderIdList(genders);
-  
+
   const [customerpersonalInfo, setCustomerpersonalInfo] = useState({
     "customerID": null,
     "firstName": "",
@@ -162,123 +162,112 @@ const SettingsPage = () => {
               </Typography>
             </Grid>
             <Grid item xs={12} sm={6}>
-              {/* <TextField label="First Name" sx={{ width: isMobile ? "100%" : "180px", marginBottom: "3rem" }} variant="standard" value={customerpersonalInfo?.firstName} onChange={(e) => { handleInputChange(e.target.value, "firstName") }} /> */}
-              <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>First Name</InputLabel>
-              <FormControl variant="outlined" size="small">
-                <OutlinedInput
-                  readOnly={false}
-                  type="text"
-                  value={customerpersonalInfo?.firstName}
-                  onChange={(e) => { handleInputChange(e.target.value, "firstName") }}
-                  name="firstName"
-                  id={`outlined-adornment`}
-                  placeholder="First Name"
-                  sx={{
-                    border: "",
-                    height: "40px",
-                    width: "100%",
-                    padding: "10px",
-                    borderRadius: "8px",
-                  }}
-                />
-              </FormControl>
+              <Stack sx={{ width: "80%", gap: "0.5rem" }} key={'key'}>
+                <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>First Name</InputLabel>
+                <FormControl variant="outlined" size="small">
+                  <OutlinedInput
+                    readOnly={false}
+                    type="text"
+                    value={customerpersonalInfo?.firstName}
+                    onChange={(e) => { handleInputChange(e.target.value, "firstName") }}
+                    name="firstName"
+                    id={`outlined-adornment`}
+                    placeholder="First Name"
+                    sx={{
+                      border: "",
+                      height: "40px",
+                      width: "100%",
+                      padding: "10px",
+                      borderRadius: "8px",
+                    }}
+                  />
+                </FormControl>
+              </Stack>
             </Grid>
             <Grid item xs={12} sm={6}>
-              {/* <TextField label="Second Name" sx={{ width: isMobile ? "100%" : "180px", marginBottom: "3rem" }} variant="standard" 
-              value={customerpersonalInfo?.lastName} onChange={(e) => { handleInputChange(e.target.value, "lastName") }} /> */}
-              <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Second Name</InputLabel>
-              <FormControl variant="outlined" size="small">
-                <OutlinedInput
-                  readOnly={false}
-                  type="text"
-                  value={customerpersonalInfo?.lastName}
-                  onChange={(e) => { handleInputChange(e.target.value, "lastName") }}
-                  name="lastName"
-                  id={`outlined-adornment`}
-                  placeholder="Second Name"
-                  sx={{
-                    border: "",
-                    height: "40px",
-                    width: "100%",
-                    padding: "10px",
-                    borderRadius: "8px",
-                  }}
-                />
-              </FormControl>
+              <Stack sx={{ width: "80%", gap: "0.5rem" }} key={'key'}>
+                <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Second Name</InputLabel>
+                <FormControl variant="outlined" size="small">
+                  <OutlinedInput
+                    readOnly={false}
+                    type="text"
+                    value={customerpersonalInfo?.lastName}
+                    onChange={(e) => { handleInputChange(e.target.value, "lastName") }}
+                    name="lastName"
+                    id={`outlined-adornment`}
+                    placeholder="Second Name"
+                    sx={{
+                      border: "",
+                      height: "40px",
+                      width: "100%",
+                      padding: "10px",
+                      borderRadius: "8px",
+                    }}
+                  />
+                </FormControl>
+              </Stack>
             </Grid>
             <Grid item xs={12} sm={6}>
-              {/* <TextField label="Phone Number" sx={{ width: isMobile ? "100%" : "180px", marginBottom: "3rem" }} variant="standard" value={customerpersonalInfo?.phoneNumber} /> */}
-              <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Phone Number</InputLabel>
-              <FormControl variant="outlined" size="small">
-                <OutlinedInput
-                  readOnly={false}
-                  type="text"
-                  value={customerpersonalInfo?.phoneNumber}
-                  // onChange={(e) => { handleInputChange(e.target.value, "phoneNumber") }}
-                  name="phoneNumber"
-                  id={`outlined-adornment`}
-                  placeholder="Second Name"
-                  sx={{
-                    border: "",
-                    height: "40px",
-                    width: "100%",
-                    padding: "10px",
-                    borderRadius: "8px",
-                  }}
-                />
-              </FormControl>
+              <Stack sx={{ width: "80%", gap: "0.5rem" }} key={'key'}>
+                <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Phone Number</InputLabel>
+                <FormControl variant="outlined" size="small">
+                  <OutlinedInput
+                    readOnly={false}
+                    type="text"
+                    value={customerpersonalInfo?.phoneNumber}
+                    // onChange={(e) => { handleInputChange(e.target.value, "phoneNumber") }}
+                    name="phoneNumber"
+                    id={`outlined-adornment`}
+                    placeholder="Second Name"
+                    sx={{
+                      border: "",
+                      height: "40px",
+                      width: "100%",
+                      padding: "10px",
+                      borderRadius: "8px",
+                    }}
+                  />
+                </FormControl>
+              </Stack>
             </Grid>
             <Grid item xs={12} sm={6}>
-              {/* <TextField label="Gender" sx={{ width: isMobile ? "100%" : "180px", marginBottom: "3rem" }} variant="standard" value={customerpersonalInfo?.genderValue} onChange={(e) => { handleInputChange(e.target.value, "gender") }} /> */}
-              <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Gender</InputLabel>
-              <FormControl variant="outlined" size="small">
-                {/* <OutlinedInput
-                  readOnly={false}
-                  type="text"
-                  value={customerpersonalInfo?.genderValue}
-                  onChange={(e) => { handleInputChange(e.target.value, "genderValue") }}
-                  name="genderValue"
-                  id={`outlined-adornment`}
-                  placeholder="Second Name"
-                  sx={{
-                    border: "",
-                    height: "40px",
-                    width: "100%",
-                    padding: "10px",
-                    borderRadius: "8px",
-                  }}
-                /> */}
-                 <SingleSelect
-                  Placeholder={"Select"}
-                  width={"100%"}
-                  disabled={false}
-                  data={gendersList}
-                  value={customerpersonalInfo?.gender}
-                  onChange={(e) => { handleInputChange(e, "gender") }}
-                />
-              </FormControl>
+              <Stack sx={{ width: "80%", gap: "0.5rem" }} key={'key'}>
+                <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Gender</InputLabel>
+                <FormControl variant="outlined" size="small">
+
+                  <SingleSelect
+                    Placeholder={"Select"}
+                    width={"100%"}
+                    disabled={false}
+                    data={gendersList}
+                    value={customerpersonalInfo?.gender}
+                    onChange={(e) => { handleInputChange(e, "gender") }}
+                  />
+                </FormControl>
+              </Stack>
             </Grid>
             <Grid item xs={12} sm={6}>
-              {/* <TextField label="Email Address" sx={{ width: isMobile ? "100%" : "300px", marginBottom: "3rem" }} variant="standard" value={customerpersonalInfo?.email} /> */}
-              <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Email Address</InputLabel>
-              <FormControl variant="outlined" size="small">
-                <OutlinedInput
-                  readOnly={false}
-                  type="text"
-                  value={customerpersonalInfo?.email}
-                  // onChange={(e) => { handleInputChange(e.target.value, "email") }}
-                  name="email"
-                  id={`outlined-adornment`}
-                  placeholder="Second Name"
-                  sx={{
-                    border: "",
-                    height: "40px",
-                    width: "100%",
-                    padding: "10px",
-                    borderRadius: "8px",
-                  }}
-                />
-              </FormControl>
+              <Stack sx={{ width: "80%", gap: "0.5rem" }} key={'key'}>
+                <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Email Address</InputLabel>
+                <FormControl variant="outlined" size="small">
+                  <OutlinedInput
+                    readOnly={false}
+                    type="text"
+                    value={customerpersonalInfo?.email}
+                    // onChange={(e) => { handleInputChange(e.target.value, "email") }}
+                    name="email"
+                    id={`outlined-adornment`}
+                    placeholder="Second Name"
+                    sx={{
+                      border: "",
+                      height: "40px",
+                      width: "100%",
+                      padding: "10px",
+                      borderRadius: "8px",
+                    }}
+                  />
+                </FormControl>
+              </Stack>
             </Grid>
 
             <Grid item xs={12}>
@@ -291,7 +280,7 @@ const SettingsPage = () => {
             </Grid>
             <Grid item xs={12}>
               <Stack sx={{ width: "100%", gap: "0.5rem" }} key={"key"}>
-                {/* <TextField label="Address line-1" sx={{ width: isMobile ? "100%" : "600px", marginBottom: "3rem" }} variant="standard" value={customerpersonalInfo?.addressLine1} onChange={(e) => { handleInputChange(e.target.value, "addressLine1") }} /> */}
+
                 <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Address line-1</InputLabel>
                 <FormControl variant="outlined" size="small">
                   <OutlinedInput
@@ -315,7 +304,6 @@ const SettingsPage = () => {
               </Stack>
             </Grid>
             <Grid item xs={12}>
-              {/* <TextField label="Address line-2" sx={{ width: isMobile ? "100%" : "600px", marginBottom: "3rem" }} variant="standard" value={customerpersonalInfo?.addressLine2} onChange={(e) => { handleInputChange(e.target.value, "addressLine2") }} /> */}
               <Stack sx={{ width: "100%", gap: "0.5rem" }} key={"key"}>
                 <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Address line-2</InputLabel>
                 <FormControl variant="outlined" size="small">
@@ -339,130 +327,120 @@ const SettingsPage = () => {
               </Stack>
             </Grid>
             <Grid item xs={12} sm={6}>
-              {/* <TextField label="Near Land Mark" variant="standard" sx={{ marginBottom: "3rem" }} fullWidth value={customerpersonalInfo?.nearLandMark} onChange={(e) => { handleInputChange(e.target.value, "nearLandMark") }} /> */}
-              <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Near Land Mark</InputLabel>
-              <FormControl variant="outlined" size="small">
-                <OutlinedInput
-                  readOnly={false}
-                  type="text"
-                  value={customerpersonalInfo?.nearLandMark}
-                  onChange={(e) => { handleInputChange(e.target.value, "nearLandMark") }}
-                  name="nearLandMark"
-                  id={`outlined-adornment`}
-                  placeholder="Second Name"
-                  sx={{
-                    border: "",
-                    height: "40px",
-                    width: "100%",
-                    padding: "10px",
-                    borderRadius: "8px",
-                  }}
-                />
-              </FormControl>
+              <Stack sx={{ width: "80%", gap: "0.5rem" }} key={'key'}>
+                <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Near Land Mark</InputLabel>
+                <FormControl variant="outlined" size="small">
+                  <OutlinedInput
+                    readOnly={false}
+                    type="text"
+                    value={customerpersonalInfo?.nearLandMark}
+                    onChange={(e) => { handleInputChange(e.target.value, "nearLandMark") }}
+                    name="nearLandMark"
+                    id={`outlined-adornment`}
+                    placeholder="Second Name"
+                    sx={{
+                      border: "",
+                      height: "40px",
+                      width: "100%",
+                      padding: "10px",
+                      borderRadius: "8px",
+                    }}
+                  />
+                </FormControl>
+              </Stack>
             </Grid>
             <Grid item xs={12} sm={6}>
-              {/* <TextField label="City" variant="standard" sx={{ marginBottom: "3rem" }} fullWidth value={customerpersonalInfo?.city} onChange={(e) => { handleInputChange(e.target.value, "city") }} /> */}
-              <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>City</InputLabel>
-              <FormControl variant="outlined" size="small">
-                {/* <OutlinedInput
-                  readOnly={false}
-                  type="text"
-                  value={customerpersonalInfo?.city}
-                  onChange={(e) => { handleInputChange(e.target.value, "city") }}
-                  name="city"
-                  id={`outlined-adornment`}
-                  placeholder="Second Name"
-                  sx={{
-                    border: "",
-                    height: "40px",
-                    width: "100%",
-                    padding: "10px",
-                    borderRadius: "8px",
-                  }}
-                /> */}
-                <SingleSelect
-                  Placeholder={"Select"}
-                  width={"100%"}
-                  disabled={false}
-                  data={cityList}
-                  value={customerpersonalInfo?.city}
-                  onChange={(e) => { handleInputChange(e, "city") }}
-                />
-              </FormControl>
-            </Grid>
-            <Grid item xs={12} sm={6}>
-              {/* <TextField label="State" variant="standard" sx={{ marginBottom: "3rem" }} fullWidth value={customerpersonalInfo?.state} 
-              onChange={(e) => { handleInputChange(e.target.value, "state") }} /> */}
-              <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>State</InputLabel>
-              <FormControl variant="outlined" size="small">
+              <Stack sx={{ width: "80%", gap: "0.5rem" }} key={'key'}>
+                <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>City</InputLabel>
+                <FormControl variant="outlined" size="small">
 
-                <SingleSelect
-                  Placeholder={"Select"}
-                  width={"100%"}
-                  disabled={false}
-                  data={stateList}
-                  value={customerpersonalInfo?.state}
-                  onChange={(e) => { handleInputChange(e, "state") }}
-                />
-              </FormControl>
+                  <SingleSelect
+                    Placeholder={"Select"}
+                    width={"100%"}
+                    disabled={false}
+                    data={cityList}
+                    value={customerpersonalInfo?.city}
+                    onChange={(e) => { handleInputChange(e, "city") }}
+                  />
+                </FormControl>
+              </Stack>
             </Grid>
             <Grid item xs={12} sm={6}>
-              {/* <TextField label="Pincode" variant="standard" sx={{ marginBottom: "3rem" }} inputProps={{ maxLength: 6 }} fullWidth
-               value={customerpersonalInfo?.pincode} onChange={(e) => { handleInputChange(e.target.value, "pincode") }} /> */}
-              <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Pincode</InputLabel>
-              <FormControl variant="outlined" size="small">
-                <OutlinedInput
-                  readOnly={false}
-                  type="text"
-                  value={customerpersonalInfo?.pincode}
-                  onChange={(e) => { handleInputChange(e.target.value, "pincode") }}
-                  name="pincode"
-                  id={`outlined-adornment`}
-                  placeholder="Second Name"
-                  sx={{
-                    border: "",
-                    height: "40px",
-                    width: "100%",
-                    padding: "10px",
-                    borderRadius: "8px",
-                  }}
-                  inputProps={{ maxLength: 6 }}
-                />
-              </FormControl>
+              <Stack sx={{ width: "80%", gap: "0.5rem" }} key={'key'}>
+                <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>State</InputLabel>
+                <FormControl variant="outlined" size="small">
+
+                  <SingleSelect
+                    Placeholder={"Select"}
+                    width={"100%"}
+                    disabled={false}
+                    data={stateList}
+                    value={customerpersonalInfo?.state}
+                    onChange={(e) => { handleInputChange(e, "state") }}
+                  />
+                </FormControl>
+              </Stack>
             </Grid>
-            <Grid item xs={12}>
-              {/* <TextField label="Country" sx={{ width: "400px", marginBottom: "3rem" }} variant="standard" 
-              value={customerpersonalInfo?.country} onChange={(e) => { handleInputChange(e.target.value, "country") }} /> */}
-              <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Country</InputLabel>
-              <FormControl variant="outlined" size="small">
-                {/* <OutlinedInput
-                  readOnly={false}
-                  type="text"
-                  value={customerpersonalInfo?.country}
-                  onChange={(e) => { handleInputChange(e.target.value, "country") }}
-                  name="country"
-                  id={`outlined-adornment`}
-                  placeholder="Second Name"
-                  sx={{
-                    border: "",
-                    height: "40px",
-                    width: "100%",
-                    padding: "10px",
-                    borderRadius: "8px",
-                  }}
-                /> */}
-                <SingleSelect
-                  Placeholder={"Select"}
-                  width={"100%"}
-                  disabled={true}
-                  data={upDatedCountryList}
-                  value={customerpersonalInfo?.country}
-                  onChange={(e) => { handleInputChange(e.target.value, "country") }}
-                />
-              </FormControl>
+            <Grid item xs={12} sm={6}>
+              <Stack sx={{ width: "80%", gap: "0.5rem" }} key={'key'}>
+                <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Pincode</InputLabel>
+                <FormControl variant="outlined" size="small">
+                  <OutlinedInput
+                    readOnly={false}
+                    type="text"
+                    value={customerpersonalInfo?.pincode}
+                    onChange={(e) => { handleInputChange(e.target.value, "pincode") }}
+                    name="pincode"
+                    id={`outlined-adornment`}
+                    placeholder="Second Name"
+                    sx={{
+                      border: "",
+                      height: "40px",
+                      width: "100%",
+                      padding: "10px",
+                      borderRadius: "8px",
+                    }}
+                    inputProps={{ maxLength: 6 }}
+                  />
+                </FormControl>
+              </Stack>
             </Grid>
-            <Grid item xs={12}>
-              <Button variant="contained" onClick={SaveUserData}> Save</Button>
+            <Grid item xs={12} sm={6}>
+              <Stack sx={{ width: "80%", gap: "0.5rem" }} key={'key'}>
+                <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Country</InputLabel>
+                <FormControl variant="outlined" size="small">
+
+                  <SingleSelect
+                    Placeholder={"Select"}
+                    width={"100%"}
+                    disabled={true}
+                    data={upDatedCountryList}
+                    value={customerpersonalInfo?.country}
+                    onChange={(e) => { handleInputChange(e.target.value, "country") }}
+                  />
+                </FormControl>
+              </Stack>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              {/* <Stack sx={{ width: "50%", gap: "0.5rem" }} key={'key'}>
+                <Button variant="contained" onClick={SaveUserData}> Save</Button>
+              </Stack> */}
+              <Box style={{ marginLeft: "30px", marginBottom: "20px" }}>
+                <Button
+                  style={{
+                    width: "90px",
+                    height: "30px",
+                    borderRadius: "10px",
+                    backgroundColor: "#2b2e64",
+                    color: "white",
+                    border: "none",
+                    marginTop: 30
+                  }}
+                  onClick={SaveUserData}
+                >
+                  Save
+                </Button>
+              </Box>
             </Grid>
           </Grid>
         </Box>

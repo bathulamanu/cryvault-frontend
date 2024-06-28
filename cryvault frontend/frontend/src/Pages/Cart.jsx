@@ -38,7 +38,7 @@ const Cart = () => {
   const isMobile = useDeviceSize() === "xs";
 
   return (
-    <Box sx={{ adding: isMobile ? "0rem 2rem" : " 7rem 10rem" }}>
+    <Box sx={{ marginTop: 15, adding: isMobile ? "0rem 2rem" : " 7rem 10rem" }}>
       <Box sx={{ display: "flex", flexDirection: isMobile ? "column" : "row", justifyContent: "space-between", margin: "3rem 7rem" }}>
         <Box>
           <Typography sx={{ fontSize: "3.5rem", fontWeight: "700" }}>Cart</Typography>
@@ -78,8 +78,8 @@ const Cart = () => {
             size="small"
             sx={{ height: "36px" }}
             name="coupon"
-            // value={loginData?.password}
-            // onChange={handleOnChange}
+          // value={loginData?.password}
+          // onChange={handleOnChange}
           />
           <Box>
             <hr />
