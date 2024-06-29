@@ -654,6 +654,15 @@ const HospitalDetails = forwardRef((props, ref) => {
             gap: 2,
           }}
         >
+           <Box
+            sx={{
+              width: "49%",
+              display: "flex",
+              flexDirection: "column",
+              gap: 4,
+            }}
+          >
+
           <Card variant="outlined">
             <CardContent sx={{ width: "550px" }}>
               <Grid container spacing={2}>
@@ -784,7 +793,15 @@ const HospitalDetails = forwardRef((props, ref) => {
                 </Grid>
               </Grid>
             </CardContent>
-          </Card>
+          </Card> </Box>
+          <Box
+            sx={{
+              width: "49%",
+              display: "flex",
+              flexDirection: "column",
+              gap: 4,
+            }}
+          >
           <Card variant="outlined">
             <CardContent sx={{ width: "550px" }}>
               <Grid container spacing={2}>
@@ -898,6 +915,8 @@ const HospitalDetails = forwardRef((props, ref) => {
               </Grid>
             </CardContent>
           </Card>
+          </Box>
+
         </Stack>
       </CardContent>
     </Card>

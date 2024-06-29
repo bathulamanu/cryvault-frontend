@@ -1,4 +1,7 @@
-import { Select, MenuItem, Button, Box, Card, Typography, useMediaQuery, Input, TextField, RadioGroup, FormControlLabel, Checkbox, Grid, FormControl, Radio } from "@mui/material";
+import {
+  Select, MenuItem, Button, Box, Card, Typography, useMediaQuery, Input, TextField, RadioGroup, FormControlLabel, Checkbox, Grid, FormControl, Radio
+  , OutlinedInput, InputLabel, Stack
+} from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getHelpDetails } from "../../redux/reducers/DashboardReducer";
@@ -15,7 +18,69 @@ const Help = () => {
   const handleDropdown = () => setShowDropdown(!showDropdown);
 
   const [selectedIssue, setSelectedIssue] = useState(null); // Initial state
-
+  const [anyDetail, setAnyDetail] = useState({
+    customerHelpTitleNo: null,
+    questionId: null,
+    customerID: null,
+    issue: ""
+  })
+  const [MobilChange, setMobilChange] = useState({
+    customerHelpTitleNo: null,
+    questionId: null,
+    customerID: null,
+    ExistedPhoneNumber: "",
+    NewPhoneNumber: "",
+    reason: ""
+  })
+  const [hospitalDetailsChange, sethospitalDetailsChange] = useState({
+    customerHelpTitleNo: null,
+    questionId: null,
+    customerID: null,
+    presentHospoital: "",
+    NewHospital: "",
+    locationOrBranch: "",
+    reason: ""
+  })
+  const [executiveChange, setExecutiveChange] = useState({
+    customerHelpTitleNo: null,
+    questionId: null,
+    customerID: null,
+    areaName: "",
+    pincode: "",
+    reason: ""
+  })
+  const [nominne, setNominne] = useState({
+    customerHelpTitleNo: null,
+    questionId: null,
+    customerID: null,
+    NomineeOrGaurdianName: "",
+    relationship: "",
+    mobileNumber: "",
+    address: "",
+    idProof: "",
+    idProofNo: "",
+    other: ""
+  })
+  const [communication, setCommunication] = useState({
+    customerHelpTitleNo: null,
+    questionId: null,
+    customerID: null,
+    addressLine1: "",
+    addressLine2: "",
+    nearlandMark: "",
+    city: null,
+    state: null,
+    pincode: "",
+    country: null,
+    ifPermanentAddressIsSameAsCorrespondence: null
+  })
+  const handleOnChange = (e) => {
+    const { name, value } = e.target;
+    setMobilChange((data) => ({
+      ...data,
+      [name]: value
+    }))
+  };
   const handleChange = (e) => {
     setSelectedIssue(e.target.id);
     setShowDropdown(false);
@@ -24,6 +89,7 @@ const Help = () => {
   useEffect(() => {
     dispatch(getHelpDetails());
   }, []);
+
   return (
     <Box sx={{ height: "100%" }}>
       <Card
@@ -36,7 +102,7 @@ const Help = () => {
         }}
         style={{ marginLeft: isMobile ? "10px" : "20px" }}
       >
-        <Box  p={2} sx={{ backgroundColor: "#2b2e64" }}>
+        <Box p={2} sx={{ backgroundColor: "#2b2e64" }}>
           <Typography sx={{ color: "white" }} variant="h4">
             Help
           </Typography>
@@ -122,7 +188,8 @@ export const DetailsIssue = React.memo(() => {
       </Box>
 
       <textarea style={{ alignItems: "flex-start", fontSize: "2rem", width: "100%", border: "1px solid #e5e5e5", height: "80%", borderRadius: "1rem", padding: "1rem" }} variant="outlined" aria-label="Demo input" multiline placeholder="If any issues comment here..." />
-      <Button className="issuesButton" variant="contained" sx={{ bottom: "-15px", right: "20px", fontSize: "2rem", fontWeight: "600", borderRadius: "0.5rem", position: isMobile ? 'static' :  "absolute", width:isMobile?'100%' : '23e' }}>
+
+      <Button className="issuesButton" variant="contained" sx={{ bottom: "-15px", right: "20px", fontSize: "2rem", fontWeight: "600", borderRadius: "0.5rem", position: isMobile ? 'static' : "absolute", width: isMobile ? '100%' : '23e' }}>
         Submit
       </Button>
     </Box>
@@ -156,24 +223,39 @@ export const MobileNumberIssue = React.memo(() => {
         <Typography sx={{ fontSize: "2rem", fontWeight: "600" }}> Mobile Number change</Typography>
       </Box>
 
-      <Box sx={{ width: "100%" }}>
+      {/* <Box sx={{ width: "100%" }}>
         <Box sx={{ marginTop: "50px" }}>
-          <TextField
-            InputLabelProps={{
-              sx: {
-                fontSize: "1.5rem",
-              },
-            }}
-            InputProps={{
-              sx: {
-                fontSize: "1.5rem",
-              },
-            }}
-            id="baby Name"
-            label="Existing Number"
-            variant="standard"
-            fullWidth
-          />
+          <Stack sx={{ width: "100%", gap: "0.5rem" }} key={"key"}>
+            <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Existing Number</InputLabel>
+            <FormControl variant="outlined" size="small">
+              <OutlinedInput
+                readOnly={false}
+                type="text"
+                value={MobilChange?.ExistedPhoneNumber}
+                name="email"
+                id={`outlined-adornment`}
+                placeholder="Existing Number"
+                sx={{
+                  border: "",
+                  height: "40px",
+                  width: "100%",
+                  padding: "10px",
+                  borderRadius: "8px",
+                }}
+                onChange={handleChange}
+                InputLabelProps={{
+                  sx: {
+                    fontSize: "1.5rem",
+                  },
+                }}
+                InputProps={{
+                  sx: {
+                    fontSize: "1.5rem",
+                  },
+                }}
+              />
+            </FormControl>
+          </Stack>
         </Box>
 
         <Box sx={{ marginTop: "50px" }}>
@@ -215,9 +297,36 @@ export const MobileNumberIssue = React.memo(() => {
             fullWidth
           />
         </Box>
-      </Box>
+      </Box> */}
 
-      <Button className="issuesButton" variant="contained" sx={{ bottom: "-15px", right: "20px", fontSize: "2rem", fontWeight: "600", borderRadius: "0.5rem",  position: isMobile ? 'static' :  "absolute", width:isMobile?'100%' : '23e' }}>
+      <Box sx={{ marginLeft: "20px", marginTop: "10px" }}>
+        <Typography sx={{ color: "#000000" }} style={{ fontSize: "2rem" }}>
+          Your Referral Code
+        </Typography>
+        {/* <TextField label="Enter Referral Code" variant="standard" sx={{ width: "350px" }} /> */}
+        <Stack sx={{ width: "100%", gap: "0.5rem" }} key={"key"}>
+          <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Enter Referral Code</InputLabel>
+          <FormControl variant="outlined" size="small">
+            <OutlinedInput
+              readOnly={false}
+              type="text"
+              // value={MobilChange.ExistedPhoneNumber}
+              name="refferalCode"
+              id={`outlined-adornment`}
+              placeholder="Enter Referral Code"
+              sx={{
+                border: "",
+                height: "40px",
+                width: "100%",
+                padding: "10px",
+                borderRadius: "8px",
+              }}
+            // onChange={handleOnChange}
+            />
+          </FormControl>
+        </Stack>
+      </Box>
+      <Button className="issuesButton" variant="contained" sx={{ bottom: "-15px", right: "20px", fontSize: "2rem", fontWeight: "600", borderRadius: "0.5rem", position: isMobile ? 'static' : "absolute", width: isMobile ? '100%' : '23e' }}>
         Submit
       </Button>
     </Box>
@@ -326,7 +435,7 @@ export const HospitalDetailsIssue = React.memo(() => {
         </Box>
       </Box>
 
-      <Button className="issuesButton" variant="contained" sx={{ bottom: "-15px", right: "20px", fontSize: "2rem", fontWeight: "600", borderRadius: "0.5rem",  position: isMobile ? 'static' :  "absolute", width:isMobile?'100%' : '23e' }}>
+      <Button className="issuesButton" variant="contained" sx={{ bottom: "-15px", right: "20px", fontSize: "2rem", fontWeight: "600", borderRadius: "0.5rem", position: isMobile ? 'static' : "absolute", width: isMobile ? '100%' : '23e' }}>
         Submit
       </Button>
     </Box>
@@ -400,7 +509,7 @@ export const ExecutiveDetailsIssue = React.memo(() => {
         <textarea style={{ marginTop: "50px", alignItems: "flex-start", fontSize: "2rem", width: "100%", border: "1px solid #e5e5e5", height: "80%", borderRadius: "1rem", padding: "1rem" }} variant="outlined" aria-label="Demo input" multiline placeholder="If any issues comment here..." />
       </Box>
 
-      <Button className="issuesButton" variant="contained" sx={{ bottom: "-15px", right: "20px", fontSize: "2rem", fontWeight: "600", borderRadius: "0.5rem",  position: isMobile ? 'static' :  "absolute", width:isMobile?'100%' : '23e' }}>
+      <Button className="issuesButton" variant="contained" sx={{ bottom: "-15px", right: "20px", fontSize: "2rem", fontWeight: "600", borderRadius: "0.5rem", position: isMobile ? 'static' : "absolute", width: isMobile ? '100%' : '23e' }}>
         Submit
       </Button>
     </Box>
@@ -626,7 +735,7 @@ export const NomineeDetailsIssue = React.memo(() => {
         </Box>
       </Box>
 
-      <Button className="issuesButton" variant="contained" sx={{ bottom: "-15px", right: "20px", fontSize: "2rem", fontWeight: "600", borderRadius: "0.5rem",  position: isMobile ? 'static' :  "absolute", width:isMobile?'100%' : '23e' }}>
+      <Button className="issuesButton" variant="contained" sx={{ bottom: "-15px", right: "20px", fontSize: "2rem", fontWeight: "600", borderRadius: "0.5rem", position: isMobile ? 'static' : "absolute", width: isMobile ? '100%' : '23e' }}>
         Submit
       </Button>
     </Box>
@@ -818,7 +927,7 @@ export const CommunicationDetailsIssue = React.memo(() => {
         />
       </Box>
 
-      <Button className="issuesButton" variant="contained" sx={{ bottom: "-15px", right: "20px", fontSize: "2rem", fontWeight: "600", borderRadius: "0.5rem",  position: isMobile ? 'static' :  "absolute", width:isMobile?'100%' : '23e' }}>
+      <Button className="issuesButton" variant="contained" sx={{ bottom: "-15px", right: "20px", fontSize: "2rem", fontWeight: "600", borderRadius: "0.5rem", position: isMobile ? 'static' : "absolute", width: isMobile ? '100%' : '23e' }}>
         Submit
       </Button>
     </Box>
