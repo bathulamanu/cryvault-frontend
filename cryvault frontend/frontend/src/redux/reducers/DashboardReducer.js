@@ -1,7 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getAnnexureInfoApi, addClientInfoApi, getClientInfoApi, getHelpDetailsApi, uploadSingleFileApi, GetTypeOfPregnancyDetails, GetTypeOfProofDetails } from "./api";
+import {
+  getAnnexureInfoApi, addClientInfoApi, getClientInfoApi, getHelpDetailsApi, uploadSingleFileApi,
+  GetTypeOfPregnancyDetails, GetTypeOfProofDetails, addAnyDetailsIssueApi,
+  addMobileNumberChange, addHospitalDetailsChangeIssue, addExecutiveDetailsIssue, addNomineeDetailsChangeIssue, addCommunicationDetailsIssue
+} from "./api";
 import axios from "axios";
 import { exampledata } from "../../data";
+import { ToastContainer, toast } from "react-toastify";
 
 export const getHelpDetails = createAsyncThunk("getHelpDetails", async (payload = {}, thunkAPI) => {
   const apiUrl = getHelpDetailsApi();
@@ -141,6 +146,123 @@ export const GetTypeOfProof = createAsyncThunk("GetTypeOfProof", async (payload 
     return thunkAPI.rejectWithValue(error);
   }
 });
+// ------
+export const addAnyDetailsIssue = createAsyncThunk("addAnyDetailsIssue", async (payload = {}, thunkAPI) => {
+  const apiUrl = addAnyDetailsIssueApi();
+  const token = sessionStorage.getItem("token");
+  const headers = {
+    authorization: `${token}`,
+  };
+  try {
+    const response = await axios.post(apiUrl, payload, { headers });
+    const { ok, problem, data } = response;
+    if (data) {
+      if (payload?.callback) payload.callback();
+      return data;
+    } else {
+      return thunkAPI.rejectWithValue({ data, problem });
+    }
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+
+export const addMobileNumber = createAsyncThunk("addMobileNumber", async (payload = {}, thunkAPI) => {
+  const apiUrl = addMobileNumberChange();
+  const token = sessionStorage.getItem("token");
+  const headers = {
+    authorization: `${token}`,
+  };
+  try {
+    const response = await axios.post(apiUrl, payload, { headers });
+    const { ok, problem, data } = response;
+    if (data) {
+      if (payload?.callback) payload.callback();
+      return data;
+    } else {
+      return thunkAPI.rejectWithValue({ data, problem });
+    }
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+
+export const addHospitalDetailsChange = createAsyncThunk("addHospitalDetailsChange", async (payload = {}, thunkAPI) => {
+  const apiUrl = addHospitalDetailsChangeIssue();
+  const token = sessionStorage.getItem("token");
+  const headers = {
+    authorization: `${token}`,
+  };
+  try {
+    const response = await axios.post(apiUrl, payload, { headers });
+    const { ok, problem, data } = response;
+    if (data) {
+      if (payload?.callback) payload.callback();
+      return data;
+    } else {
+      return thunkAPI.rejectWithValue({ data, problem });
+    }
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+export const addExecutiveDetails = createAsyncThunk("addExecutiveDetails", async (payload = {}, thunkAPI) => {
+  const apiUrl = addExecutiveDetailsIssue();
+  const token = sessionStorage.getItem("token");
+  const headers = {
+    authorization: `${token}`,
+  };
+  try {
+    const response = await axios.post(apiUrl, payload, { headers });
+    const { ok, problem, data } = response;
+    if (data) {
+      if (payload?.callback) payload.callback();
+      return data;
+    } else {
+      return thunkAPI.rejectWithValue({ data, problem });
+    }
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+export const addNomineeDetailsChange = createAsyncThunk("addNomineeDetailsChange", async (payload = {}, thunkAPI) => {
+  const apiUrl = addNomineeDetailsChangeIssue();
+  const token = sessionStorage.getItem("token");
+  const headers = {
+    authorization: `${token}`,
+  };
+  try {
+    const response = await axios.post(apiUrl, payload, { headers });
+    const { ok, problem, data } = response;
+    if (data) {
+      if (payload?.callback) payload.callback();
+      return data;
+    } else {
+      return thunkAPI.rejectWithValue({ data, problem });
+    }
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
+export const addCommunicationDetails = createAsyncThunk("addCommunicationDetails", async (payload = {}, thunkAPI) => {
+  const apiUrl = addCommunicationDetailsIssue();
+  const token = sessionStorage.getItem("token");
+  const headers = {
+    authorization: `${token}`,
+  };
+  try {
+    const response = await axios.post(apiUrl, payload, { headers });
+    const { ok, problem, data } = response;
+    if (data) {
+      if (payload?.callback) payload.callback();
+      return data;
+    } else {
+      return thunkAPI.rejectWithValue({ data, problem });
+    }
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error);
+  }
+});
 
 const initialState = {
   helpList: [],
@@ -236,6 +358,78 @@ const DashboardReducer = createSlice({
       .addCase(GetTypeOfProof.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
+      })
+      .addCase(addAnyDetailsIssue.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(addAnyDetailsIssue.fulfilled, (state, action) => {
+        state.loading = false;
+        toast.success(action.payload.message);
+      })
+      .addCase(addAnyDetailsIssue.rejected, (state, action) => {
+        state.loading = false;
+        toast.error(action.payload.message);
+      })
+      .addCase(addMobileNumber.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(addMobileNumber.fulfilled, (state, action) => {
+        state.loading = false;
+        toast.success(action.payload.message);
+      })
+      .addCase(addMobileNumber.rejected, (state, action) => {
+        state.loading = false;
+        toast.error(action.payload.message);
+      })
+      .addCase(addHospitalDetailsChange.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(addHospitalDetailsChange.fulfilled, (state, action) => {
+        state.loading = false;
+        toast.success(action.payload.message);
+      })
+      .addCase(addHospitalDetailsChange.rejected, (state, action) => {
+        state.loading = false;
+        toast.error(action.payload.message);
+      })
+      .addCase(addExecutiveDetails.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(addExecutiveDetails.fulfilled, (state, action) => {
+        state.loading = false;
+        toast.success(action.payload.message);
+      })
+      .addCase(addExecutiveDetails.rejected, (state, action) => {
+        state.loading = false;
+        toast.error(action.payload.message);
+      })
+      .addCase(addNomineeDetailsChange.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(addNomineeDetailsChange.fulfilled, (state, action) => {
+        state.loading = false;
+        toast.success(action.payload.message);
+      })
+      .addCase(addNomineeDetailsChange.rejected, (state, action) => {
+        state.loading = false;
+        toast.error(action.payload.message);
+      })
+      .addCase(addCommunicationDetails.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(addCommunicationDetails.fulfilled, (state, action) => {
+        state.loading = false;
+        toast.success(action.payload.message);
+      })
+      .addCase(addCommunicationDetails.rejected, (state, action) => {
+        state.loading = false;
+        toast.error(action.payload.message);
       })
 
   },

@@ -1,4 +1,4 @@
-const BASE_URL =    "http://18.61.70.225:4000"; // "http://localhost:4000" // "http://192.168.0.102:4000" //
+const BASE_URL = "http://18.61.70.225:4000"; // "http://localhost:4000" // "http://192.168.0.102:4000" //
 
 
 export const s3BucketFilePath = () => {
@@ -144,4 +144,27 @@ export const GetTypeOfProofDetails = () => {
   return `${BASE_URL}/flyingbyts/api/user/getMasterConfiguration/IDProof/null`;
 };
 
+export const addAnyDetailsIssueApi = () => {
+  return `${BASE_URL}/flyingbyts/api/customer/addCustomerAnyDetailsIssue`;
+};
+
+export const addMobileNumberChange = () => {
+  return `${BASE_URL}/flyingbyts/api/customer/addCustomerMobileNumberChangeIssue`;
+};
+
+export const addHospitalDetailsChangeIssue = () => {
+  return `${BASE_URL}/flyingbyts/api/customer/addCustomerHospitalDetailsChangeIssue`;
+};
+
+export const addExecutiveDetailsIssue = () => {
+  return `${BASE_URL}/flyingbyts/api/customer/addCustomerExecutiveDetailsIssue`;
+};
+
+export const addNomineeDetailsChangeIssue = () => {
+  return `${BASE_URL}/flyingbyts/api/customer/addCustomerNomineeDetailsChangeIssue`;
+};
+
+export const addCommunicationDetailsIssue = () => {
+  return `${BASE_URL}/flyingbyts/api/customer/addCustomerCommunicationDetailsIssue`;
+};
 
