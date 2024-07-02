@@ -4,7 +4,17 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getHelpDetails, addAnyDetailsIssue, addMobileNumber, addHospitalDetailsChange, addExecutiveDetails, addNomineeDetailsChange, addCommunicationDetails } from "../../redux/reducers/DashboardReducer";
+import {
+  getHelpDetails, addAnyDetailsIssue, addMobileNumber, addHospitalDetailsChange,
+  addExecutiveDetails, addNomineeDetailsChange, addCommunicationDetails
+} from "../../redux/reducers/DashboardReducer";
+import { getCountry, getState, getCity } from "../../redux/reducers/PaymentReducer";
+import {
+  getCityIdList,
+  getNamesIdList,
+  getStateIdList
+} from "../../globalFunctions";
+import { MultipleSelect, SingleSelect } from '../CheckoutDetails'
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 
@@ -1089,20 +1099,48 @@ export const NomineeDetailsIssue = React.memo(() => {
 
 export const CommunicationDetailsIssue = React.memo(() => {
   const isMobile = useMediaQuery("(max-width:600px)");
-  const [communication, setCommunication] = useState({
+  const countries = useSelector((state) => state.payment.countries);
+  const states = useSelector((state) => state.payment.states);
+  const cities = useSelector((state) => state.payment.cities);
+
+  const upDatedCountryList = getNamesIdList(countries);
+  const stateList = getStateIdList(states);
+  const cityList = getCityIdList(cities);
+
+  const initialCommunication = {
     customerHelpTitleNo: localStorage.getItem("customerHelpTitleID"),
     questionId: localStorage.getItem("selectedIssue"),
     customerID: null,
     addressLine1: "",
     addressLine2: "",
     nearlandMark: "",
-    city: 748596,
-    state: 1699,
+    city: null,
+    state: null,
     pincode: "",
     country: 352,
     ifPermanentAddressIsSameAsCorrespondence: null
-  })
+  }
+
+  const errorCommunication = {
+    addressLine1: ""
+  }
+  const [communication, setCommunication] = useState(initialCommunication);
+  const [errorCommunicationInfo, seterrorCommunicationInfo] = useState(errorCommunication)
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getCountry());
+  }, []);
+
+  useEffect(() => {
+    const dataToSend = communication?.country
+    dispatch(getState({ payload: dataToSend }));
+  }, [communication?.country]);
+
+  useEffect(() => {
+    const dataToSend = communication?.state
+    dispatch(getCity({ payload: dataToSend }));
+  }, [communication?.state]);
 
   const handleOnCommunicationChange = (value, name) => {
     const exp = /^\d*$/
@@ -1113,24 +1151,45 @@ export const CommunicationDetailsIssue = React.memo(() => {
       ...data,
       [name]: value
     }))
+    seterrorCommunicationInfo((data) => ({
+      ...data,
+      [name]: ""
+    }))
   };
 
 
   const handleCheckChange = (event, name) => {
-    // setData((prevData) => ({
-    //     ...prevData,
-    //     [name]: { ...prevData[name], value: event.target.checked, errorStatus: false, errorMessage: "" },
-    // }));
-
     setCommunication((data) => ({
       ...data,
       [name]: event.target.checked
     }))
   }
 
+  const handleChange = (event, name) => {
+    // setData((prevData) => ({
+    //   ...prevData,
+    //   [name]: { ...prevData[name], value: event, errorStatus: false, errorMessage: "" },
+    // }));
+
+    setCommunication((data) => ({
+      ...data,
+      [name]: event
+    }))
+  }
+
   const SaveUserCommunicationData = () => {
+    if (!communication.addressLine1) {
+      seterrorCommunicationInfo((data) => ({
+        ...data,
+        ['addressLine1']: "Address Line 1 is required."
+      }))
+      return
+    }
+
     console.log("cehck data communication 12345678 ", communication);
-    dispatch(addCommunicationDetails(communication))
+
+    dispatch(addCommunicationDetails(communication));
+    setCommunication(initialCommunication)
   }
 
   return (
@@ -1170,11 +1229,13 @@ export const CommunicationDetailsIssue = React.memo(() => {
                 name="email"
                 id={`outlined-adornment`}
                 placeholder="Address Line 1"
-                sx={{ border: "", height: "40px", width: "100%", padding: "10px", borderRadius: "8px", }}
+                sx={{ border: errorCommunicationInfo?.addressLine1 ? "1px solid red" : "", height: "40px", width: "100%", padding: "10px", borderRadius: "8px", }}
                 onChange={(e) => { handleOnCommunicationChange(e.target.value, "addressLine1") }}
                 InputLabelProps={{ sx: { fontSize: "1.5rem", } }}
                 InputProps={{ sx: { fontSize: "1.5rem", } }}
               />
+              {errorCommunicationInfo?.addressLine1 ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{errorCommunicationInfo?.addressLine1}</Typography> : null}
+
             </FormControl>
           </Stack>
         </Box>
@@ -1217,42 +1278,53 @@ export const CommunicationDetailsIssue = React.memo(() => {
             </FormControl>
           </Stack>
           <Stack sx={{ width: "100%", gap: "0.5rem" }} key={"key"}>
-            <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>City</InputLabel>
+            <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Country</InputLabel>
             <FormControl variant="outlined" size="small">
-              <OutlinedInput
-                readOnly={false}
-                type="text"
-                value={communication?.city}
-                name="email"
-                id={`outlined-adornment`}
-                placeholder="city"
-                sx={{ border: "", height: "40px", width: "100%", padding: "10px", borderRadius: "8px", }}
-                onChange={(e) => { handleOnCommunicationChange(e.target.value, "city") }}
-                InputLabelProps={{ sx: { fontSize: "1.5rem", } }}
-                InputProps={{ sx: { fontSize: "1.5rem", } }}
+              <SingleSelect
+                Placeholder={"Select"}
+                width={"100%"}
+                disabled={true}
+                data={upDatedCountryList}
+                value={communication?.country}
+                onChange={(e) => {
+                  handleChange(e, "Country");
+                }}
               />
             </FormControl>
           </Stack>
           <Stack sx={{ width: "100%", gap: "0.5rem" }} key={"key"}>
             <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>State</InputLabel>
             <FormControl variant="outlined" size="small">
-              <OutlinedInput
-                readOnly={false}
-                type="text"
+
+              <SingleSelect
+                Placeholder={"Select"}
+                width={"100%"}
+                data={stateList}
                 value={communication?.state}
-                name="email"
-                id={`outlined-adornment`}
-                placeholder="state"
-                sx={{ border: "", height: "40px", width: "100%", padding: "10px", borderRadius: "8px", }}
-                onChange={(e) => { handleOnCommunicationChange(e.target.value, "state") }}
-                InputLabelProps={{ sx: { fontSize: "1.5rem", } }}
-                InputProps={{ sx: { fontSize: "1.5rem", } }}
+                onChange={(e) => {
+                  handleChange(e, "state")
+                }}
               />
             </FormControl>
           </Stack>
 
         </Box>
         <Box sx={{ display: "flex", marginTop: "30px", gap: "4rem" }}>
+          <Stack sx={{ width: "100%", gap: "0.5rem" }} key={"key"}>
+            <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>City</InputLabel>
+            <FormControl variant="outlined" size="small">
+
+              <SingleSelect
+                Placeholder={"Select"}
+                width={"100%"}
+                data={cityList}
+                value={communication?.city}
+                onChange={(e) => {
+                  handleChange(e, "city");
+                }}
+              />
+            </FormControl>
+          </Stack>
           <Stack sx={{ width: "100%", gap: "0.5rem" }} key={"key"}>
             <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Picode</InputLabel>
             <FormControl variant="outlined" size="small">
@@ -1270,23 +1342,7 @@ export const CommunicationDetailsIssue = React.memo(() => {
               />
             </FormControl>
           </Stack>
-          <Stack sx={{ width: "100%", gap: "0.5rem" }} key={"key"}>
-            <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Country</InputLabel>
-            <FormControl variant="outlined" size="small">
-              <OutlinedInput
-                readOnly={false}
-                type="text"
-                value={communication?.country}
-                name="email"
-                id={`outlined-adornment`}
-                placeholder="country"
-                sx={{ border: "", height: "40px", width: "100%", padding: "10px", borderRadius: "8px", }}
-                onChange={(e) => { handleOnCommunicationChange(e.target.value, "country") }}
-                InputLabelProps={{ sx: { fontSize: "1.5rem", } }}
-                InputProps={{ sx: { fontSize: "1.5rem", } }}
-              />
-            </FormControl>
-          </Stack>
+
 
         </Box>
       </Box>

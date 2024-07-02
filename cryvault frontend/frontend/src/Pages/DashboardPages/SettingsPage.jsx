@@ -1,19 +1,21 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Box, Card, Typography, Grid, TextField, IconButton, useMediaQuery, Button, FormControl, OutlinedInput, InputLabel, Stack } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import baby from "../../assets/images/baby.png";
 import { getCustomerInfo } from "../../redux/reducers/UserReducer"
 import { useDispatch, useSelector } from "react-redux";
 import { getCustomerPaymentDetails, getGenders } from "../../redux/reducers/PaymentReducer"
+import { uploadSingleFileApi } from '../../redux/reducers/api';
 import { MultipleSelect, SingleSelect } from '../CheckoutDetails'
 import { getCountry, getState, getCity } from "../../redux/reducers/PaymentReducer";
+import { ToastContainer, toast } from "react-toastify";
 import {
   getGenderIdList,
   getCityIdList,
   getNamesIdList,
   getStateIdList,
 } from "../../globalFunctions";
-
+import axios from "axios";
 const SettingsPage = () => {
   const dispatch = useDispatch()
   const isMobile = useMediaQuery("(max-width:600px)");
@@ -54,7 +56,8 @@ const SettingsPage = () => {
       "countryID": null,
       "countryName": ""
     },
-    "genderValue": ""
+    "genderValue": "",
+    "profilePhoto": ""
   })
   useEffect(() => {
     setCustomerpersonalInfo(userDetails);
@@ -88,8 +91,39 @@ const SettingsPage = () => {
   }
 
   const SaveUserData = () => {
-    console.log("cehck data ", customerpersonalInfo);
+    console.log("cehck data lllllllllllllllllllll  ", customerpersonalInfo);
     dispatch(getCustomerPaymentDetails(customerpersonalInfo))
+  }
+
+  const fileIDProofInputRef = useRef(null);
+
+  const handleButtonClick = () => {
+    fileIDProofInputRef.current.click();
+  };
+
+  const UploadFile = async (name, fileName, e) => {
+    // alert(name);
+    const apiUrl = uploadSingleFileApi();
+    const token = sessionStorage.getItem("token");
+    const headers = {
+      'Content-Type': 'multipart/form-data',
+      authorization: `${token}`
+    };
+    const formData = new FormData();
+    formData.append('file', e?.target?.files?.[0]);
+    formData.append('folder', name);
+    const response = await axios.post(apiUrl, formData, { headers });
+    if (response?.data?.status == 200) {
+      toast.success(response?.data?.message)
+
+      setCustomerpersonalInfo((data) => ({
+        ...data,
+        [fileName]: response?.data?.data?.key
+      }))
+    }
+    else {
+      toast.error(response?.data?.message)
+    }
   }
 
   return (
@@ -114,17 +148,35 @@ const SettingsPage = () => {
             padding: "20px",
           }}
         >
-          <Box style={{ margin: isMobile ? 'none' : "60px", position: "relative", display: isMobile ? 'flex' : "block", alignItems: "center", justifyContent: "center" }}>
-            <img
-              style={{
-                width: "150px",
-                height: "180px",
-                borderRadius: "50%",
-                marginBottom: "20px",
-              }}
-              src={baby}
-              alt="Father-son"
-            />
+          <Box style={{
+            margin: isMobile ? 'none' : "60px", position: "relative",
+            display: isMobile ? 'flex' : "block", alignItems: "center", justifyContent: "center"
+          }}>
+
+            {customerpersonalInfo.profilePhoto ?
+
+              <img
+                style={{
+                  width: "150px",
+                  height: "180px",
+                  borderRadius: "50%",
+                  marginBottom: "20px",
+                }}
+                src={"https://flyingbyts.s3.ap-south-2.amazonaws.com/" + customerpersonalInfo.profilePhoto}
+                alt="Father-son"
+              />
+              :
+              <img
+                style={{
+                  width: "150px",
+                  height: "180px",
+                  borderRadius: "50%",
+                  marginBottom: "20px",
+                }}
+                src={baby}
+                alt="Father-son"
+              />
+            }
             {isMobile ? (
               <IconButton
                 style={{
@@ -134,8 +186,15 @@ const SettingsPage = () => {
                   backgroundColor: "whitesmoke",
                 }}
                 aria-label="edit"
+                onClick={handleButtonClick}
               >
                 <EditIcon />
+                <input
+                  type="file"
+                  ref={fileIDProofInputRef}
+                  style={{ display: 'none' }}
+                  onChange={(e) => UploadFile("CustomerProfile", 'profilePhoto', e)}
+                />
               </IconButton>
             ) : (
               <IconButton
@@ -146,8 +205,15 @@ const SettingsPage = () => {
                   backgroundColor: "whitesmoke",
                 }}
                 aria-label="edit"
+                onClick={handleButtonClick}
               >
                 <EditIcon />{" "}
+                <input
+                  type="file"
+                  ref={fileIDProofInputRef}
+                  style={{ display: 'none' }}
+                  onChange={(e) => UploadFile("CustomerProfile", 'profilePhoto', e)}
+                />
               </IconButton>
             )}
           </Box>
