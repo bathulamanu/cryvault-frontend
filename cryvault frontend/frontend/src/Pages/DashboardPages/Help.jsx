@@ -105,12 +105,19 @@ const Help = () => {
 
 export const DetailsIssue = React.memo(() => {
   const isMobile = useMediaQuery("(max-width:600px)");
-  const [anyDetail, setAnyDetail] = useState({
+  const initialAny = {
     customerHelpTitleNo: localStorage.getItem("customerHelpTitleID"),
     questionId: localStorage.getItem("selectedIssue"),
     customerID: null,
     issue: ""
-  })
+  }
+
+  const issueErrorMessage = {
+    errorMessage: ""
+  }
+
+  const [anyDetail, setAnyDetail] = useState(initialAny);
+  const [issueError, setissueError] = useState(issueErrorMessage)
   const dispatch = useDispatch();
 
   const handleOnanyDetailChange = (value, name) => {
@@ -118,13 +125,24 @@ export const DetailsIssue = React.memo(() => {
       ...data,
       [name]: value
     }))
+    setissueError((data) => ({
+      ...data,
+      ['errorMessage']: ""
+    }))
   };
 
   const SaveUserAnyDetailsData = () => {
-    console.log("cehck data anyDetail 12345678 ", anyDetail);
-    dispatch(addAnyDetailsIssue(anyDetail))
+    if (!anyDetail.issue) {
+      setissueError((data) => ({
+        ...data,
+        ['errorMessage']: "Issue is required."
+      }))
+      return
+    }
+    dispatch(addAnyDetailsIssue(anyDetail));
+    setAnyDetail(initialAny)
   }
-  
+
   return (
     <Box
       sx={{
@@ -150,15 +168,26 @@ export const DetailsIssue = React.memo(() => {
         <Typography sx={{ fontSize: "2rem", fontWeight: "600" }}> Any details issue </Typography>
       </Box>
 
-      <textarea
-        style={{ alignItems: "flex-start", fontSize: "2rem", width: "100%", border: "1px solid #e5e5e5", height: "80%", borderRadius: "1rem", padding: "1rem" }}
+      <TextField
+        multiline
+        rows={10}
         variant="outlined"
-        aria-label="Demo input"
-        multiline placeholder="If any issues comment here..."
         value={anyDetail?.issue}
+        fullWidth
+        placeholder="If any Issue comment hear"
+        sx={{
+          marginBottom: 2,
+          '& .MuiInputBase-input': { fontSize: '2rem' },
+          alignItems: "flex-start",
+          width: "100%",
+          border: issueError?.errorMessage ? "1px solid red" : "1px solid #e5e5e5",
+          height: "80%",
+          borderRadius: "1rem",
+          padding: "1rem"
+        }}
         onChange={(e) => { handleOnanyDetailChange(e.target.value, "issue") }}
       />
-
+      {issueError?.errorMessage ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{issueError?.errorMessage}</Typography> : null}
       <Button className="issuesButton" variant="contained" onClick={SaveUserAnyDetailsData} sx={{ bottom: "-15px", right: "20px", fontSize: "2rem", fontWeight: "600", borderRadius: "0.5rem", position: isMobile ? 'static' : "absolute", width: isMobile ? '100%' : '23e' }}>
         Submit
       </Button>
@@ -168,7 +197,7 @@ export const DetailsIssue = React.memo(() => {
 export const MobileNumberIssue = React.memo(() => {
 
   const isMobile = useMediaQuery("(max-width:600px)");
-  const [MobilChange, setMobilChange] = useState({
+  const initialmobile = {
     customerHelpTitleNo: localStorage.getItem("customerHelpTitleID"),
     questionId: localStorage.getItem("selectedIssue"),
     customerID: null,
@@ -176,7 +205,14 @@ export const MobileNumberIssue = React.memo(() => {
     NewPhoneNumber: "",
     ReEnter: "",
     reason: ""
-  })
+  }
+  const errorMobile = {
+    ExistedPhoneNumber: "",
+    NewPhoneNumber: "",
+    ReEnter: ""
+  }
+  const [MobilChange, setMobilChange] = useState(initialmobile)
+  const [errorMobileInfo, seterrorMobileInfo] = useState(errorMobile)
   const dispatch = useDispatch();
 
   const handleOnChange = (value, name) => {
@@ -184,15 +220,51 @@ export const MobileNumberIssue = React.memo(() => {
     if (name != "reason" && !exp.test(value)) {
       return
     }
+
     setMobilChange((data) => ({
       ...data,
       [name]: value
     }))
+
+    seterrorMobileInfo((data) => ({
+      ...data,
+      [name]: ""
+    }))
+
   };
 
   const SaveUserData = () => {
-    console.log("cehck data MobilChange 12345678 ", MobilChange);
+    if (!MobilChange.ExistedPhoneNumber) {
+      seterrorMobileInfo((data) => ({
+        ...data,
+        ['ExistedPhoneNumber']: "Existing Phone Number is required."
+      }))
+      return
+    }
+    if (!MobilChange.NewPhoneNumber) {
+      seterrorMobileInfo((data) => ({
+        ...data,
+        ['NewPhoneNumber']: "New Number is required."
+      }))
+      return
+    }
+    if (!MobilChange.ReEnter) {
+      seterrorMobileInfo((data) => ({
+        ...data,
+        ['ReEnter']: "ReEnter New Number is required."
+      }))
+      return
+    }
+    if (MobilChange.NewPhoneNumber !== MobilChange.ReEnter) {
+      seterrorMobileInfo((data) => ({
+        ...data,
+        ['ReEnter']: "not matched to New Number."
+      }))
+      return
+    }
+
     dispatch(addMobileNumber(MobilChange))
+    setMobilChange(initialmobile)
   }
 
   return (
@@ -232,11 +304,13 @@ export const MobileNumberIssue = React.memo(() => {
                 name="email"
                 id={`outlined-adornment`}
                 placeholder="Existing Number"
-                sx={{ border: "", height: "40px", width: "100%", padding: "10px", borderRadius: "8px", }}
+                sx={{ border: errorMobileInfo?.ExistedPhoneNumber ? "1px solid red" : "", height: "40px", width: "100%", padding: "10px", borderRadius: "8px", }}
                 onChange={(e) => { handleOnChange(e.target.value, "ExistedPhoneNumber") }}
                 InputLabelProps={{ sx: { fontSize: "1.5rem", } }}
                 InputProps={{ sx: { fontSize: "1.5rem", }, maxLength: 10 }}
               />
+              {errorMobileInfo?.ExistedPhoneNumber ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{errorMobileInfo?.ExistedPhoneNumber}</Typography> : null}
+
             </FormControl>
           </Stack>
         </Box>
@@ -253,7 +327,7 @@ export const MobileNumberIssue = React.memo(() => {
                 id={`outlined-adornment`}
                 placeholder="New Number"
                 sx={{
-                  border: "",
+                  border: errorMobileInfo?.NewPhoneNumber ? "1px solid red" : "",
                   height: "40px",
                   width: "100%",
                   padding: "10px",
@@ -273,6 +347,8 @@ export const MobileNumberIssue = React.memo(() => {
                   maxLength: 10
                 }}
               />
+              {errorMobileInfo?.NewPhoneNumber ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{errorMobileInfo?.NewPhoneNumber}</Typography> : null}
+
             </FormControl>
           </Stack>
         </Box>
@@ -289,7 +365,7 @@ export const MobileNumberIssue = React.memo(() => {
                 id={`outlined-adornment`}
                 placeholder="Re Enter New Number"
                 sx={{
-                  border: "",
+                  border: errorMobileInfo?.ReEnter ? "1px solid red" : "",
                   height: "40px",
                   width: "100%",
                   padding: "10px",
@@ -308,6 +384,8 @@ export const MobileNumberIssue = React.memo(() => {
                   maxLength: 10
                 }}
               />
+              {errorMobileInfo?.ReEnter ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{errorMobileInfo?.ReEnter}</Typography> : null}
+
             </FormControl>
           </Stack>
         </Box>
@@ -368,7 +446,7 @@ export const MobileNumberIssue = React.memo(() => {
 export const HospitalDetailsIssue = React.memo(() => {
   const isMobile = useMediaQuery("(max-width:600px)");
 
-  const [hospitalDetailsChange, sethospitalDetailsChange] = useState({
+  const intialHospital = {
     customerHelpTitleNo: localStorage.getItem("customerHelpTitleID"),
     questionId: localStorage.getItem("selectedIssue"),
     customerID: null,
@@ -376,7 +454,16 @@ export const HospitalDetailsIssue = React.memo(() => {
     NewHospital: "",
     locationOrBranch: "",
     reason: ""
-  })
+  }
+  const errorhospital = {
+    presentHospoital: "",
+    NewHospital: "",
+    locationOrBranch: ""
+  }
+
+  const [hospitalDetailsChange, sethospitalDetailsChange] = useState(intialHospital)
+  const [errorhospitalInfo, seterrorhospitalInfo] = useState(errorhospital)
+
 
   const dispatch = useDispatch();
 
@@ -385,11 +472,36 @@ export const HospitalDetailsIssue = React.memo(() => {
       ...data,
       [name]: value
     }))
+    seterrorhospitalInfo((data) => ({
+      ...data,
+      [name]: ""
+    }))
   };
 
   const SaveUserHospitalData = () => {
-    console.log("cehck data hospitalDetailsChange 12345678 ", hospitalDetailsChange);
+    if (!hospitalDetailsChange.presentHospoital) {
+      seterrorhospitalInfo((data) => ({
+        ...data,
+        ['presentHospoital']: "Present Hospital is required."
+      }))
+      return
+    }
+    if (!hospitalDetailsChange.NewHospital) {
+      seterrorhospitalInfo((data) => ({
+        ...data,
+        ['NewHospital']: "New Hospital is required."
+      }))
+      return
+    }
+    if (!hospitalDetailsChange.locationOrBranch) {
+      seterrorhospitalInfo((data) => ({
+        ...data,
+        ['locationOrBranch']: "Location Or Branch is required."
+      }))
+      return
+    }
     dispatch(addHospitalDetailsChange(hospitalDetailsChange))
+    sethospitalDetailsChange(intialHospital)
   }
 
   return (
@@ -429,11 +541,13 @@ export const HospitalDetailsIssue = React.memo(() => {
                 name="email"
                 id={`outlined-adornment`}
                 placeholder="Present Hospoital"
-                sx={{ border: "", height: "40px", width: "100%", padding: "10px", borderRadius: "8px", }}
+                sx={{ border: errorhospitalInfo?.presentHospoital ? "1px solid red" : "", height: "40px", width: "100%", padding: "10px", borderRadius: "8px", }}
                 onChange={(e) => { handleOnHospitalChange(e.target.value, "presentHospoital") }}
                 InputLabelProps={{ sx: { fontSize: "1.5rem", } }}
                 InputProps={{ sx: { fontSize: "1.5rem", } }}
               />
+              {errorhospitalInfo?.presentHospoital ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{errorhospitalInfo?.presentHospoital}</Typography> : null}
+
             </FormControl>
           </Stack>
         </Box>
@@ -450,11 +564,13 @@ export const HospitalDetailsIssue = React.memo(() => {
                 name="email"
                 id={`outlined-adornment`}
                 placeholder="New Hospoital"
-                sx={{ border: "", height: "40px", width: "100%", padding: "10px", borderRadius: "8px", }}
+                sx={{ border: errorhospitalInfo?.NewHospital ? "1px solid red" : "", height: "40px", width: "100%", padding: "10px", borderRadius: "8px", }}
                 onChange={(e) => { handleOnHospitalChange(e.target.value, "NewHospital") }}
                 InputLabelProps={{ sx: { fontSize: "1.5rem", } }}
                 InputProps={{ sx: { fontSize: "1.5rem", } }}
               />
+              {errorhospitalInfo?.NewHospital ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{errorhospitalInfo?.NewHospital}</Typography> : null}
+
             </FormControl>
           </Stack>
         </Box>
@@ -470,11 +586,13 @@ export const HospitalDetailsIssue = React.memo(() => {
                 name="email"
                 id={`outlined-adornment`}
                 placeholder="Location/Branch"
-                sx={{ border: "", height: "40px", width: "100%", padding: "10px", borderRadius: "8px", }}
+                sx={{ border: errorhospitalInfo?.locationOrBranch ? "1px solid red" : "", height: "40px", width: "100%", padding: "10px", borderRadius: "8px", }}
                 onChange={(e) => { handleOnHospitalChange(e.target.value, "locationOrBranch") }}
                 InputLabelProps={{ sx: { fontSize: "1.5rem", } }}
                 InputProps={{ sx: { fontSize: "1.5rem", } }}
               />
+              {errorhospitalInfo?.locationOrBranch ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{errorhospitalInfo?.locationOrBranch}</Typography> : null}
+
             </FormControl>
           </Stack>
         </Box>
@@ -507,14 +625,22 @@ export const HospitalDetailsIssue = React.memo(() => {
 });
 export const ExecutiveDetailsIssue = React.memo(() => {
   const isMobile = useMediaQuery("(max-width:600px)");
-  const [executiveChange, setExecutiveChange] = useState({
+  const initialExecutive = {
     customerHelpTitleNo: localStorage.getItem("customerHelpTitleID"),
     questionId: localStorage.getItem("selectedIssue"),
     customerID: null,
     areaName: "",
     pincode: "",
     reason: ""
-  })
+  }
+  const ErrorExecutive = {
+    areaName: "",
+    pincode: ""
+  }
+
+  const [executiveChange, setExecutiveChange] = useState(initialExecutive)
+  const [ErrorExecutiveinfo, setErrorExecutiveinfo] = useState(ErrorExecutive)
+
 
   const dispatch = useDispatch();
 
@@ -528,11 +654,30 @@ export const ExecutiveDetailsIssue = React.memo(() => {
       ...data,
       [name]: value
     }))
+
+    setErrorExecutiveinfo((data) => ({
+      ...data,
+      [name]: ""
+    }))
   };
 
   const SaveUserExecutiveData = () => {
-    console.log("cehck data executiveChange 12345678 ", executiveChange);
+    if (!executiveChange.areaName) {
+      setErrorExecutiveinfo((data) => ({
+        ...data,
+        ['areaName']: "Area Name is required."
+      }))
+      return
+    }
+    if (!executiveChange.pincode) {
+      setErrorExecutiveinfo((data) => ({
+        ...data,
+        ['pincode']: "Pincode is required."
+      }))
+      return
+    }
     dispatch(addExecutiveDetails(executiveChange))
+    setExecutiveChange(initialExecutive)
   }
 
   return (
@@ -572,11 +717,13 @@ export const ExecutiveDetailsIssue = React.memo(() => {
                 name="email"
                 id={`outlined-adornment`}
                 placeholder="Area Name"
-                sx={{ border: "", height: "40px", width: "100%", padding: "10px", borderRadius: "8px", }}
+                sx={{ border: ErrorExecutiveinfo?.areaName ? "1px solid red" : "", height: "40px", width: "100%", padding: "10px", borderRadius: "8px", }}
                 onChange={(e) => { handleOnExecutiveChange(e.target.value, "areaName") }}
                 InputLabelProps={{ sx: { fontSize: "1.5rem", } }}
                 InputProps={{ sx: { fontSize: "1.5rem", } }}
               />
+              {ErrorExecutiveinfo?.areaName ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{ErrorExecutiveinfo?.areaName}</Typography> : null}
+
             </FormControl>
           </Stack>
         </Box>
@@ -593,11 +740,13 @@ export const ExecutiveDetailsIssue = React.memo(() => {
                 name="email"
                 id={`outlined-adornment`}
                 placeholder="Pincode"
-                sx={{ border: "", height: "40px", width: "100%", padding: "10px", borderRadius: "8px", }}
+                sx={{ border: ErrorExecutiveinfo?.pincode ? "1px solid red" : "", height: "40px", width: "100%", padding: "10px", borderRadius: "8px", }}
                 onChange={(e) => { handleOnExecutiveChange(e.target.value, "pincode") }}
                 InputLabelProps={{ sx: { fontSize: "1.5rem", } }}
                 InputProps={{ sx: { fontSize: "1.5rem", }, maxLength: 6 }}
               />
+              {ErrorExecutiveinfo?.pincode ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{ErrorExecutiveinfo?.pincode}</Typography> : null}
+
             </FormControl>
           </Stack>
         </Box>
@@ -630,7 +779,8 @@ export const ExecutiveDetailsIssue = React.memo(() => {
 const options = ["Pan Card", "Aadhar Card", "Passport", "Voter Id", "Driving Licence", "Other"];
 export const NomineeDetailsIssue = React.memo(() => {
   const [selectedValue, setSelectedValue] = useState("");
-  const [nominne, setNominne] = useState({
+
+  const intialNominee = {
     customerHelpTitleNo: localStorage.getItem("customerHelpTitleID"),
     questionId: localStorage.getItem("selectedIssue"),
     customerID: null,
@@ -641,7 +791,16 @@ export const NomineeDetailsIssue = React.memo(() => {
     idProof: "",
     idProofNo: "",
     other: ""
-  })
+  }
+
+  const ErrorNominee = {
+    NomineeOrGaurdianName: "",
+    relationship: "",
+    mobileNumber: ""
+  }
+
+  const [nominne, setNominne] = useState(intialNominee);
+  const [ErrorNomineeInfo, setErrorNomineeInfo] = useState(ErrorNominee)
   const dispatch = useDispatch();
 
   const handleOnNomineeChange = (value, name) => {
@@ -653,11 +812,39 @@ export const NomineeDetailsIssue = React.memo(() => {
       ...data,
       [name]: value
     }))
+    setErrorNomineeInfo((data) => ({
+      ...data,
+      [name]: ""
+    }))
   };
 
+
   const SaveUserNomineeData = () => {
-    console.log("cehck data nominne 12345678 ", nominne);
+
+    if (!nominne.NomineeOrGaurdianName) {
+      setErrorNomineeInfo((data) => ({
+        ...data,
+        ['NomineeOrGaurdianName']: "Nominee Or GaurdianName is required."
+      }))
+      return
+    }
+    if (!nominne.relationship) {
+      setErrorNomineeInfo((data) => ({
+        ...data,
+        ['relationship']: "Relationship is required."
+      }))
+      return
+    }
+    if (!nominne.mobileNumber) {
+      setErrorNomineeInfo((data) => ({
+        ...data,
+        ['mobileNumber']: "Mobile Number is required."
+      }))
+      return
+    }
+
     dispatch(addNomineeDetailsChange(nominne))
+    setNominne(intialNominee)
   }
 
   const handleChange = (event) => {
@@ -708,11 +895,13 @@ export const NomineeDetailsIssue = React.memo(() => {
                 name="email"
                 id={`outlined-adornment`}
                 placeholder="Name of Nominee / Gaurdian"
-                sx={{ border: "", height: "40px", width: "100%", padding: "10px", borderRadius: "8px", }}
+                sx={{ border: ErrorNomineeInfo?.NomineeOrGaurdianName ? "1px solid red" : "", height: "40px", width: "100%", padding: "10px", borderRadius: "8px", }}
                 onChange={(e) => { handleOnNomineeChange(e.target.value, "NomineeOrGaurdianName") }}
                 InputLabelProps={{ sx: { fontSize: "1.5rem", } }}
                 InputProps={{ sx: { fontSize: "1.5rem", } }}
               />
+              {ErrorNomineeInfo?.NomineeOrGaurdianName ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{ErrorNomineeInfo?.NomineeOrGaurdianName}</Typography> : null}
+
             </FormControl>
           </Stack>
         </Box>
@@ -729,11 +918,13 @@ export const NomineeDetailsIssue = React.memo(() => {
                 name="email"
                 id={`outlined-adornment`}
                 placeholder="Relationship"
-                sx={{ border: "", height: "40px", width: "100%", padding: "10px", borderRadius: "8px", }}
+                sx={{ border: ErrorNomineeInfo?.relationship ? "1px solid red" : "", height: "40px", width: "100%", padding: "10px", borderRadius: "8px", }}
                 onChange={(e) => { handleOnNomineeChange(e.target.value, "relationship") }}
                 InputLabelProps={{ sx: { fontSize: "1.5rem", } }}
                 InputProps={{ sx: { fontSize: "1.5rem", } }}
               />
+              {ErrorNomineeInfo?.relationship ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{ErrorNomineeInfo?.relationship}</Typography> : null}
+
             </FormControl>
           </Stack>
         </Box>
@@ -749,11 +940,13 @@ export const NomineeDetailsIssue = React.memo(() => {
                 name="email"
                 id={`outlined-adornment`}
                 placeholder="Mobile"
-                sx={{ border: "", height: "40px", width: "100%", padding: "10px", borderRadius: "8px", }}
+                sx={{ border: ErrorNomineeInfo?.mobileNumber ? "1px solid red" : "", height: "40px", width: "100%", padding: "10px", borderRadius: "8px", }}
                 onChange={(e) => { handleOnNomineeChange(e.target.value, "mobileNumber") }}
                 InputLabelProps={{ sx: { fontSize: "1.5rem", } }}
                 InputProps={{ sx: { fontSize: "1.5rem", } }}
               />
+              {ErrorNomineeInfo?.mobileNumber ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{ErrorNomineeInfo?.mobileNumber}</Typography> : null}
+
             </FormControl>
           </Stack>
         </Box>
@@ -1007,7 +1200,7 @@ export const CommunicationDetailsIssue = React.memo(() => {
         <Box sx={{ display: "flex", marginTop: "30px", gap: "4rem" }}>
 
           <Stack sx={{ width: "100%", gap: "0.5rem" }} key={"key"}>
-            <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>"Near landmark</InputLabel>
+            <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Near landmark</InputLabel>
             <FormControl variant="outlined" size="small">
               <OutlinedInput
                 readOnly={false}
