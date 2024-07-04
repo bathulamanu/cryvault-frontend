@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState, forwardRef, useImperativeHandle } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getCountry, getState, getCity,getCityForPermanentAddress } from "../../redux/reducers/PaymentReducer";
+import { getCountry, getState, getCity, getCityForPermanentAddress } from "../../redux/reducers/PaymentReducer";
 import { MultipleSelect, SingleSelect } from '../CheckoutDetails'
 import {
   getByIdList,
@@ -102,7 +102,7 @@ const CommunicationDetails = forwardRef((props, ref) => {
     },
     PermanentAddressCountry: {
       value: 352,
-      placeholder: "PermanentAddressCountry",
+      placeholder: "Country",
       errorMessage: "",
       errorStatus: false,
       name: "PermanentAddressCountry",
@@ -110,7 +110,7 @@ const CommunicationDetails = forwardRef((props, ref) => {
     },
     PermanentAddressState: {
       value: null,
-      placeholder: "PermanentAddressState",
+      placeholder: "State",
       errorMessage: "",
       errorStatus: false,
       name: "PermanentAddressState",
@@ -118,7 +118,7 @@ const CommunicationDetails = forwardRef((props, ref) => {
     },
     PermanentAddressCity: {
       value: null,
-      placeholder: "PermanentAddressCity",
+      placeholder: "City",
       errorMessage: "",
       errorStatus: false,
       name: "PermanentAddressCity",
@@ -355,10 +355,33 @@ const CommunicationDetails = forwardRef((props, ref) => {
   }
 
   const handleCheckChange = (event) => {
-    setData((prevData) => ({
-      ...prevData,
-      ['permanentAddressIsSameAsCorrespondenceAddress']: { ...prevData['permanentAddressIsSameAsCorrespondenceAddress'], value: event.target.checked, errorStatus: false, errorMessage: "" },
-    }));
+    // setData((prevData) => ({
+    //   ...prevData,
+    //   ['permanentAddressIsSameAsCorrespondenceAddress']: { ...prevData['permanentAddressIsSameAsCorrespondenceAddress'], value: event.target.checked, errorStatus: false, errorMessage: "" },
+    // }));
+
+    setData((prevData) => {
+      const newValues = {
+        ...prevData, ['permanentAddressIsSameAsCorrespondenceAddress']: {
+          ...prevData['permanentAddressIsSameAsCorrespondenceAddress'],
+          value: event.target.checked, errorStatus: false, errorMessage: ""
+        }
+      };
+      if (event.target.checked === true) {
+        newValues.PermanentAddress.value = newValues.Address.value;
+        newValues.PermanentAddressCountry.value = newValues.Country.value;
+        newValues.PermanentAddressState.value = newValues.State.value;
+        newValues.PermanentAddressCity.value = newValues.City.value;
+        newValues.PermanentAddressPinCode.value = newValues.PinCode.value;
+      } else {
+        newValues.PermanentAddress.value = "";
+        newValues.PermanentAddressCountry.value = 352;
+        newValues.PermanentAddressState.value = "";
+        newValues.PermanentAddressCity.value = "";
+        newValues.PermanentAddressPinCode.value = "";
+      }
+      return newValues;
+    });
   }
 
   useEffect(() => {
@@ -373,8 +396,8 @@ const CommunicationDetails = forwardRef((props, ref) => {
 
   return (
     <Box sx={{ display: "flex", width: "100%" }} className="conatiner">
-      {/* <Typography sx={{ fontSize: "2rem", fontWeight: "600", color: "black", textTransform: "uppercase", width: "100%" }}>Communication Details</Typography>
-      <br></br>  */}
+      <Typography sx={{ fontSize: "2rem", fontWeight: "600", color: "black", textTransform: "uppercase", width: "100%" }}>Communication Details</Typography>
+      
       <Box sx={{ width: "50%", border: "1px solid #e5e5e5", margin: "2rem", padding: "2rem", borderRadius: "1rem" }}>
 
         <Box sx={{ marginTop: "3rem", display: "grid", gridTemplateColumns: "auto auto", gridColumnGap: "2rem", gridRowGap: "3rem" }} className="fatherDetails">
@@ -485,7 +508,8 @@ const CommunicationDetails = forwardRef((props, ref) => {
 
       <Box sx={{ width: "50%", flexDirection: "column", display: "flex", border: "1px solid #e5e5e5", margin: "2rem", padding: "2rem", borderRadius: "1rem" }} >
         <Box sx={{ marginTop: "3rem", display: "grid", gridTemplateColumns: "auto auto", gridColumnGap: "2rem", gridRowGap: "3rem" }} className="fatherDetails">
-          {Object.entries(data).map(([key, fieldData]) =>
+      
+           {Object.entries(data).map(([key, fieldData]) =>
             fieldData.name == "PermanentAddress" || fieldData.name == "PermanentAddressPinCode" ? (
               <>
                 <Stack sx={{ width: fieldData.name == "PermanentAddress" ? "149%" : "100%", gap: "0.5rem" }} key={key}>
@@ -569,7 +593,7 @@ const CommunicationDetails = forwardRef((props, ref) => {
                 </Stack>
               </>
             ) : (null)
-          )}
+          )} 
         </Box>
       </Box>
 

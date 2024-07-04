@@ -28,7 +28,7 @@ import {
   getTypeOfPregnancyList
 } from "../../globalFunctions";
 
-import { getCountry, getState, getCity,getCityForPermanentAddress } from "../../redux/reducers/PaymentReducer";
+import { getCountry, getState, getCity, getCityForPermanentAddress } from "../../redux/reducers/PaymentReducer";
 import { GetTypeOfPregnancy } from "../../redux/reducers/DashboardReducer";
 import { addOrupdateAnnexureInfo } from "../../redux/reducers/UserReducer"
 import { GetTypeOfProof, getAnnexureInfo } from '../../redux/reducers/DashboardReducer'
@@ -268,10 +268,33 @@ const HospitalDetails = forwardRef((props, ref) => {
   }
 
   const handleCheckChange = (event) => {
-    setData((prevData) => ({
-      ...prevData,
-      ['IsDeliveringHospitalSameAsConsultingHospotal']: { ...prevData['IsDeliveringHospitalSameAsConsultingHospotal'], value: event.target.checked, errorStatus: false, errorMessage: "" },
-    }));
+    // setData((prevData) => ({
+    //   ...prevData,
+    //   ['IsDeliveringHospitalSameAsConsultingHospotal']: { ...prevData['IsDeliveringHospitalSameAsConsultingHospotal'], value: event.target.checked, errorStatus: false, errorMessage: "" },
+    // }));
+
+    setData((prevData) => {
+      const newValues = {
+        ...prevData, ['IsDeliveringHospitalSameAsConsultingHospotal']: {
+          ...prevData['IsDeliveringHospitalSameAsConsultingHospotal'],
+          value: event.target.checked, errorStatus: false, errorMessage: ""
+        }
+      };
+      if (event.target.checked === true) {
+        newValues.DeliveringHospitalAddress.value = newValues.ConsultingHospitalAddress.value;
+        newValues.DeliveringHospitalCountry.value = newValues.ConsultingHospitalCountry.value;
+        newValues.DeliveringHospitalState.value = newValues.ConsultingHospitalState.value;
+        newValues.DeliveringHosptalCity.value = newValues.ConsultingHosptalCity.value;
+        newValues.DeliveringHospitalPinCode.value = newValues.ConsultingHospitalPinCode.value;
+      } else {
+        newValues.DeliveringHospitalAddress.value = "";
+        newValues.DeliveringHospitalCountry.value = 352;
+        newValues.DeliveringHospitalState.value = "";
+        newValues.DeliveringHosptalCity.value = "";
+        newValues.DeliveringHospitalPinCode.value = "";
+      }
+      return newValues;
+    });
   }
 
 
@@ -519,133 +542,136 @@ const HospitalDetails = forwardRef((props, ref) => {
         DELIVERY)
       </Typography>
       <CardContent>
-        <Card variant="outlined" sx={{ width: "600px", marginBottom: "15px" }}>
-          <CardContent sx={{ width: "600px" }}>
-            <Grid container spacing={2} pb={2}>
-              <Grid item style={{ width: "100%" }}>
-                <InputLabel sx={inputLableStyle}>
-                  Expected date of delivery <span style={redStarStyle}>*</span>
-                </InputLabel>
-                <FormControl variant="outlined" fullWidth>
+        <Box
+          sx={{
+            width: "60%",
+            display: "flex",
+            flexDirection: "column",
+            gap: 4,
+          }}
+        >
+          <Card variant="outlined" sx={{ marginBottom: "15px" }}>
+            <CardContent>
+              <Grid container spacing={2} pb={2}>
+                <Grid item style={{ width: "100%" }}>
+                  <InputLabel sx={inputLableStyle}>
+                    Expected date of delivery <span style={redStarStyle}>*</span>
+                  </InputLabel>
+                  <FormControl variant="outlined" fullWidth>
 
+                    <input
+                      style={{ border: data.ExpectedDateOfDelivery.errorStatus ? "1px solid red" : "none" }}
+                      onChange={handleChange}
+                      key={"key"}
+                      placeholder={data.ExpectedDateOfDelivery.placeholder}
+                      className={`dashboardInput fullWidth`}
+                      label={data.ExpectedDateOfDelivery.placeholder}
+                      type={inputType}
+                      onFocus={() => setInputType("date")}
+                      onBlur={() => setInputType("text")}
+                      value={data.ExpectedDateOfDelivery.value}
+                      name={data.ExpectedDateOfDelivery.name}
+                      size="small" />
 
-                  {/* <Box sx={{ display: "flex", flexDirection: "column" }}> */}
-                  {/* <OutlinedInput style={{ border: data.ExpectedDateOfDelivery.errorStatus ? "1px solid red" : "none" }}
-                    onChange={handleChange}
-                    key={"key"}
-                    placeholder={data.ExpectedDateOfDelivery.placeholder}
-                    className="date"//{`appointmentInput ${isOdd && index === userDetails.length - 1 ? "fullWidth" : ""}`}
-                    label={data.ExpectedDateOfDelivery.placeholder} type={inputType}
-                    onFocus={() => setInputType("date")} onBlur={() => setInputType("text")}
-                    value={data.ExpectedDateOfDelivery.value}
-                    name={data.ExpectedDateOfDelivery.name}
-                  /> */}
-                  <input
-                    style={{ border: data.ExpectedDateOfDelivery.errorStatus ? "1px solid red" : "none" }}
-                    onChange={handleChange}
-                    key={"key"}
-                    placeholder={data.ExpectedDateOfDelivery.placeholder}
-                    className={`dashboardInput fullWidth`}
-                    label={data.ExpectedDateOfDelivery.placeholder} type={inputType}
-                    onFocus={() => setInputType("date")}
-                    onBlur={() => setInputType("text")}
-                    value={data.ExpectedDateOfDelivery.value}
-                    name={data.ExpectedDateOfDelivery.name}
-                    size="small" />
+                    {data.ExpectedDateOfDelivery.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data.ExpectedDateOfDelivery.errorMessage}</Typography> : null}
 
-                  {data.ExpectedDateOfDelivery.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data.ExpectedDateOfDelivery.errorMessage}</Typography> : null}
-                  {/* </Box> */}
-                </FormControl>
+                  </FormControl>
+                </Grid>
               </Grid>
-            </Grid>
-            <Grid container spacing={2}>
-              <Grid item xs={6}>
-                <InputLabel sx={inputLableStyle}>
-                  {data.TypeOfpregnancy.placeholder} <span style={redStarStyle}>*</span>
-                </InputLabel>
-                <SingleSelect
-                  Placeholder={"Select"}
-                  width={"100%"}
-                  data={typeOfPreganacyDataList}
-                  value={data.TypeOfpregnancy.value}
-                  onChange={(e) => {
-                    handleOnChange(e, "TypeOfpregnancy");
-                  }}
-                />
-                {data.TypeOfpregnancy.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data.TypeOfpregnancy.errorMessage}</Typography> : null}
-
-              </Grid>
-              <Grid item xs={6}>
-                <InputLabel sx={inputLableStyle}>
-                  {data.HowManyChildrensDoYouHaveAlready.placeholder}  <span style={redStarStyle}>*</span>
-                </InputLabel>
-                <SingleSelect
-                  Placeholder={"Select"}
-                  width={"100%"}
-                  data={NoofChildres}
-                  value={data.HowManyChildrensDoYouHaveAlready.value}
-                  onChange={(e) => {
-                    handleOnChange(e, "HowManyChildrensDoYouHaveAlready");
-                  }}
-                />
-                {data.HowManyChildrensDoYouHaveAlready.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data.HowManyChildrensDoYouHaveAlready.errorMessage}</Typography> : null}
-
-              </Grid>
-              <Grid item xs={6}>
-                <InputLabel sx={inputLableStyle}>
-                  {data.ConsultingGynocologist.placeholder} <span style={redStarStyle}>*</span>
-                </InputLabel>
-                <FormControl variant="outlined" fullWidth>
-                  <OutlinedInput
+              <Grid container spacing={2}>
+                <Grid item xs={6}>
+                  <InputLabel sx={inputLableStyle}>
+                    {data.TypeOfpregnancy.placeholder} <span style={redStarStyle}>*</span>
+                  </InputLabel>
+                  <FormControl
+                    variant="outlined"
                     fullWidth
-                    type="text"
-                    id="ConsultingGynocologist"
-                    placeholder="Consulting Gynocologist"
-                    name={data.ConsultingGynocologist.name}
-                    sx={{
-                      border: data.ConsultingGynocologist.errorStatus ? "1px solid red" : "",
-                      height: "40px",
-                      width: "100%",
-                      padding: "10px",
-                      borderRadius: "8px",
+                    size="small"
+                  >
+                    <SingleSelect
+                      Placeholder={"Select"}
+                      width={"100%"}
+                      data={typeOfPreganacyDataList}
+                      value={data.TypeOfpregnancy.value}
+                      onChange={(e) => {
+                        handleOnChange(e, "TypeOfpregnancy");
+                      }}
+                    />
+                    {data.TypeOfpregnancy.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data.TypeOfpregnancy.errorMessage}</Typography> : null}
+                  </FormControl>
+                </Grid>
+                <Grid item xs={6}>
+                  <InputLabel sx={inputLableStyle}>
+                    {data.HowManyChildrensDoYouHaveAlready.placeholder}  <span style={redStarStyle}>*</span>
+                  </InputLabel>
+                  <SingleSelect
+                    Placeholder={"Select"}
+                    width={"100%"}
+                    data={NoofChildres}
+                    value={data.HowManyChildrensDoYouHaveAlready.value}
+                    onChange={(e) => {
+                      handleOnChange(e, "HowManyChildrensDoYouHaveAlready");
                     }}
-                    value={data.ConsultingGynocologist.value}
-                    onChange={handleChange}
                   />
+                  {data.HowManyChildrensDoYouHaveAlready.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data.HowManyChildrensDoYouHaveAlready.errorMessage}</Typography> : null}
 
-                  {data.ConsultingGynocologist.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data.ConsultingGynocologist.errorMessage}</Typography> : null}
+                </Grid>
+                <Grid item xs={6}>
+                  <InputLabel sx={inputLableStyle}>
+                    {data.ConsultingGynocologist.placeholder} <span style={redStarStyle}>*</span>
+                  </InputLabel>
+                  <FormControl variant="outlined" fullWidth>
+                    <OutlinedInput
+                      fullWidth
+                      type="text"
+                      id="ConsultingGynocologist"
+                      placeholder="Consulting Gynocologist"
+                      name={data.ConsultingGynocologist.name}
+                      sx={{
+                        border: data.ConsultingGynocologist.errorStatus ? "1px solid red" : "",
+                        height: "40px",
+                        width: "100%",
+                        padding: "10px",
+                        borderRadius: "8px",
+                      }}
+                      value={data.ConsultingGynocologist.value}
+                      onChange={handleChange}
+                    />
 
-                </FormControl>
+                    {data.ConsultingGynocologist.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data.ConsultingGynocologist.errorMessage}</Typography> : null}
+
+                  </FormControl>
+                </Grid>
+                <Grid item xs={6}>
+                  <InputLabel sx={inputLableStyle}>
+                    {data.ConsultingHospital.placeholder}<span style={redStarStyle}>*</span>
+                  </InputLabel>
+                  <FormControl variant="outlined" fullWidth>
+                    <OutlinedInput
+                      fullWidth
+                      type="text"
+                      id="ConsultingHospital"
+                      placeholder="Consulting Hospital"
+
+                      sx={{
+                        border: data.ConsultingHospital.errorStatus ? "1px solid red" : "",
+                        height: "40px",
+                        width: "100%",
+                        padding: "10px",
+                        borderRadius: "8px",
+                      }}
+                      name={data.ConsultingHospital.name}
+                      value={data.ConsultingHospital.value}
+                      onChange={handleChange}
+                    />
+                    {data.ConsultingHospital.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data.ConsultingHospital.errorMessage}</Typography> : null}
+
+                  </FormControl>
+                </Grid>
               </Grid>
-              <Grid item xs={6}>
-                <InputLabel sx={inputLableStyle}>
-                  {data.ConsultingHospital.placeholder}<span style={redStarStyle}>*</span>
-                </InputLabel>
-                <FormControl variant="outlined" fullWidth>
-                  <OutlinedInput
-                    fullWidth
-                    type="text"
-                    id="ConsultingHospital"
-                    placeholder="Consulting Hospital"
-
-                    sx={{
-                      border: data.ConsultingHospital.errorStatus ? "1px solid red" : "",
-                      height: "40px",
-                      width: "100%",
-                      padding: "10px",
-                      borderRadius: "8px",
-                    }}
-                    name={data.ConsultingHospital.name}
-                    value={data.ConsultingHospital.value}
-                    onChange={handleChange}
-                  />
-                  {data.ConsultingHospital.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data.ConsultingHospital.errorMessage}</Typography> : null}
-
-                </FormControl>
-              </Grid>
-            </Grid>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+        </Box>
         <Stack
           sx={{
             display: "flex",
@@ -654,146 +680,6 @@ const HospitalDetails = forwardRef((props, ref) => {
             gap: 2,
           }}
         >
-           <Box
-            sx={{
-              width: "49%",
-              display: "flex",
-              flexDirection: "column",
-              gap: 4,
-            }}
-          >
-
-          <Card variant="outlined">
-            <CardContent sx={{ width: "550px" }}>
-              <Grid container spacing={2}>
-
-
-                <Grid item xs={6}>
-                  <InputLabel sx={inputLableStyle}>
-                    {data.ConsultingHospitalCountry.placeholder}<span style={redStarStyle}>*</span>
-                  </InputLabel>
-                  <SingleSelect
-                    Placeholder={"Select"}
-                    width={"100%"}
-                    disabled={true}
-                    data={upDatedCountryList}
-                    // value = {352}
-                    value={data.ConsultingHospitalCountry.value}
-                    onChange={(e) => {
-                      handleOnChange(e, "ConsultingHospitalCountry");
-                    }}
-                  />
-
-                  {data.ConsultingHospitalCountry.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data.ConsultingHospitalCountry.errorMessage}</Typography> : null}
-                </Grid>
-
-                <Grid item xs={6}>
-                  <InputLabel sx={inputLableStyle}>
-                    {data.ConsultingHospitalState.placeholder} <span style={redStarStyle}>*</span>
-                  </InputLabel>
-                  <SingleSelect
-                    Placeholder={"Select"}
-                    width={"100%"}
-                    data={stateList}
-                    value={data.ConsultingHospitalState.value}
-                    onChange={(e) => {
-                      handleOnChange(e, "ConsultingHospitalState")
-                    }}
-                  />
-                  {data.ConsultingHospitalState.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data.ConsultingHospitalState.errorMessage}</Typography> : null}
-
-                </Grid>
-
-                <Grid item xs={6}>
-                  <InputLabel sx={inputLableStyle}>
-                    {data.ConsultingHosptalCity.placeholder} <span style={redStarStyle}>*</span>
-                  </InputLabel>
-                  <SingleSelect
-                    Placeholder={"Select"}
-                    width={"100%"}
-                    data={cityList}
-                    value={data.ConsultingHosptalCity.value}
-                    onChange={(e) => {
-                      handleOnChange(e, "ConsultingHosptalCity");
-                    }}
-                  />
-                  {data.ConsultingHosptalCity.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data.ConsultingHosptalCity.errorMessage}</Typography> : null}
-
-                </Grid>
-                <Grid item xs={6}>
-                  <InputLabel sx={inputLableStyle}>
-                    {data.ConsultingHospitalPinCode.placeholder} <span style={redStarStyle}>*</span>
-                  </InputLabel>
-                  <FormControl variant="outlined" size="small" fullWidth>
-                    <OutlinedInput
-                      fullWidth
-                      type="number"
-                      id="ConsultingHospitalPinCode"
-                      placeholder="PinCode"
-                      size="small"
-                      sx={{
-                        border: data.ConsultingHospitalPinCode.errorStatus ? "1px solid red" : "",
-                        height: "40px",
-                        width: "100%",
-                        padding: "10px",
-                        borderRadius: "8px",
-                      }}
-                      inputProps={{ maxLength: 6 }}
-                      name={data.ConsultingHospitalPinCode.name}
-                      value={data.ConsultingHospitalPinCode.value}
-                      onChange={handleChange}
-
-                    />
-                    {data.ConsultingHospitalPinCode.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data.ConsultingHospitalPinCode.errorMessage}</Typography> : null}
-
-                  </FormControl>
-                </Grid>
-              </Grid>
-              <Grid container spacing={2} pt={3} pb={2}>
-                <Grid item style={{ width: "100%" }}>
-                  <InputLabel sx={inputLableStyle}>
-                    {data.ConsultingHospitalAddress.placeholder}<span style={redStarStyle}>*</span>
-                  </InputLabel>
-                  <FormControl variant="outlined" fullWidth size="small">
-                    <OutlinedInput
-                      fullWidth
-                      id="ConsultingHospitalAddress"
-                      placeholder="Consulting Hospital Address"
-                      size="small"
-                      name={data.ConsultingHospitalAddress.name}
-                      sx={{
-                        border: data.ConsultingHospitalAddress.errorStatus ? "1px solid red" : "",
-                        height: "40px",
-                        width: "100%",
-                        padding: "10px",
-                        borderRadius: "8px",
-                      }}
-                      value={data.ConsultingHospitalAddress.value}
-                      onChange={handleChange}
-                    />
-                    {data.ConsultingHospitalAddress.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data.ConsultingHospitalAddress.errorMessage}</Typography> : null}
-
-                  </FormControl>
-                </Grid>
-              </Grid>
-              <Grid container spacing={2}>
-                <Grid item style={{ width: "100%", color: "black" }}>
-                  <FormControlLabel
-                    control={
-                      <Checkbox
-                        checked={data.IsDeliveringHospitalSameAsConsultingHospotal.value}
-                        onChange={handleCheckChange}
-                        name={data.IsDeliveringHospitalSameAsConsultingHospotal.name}
-                        value={data.IsDeliveringHospitalSameAsConsultingHospotal.value}
-                      />
-                    }
-                    label="If delivering hospital address is same as Current hospital address"
-
-                  />
-                </Grid>
-              </Grid>
-            </CardContent>
-          </Card> </Box>
           <Box
             sx={{
               width: "49%",
@@ -802,119 +688,259 @@ const HospitalDetails = forwardRef((props, ref) => {
               gap: 4,
             }}
           >
-          <Card variant="outlined">
-            <CardContent sx={{ width: "550px" }}>
-              <Grid container spacing={2}>
 
-                <Grid item xs={6}>
-                  <InputLabel sx={inputLableStyle}>
-                    {data.DeliveringHospitalCountry.placeholder} <span style={redStarStyle}>*</span>
-                  </InputLabel>
-                  <SingleSelect
-                    Placeholder={"Select"}
-                    width={"100%"}
-                    disabled={true}
-                    data={upDatedCountryList}
-                    value={data.DeliveringHospitalCountry.value}
-                    onChange={(e) => {
-                      handleOnChange(e, "DeliveringHospitalCountry");
-                    }}
-                  />
-                  {data.DeliveringHospitalCountry.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data.DeliveringHospitalCountry.errorMessage}</Typography> : null}
+            <Card variant="outlined">
+              <CardContent sx={{  }}>
+                <Grid container spacing={2}>
 
-                </Grid>
 
-                <Grid item xs={6}>
-                  <InputLabel sx={inputLableStyle}>
-                    {data.DeliveringHospitalState.placeholder} <span style={redStarStyle}>*</span>
-                  </InputLabel>
-                  <SingleSelect
-                    Placeholder={"Select"}
-                    width={"100%"}
-                    data={stateList}
-                    value={data.DeliveringHospitalState.value}
-                    onChange={(e) => {
-                      handleOnChange(e, "DeliveringHospitalState")
-                    }}
-                  />
-                  {data.DeliveringHospitalState.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data.DeliveringHospitalState.errorMessage}</Typography> : null}
-
-                </Grid>
-                <Grid item xs={6}>
-                  <InputLabel sx={inputLableStyle}>
-                    {data.DeliveringHosptalCity.placeholder} <span style={redStarStyle}>*</span>
-                  </InputLabel>
-                  <SingleSelect
-                    Placeholder={"Select"}
-                    width={"100%"}
-                    data={cityList2}
-                    value={data.DeliveringHosptalCity.value}
-                    onChange={(e) => {
-                      handleOnChange(e, "DeliveringHosptalCity");
-                    }}
-                  />
-                  {data.DeliveringHosptalCity.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data.DeliveringHosptalCity.errorMessage}</Typography> : null}
-
-                </Grid>
-                <Grid item xs={6}>
-                  <InputLabel sx={inputLableStyle}>
-                    {data.DeliveringHospitalPinCode.placeholder} <span style={redStarStyle}>*</span>
-                  </InputLabel>
-                  <FormControl variant="outlined" size="small" fullWidth>
-                    <OutlinedInput
-                      fullWidth
-                      type="text"
-                      id="DeliveringHospitalPinCode"
-                      placeholder="PinCode"
-                      size="small"
-                      sx={{
-                        border: data.DeliveringHospitalPinCode.errorStatus ? "1px solid red" : "",
-                        height: "40px",
-                        width: "100%",
-                        padding: "10px",
-                        borderRadius: "8px",
+                  <Grid item xs={6}>
+                    <InputLabel sx={inputLableStyle}>
+                      {data.ConsultingHospitalCountry.placeholder}<span style={redStarStyle}>*</span>
+                    </InputLabel>
+                    <SingleSelect
+                      Placeholder={"Select"}
+                      width={"100%"}
+                      disabled={true}
+                      data={upDatedCountryList}
+                      // value = {352}
+                      value={data.ConsultingHospitalCountry.value}
+                      onChange={(e) => {
+                        handleOnChange(e, "ConsultingHospitalCountry");
                       }}
-                      inputProps={{ maxLength: 6 }}
-                      name={data.DeliveringHospitalPinCode.name}
-                      value={data.DeliveringHospitalPinCode.value}
-                      onChange={handleChange}
+                    />
+
+                    {data.ConsultingHospitalCountry.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data.ConsultingHospitalCountry.errorMessage}</Typography> : null}
+                  </Grid>
+
+                  <Grid item xs={6}>
+                    <InputLabel sx={inputLableStyle}>
+                      {data.ConsultingHospitalState.placeholder} <span style={redStarStyle}>*</span>
+                    </InputLabel>
+                    <SingleSelect
+                      Placeholder={"Select"}
+                      width={"100%"}
+                      data={stateList}
+                      value={data.ConsultingHospitalState.value}
+                      onChange={(e) => {
+                        handleOnChange(e, "ConsultingHospitalState")
+                      }}
+                    />
+                    {data.ConsultingHospitalState.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data.ConsultingHospitalState.errorMessage}</Typography> : null}
+
+                  </Grid>
+
+                  <Grid item xs={6}>
+                    <InputLabel sx={inputLableStyle}>
+                      {data.ConsultingHosptalCity.placeholder} <span style={redStarStyle}>*</span>
+                    </InputLabel>
+                    <SingleSelect
+                      Placeholder={"Select"}
+                      width={"100%"}
+                      data={cityList}
+                      value={data.ConsultingHosptalCity.value}
+                      onChange={(e) => {
+                        handleOnChange(e, "ConsultingHosptalCity");
+                      }}
+                    />
+                    {data.ConsultingHosptalCity.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data.ConsultingHosptalCity.errorMessage}</Typography> : null}
+
+                  </Grid>
+                  <Grid item xs={6}>
+                    <InputLabel sx={inputLableStyle}>
+                      {data.ConsultingHospitalPinCode.placeholder} <span style={redStarStyle}>*</span>
+                    </InputLabel>
+                    <FormControl variant="outlined" size="small" fullWidth>
+                      <OutlinedInput
+                        fullWidth
+                        type="number"
+                        id="ConsultingHospitalPinCode"
+                        placeholder="PinCode"
+                        size="small"
+                        sx={{
+                          border: data.ConsultingHospitalPinCode.errorStatus ? "1px solid red" : "",
+                          height: "40px",
+                          width: "100%",
+                          padding: "10px",
+                          borderRadius: "8px",
+                        }}
+                        inputProps={{ maxLength: 6 }}
+                        name={data.ConsultingHospitalPinCode.name}
+                        value={data.ConsultingHospitalPinCode.value}
+                        onChange={handleChange}
+
+                      />
+                      {data.ConsultingHospitalPinCode.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data.ConsultingHospitalPinCode.errorMessage}</Typography> : null}
+
+                    </FormControl>
+                  </Grid>
+                </Grid>
+                <Grid container spacing={2} pt={3} pb={2}>
+                  <Grid item style={{ width: "100%" }}>
+                    <InputLabel sx={inputLableStyle}>
+                      {data.ConsultingHospitalAddress.placeholder}<span style={redStarStyle}>*</span>
+                    </InputLabel>
+                    <FormControl variant="outlined" fullWidth size="small">
+                      <OutlinedInput
+                        fullWidth
+                        id="ConsultingHospitalAddress"
+                        placeholder="Consulting Hospital Address"
+                        size="small"
+                        name={data.ConsultingHospitalAddress.name}
+                        sx={{
+                          border: data.ConsultingHospitalAddress.errorStatus ? "1px solid red" : "",
+                          height: "40px",
+                          width: "100%",
+                          padding: "10px",
+                          borderRadius: "8px",
+                        }}
+                        value={data.ConsultingHospitalAddress.value}
+                        onChange={handleChange}
+                      />
+                      {data.ConsultingHospitalAddress.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data.ConsultingHospitalAddress.errorMessage}</Typography> : null}
+
+                    </FormControl>
+                  </Grid>
+                </Grid>
+                <Grid container spacing={2}>
+                  <Grid item style={{ width: "100%", color: "black" }}>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          checked={data.IsDeliveringHospitalSameAsConsultingHospotal.value}
+                          onChange={handleCheckChange}
+                          name={data.IsDeliveringHospitalSameAsConsultingHospotal.name}
+                          value={data.IsDeliveringHospitalSameAsConsultingHospotal.value}
+                        />
+                      }
+                      label="If delivering hospital address is same as Current hospital address"
 
                     />
-                    {data.DeliveringHospitalPinCode.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data.DeliveringHospitalPinCode.errorMessage}</Typography> : null}
-
-                  </FormControl>
+                  </Grid>
                 </Grid>
-              </Grid>
-              <Grid container spacing={2} pt={3} pb={2}>
-                <Grid item style={{ width: "100%" }}>
-                  <InputLabel sx={inputLableStyle}>
-                    {data.DeliveringHospitalAddress.placeholder}
-                    <span style={redStarStyle}>*</span>
-                  </InputLabel>
-                  <FormControl variant="outlined" fullWidth size="small">
-                    <OutlinedInput
-                      fullWidth
-                      id="DeliveringHospitalAddress"
-                      placeholder="Delivering Hospital Address"
-                      size="small"
-                      sx={{
-                        border: data.DeliveringHospitalAddress.errorStatus ? "1px solid red" : "",
-                        height: "40px",
-                        width: "100%",
-                        padding: "10px",
-                        borderRadius: "8px",
+              </CardContent>
+            </Card> </Box>
+          <Box
+            sx={{
+              width: "49%",
+              display: "flex",
+              flexDirection: "column",
+              gap: 4,
+            }}
+          >
+            <Card variant="outlined">
+              <CardContent sx={{  }}>
+                <Grid container spacing={2}>
+
+                  <Grid item xs={6}>
+                    <InputLabel sx={inputLableStyle}>
+                      {data.DeliveringHospitalCountry.placeholder} <span style={redStarStyle}>*</span>
+                    </InputLabel>
+                    <SingleSelect
+                      Placeholder={"Select"}
+                      width={"100%"}
+                      disabled={true}
+                      data={upDatedCountryList}
+                      value={data.DeliveringHospitalCountry.value}
+                      onChange={(e) => {
+                        handleOnChange(e, "DeliveringHospitalCountry");
                       }}
-                      name={data.DeliveringHospitalAddress.name}
-                      value={data.DeliveringHospitalAddress.value}
-                      onChange={handleChange}
                     />
-                    {data.DeliveringHospitalAddress.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data.DeliveringHospitalAddress.errorMessage}</Typography> : null}
+                    {data.DeliveringHospitalCountry.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data.DeliveringHospitalCountry.errorMessage}</Typography> : null}
 
-                  </FormControl>
+                  </Grid>
+
+                  <Grid item xs={6}>
+                    <InputLabel sx={inputLableStyle}>
+                      {data.DeliveringHospitalState.placeholder} <span style={redStarStyle}>*</span>
+                    </InputLabel>
+                    <SingleSelect
+                      Placeholder={"Select"}
+                      width={"100%"}
+                      data={stateList}
+                      value={data.DeliveringHospitalState.value}
+                      onChange={(e) => {
+                        handleOnChange(e, "DeliveringHospitalState")
+                      }}
+                    />
+                    {data.DeliveringHospitalState.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data.DeliveringHospitalState.errorMessage}</Typography> : null}
+
+                  </Grid>
+                  <Grid item xs={6}>
+                    <InputLabel sx={inputLableStyle}>
+                      {data.DeliveringHosptalCity.placeholder} <span style={redStarStyle}>*</span>
+                    </InputLabel>
+                    <SingleSelect
+                      Placeholder={"Select"}
+                      width={"100%"}
+                      data={cityList2}
+                      value={data.DeliveringHosptalCity.value}
+                      onChange={(e) => {
+                        handleOnChange(e, "DeliveringHosptalCity");
+                      }}
+                    />
+                    {data.DeliveringHosptalCity.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data.DeliveringHosptalCity.errorMessage}</Typography> : null}
+
+                  </Grid>
+                  <Grid item xs={6}>
+                    <InputLabel sx={inputLableStyle}>
+                      {data.DeliveringHospitalPinCode.placeholder} <span style={redStarStyle}>*</span>
+                    </InputLabel>
+                    <FormControl variant="outlined" size="small" fullWidth>
+                      <OutlinedInput
+                        fullWidth
+                        type="text"
+                        id="DeliveringHospitalPinCode"
+                        placeholder="PinCode"
+                        size="small"
+                        sx={{
+                          border: data.DeliveringHospitalPinCode.errorStatus ? "1px solid red" : "",
+                          height: "40px",
+                          width: "100%",
+                          padding: "10px",
+                          borderRadius: "8px",
+                        }}
+                        inputProps={{ maxLength: 6 }}
+                        name={data.DeliveringHospitalPinCode.name}
+                        value={data.DeliveringHospitalPinCode.value}
+                        onChange={handleChange}
+
+                      />
+                      {data.DeliveringHospitalPinCode.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data.DeliveringHospitalPinCode.errorMessage}</Typography> : null}
+
+                    </FormControl>
+                  </Grid>
                 </Grid>
-              </Grid>
-            </CardContent>
-          </Card>
+                <Grid container spacing={2} pt={3} pb={2}>
+                  <Grid item style={{ width: "100%" }}>
+                    <InputLabel sx={inputLableStyle}>
+                      {data.DeliveringHospitalAddress.placeholder}
+                      <span style={redStarStyle}>*</span>
+                    </InputLabel>
+                    <FormControl variant="outlined" fullWidth size="small">
+                      <OutlinedInput
+                        fullWidth
+                        id="DeliveringHospitalAddress"
+                        placeholder="Delivering Hospital Address"
+                        size="small"
+                        sx={{
+                          border: data.DeliveringHospitalAddress.errorStatus ? "1px solid red" : "",
+                          height: "40px",
+                          width: "100%",
+                          padding: "10px",
+                          borderRadius: "8px",
+                        }}
+                        name={data.DeliveringHospitalAddress.name}
+                        value={data.DeliveringHospitalAddress.value}
+                        onChange={handleChange}
+                      />
+                      {data.DeliveringHospitalAddress.errorStatus ? <Typography sx={{ color: "red", fontSize: "1.5rem", marginLeft: "2rem" }}>{data.DeliveringHospitalAddress.errorMessage}</Typography> : null}
+
+                    </FormControl>
+                  </Grid>
+                </Grid>
+              </CardContent>
+            </Card>
           </Box>
 
         </Stack>
