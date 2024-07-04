@@ -136,8 +136,8 @@ const ReferenceIformation = forwardRef((props, ref) => {
     const handleChange = (e) => {
         const { name, value } = e.target;
         const exp = /^\d*$/
-        if ((name == "Mobile1" || name == "Mobile2" ||  name == "EmergencyMobile1"  ||  name == "EmergencyMobile2" ) && !exp.test(value)) {
-          return
+        if ((name == "Mobile1" || name == "Mobile2" || name == "EmergencyMobile1" || name == "EmergencyMobile2") && !exp.test(value)) {
+            return
         }
         setData((prevData) => ({
             ...prevData,
@@ -273,9 +273,9 @@ const ReferenceIformation = forwardRef((props, ref) => {
                 EmergencyMobile1: data.EmergencyMobile1.value,
                 EmergencyMobile2: data.EmergencyMobile2.value,
                 meternalSampleAndUmbilicalBleed: data.meternalSampleAndUmbilicalBleed.value,
-                phledopomist: data.phledopomist.value               
+                phledopomist: data.phledopomist.value
             };
-            
+
             if (currentPage < TOTAL_PAGES) {
                 setCurrentPage(currentPage + 1);
             }
@@ -311,142 +311,152 @@ const ReferenceIformation = forwardRef((props, ref) => {
 
 
     return (
-        <Stack sx={{ gap: 4 }}>
+        <Stack sx={{ gap: 4,padding:"18px" }}>
             <Stack
                 sx={{
                     display: "flex",
                     flexDirection: "row",
                     justifyContent: "space-between",
-                    gap: 5,
+                    gap: 5
                 }}
             >
-                <Card variant="outlined">
-                    <CardContent>
-                        <Typography variant="h5" sx={headingStyle}>
-                            DETAILS REFERENCE / DETAILS OF RETURNING CRYOVAULT CLIENT
-                        </Typography>
-                        <Typography
-                            variant="h5"
-                            sx={{ fontSize: "15px", marginTop: "12px" }}
-                        >
-                            If you are existing Cryovault client, please provide details as
-                            below<span style={redStarStyle}>*</span>
-                        </Typography>
-                        <Grid container spacing={2} pt={1} pb={2}>
-                            <Grid item style={{ width: "100%" }}>
-                                <InputLabel sx={inputLableStyle}>
-                                    UIN
-                                    <span style={redStarStyle}>*</span>
-                                </InputLabel>
-                                <FormControl variant="outlined" fullWidth size="small">
-                                    <OutlinedInput
-                                        fullWidth
-                                        id="outlined-adornment-ExisitingCryovaultClientUIN"
-                                        placeholder="Exisiting Cryovault Client UIN"
-                                        size="small"
-                                        sx={{
-                                            border: data.ExisitingCryovaultClientUIN.errorStatus ? "1px solid red" : "",
-                                            height: "40px",
-                                            width: "100%",
-                                            padding: "10px",
-                                            borderRadius: "8px",
-                                        }}
-                                        name="ExisitingCryovaultClientUIN"
-                                        value={data.ExisitingCryovaultClientUIN.value}
-                                        onChange={handleChange}
-                                    />
-
-                                    {data.ExisitingCryovaultClientUIN.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{data.ExisitingCryovaultClientUIN.errorMessage}</Typography> : null}
-
-                                </FormControl>
-                            </Grid>
-                        </Grid>
-                        <Typography
-                            variant="h5"
-                            sx={{ fontSize: "15px", marginTop: "10px" }}
-                        >
-                            If referred by an existing client, please provide details as below
-                            below
-                        </Typography>
-                        <Grid container spacing={2} pt={1} pb={2}>
-                            <Grid item style={{ width: "100%" }}>
-                                <InputLabel sx={inputLableStyle}>
-                                    Referring clients name
-                                    <span style={redStarStyle}>*</span>
-                                </InputLabel>
-                                <FormControl variant="outlined" fullWidth size="small">
-                                    <OutlinedInput
-                                        fullWidth
-                                        id="outlined-adornment-IfReferredByExisitingClientName"
-                                        placeholder="Client Name"
-                                        size="small"
-                                        sx={{
-                                            border: data.IfReferredByExisitingClientName.errorStatus ? "1px solid red" : "",
-                                            height: "40px",
-                                            width: "100%",
-                                            padding: "10px",
-                                            borderRadius: "8px",
-                                        }}
-                                        name="IfReferredByExisitingClientName"
-                                        value={data.IfReferredByExisitingClientName.value}
-                                        onChange={handleChange}
-                                    />
-                                    {data.IfReferredByExisitingClientName.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{data.IfReferredByExisitingClientName.errorMessage}</Typography> : null}
-
-                                </FormControl>
-                            </Grid>
-                        </Grid>
-                        <Grid container spacing={2} pt={3}>
-                            <Grid item xs={6}>
-                                <InputLabel sx={inputLableStyle}>Mobile-1</InputLabel>
-                                <OutlinedInput
-                                    fullWidth
-                                    id="outlined-adornment-Mobile1"
-                                    placeholder="Mobile Number"
-                                    size="small"
-                                    sx={{
-                                        border: data.Mobile1.errorStatus ? "1px solid red" : "",
-                                        height: "40px",
-                                        width: "100%",
-                                        padding: "10px",
-                                        borderRadius: "8px",
-                                    }}
-                                    name="Mobile1"
-                                    value={data.Mobile1.value}
-                                    inputProps={{ maxLength: 10 }}
-                                    onChange={handleChange}
-                                />
-                                {data.Mobile1.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{data.Mobile1.errorMessage}</Typography> : null}
-
-                            </Grid>
-                            <Grid item xs={6}>
-                                <InputLabel sx={inputLableStyle}>Mobile-2</InputLabel>
-                                <OutlinedInput
-                                    fullWidth
-                                    id="outlined-adornment-Mobile2"
-                                    placeholder="Mobile Number"
-                                    size="small"
-                                    sx={{
-                                        border: data.Mobile2.errorStatus ? "1px solid red" : "",
-                                        height: "40px",
-                                        width: "100%",
-                                        padding: "10px",
-                                        borderRadius: "8px",
-                                    }}
-
-                                    name="Mobile2"
-                                    value={data.Mobile2.value}
-                                    inputProps={{ maxLength: 10 }}
-                                    onChange={handleChange}
-                                />
-                                {data.Mobile2.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{data.Mobile2.errorMessage}</Typography> : null}
-
-                            </Grid>
-                        </Grid>
-                    </CardContent>
-                </Card>
-                <Stack
+                <Box
                     sx={{
+                        width: "49%",
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: 4,
+                    }}
+                >
+                    <Card variant="outlined">
+                        <CardContent>
+                            <Typography variant="h5" sx={headingStyle}>
+                                DETAILS REFERENCE / DETAILS OF RETURNING CRYOVAULT CLIENT
+                            </Typography>
+                            <Typography
+                                variant="h5"
+                                sx={{ fontSize: "15px", marginTop: "12px" }}
+                            >
+                                If you are existing Cryovault client, please provide details as
+                                below<span style={redStarStyle}>*</span>
+                            </Typography>
+                            <Grid container spacing={2} pt={1} pb={2}>
+                                <Grid item style={{ width: "100%" }}>
+                                    <InputLabel sx={inputLableStyle}>
+                                        UIN
+                                        <span style={redStarStyle}>*</span>
+                                    </InputLabel>
+                                    <FormControl variant="outlined" fullWidth size="small">
+                                        <OutlinedInput
+                                            fullWidth
+                                            id="outlined-adornment-ExisitingCryovaultClientUIN"
+                                            placeholder="Exisiting Cryovault Client UIN"
+                                            size="small"
+                                            sx={{
+                                                border: data.ExisitingCryovaultClientUIN.errorStatus ? "1px solid red" : "",
+                                                height: "40px",
+                                                width: "100%",
+                                                padding: "10px",
+                                                borderRadius: "8px",
+                                            }}
+                                            name="ExisitingCryovaultClientUIN"
+                                            value={data.ExisitingCryovaultClientUIN.value}
+                                            onChange={handleChange}
+                                        />
+
+                                        {data.ExisitingCryovaultClientUIN.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{data.ExisitingCryovaultClientUIN.errorMessage}</Typography> : null}
+
+                                    </FormControl>
+                                </Grid>
+                            </Grid>
+                            <Typography
+                                variant="h5"
+                                sx={{ fontSize: "15px", marginTop: "10px" }}
+                            >
+                                If referred by an existing client, please provide details as below
+                                below
+                            </Typography>
+                            <Grid container spacing={2} pt={1} pb={2}>
+                                <Grid item style={{ width: "100%" }}>
+                                    <InputLabel sx={inputLableStyle}>
+                                        Referring clients name
+                                        <span style={redStarStyle}>*</span>
+                                    </InputLabel>
+                                    <FormControl variant="outlined" fullWidth size="small">
+                                        <OutlinedInput
+                                            fullWidth
+                                            id="outlined-adornment-IfReferredByExisitingClientName"
+                                            placeholder="Client Name"
+                                            size="small"
+                                            sx={{
+                                                border: data.IfReferredByExisitingClientName.errorStatus ? "1px solid red" : "",
+                                                height: "40px",
+                                                width: "100%",
+                                                padding: "10px",
+                                                borderRadius: "8px",
+                                            }}
+                                            name="IfReferredByExisitingClientName"
+                                            value={data.IfReferredByExisitingClientName.value}
+                                            onChange={handleChange}
+                                        />
+                                        {data.IfReferredByExisitingClientName.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{data.IfReferredByExisitingClientName.errorMessage}</Typography> : null}
+
+                                    </FormControl>
+                                </Grid>
+                            </Grid>
+                            <Grid container spacing={2} pt={3}>
+                                <Grid item xs={6}>
+                                    <InputLabel sx={inputLableStyle}>Mobile-1</InputLabel>
+                                    <OutlinedInput
+                                        fullWidth
+                                        id="outlined-adornment-Mobile1"
+                                        placeholder="Mobile Number"
+                                        size="small"
+                                        sx={{
+                                            border: data.Mobile1.errorStatus ? "1px solid red" : "",
+                                            height: "40px",
+                                            width: "100%",
+                                            padding: "10px",
+                                            borderRadius: "8px",
+                                        }}
+                                        name="Mobile1"
+                                        value={data.Mobile1.value}
+                                        inputProps={{ maxLength: 10 }}
+                                        onChange={handleChange}
+                                    />
+                                    {data.Mobile1.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{data.Mobile1.errorMessage}</Typography> : null}
+
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <InputLabel sx={inputLableStyle}>Mobile-2</InputLabel>
+                                    <OutlinedInput
+                                        fullWidth
+                                        id="outlined-adornment-Mobile2"
+                                        placeholder="Mobile Number"
+                                        size="small"
+                                        sx={{
+                                            border: data.Mobile2.errorStatus ? "1px solid red" : "",
+                                            height: "40px",
+                                            width: "100%",
+                                            padding: "10px",
+                                            borderRadius: "8px",
+                                        }}
+
+                                        name="Mobile2"
+                                        value={data.Mobile2.value}
+                                        inputProps={{ maxLength: 10 }}
+                                        onChange={handleChange}
+                                    />
+                                    {data.Mobile2.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{data.Mobile2.errorMessage}</Typography> : null}
+
+                                </Grid>
+                            </Grid>
+                        </CardContent>
+                    </Card>
+                </Box>
+                <Box
+                    sx={{
+                        width: "49%",
                         display: "flex",
                         flexDirection: "column",
                         gap: 4,
@@ -576,9 +586,12 @@ const ReferenceIformation = forwardRef((props, ref) => {
                             </Grid>
                         </CardContent>
                     </Card>
-                </Stack>
+                </Box>
             </Stack>
-            <Card variant="outlined">
+            {/* <Stack>
+
+            </Stack> */}
+            <Card variant="outlined" >
                 <CardContent>
                     <Typography variant="h5" sx={headingStyle}>
                         TICK AS APPLICABLE FOR CRYOVAULT BIOTECH INDIA PVT. LTD.

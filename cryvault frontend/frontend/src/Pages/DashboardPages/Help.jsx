@@ -767,7 +767,7 @@ export const ExecutiveDetailsIssue = React.memo(() => {
             fontSize: "2rem",
             width: "100%",
             border: "1px solid #e5e5e5",
-            height: "80%",
+            height: "60%",
             borderRadius: "1rem",
             padding: "1rem"
           }}
@@ -880,7 +880,7 @@ export const NomineeDetailsIssue = React.memo(() => {
         borderRadius: "1.5rem",
         padding: "1rem",
         height: "85%",
-        background: "white",
+        background: "white"
       }}
     >
       <Box
@@ -894,7 +894,7 @@ export const NomineeDetailsIssue = React.memo(() => {
       </Box>
 
       <Box sx={{ width: "100%" }}>
-        <Box sx={{ marginTop: "30px" }}>
+        <Box sx={{ marginTop: "10px", }}>
           <Stack sx={{ width: "100%", gap: "0.5rem" }} key={"key"}>
             <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Name of Nominee / Gaurdian</InputLabel>
             <FormControl variant="outlined" size="small">
@@ -916,7 +916,7 @@ export const NomineeDetailsIssue = React.memo(() => {
           </Stack>
         </Box>
 
-        <Box sx={{ marginTop: "30px" }}>
+        <Box sx={{ marginTop: "10px" }}>
 
           <Stack sx={{ width: "100%", gap: "0.5rem" }} key={"key"}>
             <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Relationship</InputLabel>
@@ -938,7 +938,7 @@ export const NomineeDetailsIssue = React.memo(() => {
             </FormControl>
           </Stack>
         </Box>
-        <Box sx={{ marginTop: "30px" }}>
+        <Box sx={{ marginTop: "10px" }}>
 
           <Stack sx={{ width: "100%", gap: "0.5rem" }} key={"key"}>
             <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Mobile</InputLabel>
@@ -961,7 +961,7 @@ export const NomineeDetailsIssue = React.memo(() => {
           </Stack>
         </Box>
 
-        <Box sx={{ marginTop: "30px" }}>
+        <Box sx={{ marginTop: "10px" }}>
 
           <Stack sx={{ width: "100%", gap: "0.5rem" }} key={"key"}>
             <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Address</InputLabel>
@@ -981,7 +981,7 @@ export const NomineeDetailsIssue = React.memo(() => {
             </FormControl>
           </Stack>
         </Box>
-        <Box sx={{ display: "flex", flexDirection: isMobile ? "column" : "row", marginTop: "30px", gap: isMobile ? "1rem" : "6rem" }}>
+        <Box sx={{ display: "flex", flexDirection: isMobile ? "column" : "row", marginTop: "10px", gap: isMobile ? "1rem" : "6rem" }}>
           <Typography
             InputLabelProps={{
               sx: {
@@ -1017,7 +1017,8 @@ export const NomineeDetailsIssue = React.memo(() => {
                         }}
                       />
                     }
-                    label={<Typography variant="h4">{option}</Typography>} // Use Typography for label
+                    // label={<Typography variant="h4">{option}</Typography>} // Use Typography for label
+                    label={<InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>{option}</InputLabel>}
                   />
                 ))}
               </Box>
@@ -1039,7 +1040,8 @@ export const NomineeDetailsIssue = React.memo(() => {
                             }}
                           />
                         }
-                        label={<Typography variant="h4">{option}</Typography>} // Use Typography for label
+                        // label={<Typography variant="h4">{option}</Typography>} // Use Typography for label
+                        label={<InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>{option}</InputLabel>}
                       />
                     ))}
                   </Box>
@@ -1048,7 +1050,9 @@ export const NomineeDetailsIssue = React.memo(() => {
             </Box>
           </RadioGroup>
         </Box>
-        <Box sx={{ display: "flex", flexDirection: isMobile ? "column" : "row", marginTop: "10px", justifyContent: "space-between", alignItems: isMobile ? "start" : "center" }}>
+        <Box sx={{ display: "flex", flexDirection: isMobile ? "column" : "row",
+         marginTop: "10px", justifyContent: "space-between", 
+          alignItems: isMobile ? "start" : "center" }}>
 
           <Stack sx={{ width: "100%", gap: "0.5rem" }} key={"key"}>
             <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Id proof Number</InputLabel>
@@ -1068,7 +1072,7 @@ export const NomineeDetailsIssue = React.memo(() => {
             </FormControl>
           </Stack>
         </Box>
-        <Box sx={{ display: "flex", flexDirection: isMobile ? "column" : "row", marginTop: "30px", justifyContent: "space-between", alignItems: isMobile ? "start" : "center" }}>
+        <Box sx={{ display: "flex", flexDirection: isMobile ? "column" : "row", marginTop: "10px", justifyContent: "space-between", alignItems: isMobile ? "start" : "center" }}>
           <Stack sx={{ width: "100%", gap: "0.5rem" }} key={"key"}>
             <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>If other please specify</InputLabel>
             <FormControl variant="outlined" size="small">
@@ -1186,7 +1190,7 @@ export const CommunicationDetailsIssue = React.memo(() => {
       return
     }
 
-    console.log("cehck data communication 12345678 ", communication);
+    // console.log("cehck data communication 12345678 ", communication);
 
     dispatch(addCommunicationDetails(communication));
     setCommunication(initialCommunication)
@@ -1260,7 +1264,7 @@ export const CommunicationDetailsIssue = React.memo(() => {
         </Box>
         <Box sx={{ display: "flex", marginTop: "30px", gap: "4rem" }}>
 
-          <Stack sx={{ width: "100%", gap: "0.5rem" }} key={"key"}>
+          <Stack sx={{ width: "33%", gap: "0.5rem" }} key={"key"}>
             <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Near landmark</InputLabel>
             <FormControl variant="outlined" size="small">
               <OutlinedInput
@@ -1277,7 +1281,8 @@ export const CommunicationDetailsIssue = React.memo(() => {
               />
             </FormControl>
           </Stack>
-          <Stack sx={{ width: "100%", gap: "0.5rem" }} key={"key"}>
+
+          <Stack sx={{ width: "33%", gap: "0.5rem" }} key={"key"}>
             <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Country</InputLabel>
             <FormControl variant="outlined" size="small">
               <SingleSelect
@@ -1292,7 +1297,8 @@ export const CommunicationDetailsIssue = React.memo(() => {
               />
             </FormControl>
           </Stack>
-          <Stack sx={{ width: "100%", gap: "0.5rem" }} key={"key"}>
+
+          <Stack sx={{ width: "33%", gap: "0.5rem" }} key={"key"}>
             <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>State</InputLabel>
             <FormControl variant="outlined" size="small">
 
@@ -1325,6 +1331,7 @@ export const CommunicationDetailsIssue = React.memo(() => {
               />
             </FormControl>
           </Stack>
+
           <Stack sx={{ width: "100%", gap: "0.5rem" }} key={"key"}>
             <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Picode</InputLabel>
             <FormControl variant="outlined" size="small">

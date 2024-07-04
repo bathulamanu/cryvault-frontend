@@ -34,7 +34,7 @@ export const GetGenderDetails = () => {
   return `${BASE_URL}/flyingbyts/api/user/getMasterConfiguration/Gender/null`;
 };
 
-export const GetCustomerPaymentDetails = () => {
+export const updateCustomerInfoApi = () => {
   return `${BASE_URL}/flyingbyts/api/customer/updateCustomerInfo`;
 };
 export const GetHeaderSocialMediaIcon = () => {

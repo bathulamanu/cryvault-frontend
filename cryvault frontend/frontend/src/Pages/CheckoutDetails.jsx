@@ -3,8 +3,14 @@ import { Box, Button, FormControl, FormControlLabel, InputLabel, MenuItem, Outli
 import React, { useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useDeviceSize from "../Utilities/useDeviceSize";
-import { createOrder, getCity, getCountry, getCustomerPaymentDetails, getGenders, getState } from "../redux/reducers/PaymentReducer";
-
+import { createOrder, getCity, getCountry, getGenders, getState, updateCustomerInfo } from "../redux/reducers/PaymentReducer";
+import { validateEmail, validatePhoneNumber } from "../Components/Contact/ContactForm";
+import {
+  getByIdList,
+  getCityIdList,
+  getNamesIdList,
+  getStateIdList,
+} from "../globalFunctions";
 const CheckoutDetails = () => {
   const [detail, setDetail] = useState(null);
 
@@ -32,6 +38,11 @@ const CheckoutDetails = () => {
   const countries = useSelector((state) => state.payment.countries);
   const states = useSelector((state) => state.payment.states);
   const cities = useSelector((state) => state.payment.cities);
+
+  const upDatedCountryList = getNamesIdList(countries);
+  const stateList = getStateIdList(states);
+  const cityList = getCityIdList(cities);
+  const gendersList = getByIdList(genders);
 
   const planName = localStorage.getItem("planName");
   const amount = localStorage.getItem("planAmount");
@@ -125,7 +136,7 @@ const CheckoutDetails = () => {
       id: "nearLandMark",
     },
     country: {
-      value: detail?.countryCode || 352,
+      value: 352,
       placeholder: "Country",
       errorStatus: false,
       errorMessage: "",
@@ -226,6 +237,15 @@ const CheckoutDetails = () => {
     const { name, value } = e.target;
     setUserData({ ...userData, [e.target.name]: { ...userData[e.target.name], value: value, errorStatus: false, errorMessage: "" } });
   };
+
+  const handleChange = (event, name) => {
+    // alert("ok", name)
+    setUserData((prevData) => ({
+      ...prevData,
+      [name]: { ...prevData[name], value: event, errorStatus: false, errorMessage: "" },
+    }));
+  }
+
   const handlePartialOrFullPament = (e) => {
     // const newValue = e.target.value === 'true';
     setPartialOrFull(e.target.value);
@@ -242,6 +262,141 @@ const CheckoutDetails = () => {
   }, [userData.state.value]);
 
   const proceed = () => {
+
+    if (!userData.phone.value) {
+      setUserData((prevData) => ({
+        ...prevData,
+        phone: {
+          ...prevData.phone,
+          errorStatus: true,
+          errorMessage: "Enter valid phone number",
+        },
+      }));
+      return;
+    }
+    if (!userData.firstName.value) {
+      setUserData((prevData) => ({
+        ...prevData,
+        firstName: {
+          ...prevData.firstName,
+          errorStatus: true,
+          errorMessage: "First Name is required.",
+        },
+      }));
+      return;
+    }
+    // if (!userData.lastName.value) {
+    //   setUserData((prevData) => ({
+    //     ...prevData,
+    //     lastName: {
+    //       ...prevData.lastName,
+    //       errorStatus: true,
+    //       errorMessage: "Last Name is required.",
+    //     },
+    //   }));
+    //   return;
+    // }
+
+    // if (!userData.email.value) {
+    //   setUserData((prevData) => ({
+    //     ...prevData,
+    //     email: {
+    //       ...prevData.email,
+    //       errorStatus: true,
+    //       errorMessage: "Email ID is required.",
+    //     },
+    //   }));
+    //   return;
+    // }
+    // if (!validateEmail(userData.email.value)) {
+    //   setUserData((prevData) => ({
+    //     ...prevData,
+    //     email: {
+    //       ...prevData.email,
+    //       errorStatus: true,
+    //       errorMessage: "Enter valid Email ID",
+    //     },
+    //   }));
+    //   return;
+    // }
+    // if (!userData.addressLine1.value) {
+    //   setUserData((prevData) => ({
+    //     ...prevData,
+    //     addressLine1: {
+    //       ...prevData.addressLine1,
+    //       errorStatus: true,
+    //       errorMessage: "Address line 1 is required.",
+    //     },
+    //   }));
+    //   return;
+    // }
+    // if (!userData.addressLine2.value) {
+    //   setUserData((prevData) => ({
+    //     ...prevData,
+    //     addressLine2: {
+    //       ...prevData.addressLine2,
+    //       errorStatus: true,
+    //       errorMessage: "Address line 2 is required.",
+    //     },
+    //   }));
+    //   return;
+    // }
+    // if (!userData.nearLandMark.value) {
+    //   setUserData((prevData) => ({
+    //     ...prevData,
+    //     nearLandMark: {
+    //       ...prevData.nearLandMark,
+    //       errorStatus: true,
+    //       errorMessage: "Near land Mark is required.",
+    //     },
+    //   }));
+    //   return;
+    // }
+
+    // if (!userData.country.value) {
+    //   setUserData((prevData) => ({
+    //     ...prevData,
+    //     country: {
+    //       ...prevData.city,
+    //       errorStatus: true,
+    //       errorMessage: "Country is required.",
+    //     },
+    //   }));
+    //   return;
+    // }
+    // if (!userData.state.value) {
+    //   setUserData((prevData) => ({
+    //     ...prevData,
+    //     state: {
+    //       ...prevData.state,
+    //       errorStatus: true,
+    //       errorMessage: "State is required.",
+    //     },
+    //   }));
+    //   return;
+    // }
+    // if (!userData.city.value) {
+    //   setUserData((prevData) => ({
+    //     ...prevData,
+    //     city: {
+    //       ...prevData.city,
+    //       errorStatus: true,
+    //       errorMessage: "City is required.",
+    //     },
+    //   }));
+    //   return;
+    // }
+    // if (!userData.pincode.value) {
+    //   setUserData((prevData) => ({
+    //     ...prevData,
+    //     pincode: {
+    //       ...prevData.pincode,
+    //       errorStatus: true,
+    //       errorMessage: "Pincode is required.",
+    //     },
+    //   }));
+    //   return;
+    // }
     const dataToSend = {
       countryCode: "91",
       phoneNumber: userData.phone.value,
@@ -257,134 +412,12 @@ const CheckoutDetails = () => {
       country: userData.country.value,
       gender: userData.gender.value,
     };
-    // if (!userData.phone.value) {
-    //   setUserData((prevData) => ({
-    //     ...prevData,
-    //     phone: {
-    //       ...prevData.phone,
-    //       errorStatus: true,
-    //       errorMessage: "Enter valid phone number",
-    //     },
-    //   }));
-    //   return;
-    // }
-    // if (!userData.firstName.value) {
-    //   setUserData((prevData) => ({
-    //     ...prevData,
-    //     firstName: {
-    //       ...prevData.firstName,
-    //       errorStatus: true,
-    //       errorMessage: "Enter valid first name",
-    //     },
-    //   }));
-    //   return;
-    // }
-    // if (!userData.lastName.value) {
-    //   setUserData((prevData) => ({
-    //     ...prevData,
-    //     lastName: {
-    //       ...prevData.lastName,
-    //       errorStatus: true,
-    //       errorMessage: "Enter valid last name",
-    //     },
-    //   }));
-    //   return;
-    // }
-    // if (!userData.email.value) {
-    //   setUserData((prevData) => ({
-    //     ...prevData,
-    //     email: {
-    //       ...prevData.email,
-    //       errorStatus: true,
-    //       errorMessage: "Enter valid email",
-    //     },
-    //   }));
-    //   return;
-    // }
-    // if (!userData.addressLine1.value) {
-    //   setUserData((prevData) => ({
-    //     ...prevData,
-    //     addressLine1: {
-    //       ...prevData.addressLine1,
-    //       errorStatus: true,
-    //       errorMessage: "Enter valid address line 1",
-    //     },
-    //   }));
-    //   return;
-    // }
-    // if (!userData.addressLine2.value) {
-    //   setUserData((prevData) => ({
-    //     ...prevData,
-    //     addressLine2: {
-    //       ...prevData.addressLine2,
-    //       errorStatus: true,
-    //       errorMessage: "Enter valid address line 2",
-    //     },
-    //   }));
-    //   return;
-    // }
-    // if (!userData.nearLandMark.value) {
-    //   setUserData((prevData) => ({
-    //     ...prevData,
-    //     nearLandMark: {
-    //       ...prevData.nearLandMark,
-    //       errorStatus: true,
-    //       errorMessage: "Enter valid near landMark",
-    //     },
-    //   }));
-    //   return;
-    // }
-
-    // if (!userData.country.value) {
-    //   setUserData((prevData) => ({
-    //     ...prevData,
-    //     country: {
-    //       ...prevData.city,
-    //       errorStatus: true,
-    //       errorMessage: "Enter valid country",
-    //     },
-    //   }));
-    //   return;
-    // }
-    // if (!userData.state.value) {
-    //   setUserData((prevData) => ({
-    //     ...prevData,
-    //     state: {
-    //       ...prevData.state,
-    //       errorStatus: true,
-    //       errorMessage: "Enter valid state",
-    //     },
-    //   }));
-    //   return;
-    // }
-    // if (!userData.city.value) {
-    //   setUserData((prevData) => ({
-    //     ...prevData,
-    //     city: {
-    //       ...prevData.city,
-    //       errorStatus: true,
-    //       errorMessage: "Enter valid city",
-    //     },
-    //   }));
-    //   return;
-    // }
-    // if (!userData.pincode.value) {
-    //   setUserData((prevData) => ({
-    //     ...prevData,
-    //     pincode: {
-    //       ...prevData.pincode,
-    //       errorStatus: true,
-    //       errorMessage: "Enter valid pincode",
-    //     },
-    //   }));
-    //   return;
-    // }
-    // dispatch(getCustomerPaymentDetails({ payload: dataToSend, callback: order }));
-    order();
+    dispatch(updateCustomerInfo({ dataToSend, callback: order })); // 
+    // order(); 
   };
 
   const order = () => {
-    const cleanedString = localStorage.getItem("planAmount").replace(/,/g, '');
+    const cleanedString = localStorage.getItem("planAmount")?.replace(/,/g, '');
     const dataToSend = {
       amount: localStorage.getItem("planAmount"),//parseInt(cleanedString, 10),
       currency: "INR",
@@ -406,6 +439,11 @@ const CheckoutDetails = () => {
     document.body.appendChild(script);
   }, []);
 
+  useEffect(() => {
+    const dataToSend = userData.state.value
+    dispatch(getCity({ payload: dataToSend }));
+  }, [userData.state.value]);
+
   return (
     <Box style={{ marginTop: isMobile ? "3rem" : "10rem", padding: isMobile ? "0rem 2rem" : "3rem 5rem" }}>
       <Typography variant="h2" sx={{ fontWeight: "600" }}>
@@ -416,30 +454,133 @@ const CheckoutDetails = () => {
         <Box style={{ display: "grid", gridTemplateColumns: isMobile ? "auto" : "auto auto", columnGap: "20px", rowGap: "20px", width: isMobile ? "100%" : "60%" }}>
           {otherUserData.map((data, index) => (
             <Stack key={data[0]}>
-              <InputLabel sx={{ fontSize: "2rem" }} htmlFor={data[1].name}>
+              <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }} htmlFor={data[1].name}>
                 {data[1].placeholder}
               </InputLabel>
               <FormControl variant="outlined" size="small">
-                <OutlinedInput readOnly={data[1].name == "phone" ? true : false} type={data[1].type} value={data[1].value} name={data[1].name} id="outlined-adornment-password" placeholder={data[1].placeholder} sx={{ border: data[1].errorStatus ? "1px solid red" : "", height: "57px" }} onChange={handleOnChange} />
+                <OutlinedInput readOnly={data[1].name == "phone" ? true : false}
+                  type={data[1].type} value={data[1].value}
+                  name={data[1].name} id="outlined-adornment-password"
+                  placeholder={data[1].placeholder}
+                  sx={{
+                    border: data[1].errorStatus ? "1px solid red" : "",
+                    height: "40px",
+                    width: "100%",
+                    padding: "10px",
+                    borderRadius: "8px",
+                    marginTop: "7px"
+                  }}
+                  onChange={handleOnChange} />
                 {data[1].errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}> {data[1].errorMessage} </Typography> : null}
               </FormControl>
             </Stack>
           ))}
 
+          {/* <MultipleSelect type={"gender"} title={"Gender"} userData={userData} dataArray={genders} handleChange={handleGenderChange} /> */}
+          <Stack sx={{ width: "100%", gap: "0.5rem" }} key={"key"}>
+            <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>{userData.gender.name} </InputLabel>
+            <FormControl variant="outlined" size="small">
+              <SingleSelect
+                Placeholder={"Select"}
+                width={"100%"}
+                disabled={false}
+                data={gendersList}
+                value={userData.gender.value}
+                onChange={(e) => {
+                  handleChange(e, "gender")
+                }}
+              />
+            </FormControl>
+          </Stack>
 
-          <MultipleSelect type={"country"} title={"Country"} userData={userData} dataArray={countries} handleChange={handleCountryChange} />
-          <MultipleSelect type={"state"} title={"State"} userData={userData} dataArray={states} handleChange={handleStateChange} />
-          <MultipleSelect type={"city"} title={"City"} userData={userData} dataArray={cities} handleChange={handleCityChange} />
-          <MultipleSelect type={"gender"} title={"Gender"} userData={userData} dataArray={genders} handleChange={handleGenderChange} />
+          <Stack sx={{ width: "100%", gap: "0.5rem" }} key={"key"}>
+            <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>{userData.country.name} </InputLabel>
+            <FormControl variant="outlined" size="small">
+              <SingleSelect
+                Placeholder={"Select"}
+                width={"100%"}
+                disabled={true}
+                data={upDatedCountryList}
+                value={userData.country.value}
+              />
+              {userData.country.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}> {userData.country.errorMessage} </Typography> : null}
+            </FormControl>
+          </Stack>
+
+
+          <Stack sx={{ width: "100%", gap: "0.5rem" }} key={"key"}>
+            <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>{userData.state.name}</InputLabel>
+            <SingleSelect
+              Placeholder={"Select"}
+              width={"100%"}
+              data={stateList}
+              value={userData.state.value}
+              onChange={(e) => {
+                handleChange(e, "state")
+              }}
+            />
+            {userData.state.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}> {userData.state.errorMessage} </Typography> : null}
+          </Stack>
+
+
+          <Stack sx={{ width: "100%", gap: "0.5rem" }} key={"key"}>
+            <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>{userData.city.name} </InputLabel>
+            <SingleSelect
+              Placeholder={"Select"}
+              width={"100%"}
+              data={cityList}
+              value={userData.city.value}
+              onChange={(e) => {
+                handleChange(e, "city");
+              }}
+            />
+            {userData.city.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}> {userData.city.errorMessage} </Typography> : null}
+
+          </Stack>
+
+          {/* <MultipleSelect type={"country"} title={"Country"} userData={userData} dataArray={countries} handleChange={handleCountryChange} /> */}
+          {/* <MultipleSelect type={"state"} title={"State"} userData={userData} dataArray={states} handleChange={handleStateChange} /> */}
+          {/* <MultipleSelect type={"city"} title={"City"} userData={userData} dataArray={cities} handleChange={handleCityChange} /> */}
+
 
           <Stack key={"pincode"}>
-            <InputLabel sx={{ fontSize: "2rem" }} htmlFor={"pincode"}>
+            <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>
               Pincode
             </InputLabel>
             <FormControl variant="outlined" size="small">
-              <OutlinedInput readOnly={false} type={"text"} value={userData.pincode.value} name={userData.pincode.name} id="outlined-adornment-password" placeholder={userData.pincode.placeholder} sx={{ border: userData.pincode.errorStatus ? "1px solid red" : "", height: "57px" }} onChange={handleOnChange} />
+              <OutlinedInput readOnly={false} type={"text"} value={userData.pincode.value} name={userData.pincode.name} id="outlined-adornment-password"
+                placeholder={userData.pincode.placeholder}
+                sx={{
+                  border: userData.pincode.errorStatus ? "1px solid red" : "",
+                  height: "40px",
+                  width: "100%",
+                  padding: "10px",
+                  borderRadius: "8px",
+                  marginTop: "7px"
+                }}
+                onChange={handleOnChange} />
               {userData.pincode.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}> {userData.pincode.errorMessage} </Typography> : null}
             </FormControl>
+            {/* <Box sx={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+            <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Pincode</InputLabel>
+            <FormControl variant="outlined" size="small">
+              <OutlinedInput
+                readOnly={false}
+                value={userData.pincode.value}
+                name={userData.pincode.name}
+                placeholder={userData.pincode.placeholder}
+                sx={{
+                  border: "",
+                  height: "40px",
+                  width: "100%",
+                  padding: "10px",
+                  borderRadius: "8px",
+                }}
+                onChange={handleOnChange}
+              />
+              {userData.pincode.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}> {userData.pincode.errorMessage} </Typography> : null}
+            </FormControl>
+          </Box> */}
           </Stack>
         </Box>
 
@@ -573,28 +714,7 @@ export function MultipleSelect(props) {
           </option>
         ))}
       </select>
-      {/* <FormControl fullWidth>
-        <InputLabel sx={{ fontSize: "2rem" }} id="demo-simple-select-autowidth-label">
-        {title}
-        </InputLabel>
-        <Select
-          sx={{ fontSize: "2rem", border: userData.city?.errorStatus ? "1px solid red" : "" }}
-          // labelId="demo-simple-select-autowidth-label"
-          labelId="demo-multiple-name-label"
-          id="demo-simple-select-autowidth"
-          value={userData.city?.value}
-          onChange={handleChange}
-          // autoWidth
-          label="Cities"
-        >
-          {dataArray?.map((city) => (
-            <MenuItem sx={{ fontSize: "2rem" }} name={city.name} id={city._id} key={city.name} value={city.cityID}>
-              {city.name}
-            </MenuItem>
-          ))}
-        </Select>
-        {userData.city?.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}> {userData.city?.errorMessage} </Typography> : null}
-      </FormControl> */}
+
 
     </Box>
   );
@@ -651,55 +771,3 @@ export function SingleSelect(props) {
   )
 }
 export default CheckoutDetails;
-{
-  /* <FormControl fullWidth>
-            <InputLabel sx={{ fontSize: "2rem" }} id="demo-simple-select-autowidth-label">
-              cities
-            </InputLabel>
-            <Select
-              sx={{ fontSize: "2rem", border: userData.city?.errorStatus ? "1px solid red" : "" }}
-              // labelId="demo-simple-select-autowidth-label"
-              labelId="demo-multiple-name-label"
-              id="demo-simple-select-autowidth"
-              value={userData.city?.value}
-              onChange={handleCityChange}
-              // autoWidth
-              label="Cities"
-            >
-              {cities?.map((city) => (
-                <MenuItem sx={{ fontSize: "2rem" }} name={city.name} id={city._id} key={city.name} value={city.cityID}>
-                  {city.name}
-                </MenuItem>
-              ))}
-            </Select>
-            {userData.city?.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}> {userData.city?.errorMessage} </Typography> : null}
-          </FormControl> */
-}
-
-//   <FormControl fullWidth>
-//   <InputLabel sx={{ fontSize: "2rem" }} id="demo-simple-select-autowidth-label">
-//     Countries
-//   </InputLabel>
-//   <Select sx={{ fontSize: "2rem", border: userData.country?.errorStatus ? "1px solid red" : "" }} labelId="demo-simple-select-autowidth-label" id="demo-simple-select-autowidth" value={userData.country?.value} onChange={handleCountryChange} autoWidth label="Countries">
-//     {countries?.map((country) => (
-//       <MenuItem sx={{ fontSize: "2rem" }} name={country.name} id={country._id} key={country.name} value={country.countryID}>
-//         {country.name}
-//       </MenuItem>
-//     ))}
-//   </Select>
-//   {userData.country?.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}> {userData.country?.errorMessage} </Typography> : null}
-// </FormControl>
-
-// <FormControl sx={{}} fullWidth>
-//   <InputLabel sx={{ fontSize: "2rem" }} id="demo-simple-select-autowidth-label">
-//     States
-//   </InputLabel>
-//   <Select sx={{ fontSize: "2rem", border: userData.state?.errorStatus ? "1px solid red" : "" }} labelId="demo-simple-select-autowidth-label" id="demo-simple-select-autowidth" value={userData.state?.value} onChange={handleStateChange} autoWidth label="State">
-//     {states?.map((state) => (
-//       <MenuItem sx={{ fontSize: "2rem" }} name={state.name} id={state._id} key={state.name} value={state.stateID}>
-//         {state.name}
-//       </MenuItem>
-//     ))}
-//   </Select>
-//   {userData.state?.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}> {userData.state?.errorMessage} </Typography> : null}
-// </FormControl>

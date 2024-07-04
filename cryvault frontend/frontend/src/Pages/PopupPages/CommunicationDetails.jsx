@@ -395,207 +395,209 @@ const CommunicationDetails = forwardRef((props, ref) => {
   }, [handleNext]);
 
   return (
-    <Box sx={{ display: "flex", width: "100%" }} className="conatiner">
+    <Box sx={{ display: "flex", flexDirection: "column", width: "100%", padding: "2rem" }} className="conatiner">
       <Typography sx={{ fontSize: "2rem", fontWeight: "600", color: "black", textTransform: "uppercase", width: "100%" }}>Communication Details</Typography>
-      
-      <Box sx={{ width: "50%", border: "1px solid #e5e5e5", margin: "2rem", padding: "2rem", borderRadius: "1rem" }}>
+      <Stack sx={{ display: "flex", flexDirection: "row" }}>
 
-        <Box sx={{ marginTop: "3rem", display: "grid", gridTemplateColumns: "auto auto", gridColumnGap: "2rem", gridRowGap: "3rem" }} className="fatherDetails">
-          {Object.entries(data).map(([key, fieldData]) =>
-            fieldData.name == "Address" || fieldData.name == "PinCode" ? (
-              <>
-                <Stack sx={{ width: fieldData.name == "Address" ? "198%" : "100%", gap: "0.5rem" }} key={key}>
-                  <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>{fieldData.placeholder} <span style={redStarStyle}>*</span></InputLabel>
-                  <FormControl variant="outlined" size="small">
-                    <OutlinedInput
-                      readOnly={false}
-                      type={fieldData.type || "text"}
-                      value={fieldData.value}
-                      name={fieldData.name}
-                      id={`outlined-adornment-${key}`}
-                      placeholder={fieldData.placeholder}
-                      sx={{
-                        border: fieldData.errorStatus ? "1px solid red" : "",
-                        height: "40px",
-                        width: "100%",
-                        padding: "10px",
-                        borderRadius: "8px",
-                      }}
-                      onChange={handleOnChange}
-                      inputProps={fieldData.name == "PinCode" ? { maxLength: 6 } : { maxLength: 200 }}
-                    />
-                    {fieldData.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{fieldData.errorMessage}</Typography> : null}
-                  </FormControl>
-                </Stack>
-                {fieldData.name == "Address" ? <br /> : null}
-              </>
-            ) :
-              fieldData.name == "Country" ? (
+        <Box sx={{ width: "49%", border: "1px solid #e5e5e5", margin: "2rem", padding: "2rem", borderRadius: "1rem" }}>
+
+          <Box sx={{ marginTop: "3rem", display: "grid", gridTemplateColumns: "auto auto", gridColumnGap: "2rem", gridRowGap: "3rem" }} className="fatherDetails">
+            {Object.entries(data).map(([key, fieldData]) =>
+              fieldData.name == "Address" || fieldData.name == "PinCode" ? (
                 <>
-                  <Stack sx={{ width: "100%", gap: "0.5rem" }} key={key}>
-
-                    <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>{data.Country.name} <span style={redStarStyle}>*</span></InputLabel>
+                  <Stack sx={{ width: fieldData.name == "Address" ? "198%" : "100%", gap: "0.5rem" }} key={key}>
+                    <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>{fieldData.placeholder} <span style={redStarStyle}>*</span></InputLabel>
                     <FormControl variant="outlined" size="small">
+                      <OutlinedInput
+                        readOnly={false}
+                        type={fieldData.type || "text"}
+                        value={fieldData.value}
+                        name={fieldData.name}
+                        id={`outlined-adornment-${key}`}
+                        placeholder={fieldData.placeholder}
+                        sx={{
+                          border: fieldData.errorStatus ? "1px solid red" : "",
+                          height: "40px",
+                          width: "100%",
+                          padding: "10px",
+                          borderRadius: "8px",
+                        }}
+                        onChange={handleOnChange}
+                        inputProps={fieldData.name == "PinCode" ? { maxLength: 6 } : { maxLength: 200 }}
+                      />
+                      {fieldData.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{fieldData.errorMessage}</Typography> : null}
+                    </FormControl>
+                  </Stack>
+                  {fieldData.name == "Address" ? <br /> : null}
+                </>
+              ) :
+                fieldData.name == "Country" ? (
+                  <>
+                    <Stack sx={{ width: "100%", gap: "0.5rem" }} key={key}>
+
+                      <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>{data.Country.name} <span style={redStarStyle}>*</span></InputLabel>
+                      <FormControl variant="outlined" size="small">
+                        <SingleSelect
+                          Placeholder={"Select"}
+                          width={"100%"}
+                          disabled={true}
+                          data={upDatedCountryList}
+                          value={data.Country.value}
+                          onChange={(e) => {
+                            handleChange(e, "Country");
+                          }}
+                        />
+
+                        {data.Country.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{data.Country.errorMessage}</Typography> : null}
+                      </FormControl>
+                    </Stack>
+                  </>
+                ) : fieldData.name == "State" ? (
+                  <>
+                    <Stack sx={{ width: "100%", gap: "0.5rem" }} key={key}>
+                      <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>{data.State.name} <span style={redStarStyle}>*</span></InputLabel>
                       <SingleSelect
                         Placeholder={"Select"}
                         width={"100%"}
-                        disabled={true}
-                        data={upDatedCountryList}
-                        value={data.Country.value}
+                        data={stateList}
+                        value={data.State.value}
                         onChange={(e) => {
-                          handleChange(e, "Country");
+                          handleChange(e, "State")
                         }}
                       />
 
-                      {data.Country.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{data.Country.errorMessage}</Typography> : null}
+                      {data.State.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{data.State.errorMessage}</Typography> : null}
+                    </Stack>
+                  </>
+                ) : fieldData.name == "City" ? (
+                  <>
+                    <Stack sx={{ width: "100%", gap: "0.5rem" }} key={key}>
+                      <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>{data.City.name} <span style={redStarStyle}>*</span></InputLabel>
+                      <SingleSelect
+                        Placeholder={"Select"}
+                        width={"100%"}
+                        data={cityList}
+                        value={data.City.value}
+                        onChange={(e) => {
+                          handleChange(e, "City");
+                        }}
+                      />
+                      {data.City.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{data.City.errorMessage}</Typography> : null}
+                    </Stack>
+                  </>
+                ) : fieldData.name == "permanentAddressIsSameAsCorrespondenceAddress" ? (
+                  <>
+                    <Stack sx={{ width: "100%", gap: "0.5rem" }} key={key}>
+                      {data.permanentAddressIsSameAsCorrespondenceAddress.value}
+                      <FormControlLabel
+                        control={
+                          <Checkbox
+                            checked={data.permanentAddressIsSameAsCorrespondenceAddress.value}
+                            onChange={handleCheckChange}
+                            name={data.permanentAddressIsSameAsCorrespondenceAddress.name}
+                            value={data.permanentAddressIsSameAsCorrespondenceAddress.value}
+                          />
+                        }
+                        label="If permanent address is same as correspondence address"
+                      />
+                    </Stack>
+                  </>
+                ) : (null)
+            )}
+          </Box>
+        </Box>
+
+        <Box sx={{ width: "49%", flexDirection: "column",  border: "1px solid #e5e5e5", margin: "2rem", padding: "2rem", borderRadius: "1rem" }} >
+          <Box sx={{ marginTop: "3rem", display: "grid", gridTemplateColumns: "auto auto", gridColumnGap: "2rem", gridRowGap: "3rem" }} className="fatherDetails">
+
+            {Object.entries(data).map(([key, fieldData]) =>
+              fieldData.name == "PermanentAddress" || fieldData.name == "PermanentAddressPinCode" ? (
+                <>
+                  <Stack sx={{ width: fieldData.name == "PermanentAddress" ? "145%" : "100%", gap: "0.5rem" }} key={key}>
+                    <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>{fieldData.placeholder} <span style={redStarStyle}>*</span></InputLabel>
+                    <FormControl variant="outlined" size="small">
+                      <OutlinedInput
+                        readOnly={false} 
+                        type={fieldData.type || "text"}
+                        value={fieldData.value}
+                        name={fieldData.name}
+                        id={`outlined-adornment-${key}`}
+                        placeholder={fieldData.placeholder}
+                        sx={{
+                          border: fieldData.errorStatus ? "1px solid red" : "",
+                          height: "40px",
+                          width: "100%",
+                          padding: "10px",
+                          borderRadius: "8px",
+                        }}
+                        onChange={handleOnChange}
+                        inputProps={fieldData.name == "PermanentAddressPinCode" ? { maxLength: 6 } : { maxLength: 200 }}
+                      />
+                      {fieldData.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{fieldData.errorMessage}</Typography> : null}
                     </FormControl>
                   </Stack>
+                  {fieldData.name == "PermanentAddress" ? <br /> : null}
                 </>
-              ) : fieldData.name == "State" ? (
+              ) : fieldData.name == "PermanentAddressCountry" ? (
+                <>
+                  <Stack sx={{ width: "90%", gap: "0.5rem" }} key={key}>
+
+                    <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Country <span style={redStarStyle}>*</span></InputLabel>
+                    <SingleSelect
+                      Placeholder={"Select"}
+                      width={"100%"}
+                      data={upDatedCountryList}
+                      disabled={true}
+                      value={data.PermanentAddressCountry.value}
+                      onChange={(e) => {
+                        handleChange(e, "PermanentAddressCountry");
+                      }}
+                    />
+
+                    {data.PermanentAddressCountry.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{data.PermanentAddressCountry.errorMessage}</Typography> : null}
+                  </Stack>
+                </>
+              ) : fieldData.name == "PermanentAddressState" ? (
                 <>
                   <Stack sx={{ width: "100%", gap: "0.5rem" }} key={key}>
-                    <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>{data.State.name} <span style={redStarStyle}>*</span></InputLabel>
+
+                    <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>State <span style={redStarStyle}>*</span></InputLabel>
                     <SingleSelect
                       Placeholder={"Select"}
                       width={"100%"}
                       data={stateList}
-                      value={data.State.value}
+                      value={data.PermanentAddressState.value}
                       onChange={(e) => {
-                        handleChange(e, "State")
+                        handleChange(e, "PermanentAddressState");
                       }}
                     />
 
-                    {data.State.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{data.State.errorMessage}</Typography> : null}
+                    {data.PermanentAddressState.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{data.PermanentAddressState.errorMessage}</Typography> : null}
                   </Stack>
                 </>
-              ) : fieldData.name == "City" ? (
+              ) : fieldData.name == "PermanentAddressCity" ? (
                 <>
                   <Stack sx={{ width: "100%", gap: "0.5rem" }} key={key}>
-                    <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>{data.City.name} <span style={redStarStyle}>*</span></InputLabel>
+
+                    <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>City <span style={redStarStyle}>*</span></InputLabel>
                     <SingleSelect
                       Placeholder={"Select"}
                       width={"100%"}
-                      data={cityList}
-                      value={data.City.value}
+                      data={cityList2}
+                      value={data.PermanentAddressCity.value}
                       onChange={(e) => {
-                        handleChange(e, "City");
+                        handleChange(e, "PermanentAddressCity");
                       }}
                     />
-                    {data.City.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{data.City.errorMessage}</Typography> : null}
-                  </Stack>
-                </>
-              ) : fieldData.name == "permanentAddressIsSameAsCorrespondenceAddress" ? (
-                <>
-                  <Stack sx={{ width: "100%", gap: "0.5rem" }} key={key}>
-                    {data.permanentAddressIsSameAsCorrespondenceAddress.value}
-                    <FormControlLabel
-                      control={
-                        <Checkbox
-                          checked={data.permanentAddressIsSameAsCorrespondenceAddress.value}
-                          onChange={handleCheckChange}
-                          name={data.permanentAddressIsSameAsCorrespondenceAddress.name}
-                          value={data.permanentAddressIsSameAsCorrespondenceAddress.value}
-                        />
-                      }
-                      label="If permanent address is same as correspondence address"
-                    />
+
+                    {data.PermanentAddressCity.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{data.PermanentAddressCity.errorMessage}</Typography> : null}
                   </Stack>
                 </>
               ) : (null)
-          )}
+            )}
+          </Box>
         </Box>
-      </Box>
-
-      <Box sx={{ width: "50%", flexDirection: "column", display: "flex", border: "1px solid #e5e5e5", margin: "2rem", padding: "2rem", borderRadius: "1rem" }} >
-        <Box sx={{ marginTop: "3rem", display: "grid", gridTemplateColumns: "auto auto", gridColumnGap: "2rem", gridRowGap: "3rem" }} className="fatherDetails">
-      
-           {Object.entries(data).map(([key, fieldData]) =>
-            fieldData.name == "PermanentAddress" || fieldData.name == "PermanentAddressPinCode" ? (
-              <>
-                <Stack sx={{ width: fieldData.name == "PermanentAddress" ? "149%" : "100%", gap: "0.5rem" }} key={key}>
-                  <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>{fieldData.placeholder} <span style={redStarStyle}>*</span></InputLabel>
-                  <FormControl variant="outlined" size="small">
-                    <OutlinedInput
-                      readOnly={false}
-                      type={fieldData.type || "text"}
-                      value={fieldData.value}
-                      name={fieldData.name}
-                      id={`outlined-adornment-${key}`}
-                      placeholder={fieldData.placeholder}
-                      sx={{
-                        border: fieldData.errorStatus ? "1px solid red" : "",
-                        height: "40px",
-                        width: "100%",
-                        padding: "10px",
-                        borderRadius: "8px",
-                      }}
-                      onChange={handleOnChange}
-                      inputProps={fieldData.name == "PermanentAddressPinCode" ? { maxLength: 6 } : { maxLength: 200 }}
-                    />
-                    {fieldData.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{fieldData.errorMessage}</Typography> : null}
-                  </FormControl>
-                </Stack>
-                {fieldData.name == "PermanentAddress" ? <br /> : null}
-              </>
-            ) : fieldData.name == "PermanentAddressCountry" ? (
-              <>
-                <Stack sx={{ width: "90%", gap: "0.5rem" }} key={key}>
-
-                  <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>Country <span style={redStarStyle}>*</span></InputLabel>
-                  <SingleSelect
-                    Placeholder={"Select"}
-                    width={"100%"}
-                    data={upDatedCountryList}
-                    disabled={true}
-                    value={data.PermanentAddressCountry.value}
-                    onChange={(e) => {
-                      handleChange(e, "PermanentAddressCountry");
-                    }}
-                  />
-
-                  {data.PermanentAddressCountry.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{data.PermanentAddressCountry.errorMessage}</Typography> : null}
-                </Stack>
-              </>
-            ) : fieldData.name == "PermanentAddressState" ? (
-              <>
-                <Stack sx={{ width: "100%", gap: "0.5rem" }} key={key}>
-
-                  <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>State <span style={redStarStyle}>*</span></InputLabel>
-                  <SingleSelect
-                    Placeholder={"Select"}
-                    width={"100%"}
-                    data={stateList}
-                    value={data.PermanentAddressState.value}
-                    onChange={(e) => {
-                      handleChange(e, "PermanentAddressState");
-                    }}
-                  />
-
-                  {data.PermanentAddressState.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{data.PermanentAddressState.errorMessage}</Typography> : null}
-                </Stack>
-              </>
-            ) : fieldData.name == "PermanentAddressCity" ? (
-              <>
-                <Stack sx={{ width: "100%", gap: "0.5rem" }} key={key}>
-
-                  <InputLabel sx={{ fontSize: "1.5rem", fontWeight: "500", color: "black" }}>City <span style={redStarStyle}>*</span></InputLabel>
-                  <SingleSelect
-                    Placeholder={"Select"}
-                    width={"100%"}
-                    data={cityList2}
-                    value={data.PermanentAddressCity.value}
-                    onChange={(e) => {
-                      handleChange(e, "PermanentAddressCity");
-                    }}
-                  />
-
-                  {data.PermanentAddressCity.errorStatus ? <Typography sx={{ fontSize: "1.75rem", color: "red" }}>{data.PermanentAddressCity.errorMessage}</Typography> : null}
-                </Stack>
-              </>
-            ) : (null)
-          )} 
-        </Box>
-      </Box>
+      </Stack>
 
     </Box>
   );

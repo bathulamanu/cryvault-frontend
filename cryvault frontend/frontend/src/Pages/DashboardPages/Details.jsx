@@ -119,7 +119,8 @@ const Details = () => {
         </Box>
         <CardContent>
 
-          {isUserFillTheForm ? <Box mt={2} sx={{ padding: "20px" }}>
+          {isUserFillTheForm ? 
+          <Box mt={2} sx={{ padding: "20px" }}>
             <Grid container spacing={2}>
               <Grid xs={isMobile ? 12 : 6}>
                 <Grid container spacing={2}>

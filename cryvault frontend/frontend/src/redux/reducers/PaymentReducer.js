@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { CreateOrderApi, GetCustomerPaymentDetails, GetGenderDetails, LoginAPI, OTP, PaymentStatus, getCityName, getCountryName, getOrderDetailsApi, getPaymentDetailsApi, getStateName } from "./api";
+import { CreateOrderApi, updateCustomerInfoApi, GetGenderDetails, LoginAPI, OTP, PaymentStatus, getCityName, getCountryName, getOrderDetailsApi, getPaymentDetailsApi, getStateName } from "./api";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
@@ -100,14 +100,14 @@ export const getCityForPermanentAddress = createAsyncThunk("getCityForPermanentA
     return thunkAPI.rejectWithValue(error);
   }
 });
-export const getCustomerPaymentDetails = createAsyncThunk("getCustomerPaymentDetails", async (payload, thunkAPI) => {
-  const apiUrl = GetCustomerPaymentDetails();
+export const updateCustomerInfo = createAsyncThunk("updateCustomerInfo", async (payload, thunkAPI) => {
+  const apiUrl = updateCustomerInfoApi();
   const token = sessionStorage.getItem("token");
   const headers = {
     authorization: `${token}`,
   };
   try {
-    const response = await axios.post(apiUrl, payload, { headers });
+    const response = await axios.post(apiUrl, payload?.dataToSend || payload, { headers });
     const { ok, problem, data } = response;
     if (data) {
       if (payload?.callback) payload.callback();
@@ -288,16 +288,16 @@ const PaymentReducer = createSlice({
         state.loading = false;
         state.error = action.error.message;
       })
-      .addCase(getCustomerPaymentDetails.pending, (state) => {
+      .addCase(updateCustomerInfo.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(getCustomerPaymentDetails.fulfilled, (state, action) => {
+      .addCase(updateCustomerInfo.fulfilled, (state, action) => {
         state.loading = false;
         state.userPaymentDetails = action.payload;
         toast.success(action.payload.message);
       })
-      .addCase(getCustomerPaymentDetails.rejected, (state, action) => {
+      .addCase(updateCustomerInfo.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
         toast.error(action.payload.message);

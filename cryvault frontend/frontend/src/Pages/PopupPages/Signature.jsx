@@ -145,131 +145,133 @@ const Signature = forwardRef((props, ref) => {
 
 
   return (
-    <Card variant="outlined">
-      <CardContent>
-        <Typography variant="h5" sx={headingStyle}>
-          SIGNATURE
-        </Typography>
-        <Grid container spacing={3} pt={1} pb={2}>
-          <Grid item xs={4}>
-            <InputLabel sx={inputLableStyle}>
-              Signature of Father / Legal Guardian
-            </InputLabel>
-            <FormControl variant="outlined" fullWidth size="small">
-              <TextareaAutosize
-                minRows={4}
-                id="outlined-adornment-password"
-                size="small"
-                name="FatherOrGuardianSignature"
-                value={data.FatherOrGuardianSignature.value}
-                onChange={handleChange}
-              />
-            </FormControl>
+    <Stack sx={{ padding: "18px" }}>
+      <Card variant="outlined">
+        <CardContent>
+          <Typography variant="h5" sx={headingStyle}>
+            SIGNATURE
+          </Typography>
+          <Grid container spacing={3} pt={1} pb={2}>
+            <Grid item xs={4}>
+              <InputLabel sx={inputLableStyle}>
+                Signature of Father / Legal Guardian
+              </InputLabel>
+              <FormControl variant="outlined" fullWidth size="small">
+                <TextareaAutosize
+                  minRows={4}
+                  id="outlined-adornment-password"
+                  size="small"
+                  name="FatherOrGuardianSignature"
+                  value={data.FatherOrGuardianSignature.value}
+                  onChange={handleChange}
+                />
+              </FormControl>
+            </Grid>
+            <Grid item xs={4}>
+              <InputLabel sx={inputLableStyle}>
+                Signature of Mother / Legal Guardian
+              </InputLabel>
+              <FormControl variant="outlined" fullWidth size="small">
+                <TextareaAutosize
+                  minRows={4}
+                  id="outlined-adornment-password"
+                  size="small"
+                  name="MotherOrGuardianSignature"
+                  value={data.MotherOrGuardianSignature.value}
+                  onChange={handleChange}
+                />
+              </FormControl>
+            </Grid>
+            <Grid item xs={4}>
+              <InputLabel sx={inputLableStyle}>
+                Signature of Medical Director CBIPL
+              </InputLabel>
+              <FormControl variant="outlined" fullWidth size="small">
+                <TextareaAutosize
+                  minRows={4}
+                  id="outlined-adornment-password"
+                  size="small"
+                  name="MedicalDirectorSignature"
+                  value={data.MedicalDirectorSignature.value}
+                  onChange={handleChange}
+                />
+              </FormControl>
+            </Grid>
           </Grid>
-          <Grid item xs={4}>
-            <InputLabel sx={inputLableStyle}>
-              Signature of Mother / Legal Guardian
-            </InputLabel>
-            <FormControl variant="outlined" fullWidth size="small">
-              <TextareaAutosize
-                minRows={4}
-                id="outlined-adornment-password"
-                size="small"
-                name="MotherOrGuardianSignature"
-                value={data.MotherOrGuardianSignature.value}
-                onChange={handleChange}
-              />
-            </FormControl>
+          <Grid container spacing={3} pt={1} pb={2}>
+            <Grid item xs={4}>
+              <InputLabel sx={inputLableStyle}>
+                Name of Father / Legal Guardian
+              </InputLabel>
+              <FormControl variant="outlined" fullWidth size="small">
+                <OutlinedInput
+                  fullWidth
+                  id="outlined-adornment-password"
+                  placeholder="Name"
+                  size="small"
+                  sx={{
+                    border: data.FatherOrGuardianName.errorStatus ? "1px solid red" : "",
+                    height: "40px",
+                    width: "100%",
+                    padding: "10px",
+                    borderRadius: "8px",
+                  }}
+                  name="FatherOrGuardianName"
+                  value={data.FatherOrGuardianName.value}
+                  onChange={handleChange}
+                />
+              </FormControl>
+            </Grid>
+            <Grid item xs={4}>
+              <InputLabel sx={inputLableStyle}>
+                Name of Mother / Legal Guardian
+              </InputLabel>
+              <FormControl variant="outlined" fullWidth size="small">
+                <OutlinedInput
+                  fullWidth
+                  id="outlined-adornment-password"
+                  placeholder="Name"
+                  size="small"
+                  sx={{
+                    border: data.MotherOrGuardianName.errorStatus ? "1px solid red" : "",
+                    height: "40px",
+                    width: "100%",
+                    padding: "10px",
+                    borderRadius: "8px",
+                  }}
+                  name="MotherOrGuardianName"
+                  value={data.MotherOrGuardianName.value}
+                  onChange={handleChange}
+                />
+              </FormControl>
+            </Grid>
+            <Grid item xs={4}>
+              <InputLabel sx={inputLableStyle}>
+                Name of Medical Director CBIPL
+              </InputLabel>
+              <FormControl variant="outlined" fullWidth size="small">
+                <OutlinedInput
+                  fullWidth
+                  id="outlined-adornment-password"
+                  placeholder="Name"
+                  size="small"
+                  sx={{
+                    border: data.MedicalDirectorName.errorStatus ? "1px solid red" : "",
+                    height: "40px",
+                    width: "100%",
+                    padding: "10px",
+                    borderRadius: "8px",
+                  }}
+                  name="MedicalDirectorName"
+                  value={data.MedicalDirectorName.value}
+                  onChange={handleChange}
+                />
+              </FormControl>
+            </Grid>
           </Grid>
-          <Grid item xs={4}>
-            <InputLabel sx={inputLableStyle}>
-              Signature of Medical Director CBIPL
-            </InputLabel>
-            <FormControl variant="outlined" fullWidth size="small">
-              <TextareaAutosize
-                minRows={4}
-                id="outlined-adornment-password"
-                size="small"
-                name="MedicalDirectorSignature"
-                value={data.MedicalDirectorSignature.value}
-                onChange={handleChange}
-              />
-            </FormControl>
-          </Grid>
-        </Grid>
-        <Grid container spacing={3} pt={1} pb={2}>
-          <Grid item xs={4}>
-            <InputLabel sx={inputLableStyle}>
-              Name of Father / Legal Guardian
-            </InputLabel>
-            <FormControl variant="outlined" fullWidth size="small">
-              <OutlinedInput
-                fullWidth
-                id="outlined-adornment-password"
-                placeholder="Name"
-                size="small"
-                sx={{
-                  border: data.FatherOrGuardianName.errorStatus ? "1px solid red":"", 
-                  height: "40px",
-                  width: "100%",
-                  padding: "10px",
-                  borderRadius: "8px",
-                }}
-                name="FatherOrGuardianName"
-                value={data.FatherOrGuardianName.value}
-                onChange={handleChange}
-              />
-            </FormControl>
-          </Grid>
-          <Grid item xs={4}>
-            <InputLabel sx={inputLableStyle}>
-              Name of Mother / Legal Guardian
-            </InputLabel>
-            <FormControl variant="outlined" fullWidth size="small">
-              <OutlinedInput
-                fullWidth
-                id="outlined-adornment-password"
-                placeholder="Name"
-                size="small"
-                sx={{
-                  border: data.MotherOrGuardianName.errorStatus ? "1px solid red":"",
-                  height: "40px",
-                  width: "100%",
-                  padding: "10px",
-                  borderRadius: "8px",
-                }}
-                name="MotherOrGuardianName"
-                value={data.MotherOrGuardianName.value}
-                onChange={handleChange}
-              />
-            </FormControl>
-          </Grid>
-          <Grid item xs={4}>
-            <InputLabel sx={inputLableStyle}>
-              Name of Medical Director CBIPL
-            </InputLabel>
-            <FormControl variant="outlined" fullWidth size="small">
-              <OutlinedInput
-                fullWidth
-                id="outlined-adornment-password"
-                placeholder="Name"
-                size="small"
-                sx={{
-                  border: data.MedicalDirectorName.errorStatus ? "1px solid red":"",
-                  height: "40px",
-                  width: "100%",
-                  padding: "10px",
-                  borderRadius: "8px",
-                }}
-                name="MedicalDirectorName"
-                value={data.MedicalDirectorName.value}
-                onChange={handleChange}
-              />
-            </FormControl>
-          </Grid>
-        </Grid>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </Stack>
   );
 });
 

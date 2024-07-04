@@ -115,7 +115,7 @@ const ForbankUse = forwardRef((props, ref) => {
           for (let item1 in data) {
             if (item1 == item) {
               data[item1].value = item == "Date" ? formatDate(SubscribedInnerPageData.CustomerData[0].ExcutiveInfoForbankUse[item]) : SubscribedInnerPageData.CustomerData[0].ExcutiveInfoForbankUse[item]
-          
+
             }
           }
         }
@@ -157,6 +157,7 @@ const ForbankUse = forwardRef((props, ref) => {
 
 
   return (
+    <Stack sx={{ padding: "18px" }}>
     <Card variant="outlined">
       <CardContent>
         <Typography variant="h5" sx={headingStyle}>
@@ -172,7 +173,7 @@ const ForbankUse = forwardRef((props, ref) => {
                 placeholder={data.NameOfExcutive.placeholder}
                 size="small"
                 sx={{
-                  border: data.NameOfExcutive.errorStatus ? "1px solid red":"",
+                  border: data.NameOfExcutive.errorStatus ? "1px solid red" : "",
                   height: "40px",
                   width: "100%",
                   padding: "10px",
@@ -193,7 +194,7 @@ const ForbankUse = forwardRef((props, ref) => {
                 placeholder={data.EmployeeCode.placeholder}
                 size="small"
                 sx={{
-                  border: data.EmployeeCode.errorStatus ? "1px solid red":"",
+                  border: data.EmployeeCode.errorStatus ? "1px solid red" : "",
                   height: "40px",
                   width: "100%",
                   padding: "10px",
@@ -216,7 +217,7 @@ const ForbankUse = forwardRef((props, ref) => {
                 placeholder={data.NameOfManager.placeholder}
                 size="small"
                 sx={{
-                  border: data.NameOfManager.errorStatus ? "1px solid red":"",
+                  border: data.NameOfManager.errorStatus ? "1px solid red" : "",
                   height: "40px",
                   width: "100%",
                   padding: "10px",
@@ -237,7 +238,7 @@ const ForbankUse = forwardRef((props, ref) => {
                 placeholder={data.AreaOrRegion.placeholder}
                 size="small"
                 sx={{
-                  border: data.AreaOrRegion.errorStatus ? "1px solid red":"",
+                  border: data.AreaOrRegion.errorStatus ? "1px solid red" : "",
                   height: "40px",
                   width: "100%",
                   padding: "10px",
@@ -252,7 +253,7 @@ const ForbankUse = forwardRef((props, ref) => {
           <Grid item xs={4}>
             <InputLabel sx={inputLableStyle}>Date</InputLabel>
             <FormControl variant="outlined" fullWidth size="small">
-           
+
               <input
                 style={{ border: data.Date.errorStatus ? "1px solid red" : "none" }}
                 onChange={handleChange}
@@ -268,52 +269,70 @@ const ForbankUse = forwardRef((props, ref) => {
             </FormControl>
           </Grid>
         </Grid>
+
         <Stack
-          sx={{ display: "flex", marginLeft: "1020px", maxWidth: "350px" }}
+          sx={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            width: "100%",
+          }}
         >
-          <Grid container spacing={2} pt={3} pb={2}>
-            <Grid item style={{ width: "100%" }}>
-              <InputLabel sx={inputLableStyle}>
-                Signature of executive
-              </InputLabel>
-              <FormControl variant="outlined" fullWidth size="small">
-                <TextareaAutosize
-                  minRows={4}
-                  id="outlined-adornment-password"
-                  size="small"
-                  name={data.ExcutiveSignature.name}
-                  value={data.ExcutiveSignature.value}
-                  onChange={handleChange}
-                />
-              </FormControl>
+          <Stack></Stack>
+          <Stack
+            sx={{
+              width: "25%",
+              display: "flex",
+              flexDirection: "column",
+              gap: 0,
+            }}
+          >
+            <Grid container spacing={2} pt={3} pb={2}>
+              <Grid item style={{ width: "100%" }}>
+                <InputLabel sx={inputLableStyle}>
+                  Signature of executive
+                </InputLabel>
+                <FormControl variant="outlined" fullWidth size="small">
+                  <TextareaAutosize
+                    minRows={4}
+                    id="outlined-adornment-password"
+                    size="small"
+                    name={data.ExcutiveSignature.name}
+                    value={data.ExcutiveSignature.value}
+                    onChange={handleChange}
+                  />
+                </FormControl>
+              </Grid>
             </Grid>
-          </Grid>
-          <Grid container spacing={2} pt={3} pb={2}>
-            <Grid item style={{ width: "100%" }}>
-              <InputLabel sx={inputLableStyle}>Name of excutive</InputLabel>
-              <FormControl variant="outlined" fullWidth size="small">
-                <OutlinedInput
-                  fullWidth
-                  id="outlined-adornment-password"
-                  placeholder={data.Name.placeholder}
-                  size="small"
-                  sx={{
-                    border: data.Name.errorStatus ? "1px solid red":"",
-                    height: "40px",
-                    width: "100%",
-                    padding: "10px",
-                    borderRadius: "8px",
-                  }}
-                  name={data.Name.name}
-                  value={data.Name.value}
-                  onChange={handleChange}
-                />
-              </FormControl>
+            <Grid container spacing={2} pt={3} pb={2}>
+              <Grid item style={{ width: "100%" }}>
+                <InputLabel sx={inputLableStyle}>Name of excutive</InputLabel>
+                <FormControl variant="outlined" fullWidth size="small">
+                  <OutlinedInput
+                    fullWidth
+                    id="outlined-adornment-password"
+                    placeholder={data.Name.placeholder}
+                    size="small"
+                    sx={{
+                      border: data.Name.errorStatus ? "1px solid red" : "",
+                      height: "40px",
+                      width: "100%",
+                      padding: "10px",
+                      borderRadius: "8px",
+                    }}
+                    name={data.Name.name}
+                    value={data.Name.value}
+                    onChange={handleChange}
+                  />
+                </FormControl>
+              </Grid>
             </Grid>
-          </Grid>
+          </Stack>
         </Stack>
+
       </CardContent>
     </Card>
+    </Stack>
   );
 });
 

@@ -201,7 +201,7 @@ const Refferals = () => {
                 </FormControl>
               </Stack>
                 </Box>
-                <Box sx={{ margin: "20px 0px 0px 80px" }}>
+                <Box sx={{ margin: "60px 0px 0px 80px" }}>
                   <Button
                     style={{
                       width: "90px",

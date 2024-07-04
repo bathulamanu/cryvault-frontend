@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Box, Card, List, ListItem, ListItemIcon, Menu, MenuItem, useMediaQuery } from "@mui/material";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import { Cake } from "@mui/icons-material";
 import ReceiptIcon from "@mui/icons-material/Receipt";
 import { Report } from "@mui/icons-material";
 import { LocalOffer } from "@mui/icons-material";
+import { useDispatch, useSelector } from "react-redux";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 import { Share } from "@mui/icons-material";
 import SettingsIcon from "@mui/icons-material/Settings";
@@ -21,27 +22,41 @@ import Offers from "../../Pages/DashboardPages/Offers";
 import Refferals from "../../Pages/DashboardPages/Refferals";
 import SettingsPage from "../../Pages/DashboardPages/SettingsPage";
 import Help from "../../Pages/DashboardPages/Help";
-import { useSelector } from "react-redux";
+// import { useSelector } from "react-redux";
 import { AddDetailsPopup } from "../../Utilities/PopupLazyLoad";
 import useDeviceSize from "../../Utilities/useDeviceSize";
+import { getAnnexureInfo, getClientInfo } from "../../redux/reducers/DashboardReducer";
+
 
 const Dashboard = () => {
   // alert("ok")
+  const dispatch = useDispatch();
   const [selectedItem, setSelectedItem] = useState("DashBoard");
   const isMobile = useDeviceSize() === "xs";
-
+  const UserData = useSelector((state) => state.dashboard.SubscribedUserData);
   const [isListVisible, setListVisible] = useState(true); // State variable to track list visibility
-  const isSubscribedUser = useSelector((state) => state.dashboard.getAnnexureInfo);
+  const [isUserFillTheForm, setisUserFillTheForm] = useState(false)
   // Function to handle menu icon click
   const handleMenuIconClick = () => {
     setListVisible(!isListVisible); // Toggle list visibility
   };
 
   const handleItemClick = (item) => {
-    setSelectedItem(item === selectedItem ? item : item);
-    setListVisible(false);
+    if (isUserFillTheForm) {
+      setSelectedItem(item === selectedItem ? item : item);
+      setListVisible(false);
+    }
   };
 
+
+  useEffect(() => {
+    setisUserFillTheForm(UserData?.isUserEnteredAllMandatoryFileds);
+
+  }, [UserData])
+
+  useEffect(() => {
+    dispatch(getAnnexureInfo())
+  }, [])
 
 
   return (
@@ -132,7 +147,8 @@ const Dashboard = () => {
                 onClick={() => handleItemClick("Baby Details")}
               >
                 <ListItemIcon>
-                  <Cake className={selectedItem === "Baby Details" ? "selectedIcon" : "Icon"} sx={{ color: selectedItem === "Baby Details" ? "#2b2e64" : "black" }} />
+                  <Cake className={selectedItem === "Baby Details" ? "selectedIcon" : "Icon"}
+                    sx={{ color: selectedItem === "Baby Details" ? "#2b2e64" : "black" }} />
                 </ListItemIcon>
 
                 {selectedItem === "Baby Details" && (

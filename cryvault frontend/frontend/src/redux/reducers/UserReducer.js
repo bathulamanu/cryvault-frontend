@@ -155,7 +155,7 @@ const UserReducer = createSlice({
         localStorage.setItem("subscriptionPlanId", JSON.stringify(action.payload.data.subscriptionPlanId));
         sessionStorage.setItem("userData", JSON.stringify(userData));
         state.optid = action.payload.optid;
-        toast.success(action.payload.message);
+        // toast.success(action.payload.message);
       })
       .addCase(getCustomerInfo.rejected, (state, action) => {
         state.loading = false;

@@ -4,10 +4,10 @@ import EditIcon from "@mui/icons-material/Edit";
 import baby from "../../assets/images/baby.png";
 import { getCustomerInfo } from "../../redux/reducers/UserReducer"
 import { useDispatch, useSelector } from "react-redux";
-import { getCustomerPaymentDetails, getGenders } from "../../redux/reducers/PaymentReducer"
+import {  getGenders } from "../../redux/reducers/PaymentReducer"
 import { uploadSingleFileApi } from '../../redux/reducers/api';
 import { MultipleSelect, SingleSelect } from '../CheckoutDetails'
-import { getCountry, getState, getCity } from "../../redux/reducers/PaymentReducer";
+import { getCountry, getState, getCity,updateCustomerInfo } from "../../redux/reducers/PaymentReducer";
 import { ToastContainer, toast } from "react-toastify";
 import {
   getGenderIdList,
@@ -92,7 +92,7 @@ const SettingsPage = () => {
 
   const SaveUserData = () => {
     console.log("cehck data lllllllllllllllllllll  ", customerpersonalInfo);
-    dispatch(getCustomerPaymentDetails(customerpersonalInfo))
+    dispatch(updateCustomerInfo(customerpersonalInfo))
   }
 
   const fileIDProofInputRef = useRef(null);
@@ -323,7 +323,7 @@ const SettingsPage = () => {
                     // onChange={(e) => { handleInputChange(e.target.value, "email") }}
                     name="email"
                     id={`outlined-adornment`}
-                    placeholder="Second Name"
+                    placeholder="Email Address"
                     sx={{
                       border: "",
                       height: "40px",
@@ -356,7 +356,7 @@ const SettingsPage = () => {
                     onChange={(e) => { handleInputChange(e.target.value, "addressLine1") }}
                     name="addressLine1"
                     id={`outlined-adornment`}
-                    placeholder="Second Name"
+                    placeholder="Address line-1"
                     sx={{
                       border: "",
                       height: "40px",
@@ -380,7 +380,7 @@ const SettingsPage = () => {
                     onChange={(e) => { handleInputChange(e.target.value, "addressLine2") }}
                     name="addressLine2"
                     id={`outlined-adornment`}
-                    placeholder="Second Name"
+                    placeholder="Address line-2"
                     sx={{
                       border: "",
                       height: "40px",
@@ -403,7 +403,7 @@ const SettingsPage = () => {
                     onChange={(e) => { handleInputChange(e.target.value, "nearLandMark") }}
                     name="nearLandMark"
                     id={`outlined-adornment`}
-                    placeholder="Second Name"
+                    placeholder="Near Land Mark"
                     sx={{
                       border: "",
                       height: "40px",
@@ -458,7 +458,7 @@ const SettingsPage = () => {
                     onChange={(e) => { handleInputChange(e.target.value, "pincode") }}
                     name="pincode"
                     id={`outlined-adornment`}
-                    placeholder="Second Name"
+                    placeholder="Pincode"
                     sx={{
                       border: "",
                       height: "40px",
