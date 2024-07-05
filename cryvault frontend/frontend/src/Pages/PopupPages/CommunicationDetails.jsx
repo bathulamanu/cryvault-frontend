@@ -176,121 +176,121 @@ const CommunicationDetails = forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => ({
     getCommunicationDetailsChildData: () => {
-      // if (!data.Address.value) {
-      //   setData((prevData) => ({
-      //     ...prevData,
-      //     Address: {
-      //       ...prevData.Address,
-      //       errorStatus: true,
-      //       errorMessage: "Address is required.",
-      //     },
-      //   }));
-      //   return;
-      // }
+      if (!data.Address.value) {
+        setData((prevData) => ({
+          ...prevData,
+          Address: {
+            ...prevData.Address,
+            errorStatus: true,
+            errorMessage: "Address is required.",
+          },
+        }));
+        return;
+      }
 
-      // if (!data.Country.value) {
-      //   setData((prevData) => ({
-      //     ...prevData,
-      //     Country: {
-      //       ...prevData.Country,
-      //       errorStatus: true,
-      //       errorMessage: "Country is required.",
-      //     },
-      //   }));
-      //   return;
-      // }
+      if (!data.Country.value) {
+        setData((prevData) => ({
+          ...prevData,
+          Country: {
+            ...prevData.Country,
+            errorStatus: true,
+            errorMessage: "Country is required.",
+          },
+        }));
+        return;
+      }
 
-      // if (!data.State.value) {
-      //   setData((prevData) => ({
-      //     ...prevData,
-      //     State: {
-      //       ...prevData.State,
-      //       errorStatus: true,
-      //       errorMessage: "State is required.",
-      //     },
-      //   }));
-      //   return;
-      // }
-      // if (!data.City.value) {
-      //   setData((prevData) => ({
-      //     ...prevData,
-      //     City: {
-      //       ...prevData.City,
-      //       errorStatus: true,
-      //       errorMessage: "City is required.",
-      //     },
-      //   }));
-      //   return;
-      // }
+      if (!data.State.value) {
+        setData((prevData) => ({
+          ...prevData,
+          State: {
+            ...prevData.State,
+            errorStatus: true,
+            errorMessage: "State is required.",
+          },
+        }));
+        return;
+      }
+      if (!data.City.value) {
+        setData((prevData) => ({
+          ...prevData,
+          City: {
+            ...prevData.City,
+            errorStatus: true,
+            errorMessage: "City is required.",
+          },
+        }));
+        return;
+      }
 
-      // if (!data.PinCode.value) {
-      //   setData((prevData) => ({
-      //     ...prevData,
-      //     PinCode: {
-      //       ...prevData.PinCode,
-      //       errorStatus: true,
-      //       errorMessage: "PinCode is required.",
-      //     },
-      //   }));
-      //   return;
-      // }
-      // if (!data.PermanentAddress.value) {
-      //   setData((prevData) => ({
-      //     ...prevData,
-      //     PermanentAddress: {
-      //       ...prevData.PermanentAddress,
-      //       errorStatus: true,
-      //       errorMessage: "Permanent Address is required.",
-      //     },
-      //   }));
-      //   return;
-      // }
+      if (!data.PinCode.value) {
+        setData((prevData) => ({
+          ...prevData,
+          PinCode: {
+            ...prevData.PinCode,
+            errorStatus: true,
+            errorMessage: "PinCode is required.",
+          },
+        }));
+        return;
+      }
+      if (!data.PermanentAddress.value) {
+        setData((prevData) => ({
+          ...prevData,
+          PermanentAddress: {
+            ...prevData.PermanentAddress,
+            errorStatus: true,
+            errorMessage: "Permanent Address is required.",
+          },
+        }));
+        return;
+      }
 
-      // if (!data.PermanentAddressCountry.value) {
-      //   setData((prevData) => ({
-      //     ...prevData,
-      //     PermanentAddressCountry: {
-      //       ...prevData.PermanentAddressCountry,
-      //       errorStatus: true,
-      //       errorMessage: "Country is required.",
-      //     },
-      //   }));
-      //   return;
-      // }
+      if (!data.PermanentAddressCountry.value) {
+        setData((prevData) => ({
+          ...prevData,
+          PermanentAddressCountry: {
+            ...prevData.PermanentAddressCountry,
+            errorStatus: true,
+            errorMessage: "Country is required.",
+          },
+        }));
+        return;
+      }
 
-      // if (!data.PermanentAddressState.value) {
-      //   setData((prevData) => ({
-      //     ...prevData,
-      //     PermanentAddressState: {
-      //       ...prevData.PermanentAddressState,
-      //       errorStatus: true,
-      //       errorMessage: "State is required.",
-      //     },
-      //   }));
-      //   return;
-      // }
-      // if (!data.PermanentAddressCity.value) {
-      //   setData((prevData) => ({
-      //     ...prevData,
-      //     PermanentAddressCity: {
-      //       ...prevData.PermanentAddressCity,
-      //       errorStatus: true,
-      //       errorMessage: "City is required.",
-      //     },
-      //   }));
-      //   return;
-      // }
-      // if (!data.PermanentAddressPinCode.value) {
-      //   setData((prevData) => ({
-      //     ...prevData,
-      //     PermanentAddressPinCode: {
-      //       ...prevData.PermanentAddressPinCode,
-      //       errorStatus: true,
-      //       errorMessage: "PinCode is required.",
-      //     },
-      //   }));
-      //   return;
-      // }
+      if (!data.PermanentAddressState.value) {
+        setData((prevData) => ({
+          ...prevData,
+          PermanentAddressState: {
+            ...prevData.PermanentAddressState,
+            errorStatus: true,
+            errorMessage: "State is required.",
+          },
+        }));
+        return;
+      }
+      if (!data.PermanentAddressCity.value) {
+        setData((prevData) => ({
+          ...prevData,
+          PermanentAddressCity: {
+            ...prevData.PermanentAddressCity,
+            errorStatus: true,
+            errorMessage: "City is required.",
+          },
+        }));
+        return;
+      }
+      if (!data.PermanentAddressPinCode.value) {
+        setData((prevData) => ({
+          ...prevData,
+          PermanentAddressPinCode: {
+            ...prevData.PermanentAddressPinCode,
+            errorStatus: true,
+            errorMessage: "PinCode is required.",
+          },
+        }));
+        return;
+      }
 
       const dataToSend = {
         Address: data.Address.value,

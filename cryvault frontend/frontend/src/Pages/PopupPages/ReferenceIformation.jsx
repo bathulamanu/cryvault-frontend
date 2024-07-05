@@ -193,29 +193,29 @@ const ReferenceIformation = forwardRef((props, ref) => {
             if (data.EmergencyMobile2.value) {
                 isEmergencyMobile2Invalid = !validatePhoneNumber(data.EmergencyMobile2.value, "91");
             }
-            // if (!data.ExisitingCryovaultClientUIN.value) {
-            //     setData((prevData) => ({
-            //         ...prevData,
-            //         ExisitingCryovaultClientUIN: {
-            //             ...prevData.ExisitingCryovaultClientUIN,
-            //             errorStatus: true,
-            //             errorMessage: "Client UIN is required.",
-            //         },
-            //     }));
-            //     return;
-            // }
+            if (!data.ExisitingCryovaultClientUIN.value) {
+                setData((prevData) => ({
+                    ...prevData,
+                    ExisitingCryovaultClientUIN: {
+                        ...prevData.ExisitingCryovaultClientUIN,
+                        errorStatus: true,
+                        errorMessage: "Client UIN is required.",
+                    },
+                }));
+                return;
+            }
 
-            // if (!data.IfReferredByExisitingClientName.value) {
-            //     setData((prevData) => ({
-            //         ...prevData,
-            //         IfReferredByExisitingClientName: {
-            //             ...prevData.IfReferredByExisitingClientName,
-            //             errorStatus: true,
-            //             errorMessage: "Exisiting ClientName is required.",
-            //         },
-            //     }));
-            //     return;
-            // }
+            if (!data.IfReferredByExisitingClientName.value) {
+                setData((prevData) => ({
+                    ...prevData,
+                    IfReferredByExisitingClientName: {
+                        ...prevData.IfReferredByExisitingClientName,
+                        errorStatus: true,
+                        errorMessage: "Exisiting ClientName is required.",
+                    },
+                }));
+                return;
+            }
 
             if (isMobile1Invalid) {
                 setData((prevData) => ({

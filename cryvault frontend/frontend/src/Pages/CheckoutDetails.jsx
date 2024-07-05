@@ -285,118 +285,118 @@ const CheckoutDetails = () => {
       }));
       return;
     }
-    // if (!userData.lastName.value) {
-    //   setUserData((prevData) => ({
-    //     ...prevData,
-    //     lastName: {
-    //       ...prevData.lastName,
-    //       errorStatus: true,
-    //       errorMessage: "Last Name is required.",
-    //     },
-    //   }));
-    //   return;
-    // }
+    if (!userData.lastName.value) {
+      setUserData((prevData) => ({
+        ...prevData,
+        lastName: {
+          ...prevData.lastName,
+          errorStatus: true,
+          errorMessage: "Last Name is required.",
+        },
+      }));
+      return;
+    }
 
-    // if (!userData.email.value) {
-    //   setUserData((prevData) => ({
-    //     ...prevData,
-    //     email: {
-    //       ...prevData.email,
-    //       errorStatus: true,
-    //       errorMessage: "Email ID is required.",
-    //     },
-    //   }));
-    //   return;
-    // }
-    // if (!validateEmail(userData.email.value)) {
-    //   setUserData((prevData) => ({
-    //     ...prevData,
-    //     email: {
-    //       ...prevData.email,
-    //       errorStatus: true,
-    //       errorMessage: "Enter valid Email ID",
-    //     },
-    //   }));
-    //   return;
-    // }
-    // if (!userData.addressLine1.value) {
-    //   setUserData((prevData) => ({
-    //     ...prevData,
-    //     addressLine1: {
-    //       ...prevData.addressLine1,
-    //       errorStatus: true,
-    //       errorMessage: "Address line 1 is required.",
-    //     },
-    //   }));
-    //   return;
-    // }
-    // if (!userData.addressLine2.value) {
-    //   setUserData((prevData) => ({
-    //     ...prevData,
-    //     addressLine2: {
-    //       ...prevData.addressLine2,
-    //       errorStatus: true,
-    //       errorMessage: "Address line 2 is required.",
-    //     },
-    //   }));
-    //   return;
-    // }
-    // if (!userData.nearLandMark.value) {
-    //   setUserData((prevData) => ({
-    //     ...prevData,
-    //     nearLandMark: {
-    //       ...prevData.nearLandMark,
-    //       errorStatus: true,
-    //       errorMessage: "Near land Mark is required.",
-    //     },
-    //   }));
-    //   return;
-    // }
+    if (!userData.email.value) {
+      setUserData((prevData) => ({
+        ...prevData,
+        email: {
+          ...prevData.email,
+          errorStatus: true,
+          errorMessage: "Email ID is required.",
+        },
+      }));
+      return;
+    }
+    if (!validateEmail(userData.email.value)) {
+      setUserData((prevData) => ({
+        ...prevData,
+        email: {
+          ...prevData.email,
+          errorStatus: true,
+          errorMessage: "Enter valid Email ID",
+        },
+      }));
+      return;
+    }
+    if (!userData.addressLine1.value) {
+      setUserData((prevData) => ({
+        ...prevData,
+        addressLine1: {
+          ...prevData.addressLine1,
+          errorStatus: true,
+          errorMessage: "Address line 1 is required.",
+        },
+      }));
+      return;
+    }
+    if (!userData.addressLine2.value) {
+      setUserData((prevData) => ({
+        ...prevData,
+        addressLine2: {
+          ...prevData.addressLine2,
+          errorStatus: true,
+          errorMessage: "Address line 2 is required.",
+        },
+      }));
+      return;
+    }
+    if (!userData.nearLandMark.value) {
+      setUserData((prevData) => ({
+        ...prevData,
+        nearLandMark: {
+          ...prevData.nearLandMark,
+          errorStatus: true,
+          errorMessage: "Near land Mark is required.",
+        },
+      }));
+      return;
+    }
 
-    // if (!userData.country.value) {
-    //   setUserData((prevData) => ({
-    //     ...prevData,
-    //     country: {
-    //       ...prevData.city,
-    //       errorStatus: true,
-    //       errorMessage: "Country is required.",
-    //     },
-    //   }));
-    //   return;
-    // }
-    // if (!userData.state.value) {
-    //   setUserData((prevData) => ({
-    //     ...prevData,
-    //     state: {
-    //       ...prevData.state,
-    //       errorStatus: true,
-    //       errorMessage: "State is required.",
-    //     },
-    //   }));
-    //   return;
-    // }
-    // if (!userData.city.value) {
-    //   setUserData((prevData) => ({
-    //     ...prevData,
-    //     city: {
-    //       ...prevData.city,
-    //       errorStatus: true,
-    //       errorMessage: "City is required.",
-    //     },
-    //   }));
-    //   return;
-    // }
-    // if (!userData.pincode.value) {
-    //   setUserData((prevData) => ({
-    //     ...prevData,
-    //     pincode: {
-    //       ...prevData.pincode,
-    //       errorStatus: true,
-    //       errorMessage: "Pincode is required.",
-    //     },
-    //   }));
-    //   return;
-    // }
+    if (!userData.country.value) {
+      setUserData((prevData) => ({
+        ...prevData,
+        country: {
+          ...prevData.city,
+          errorStatus: true,
+          errorMessage: "Country is required.",
+        },
+      }));
+      return;
+    }
+    if (!userData.state.value) {
+      setUserData((prevData) => ({
+        ...prevData,
+        state: {
+          ...prevData.state,
+          errorStatus: true,
+          errorMessage: "State is required.",
+        },
+      }));
+      return;
+    }
+    if (!userData.city.value) {
+      setUserData((prevData) => ({
+        ...prevData,
+        city: {
+          ...prevData.city,
+          errorStatus: true,
+          errorMessage: "City is required.",
+        },
+      }));
+      return;
+    }
+    if (!userData.pincode.value) {
+      setUserData((prevData) => ({
+        ...prevData,
+        pincode: {
+          ...prevData.pincode,
+          errorStatus: true,
+          errorMessage: "Pincode is required.",
+        },
+      }));
+      return;
+    }
     const dataToSend = {
       countryCode: "91",
       phoneNumber: userData.phone.value,
@@ -412,8 +412,8 @@ const CheckoutDetails = () => {
       country: userData.country.value,
       gender: userData.gender.value,
     };
-    dispatch(updateCustomerInfo({ dataToSend, callback: order })); // 
-    // order(); 
+    dispatch(updateCustomerInfo({ dataToSend, callback: order })); 
+    
   };
 
   const order = () => {

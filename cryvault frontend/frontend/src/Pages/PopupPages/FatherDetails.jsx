@@ -170,121 +170,121 @@ const FatherDetails = forwardRef((props, ref) => {
 
   useImperativeHandle(ref, () => ({
     getFatherData: () => {
-      // let isMobileInvalid;
-      // if (data.ExpectantFatherMobile.value) {
-      //   isMobileInvalid = !validatePhoneNumber(data.ExpectantFatherMobile.value, "91");
-      // }
+      let isMobileInvalid;
+      if (data.ExpectantFatherMobile.value) {
+        isMobileInvalid = !validatePhoneNumber(data.ExpectantFatherMobile.value, "91");
+      }
 
-      // if (!data.ExpectantFatherName.value) {
-      //   setData((prevData) => ({
-      //     ...prevData,
-      //     ExpectantFatherName: {
-      //       ...prevData.ExpectantFatherName,
-      //       errorStatus: true,
-      //       errorMessage: "Father Name is required.",
-      //     },
-      //   }));
-      //   return;
-      // }
-      // if (!data.ExpectantFatherDOB.value) {
-      //   setData((prevData) => ({
-      //     ...prevData,
-      //     ExpectantFatherDOB: {
-      //       ...prevData.ExpectantFatherDOB,
-      //       errorStatus: true,
-      //       errorMessage: "Date of Birth is required.",
-      //     },
-      //   }));
-      //   return;
-      // }
-      // if (!validateEmail(data.ExpectantFatherEmail.value)) {
-      //   setData((prevData) => ({
-      //     ...prevData,
-      //     ExpectantFatherEmail: {
-      //       ...prevData.ExpectantFatherEmail,
-      //       errorStatus: true,
-      //       errorMessage: "Email Address is required.",
-      //     },
-      //   }));
-      //   return;
-      // }
-      // if (!data.ExpectantFatherMobile.value) {
-      //   setData((prevData) => ({
-      //     ...prevData,
-      //     ExpectantFatherMobile: {
-      //       ...prevData.ExpectantFatherMobile,
-      //       errorStatus: true,
-      //       errorMessage: "Phone Number is required.",
-      //     },
-      //   }));
-      //   return;
-      // }
-      // if (isMobileInvalid) {
-      //   setData((prevData) => ({
-      //     ...prevData,
-      //     ExpectantFatherMobile: {
-      //       ...prevData.ExpectantFatherMobile,
-      //       errorStatus: true,
-      //       errorMessage: "Enter Valid Phone Number",
-      //     },
-      //   }));
-      //   return;
-      // }
-      // if (!data.ExpectantFatherOccupation.value) {
-      //   setData((prevData) => ({
-      //     ...prevData,
-      //     ExpectantFatherOccupation: {
-      //       ...prevData.ExpectantFatherOccupation,
-      //       errorStatus: true,
-      //       errorMessage: "Occupation is required.",
-      //     },
-      //   }));
-      //   return;
-      // }
-      // if (!data.ExpectantFatherDesignation.value) {
-      //   setData((prevData) => ({
-      //     ...prevData,
-      //     ExpectantFatherDesignation: {
-      //       ...prevData.ExpectantFatherDesignation,
-      //       errorStatus: true,
-      //       errorMessage: "Designation is required.",
-      //     },
-      //   }));
-      //   return;
-      // }
-      // if (!data.ExpectantFatherOrganizationName.value) {
-      //   setData((prevData) => ({
-      //     ...prevData,
-      //     ExpectantFatherOrganizationName: {
-      //       ...prevData.ExpectantFatherOrganizationName,
-      //       errorStatus: true,
-      //       errorMessage: "Organization Name is required.",
-      //     },
-      //   }));
-      //   return;
-      // }
-      // if (!data.ExpectantFatherIDproof.value) {
-      //   setData((prevData) => ({
-      //     ...prevData,
-      //     ExpectantFatherIDproof: {
-      //       ...prevData.ExpectantFatherIDproof,
-      //       errorStatus: true,
-      //       errorMessage: "ID Proof is required.",
-      //     },
-      //   }));
-      //   return;
-      // }
-      // if (!data.ExpectantFatherIdproofNo.value) {
-      //   setData((prevData) => ({
-      //     ...prevData,
-      //     ExpectantFatherIdproofNo: {
-      //       ...prevData.ExpectantFatherIdproofNo,
-      //       errorStatus: true,
-      //       errorMessage: "ID Proof Number is required.",
-      //     },
-      //   }));
-      //   return;
-      // }
+      if (!data.ExpectantFatherName.value) {
+        setData((prevData) => ({
+          ...prevData,
+          ExpectantFatherName: {
+            ...prevData.ExpectantFatherName,
+            errorStatus: true,
+            errorMessage: "Father Name is required.",
+          },
+        }));
+        return;
+      }
+      if (!data.ExpectantFatherDOB.value) {
+        setData((prevData) => ({
+          ...prevData,
+          ExpectantFatherDOB: {
+            ...prevData.ExpectantFatherDOB,
+            errorStatus: true,
+            errorMessage: "Date of Birth is required.",
+          },
+        }));
+        return;
+      }
+      if (!validateEmail(data.ExpectantFatherEmail.value)) {
+        setData((prevData) => ({
+          ...prevData,
+          ExpectantFatherEmail: {
+            ...prevData.ExpectantFatherEmail,
+            errorStatus: true,
+            errorMessage: "Email Address is required.",
+          },
+        }));
+        return;
+      }
+      if (!data.ExpectantFatherMobile.value) {
+        setData((prevData) => ({
+          ...prevData,
+          ExpectantFatherMobile: {
+            ...prevData.ExpectantFatherMobile,
+            errorStatus: true,
+            errorMessage: "Phone Number is required.",
+          },
+        }));
+        return;
+      }
+      if (isMobileInvalid) {
+        setData((prevData) => ({
+          ...prevData,
+          ExpectantFatherMobile: {
+            ...prevData.ExpectantFatherMobile,
+            errorStatus: true,
+            errorMessage: "Enter Valid Phone Number",
+          },
+        }));
+        return;
+      }
+      if (!data.ExpectantFatherOccupation.value) {
+        setData((prevData) => ({
+          ...prevData,
+          ExpectantFatherOccupation: {
+            ...prevData.ExpectantFatherOccupation,
+            errorStatus: true,
+            errorMessage: "Occupation is required.",
+          },
+        }));
+        return;
+      }
+      if (!data.ExpectantFatherDesignation.value) {
+        setData((prevData) => ({
+          ...prevData,
+          ExpectantFatherDesignation: {
+            ...prevData.ExpectantFatherDesignation,
+            errorStatus: true,
+            errorMessage: "Designation is required.",
+          },
+        }));
+        return;
+      }
+      if (!data.ExpectantFatherOrganizationName.value) {
+        setData((prevData) => ({
+          ...prevData,
+          ExpectantFatherOrganizationName: {
+            ...prevData.ExpectantFatherOrganizationName,
+            errorStatus: true,
+            errorMessage: "Organization Name is required.",
+          },
+        }));
+        return;
+      }
+      if (!data.ExpectantFatherIDproof.value) {
+        setData((prevData) => ({
+          ...prevData,
+          ExpectantFatherIDproof: {
+            ...prevData.ExpectantFatherIDproof,
+            errorStatus: true,
+            errorMessage: "ID Proof is required.",
+          },
+        }));
+        return;
+      }
+      if (!data.ExpectantFatherIdproofNo.value) {
+        setData((prevData) => ({
+          ...prevData,
+          ExpectantFatherIdproofNo: {
+            ...prevData.ExpectantFatherIdproofNo,
+            errorStatus: true,
+            errorMessage: "ID Proof Number is required.",
+          },
+        }));
+        return;
+      }
 
       const dataToSend = {
         ExpectantFatherName: data.ExpectantFatherName.value,
