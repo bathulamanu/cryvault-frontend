@@ -1,0 +1,15 @@
+pipeline {
+    agent any
+    environment {
+        AWS_CREDENTIALS = credentials('aws-credentials')  // Fetch stored AWS credentials
+    }
+    stages {
+        stage('Check AWS Connection') {
+            steps {
+                withAWS(credentials: 'aws-credentials', region: 'us-east-1') {
+                    sh 'aws s3 ls' // List all S3 buckets
+                }
+            }
+        }
+    }
+}
