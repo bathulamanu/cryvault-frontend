@@ -3,8 +3,7 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = "manu348/front:latest"
-        DOCKER_USERNAME = "manu348"
-        DOCKER_TOKEN = "dckr_pat_cMdGWRpjOwzGG4MiiIYq3w6uWHk"
+        DOCKER_CREDENTIALS = "docker-hub-credentials"
     }
 
     stages {
@@ -22,7 +21,9 @@ pipeline {
 
         stage('Login to Docker Hub') {
             steps {
-                sh "echo $DOCKER_TOKEN | docker login -u $DOCKER_USERNAME --password-stdin"
+                withCredentials([usernamePassword(credentialsId: DOCKER_CREDENTIALS, usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                    sh "echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin"
+                }
             }
         }
 
@@ -35,4 +36,9 @@ pipeline {
         stage('Run Docker Container') {
             steps {
                 sh "docker stop cryvault-frontend || true && docker rm cryvault-frontend || true"
-                sh "docker run -d --
+                sh "docker run -d --name cryvault-frontend -p 3000:3000 $DOCKER_IMAGE"
+            }
+        }
+    }
+}
+
