@@ -1,15 +1,38 @@
 pipeline {
     agent any
+
     environment {
-        AWS_CREDENTIALS = credentials('aws-credentials')  // Fetch stored AWS credentials
+        DOCKER_IMAGE = "manu348/front:latest"
+        DOCKER_USERNAME = "manu348"
+        DOCKER_TOKEN = "dckr_pat_cMdGWRpjOwzGG4MiiIYq3w6uWHk"
     }
+
     stages {
-        stage('Check AWS Connection') {
+        stage('Clone Repository') {
             steps {
-                withAWS(credentials: 'aws-credentials', region: 'us-east-1') {
-                    sh 'aws s3 ls' // List all S3 buckets
-                }
+                git branch: 'main', url: 'https://github.com/bathulamanu/cryvault-frontend.git'
             }
         }
-    }
-}
+
+        stage('Build Docker Image') {
+            steps {
+                sh "docker build -t $DOCKER_IMAGE ."
+            }
+        }
+
+        stage('Login to Docker Hub') {
+            steps {
+                sh "echo $DOCKER_TOKEN | docker login -u $DOCKER_USERNAME --password-stdin"
+            }
+        }
+
+        stage('Push to Docker Hub') {
+            steps {
+                sh "docker push $DOCKER_IMAGE"
+            }
+        }
+
+        stage('Run Docker Container') {
+            steps {
+                sh "docker stop cryvault-frontend || true && docker rm cryvault-frontend || true"
+                sh "docker run -d --
