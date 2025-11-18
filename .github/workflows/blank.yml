@@ -1,36 +1,70 @@
-# This is a basic workflow to help you get started with Actions
+name: Build & Deploy to EC2 using ECR
 
-name: CI
-
-# Controls when the workflow will run
 on:
-  # Triggers the workflow on push or pull request events but only for the "master" branch
   push:
-    branches: [ "master" ]
-  pull_request:
-    branches: [ "master" ]
+    branches:
+      - main
 
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
+  deploy:
     runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v4
+      # Step 1 - Checkout Repository
+      - name: Checkout Code
+        uses: actions/checkout@v3
 
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+      # Step 2 - Configure AWS Credentials
+      - name: AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-north-1
 
-      # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
+      # Step 3 - Login to ECR
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v2
+
+      # Step 4 - Build & Push Docker Image to ECR
+      - name: Build & Push Docker Image
         run: |
-          echo Add other actions to build,
-          echo test, and deploy your project.
+          REPO=378766468379.dkr.ecr.eu-north-1.amazonaws.com/cry-back
+          TAG=latest
+
+          echo "Building Docker image..."
+          docker build -t cry-back .
+
+          echo "Tagging Docker image..."
+          docker tag cry-back:latest $REPO:$TAG
+
+          echo "Pushing image to ECR..."
+          docker push $REPO:$TAG
+
+      # Step 5 - SSH to EC2 & Deploy Container
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ubuntu
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            REPO=378766468379.dkr.ecr.eu-north-1.amazonaws.com/cry-back
+            TAG=latest
+
+            echo "Logging into ECR..."
+            aws ecr get-login-password --region eu-north-1 \
+              | docker login --username AWS --password-stdin $REPO
+
+            echo "Pulling latest Docker image..."
+            docker pull $REPO:$TAG
+
+            echo "Stopping old container..."
+            docker stop cry-back || true
+            docker rm cry-back || true
+
+            echo "Starting new container..."
+            docker run -d --name cry-back -p 80:80 $REPO:$TAG
+
+            echo "Deployment Completed Successfully!"
