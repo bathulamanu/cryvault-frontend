@@ -1,4 +1,4 @@
-name: Build, Push to ECR & Deploy to EC2
+name: Build & Deploy to EC2 using ECR
 
 on:
   push:
@@ -10,57 +10,61 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # Checkout code
-    - name: Checkout code
+    # Step 1 - Checkout Repository
+    - name: Checkout Code
       uses: actions/checkout@v3
 
-    # Configure AWS Credentials
-    - name: Configure AWS Credentials
+    # Step 2 - Configure AWS Credentials
+    - name: AWS Credentials
       uses: aws-actions/configure-aws-credentials@v4
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: eu-north-1
 
-    # Login to ECR
+    # Step 3 - Login to ECR
     - name: Login to Amazon ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v2
 
-    # Build and push Docker image
+    # Step 4 - Build & Push Docker Image to ECR
     - name: Build & Push Docker Image
-    run: |
-      IMAGE_TAG=latest
-      REPO_URI=378766468379.dkr.ecr.eu-north-1.amazonaws.com/cry-back
+      run: |
+        REPO=378766468379.dkr.ecr.eu-north-1.amazonaws.com/cry-back
+        TAG=latest
 
-      echo "Building Docker image..."
-      docker build -t cry-back .
+        echo "Building Docker image..."
+        docker build -t cry-back .
 
-      echo "Tagging image..."
-      docker tag cry-back:latest $REPO_URI:$IMAGE_TAG
+        echo "Tagging Docker image..."
+        docker tag cry-back:latest $REPO:$TAG
 
-      echo "Pushing to ECR..."
-      docker push $REPO_URI:$IMAGE_TAG
+        echo "Pushing image to ECR..."
+        docker push $REPO:$TAG
 
-    # SSH into EC2 and deploy container
-    - name: Deploy on EC2 via SSH
+    # Step 5 - SSH to EC2 & Deploy Container
+    - name: Deploy to EC2
       uses: appleboy/ssh-action@v1.2.0
       with:
         host: ${{ secrets.EC2_HOST }}
         username: ubuntu
         key: ${{ secrets.EC2_SSH_KEY }}
         script: |
-          echo "Logging in to ECR..."
+          REPO=378766468379.dkr.ecr.eu-north-1.amazonaws.com/cry-back
+          TAG=latest
+
+          echo "Logging into ECR..."
           aws ecr get-login-password --region eu-north-1 \
-            | docker login --username AWS --password-stdin 378766468379.dkr.ecr.eu-north-1.amazonaws.com
+            | docker login --username AWS --password-stdin $REPO
 
-          echo "Pull latest image..."
-          docker pull 378766468379.dkr.ecr.eu-north-1.amazonaws.com/cry-back:latest
+          echo "Pulling latest Docker image..."
+          docker pull $REPO:$TAG
 
-          echo "Stop old container..."
+          echo "Stopping old container..."
           docker stop cry-back || true
           docker rm cry-back || true
 
-          echo "Start new container..."
-          docker run -d --name cry-back -p 80:80 \
-            378766468379.dkr.ecr.eu-north-1.amazonaws.com/cry-back:latest
+          echo "Starting new container..."
+          docker run -d --name cry-back -p 80:80 $REPO:$TAG
+
+          echo "Deployment Completed Successfully!"
